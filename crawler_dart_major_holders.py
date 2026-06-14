@@ -316,42 +316,56 @@ def parse_major_holders_payload(payload: dict[str, Any]) -> dict[str, Any]:
         }
 
     rows = payload.get("list") or []
-    holders: list[dict[str, Any]] = []
+    latest_by_reporter: dict[str, dict[str, Any]] = {}
     for row in rows:
-        holder_name = row.get("report_resn") or row.get("nm") or row.get("repror") or row.get("rcept_no")
-        ratio_text = row.get("stkqy_irds_rt") or row.get("trmend_irds_rt") or row.get("stkrt")
+        reporter_name = row.get("repror") or row.get("nm") or row.get("report_resn") or row.get("rcept_no")
+        ratio_text = row.get("stkrt") or row.get("stkqy_irds_rt") or row.get("trmend_irds_rt")
         ratio = None
         if isinstance(ratio_text, str):
             match = re.search(r"-?\d+(?:\.\d+)?", ratio_text.replace(",", ""))
             if match:
                 ratio = float(match.group(0))
 
-        holders.append(
-            {
-                "holder_name": holder_name,
-                "report_date": row.get("rcept_dt") or row.get("report_dt"),
-                "ratio": ratio,
-                "raw": row,
-            }
-        )
+        report_date = row.get("rcept_dt") or row.get("report_dt")
+        if not reporter_name:
+            continue
+
+        holder = {
+            "holder_name": reporter_name,
+            "report_date": report_date,
+            "ratio": ratio,
+            "raw": row,
+        }
+
+        previous = latest_by_reporter.get(reporter_name)
+        previous_date = (previous or {}).get("report_date") or ""
+        current_date = report_date or ""
+        if previous is None or current_date >= previous_date:
+            latest_by_reporter[reporter_name] = holder
+
+    holders = [
+        holder
+        for holder in latest_by_reporter.values()
+        if holder["ratio"] is not None and holder["ratio"] >= 5
+    ]
 
     holders.sort(
         key=lambda item: (
             item["ratio"] is None,
             -(item["ratio"] or 0),
-            item["report_date"] or "",
+            -(int(str(item["report_date"]).replace("-", "")) if item["report_date"] else 0),
         )
     )
 
-    top_holders = holders[:5]
+    latest_report_date = max((holder["report_date"] for holder in holders if holder["report_date"]), default=None)
     return {
         "status": "000",
         "message": payload.get("message"),
-        "has_major_holders": bool(top_holders),
-        "holders": top_holders,
-        "top_holder_name": top_holders[0]["holder_name"] if top_holders else None,
-        "top_holder_ratio": top_holders[0]["ratio"] if top_holders else None,
-        "latest_report_date": top_holders[0]["report_date"] if top_holders else None,
+        "has_major_holders": bool(holders),
+        "holders": holders,
+        "top_holder_name": holders[0]["holder_name"] if holders else None,
+        "top_holder_ratio": holders[0]["ratio"] if holders else None,
+        "latest_report_date": latest_report_date,
     }
 
 
