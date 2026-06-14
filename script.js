@@ -1,10 +1,12 @@
 const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
 const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
+const DART_MAJOR_URL = "./data/dart_major_holders.json";
 const MARKET_IMPLIED_DISCOUNT = 0.1;
 
 const state = {
   rawStocks: [],
   roeHistoryByCode: new Map(),
+  dartMajorByCode: new Map(),
   selectedCode: null,
   threshold: 10,
   discountRate: 10,
@@ -89,6 +91,47 @@ function formatMarketCap(value) {
   }
 
   return `${value.toLocaleString("ko-KR")}억`;
+}
+
+function formatCompactDate(value) {
+  if (!value) {
+    return "N/A";
+  }
+
+  const normalized = String(value).trim();
+  if (/^\d{8}$/.test(normalized)) {
+    return `${normalized.slice(0, 4)}.${normalized.slice(4, 6)}.${normalized.slice(6, 8)}`;
+  }
+
+  const date = new Date(normalized);
+  if (Number.isNaN(date.getTime())) {
+    return normalized;
+  }
+
+  return date.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function summarizeReporterNames(names, limit = 2) {
+  if (!names.length) {
+    return "공시 없음";
+  }
+  if (names.length <= limit) {
+    return names.join(", ");
+  }
+  return `${names.slice(0, limit).join(", ")} 외 ${names.length - limit}명`;
 }
 
 function updateLastUpdated(value) {
@@ -277,6 +320,24 @@ function getRoeHistoryValues(history) {
   return allValues;
 }
 
+function extractReporterNames(majorHolder) {
+  const holders = majorHolder?.holders || [];
+  const seen = new Set();
+  const names = [];
+
+  holders.forEach((holder) => {
+    const rawName = holder?.raw?.repror || holder?.holder_name || null;
+    const normalized = typeof rawName === "string" ? rawName.trim() : "";
+    if (!normalized || seen.has(normalized)) {
+      return;
+    }
+    seen.add(normalized);
+    names.push(normalized);
+  });
+
+  return names;
+}
+
 function inferRoeRange(stock, history) {
   const values = getRoeHistoryValues(history);
 
@@ -401,7 +462,9 @@ function buildScenarioResult(stock, params) {
 }
 
 function enrichStock(stock) {
+  const majorHolder = state.dartMajorByCode.get(stock.code) || null;
   const history = state.roeHistoryByCode.get(stock.code) || null;
+  const reporterNames = extractReporterNames(majorHolder);
   const marketImpliedN = estimateMarketImpliedDuration(stock);
   const roeRange = inferRoeRange(stock, history);
   const nModel = estimateFinancialN(stock, roeRange.values);
@@ -446,6 +509,14 @@ function enrichStock(stock) {
     recommendedRoeOptimistic: roeRange.optimistic,
     roeInferenceSource: roeRange.source,
     roeHistory: history,
+    majorHolder,
+    hasMajorHolders: Boolean(majorHolder?.has_major_holders),
+    reporterNames,
+    reporterCount: reporterNames.length,
+    reporterSummary: reporterNames.join(", "),
+    topHolderName: majorHolder?.top_holder_name || null,
+    topHolderRatio: typeof majorHolder?.top_holder_ratio === "number" ? majorHolder.top_holder_ratio : null,
+    latestReportDate: majorHolder?.latest_report_date || null,
     nModel,
     scenarios,
     fairPriceConservative: scenarios.conservative.fairPrice,
@@ -557,7 +628,7 @@ function renderPriorityCandidates(stocks) {
   if (!candidates.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="10" class="empty-state">조건에 맞는 우선 검토 후보가 없습니다.</td>
+        <td colspan="14" class="empty-state">조건에 맞는 우선 검토 후보가 없습니다.</td>
       </tr>
     `;
     return;
@@ -578,6 +649,13 @@ function renderPriorityCandidates(stocks) {
       <td>${formatNumber(stock.pbr, 2)}</td>
       <td>${formatYears(stock.estimatedNBase)}</td>
       <td>${formatYears(stock.marketImpliedN)}</td>
+      <td>${stock.hasMajorHolders ? '<span class="status-badge">5% 공시</span>' : '<span class="table-subtext">없음</span>'}</td>
+      <td>${stock.reporterCount ? `${stock.reporterCount}명` : '<span class="table-subtext">0명</span>'}</td>
+      <td>${stock.reporterNames.length
+        ? `<div class="table-subtext">${stock.reporterNames.map((name) => escapeHtml(name)).join("<br>")}</div>`
+        : '<span class="table-subtext">공시 없음</span>'}</td>
+      <td>${stock.topHolderRatio === null ? '<span class="table-subtext">N/A</span>' : formatPercent(stock.topHolderRatio, 2)}</td>
+      <td>${stock.latestReportDate ? formatCompactDate(stock.latestReportDate) : '<span class="table-subtext">N/A</span>'}</td>
       <td>${formatPrice(stock.current_price)}</td>
       <td>${formatPrice(stock.fairPriceBase)}</td>
       <td class="${metricClass(stock.gapRateBase)}">${formatPercent(stock.gapRateBase, 1)}</td>
@@ -619,7 +697,7 @@ function renderTable(stocks) {
   if (!stocks.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="14" class="empty-state">조건에 맞는 종목이 없습니다.</td>
+        <td colspan="15" class="empty-state">조건에 맞는 종목이 없습니다.</td>
       </tr>
     `;
     return;
@@ -652,6 +730,7 @@ function renderTable(stocks) {
       <td>${formatPrice(stock.fairPriceOptimistic)}</td>
       <td class="${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateConservative, stock.gapRateOptimistic, (value) => formatPercent(value, 1))}</td>
       <td class="${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</td>
+      <td>${stock.reporterCount ? `<div class="table-subtext">${stock.reporterCount}명</div><div class="table-subtext">${escapeHtml(summarizeReporterNames(stock.reporterNames))}</div>` : '<span class="table-subtext">공시 없음</span>'}</td>
     </tr>
   `).join("");
 
@@ -953,8 +1032,8 @@ function bindTableSortHeaders() {
 }
 
 function renderError(message) {
-  document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="10" class="empty-state">${message}</td></tr>`;
-  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="14" class="empty-state">${message}</td></tr>`;
+  document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="14" class="empty-state">${message}</td></tr>`;
+  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="15" class="empty-state">${message}</td></tr>`;
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("fair-value-panel").innerHTML = `<div class="empty-state">${message}</div>`;
@@ -962,6 +1041,19 @@ function renderError(message) {
 }
 
 function buildRoeHistoryMap(payload) {
+  const map = new Map();
+  const rows = payload?.stocks || [];
+
+  rows.forEach((row) => {
+    if (row?.code) {
+      map.set(row.code, row);
+    }
+  });
+
+  return map;
+}
+
+function buildDartMajorMap(payload) {
   const map = new Map();
   const rows = payload?.stocks || [];
 
@@ -992,10 +1084,20 @@ async function loadStocks() {
       })
       .catch(() => ({ stocks: [] }));
 
-    const [marketPayload, roePayload] = await Promise.all([marketPromise, roePromise]);
+    const dartPromise = fetch(DART_MAJOR_URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} for DART major holders`);
+        }
+        return response.json();
+      })
+      .catch(() => ({ stocks: [] }));
+
+    const [marketPayload, roePayload, dartPayload] = await Promise.all([marketPromise, roePromise, dartPromise]);
 
     state.rawStocks = marketPayload.stocks || [];
     state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
+    state.dartMajorByCode = buildDartMajorMap(dartPayload);
     updateLastUpdated(marketPayload.crawled_at_utc);
     bindControls();
     bindPrioritySortHeaders();
