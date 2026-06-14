@@ -3,64 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stock Dashboard</title>
+  <title>최재혁 방식 가치평가</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="page-shell">
-    <header class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">KOREA EQUITY DASHBOARD</p>
-        <h1>ROE 중심으로 보는 국내 시가총액 대시보드</h1>
-        <p class="hero-text">
-          우선은 대시보드 골격과 ROE 상위 섹션부터 구성했습니다.
-          실제 네이버 금융 크롤링 데이터는 다음 단계에서 연결할 수 있게 분리해둘 예정입니다.
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Value Framework Dashboard</p>
+        <h1>최재혁 방식 가치평가</h1>
+        <p class="intro">
+          ROE, PBR, PER, 적정주가, 괴리율, 켈리비율을 한 화면에서 보고
+          클릭한 종목에 대해 지속기간과 적정주가를 바로 계산합니다.
         </p>
       </div>
-
-      <div class="hero-panel">
-        <div class="metric-card accent">
-          <span class="metric-label">정렬 기준</span>
-          <strong class="metric-value">ROE</strong>
-          <span class="metric-sub">내림차순</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">현재 상태</span>
-          <strong class="metric-value">Mock</strong>
-          <span class="metric-sub">실데이터 연결 전</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">다음 단계</span>
-          <strong class="metric-value">Crawler</strong>
-          <span class="metric-sub">Naver Finance</span>
-        </div>
+      <div class="topbar-meta">
+        <span class="meta-label">마지막 갱신</span>
+        <strong id="last-updated-value">Loading</strong>
       </div>
     </header>
 
-    <main class="dashboard-grid">
-      <section class="panel wide">
+    <main class="dashboard-layout">
+      <section class="panel">
         <div class="section-head">
           <div>
-            <p class="section-kicker">Top Ranking</p>
-            <h2>ROE 10% 초과 종목</h2>
+            <p class="section-kicker">1. Top Table</p>
+            <h2>ROE 정렬 종목 테이블</h2>
           </div>
-          <span class="badge" id="roe-count-badge">Loading</span>
+          <div class="section-side">
+            <span class="stat-pill" id="roe-count-badge">Loading</span>
+            <span class="stat-pill subtle" id="table-summary-badge">ROE 필터 적용 중</span>
+          </div>
         </div>
 
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>순위</th>
-                <th>종목명</th>
-                <th>티커</th>
-                <th>ROE</th>
-                <th>PER</th>
-                <th>외국인비율</th>
-                <th>시가총액</th>
+                <th data-sort-key="rank">순위</th>
+                <th data-sort-key="name">종목명</th>
+                <th data-sort-key="roe">ROE</th>
+                <th data-sort-key="pbr">PBR</th>
+                <th data-sort-key="per">PER</th>
+                <th data-sort-key="market_cap_krw_100m">시가총액</th>
+                <th data-sort-key="impliedDuration">지속기간(N년)</th>
+                <th data-sort-key="fairPrice">적정주가</th>
+                <th data-sort-key="current_price">현재주가</th>
+                <th data-sort-key="gapRate">괴리율</th>
+                <th data-sort-key="kellyRatio">켈리비율</th>
               </tr>
             </thead>
             <tbody id="roe-table-body"></tbody>
@@ -68,29 +61,100 @@
         </div>
       </section>
 
-      <section class="panel">
-        <div class="section-head">
-          <div>
-            <p class="section-kicker">Snapshot</p>
-            <h2>최상위 ROE 종목</h2>
+      <section class="detail-grid">
+        <div class="panel selected-panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">2. Detail Panel</p>
+              <h2>선택 종목 상세 계산</h2>
+            </div>
           </div>
+
+          <div id="selected-stock-summary" class="selected-stock-summary"></div>
         </div>
-        <div id="top-highlight" class="highlight-card"></div>
+
+        <div class="panel calc-panel">
+          <div class="calc-head">
+            <span class="calc-tag">A</span>
+            <div>
+              <h3>현재 ROE 기반 지속기간 추정</h3>
+              <p>할인율 10% 고정, 현재 PBR과 현재 ROE 기준 시장이 반영한 지속기간을 역산합니다.</p>
+            </div>
+          </div>
+          <div id="duration-panel" class="calc-body"></div>
+        </div>
+
+        <div class="panel calc-panel">
+          <div class="calc-head">
+            <span class="calc-tag">B</span>
+            <div>
+              <h3>적정주가 계산기</h3>
+              <p>연도별 EPS 현재가치와 최종 BPS 현재가치를 합산하는 방식으로 계산합니다.</p>
+            </div>
+          </div>
+          <div class="inline-controls">
+            <label>
+              <span>ROE 가정</span>
+              <input id="assumed-roe-input" type="number" min="1" max="100" step="0.5" value="20">
+            </label>
+            <label>
+              <span>영구성장률</span>
+              <input id="growth-rate-input" type="number" min="0" max="10" step="0.5" value="3">
+            </label>
+          </div>
+          <div id="fair-value-panel" class="calc-body"></div>
+        </div>
+
+        <div class="panel calc-panel">
+          <div class="calc-head">
+            <span class="calc-tag">C</span>
+            <div>
+              <h3>켈리 기준 베팅 비율</h3>
+              <p>승률 50%, 패배확률 50%를 기본값으로 두고 적정가 대비 현재가 기준으로 계산합니다.</p>
+            </div>
+          </div>
+          <div id="kelly-panel" class="calc-body"></div>
+        </div>
       </section>
 
-      <section class="panel">
+      <section class="panel control-panel">
         <div class="section-head">
           <div>
-            <p class="section-kicker">Roadmap</p>
-            <h2>다음 구현 순서</h2>
+            <p class="section-kicker">3. Filters & Settings</p>
+            <h2>필터 및 전역 설정</h2>
           </div>
         </div>
-        <ol class="roadmap">
-          <li>정적 대시보드 UI 확정</li>
-          <li>네이버 금융 전 페이지 크롤러 추가</li>
-          <li>ROE 정렬용 JSON 생성</li>
-          <li>대시보드와 데이터 연결</li>
-        </ol>
+
+        <div class="controls-grid">
+          <label class="control-card">
+            <span class="control-label">ROE 기준선</span>
+            <select id="roe-threshold-select">
+              <option value="10">10%</option>
+              <option value="15">15%</option>
+              <option value="20">20%</option>
+            </select>
+          </label>
+
+          <label class="control-card">
+            <span class="control-label">할인율</span>
+            <input id="discount-range" type="range" min="5" max="15" step="0.5" value="10">
+            <strong id="discount-value">10.0%</strong>
+          </label>
+
+          <label class="control-card">
+            <span class="control-label">지속기간 N</span>
+            <input id="duration-range" type="range" min="1" max="15" step="1" value="3">
+            <strong id="duration-value">3년</strong>
+          </label>
+
+          <label class="control-card">
+            <span class="control-label">섹터 필터</span>
+            <select id="sector-select" disabled>
+              <option value="all">전체</option>
+            </select>
+            <small>현재 데이터셋에 섹터 정보가 없어 추후 연결 예정</small>
+          </label>
+        </div>
       </section>
     </main>
   </div>
