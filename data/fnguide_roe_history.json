@@ -1,0 +1,8750 @@
+{
+  "source": "FnGuide SVD_FinanceRatio.asp",
+  "input": "data\\market_sum.json",
+  "min_roe": 10.0,
+  "note": "FnGuide public finance ratio page currently exposes the most recent annual periods plus the latest interim period in the visible annual table. full_years contains completed fiscal years only.",
+  "count": 190,
+  "crawled_at_utc": "2026-06-14T09:24:23.151735+00:00",
+  "stocks": [
+    {
+      "code": "005930",
+      "name": "삼성전자",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000660",
+      "name": "SK하이닉스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000660&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "402340",
+      "name": "SK스퀘어",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A402340&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "329180",
+      "name": "HD현대중공업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A329180&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000270",
+      "name": "기아",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000270&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "207940",
+      "name": "삼성바이오로직스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A207940&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "012450",
+      "name": "한화에어로스페이스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A012450&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "267260",
+      "name": "HD현대일렉트릭",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A267260&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "042660",
+      "name": "한화오션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A042660&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "042700",
+      "name": "한미반도체",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A042700&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "010120",
+      "name": "LS ELECTRIC",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A010120&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "298040",
+      "name": "효성중공업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A298040&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "006800",
+      "name": "미래에셋증권",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A006800&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000810",
+      "name": "삼성화재",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000810&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009540",
+      "name": "HD한국조선해양",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009540&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "015760",
+      "name": "한국전력",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A015760&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "010140",
+      "name": "삼성중공업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A010140&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "064350",
+      "name": "현대로템",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A064350&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "033780",
+      "name": "KT&G",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A033780&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "267250",
+      "name": "HD현대",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A267250&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "307950",
+      "name": "현대오토에버",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A307950&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "138040",
+      "name": "메리츠금융지주",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A138040&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "079550",
+      "name": "LIG디펜스앤에어로스페이스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A079550&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "086280",
+      "name": "현대글로비스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A086280&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "278470",
+      "name": "에이피알",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A278470&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A030200&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "047810",
+      "name": "한국항공우주",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A047810&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "071050",
+      "name": "한국금융지주",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A071050&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005940",
+      "name": "NH투자증권",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005940&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "443060",
+      "name": "HD현대마린솔루션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A443060&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "259960",
+      "name": "크래프톤",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A259960&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "016360",
+      "name": "삼성증권",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A016360&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005830",
+      "name": "DB손해보험",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005830&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "039490",
+      "name": "키움증권",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A039490&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A028050&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "064400",
+      "name": "LG씨엔에스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A064400&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "007660",
+      "name": "이수페타시스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A007660&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003230",
+      "name": "삼양식품",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003230&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000990",
+      "name": "DB하이텍",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000990&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "062040",
+      "name": "산일전기",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A062040&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A326030&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "021240",
+      "name": "코웨이",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A021240&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "052690",
+      "name": "한전기술",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A052690&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "036570",
+      "name": "NC",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A036570&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "271560",
+      "name": "오리온",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A271560&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "128940",
+      "name": "한미약품",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A128940&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "175330",
+      "name": "JB금융지주",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A175330&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "082740",
+      "name": "한화엔진",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A082740&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "002380",
+      "name": "KCC",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A002380&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000500",
+      "name": "가온전선",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000500&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "103590",
+      "name": "일진전기",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A103590&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "111770",
+      "name": "영원무역",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A111770&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "012510",
+      "name": "더존비즈온",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A012510&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "012750",
+      "name": "에스원",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A012750&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "001450",
+      "name": "현대해상",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001450&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "383220",
+      "name": "F&F",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A383220&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "007810",
+      "name": "코리아써키트",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A007810&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "014680",
+      "name": "한솔케미칼",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A014680&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005850",
+      "name": "에스엘",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005850&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "017800",
+      "name": "현대엘리베이터",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A017800&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "004800",
+      "name": "효성",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A004800&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009970",
+      "name": "영원무역홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009970&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "483650",
+      "name": "달바글로벌",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A483650&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "007340",
+      "name": "DN오토모티브",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A007340&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "439260",
+      "name": "대한조선",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A439260&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "030000",
+      "name": "제일기획",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A030000&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "081660",
+      "name": "미스토홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A081660&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "071970",
+      "name": "HD현대마린엔진",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A071970&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "282330",
+      "name": "BGF리테일",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A282330&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005440",
+      "name": "현대지에프홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005440&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "008930",
+      "name": "한미사이언스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A008930&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "161890",
+      "name": "한국콜마",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A161890&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "097230",
+      "name": "HJ중공업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A097230&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "192820",
+      "name": "코스맥스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A192820&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "229640",
+      "name": "LS에코에너지",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A229640&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "462870",
+      "name": "시프트업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A462870&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "281820",
+      "name": "케이씨텍",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A281820&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "023590",
+      "name": "다우기술",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A023590&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "322000",
+      "name": "HD현대에너지솔루션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A322000&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "017960",
+      "name": "한국카본",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A017960&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "192080",
+      "name": "더블유게임즈",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A192080&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "006040",
+      "name": "동원산업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A006040&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "475150",
+      "name": "SK이터닉스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A475150&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "069620",
+      "name": "대웅제약",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A069620&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "073240",
+      "name": "금호타이어",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A073240&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "077970",
+      "name": "STX엔진",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A077970&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "012630",
+      "name": "HDC",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A012630&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003090",
+      "name": "대웅",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003090&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009450",
+      "name": "경동나비엔",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009450&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "192400",
+      "name": "쿠쿠홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A192400&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005690",
+      "name": "파미셀",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005690&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "030190",
+      "name": "NICE평가정보",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A030190&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "075580",
+      "name": "세진중공업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A075580&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "079900",
+      "name": "전진건설로봇",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A079900&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "071320",
+      "name": "지역난방공사",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A071320&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "484870",
+      "name": "엠앤씨솔루션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A484870&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009240",
+      "name": "한샘",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009240&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000370",
+      "name": "한화손해보험",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000370&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "033240",
+      "name": "자화전자",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A033240&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "114090",
+      "name": "GKL",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A114090&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "100840",
+      "name": "SNT에너지",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A100840&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "002960",
+      "name": "한국쉘석유",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A002960&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "317450",
+      "name": "명인제약",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A317450&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "001060",
+      "name": "JW중외제약",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001060&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "249420",
+      "name": "일동제약",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A249420&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "453340",
+      "name": "현대그린푸드",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A453340&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "002840",
+      "name": "미원상사",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A002840&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "039130",
+      "name": "하나투어",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A039130&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009410",
+      "name": "태영건설",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009410&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "284740",
+      "name": "쿠쿠홈시스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A284740&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "268280",
+      "name": "미원에스씨",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A268280&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "381970",
+      "name": "케이카",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A381970&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003280",
+      "name": "흥아해운",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003280&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "015360",
+      "name": "INVENI",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A015360&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "002810",
+      "name": "삼영무역",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A002810&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "012030",
+      "name": "DB",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A012030&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "010820",
+      "name": "퍼스텍",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A010820&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "097520",
+      "name": "엠씨넥스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A097520&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "010690",
+      "name": "화신",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A010690&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "194370",
+      "name": "제이에스코퍼레이션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A194370&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "011760",
+      "name": "현대코퍼레이션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A011760&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "001750",
+      "name": "한양증권",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001750&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003720",
+      "name": "삼영",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003720&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "096760",
+      "name": "JW홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A096760&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "078520",
+      "name": "에이블씨엔씨",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A078520&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005430",
+      "name": "한국공항",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005430&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "037270",
+      "name": "YG PLUS",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A037270&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000540",
+      "name": "흥국화재",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000540&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "244920",
+      "name": "에이플러스에셋",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A244920&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "136490",
+      "name": "선진",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A136490&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "134380",
+      "name": "미원화학",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A134380&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003650",
+      "name": "미창석유",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003650&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "035150",
+      "name": "백산",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A035150&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009470",
+      "name": "삼화전기",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009470&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "033530",
+      "name": "SJG세종",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A033530&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003350",
+      "name": "한국화장품제조",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003350&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "234080",
+      "name": "JW생명과학",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A234080&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "013580",
+      "name": "계룡건설",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A013580&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000300",
+      "name": "DH오토넥스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000300&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "044820",
+      "name": "코스맥스비티아이",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A044820&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "031440",
+      "name": "신세계푸드",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A031440&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "016880",
+      "name": "웅진",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A016880&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "271980",
+      "name": "제일약품",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A271980&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003480",
+      "name": "한진중공업홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003480&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "298000",
+      "name": "효성화학",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A298000&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005960",
+      "name": "동부건설",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005960&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "002990",
+      "name": "금호건설",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A002990&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "094280",
+      "name": "효성ITX",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A094280&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "019180",
+      "name": "티에이치엔",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A019180&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "001360",
+      "name": "삼성제약",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001360&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "016740",
+      "name": "두올",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A016740&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "013520",
+      "name": "화승코퍼레이션",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A013520&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "014580",
+      "name": "태경비케이",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A014580&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "227840",
+      "name": "현대코퍼레이션홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A227840&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "011810",
+      "name": "STX",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A011810&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "023450",
+      "name": "동남합성",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A023450&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "007610",
+      "name": "선도전기",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A007610&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "058850",
+      "name": "KTcs",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A058850&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "036580",
+      "name": "팜스코",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A036580&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "004140",
+      "name": "동방",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A004140&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "058860",
+      "name": "KTis",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A058860&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "017370",
+      "name": "우신시스템",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A017370&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "007980",
+      "name": "TP",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A007980&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "001470",
+      "name": "삼부토건",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001470&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009180",
+      "name": "한솔로지스틱스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009180&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "069730",
+      "name": "DSR제강",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A069730&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "018500",
+      "name": "동원금속",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A018500&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/03",
+        "2023/03",
+        "2024/03",
+        "2025/03",
+        "2025/12"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2025/12",
+          "roe": 3.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2022/03",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/03",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/03",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/03",
+          "roe": 2.0
+        }
+      ],
+      "latest_full_year_roe": 3.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 3.0
+    },
+    {
+      "code": "001560",
+      "name": "제일연마",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001560&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "031820",
+      "name": "아이티센씨티에스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A031820&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "100220",
+      "name": "비상교육",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A100220&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003780",
+      "name": "진양산업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003780&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "013700",
+      "name": "까뮤이앤씨",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A013700&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003010",
+      "name": "혜인",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003010&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009770",
+      "name": "삼정펄프",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009770&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "010770",
+      "name": "평화홀딩스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A010770&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "378850",
+      "name": "화승알앤에이",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A378850&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "004920",
+      "name": "씨아이테크",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A004920&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "001620",
+      "name": "케이비아이동국실업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A001620&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "002410",
+      "name": "범양건영",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A002410&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "090080",
+      "name": "평화산업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A090080&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000910",
+      "name": "유니온",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000910&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "047400",
+      "name": "유니온머티리얼",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A047400&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "009320",
+      "name": "아진전자부품",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A009320&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "000950",
+      "name": "전방",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A000950&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "003080",
+      "name": "SB성보",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A003080&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "012280",
+      "name": "영화금속",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A012280&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "033250",
+      "name": "체시스",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A033250&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/06",
+        "2023/06",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2022/06",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/06",
+          "roe": 4.0
+        },
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.0
+    },
+    {
+      "code": "030720",
+      "name": "동원수산",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A030720&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "005110",
+      "name": "한창",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A005110&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    },
+    {
+      "code": "008500",
+      "name": "일정실업",
+      "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp?pGB=1&gicode=A008500&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701",
+      "periods": [
+        "2022/12",
+        "2023/12",
+        "2024/12",
+        "2025/12",
+        "2026/03"
+      ],
+      "roe_values": [
+        1.0,
+        4.0,
+        2.0,
+        2.0,
+        3.0
+      ],
+      "full_years": [
+        {
+          "period": "2022/12",
+          "roe": 1.0
+        },
+        {
+          "period": "2023/12",
+          "roe": 4.0
+        },
+        {
+          "period": "2024/12",
+          "roe": 2.0
+        },
+        {
+          "period": "2025/12",
+          "roe": 2.0
+        }
+      ],
+      "latest_periods": [
+        {
+          "period": "2026/03",
+          "roe": 3.0
+        }
+      ],
+      "latest_full_year_roe": 2.0,
+      "five_period_average_roe": 2.4,
+      "four_full_year_average_roe": 2.25
+    }
+  ]
+}

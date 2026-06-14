@@ -16,8 +16,8 @@
         <p class="eyebrow">Value Framework Dashboard</p>
         <h1>최재혁 방식 가치평가</h1>
         <p class="intro">
-          ROE와 현재 PBR이 시장에서 몇 년의 지속성을 반영하는지 역산하고,
-          보수적·기준·낙관적 3개 시나리오로 적정가 범위와 켈리 비율 범위를 함께 봅니다.
+          FnGuide 과거 ROE 이력으로 기준 수익성을 추정하고,
+          현재 PBR이 반영한 시장 내재 지속연수를 N으로 사용해 적정가 범위와 켈리 비율 범위를 함께 봅니다.
         </p>
       </div>
       <div class="topbar-meta">
@@ -91,13 +91,13 @@
             <span class="calc-tag">B</span>
             <div>
               <h3>적정가 범위 계산기</h3>
-              <p>기준 가정에서 보수적·기준·낙관적 3개 시나리오를 만들어 적정가 범위를 계산합니다.</p>
+              <p>과거 ROE 이력으로 추정한 수익성과 현재 시장 N을 기준으로 보수적·기준·낙관적 3개 시나리오를 계산합니다.</p>
             </div>
           </div>
           <div class="inline-controls">
             <label>
-              <span>기준 ROE 가정</span>
-              <input id="assumed-roe-input" type="number" min="1" max="100" step="0.5" value="20">
+              <span>추정 ROE 보정치</span>
+              <input id="assumed-roe-input" type="number" min="-10" max="10" step="0.5" value="0">
             </label>
             <label>
               <span>영구성장률</span>
@@ -112,7 +112,7 @@
             <span class="calc-tag">C</span>
             <div>
               <h3>켈리 기준 베팅 비율</h3>
-              <p>승률 50%, 패배확률 50%를 두고 보수적·기준·낙관적 적정가 범위에서 켈리 범위를 계산합니다.</p>
+              <p>승률 50%, 패배확률 50%를 두고 과거 ROE 추정치와 시장 N 기준의 적정가 범위에서 켈리 범위를 계산합니다.</p>
             </div>
           </div>
           <div id="kelly-panel" class="calc-body"></div>
@@ -144,9 +144,9 @@
           </label>
 
           <label class="control-card">
-            <span class="control-label">기준 지속기간 N</span>
-            <input id="duration-range" type="range" min="1" max="15" step="1" value="3">
-            <strong id="duration-value">3년</strong>
+            <span class="control-label">시장 N 보정치</span>
+            <input id="duration-range" type="range" min="-3" max="3" step="1" value="0">
+            <strong id="duration-value">0년</strong>
           </label>
 
           <label class="control-card">

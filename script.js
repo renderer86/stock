@@ -1,13 +1,15 @@
-const DATA_URL = "./data/market_sum_by_roe.json";
+const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
+const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
 const MARKET_IMPLIED_DISCOUNT = 0.1;
 
 const state = {
   rawStocks: [],
+  roeHistoryByCode: new Map(),
   selectedCode: null,
   threshold: 10,
   discountRate: 10,
-  durationYears: 3,
-  assumedRoe: 20,
+  durationOffset: 0,
+  roeAdjustment: 0,
   growthRate: 3,
   sortKey: "roe",
   sortDirection: "desc"
@@ -38,6 +40,20 @@ function formatPercent(value, digits = 1) {
   }
 
   return `${formatNumber(value, digits)}%`;
+}
+
+function formatSignedPercent(value, digits = 1) {
+  if (value === null || value === undefined || Number.isNaN(value)) {
+    return "N/A";
+  }
+
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${formatNumber(value, digits)}%`;
+}
+
+function formatSignedYears(value) {
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value}년`;
 }
 
 function formatPrice(value) {
@@ -98,6 +114,14 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function average(values) {
+  if (!values.length) {
+    return null;
+  }
+
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
 function getBookValuePerShare(stock) {
   if (!stock.current_price || !stock.pbr || stock.pbr <= 0) {
     return null;
@@ -112,7 +136,7 @@ function compoundFairPrice(stock, params) {
     return null;
   }
 
-  const roe = params.assumedRoe / 100;
+  const roe = (params.assumedRoe ?? 0) / 100;
   const discount = params.discountRate / 100;
   const growth = params.growthRate / 100;
   const duration = params.durationYears;
@@ -215,29 +239,60 @@ function isSuspendedLike(stock) {
   return stock.volume === 0 && stock.diff === 0 && stock.diff_rate === 0;
 }
 
-function buildScenarioParams() {
-  const base = {
-    assumedRoe: state.assumedRoe,
-    durationYears: state.durationYears,
-    growthRate: state.growthRate,
-    discountRate: state.discountRate
-  };
+function getRoeHistoryValues(history) {
+  const fullYearValues = (history?.full_years || [])
+    .map((item) => item?.roe)
+    .filter((value) => typeof value === "number" && Number.isFinite(value));
 
-  const conservative = {
-    assumedRoe: clamp(base.assumedRoe - 4, 1, 100),
-    durationYears: clamp(base.durationYears - 1, 1, 30),
-    growthRate: clamp(base.growthRate - 1, 0, 10),
-    discountRate: base.discountRate
-  };
+  if (fullYearValues.length >= 2) {
+    return fullYearValues;
+  }
 
-  const optimistic = {
-    assumedRoe: clamp(base.assumedRoe + 4, 1, 100),
-    durationYears: clamp(base.durationYears + 2, 1, 30),
-    growthRate: clamp(base.growthRate + 1, 0, 10),
-    discountRate: base.discountRate
-  };
+  const allValues = (history?.roe_values || [])
+    .filter((value) => typeof value === "number" && Number.isFinite(value));
 
-  return { conservative, base, optimistic };
+  if (allValues.length) {
+    return allValues;
+  }
+
+  return [];
+}
+
+function inferRoeRange(stock, history) {
+  const values = getRoeHistoryValues(history);
+
+  if (!values.length) {
+    const fallback = typeof stock.roe === "number" ? stock.roe : null;
+    if (fallback === null) {
+      return { conservative: null, base: null, optimistic: null, source: "none" };
+    }
+
+    return {
+      conservative: clamp(fallback - 4, 1, 100),
+      base: clamp(fallback, 1, 100),
+      optimistic: clamp(fallback + 4, 1, 100),
+      source: "current_roe"
+    };
+  }
+
+  return {
+    conservative: clamp(Math.min(...values), 1, 100),
+    base: clamp(average(values), 1, 100),
+    optimistic: clamp(Math.max(...values), 1, 100),
+    source: values.length >= 2 ? "history_avg" : "latest_mix"
+  };
+}
+
+function inferDurationRange(impliedDuration) {
+  const marketYears = clamp(Math.round(impliedDuration ?? 0), 1, 30);
+  const base = clamp(marketYears + state.durationOffset, 1, 30);
+
+  return {
+    conservative: clamp(base - 1, 1, 30),
+    base,
+    optimistic: clamp(base + 2, 1, 30),
+    marketBase: marketYears
+  };
 }
 
 function buildScenarioResult(stock, params) {
@@ -256,29 +311,56 @@ function buildScenarioResult(stock, params) {
 }
 
 function enrichStock(stock) {
-  const scenarios = buildScenarioParams();
-  const conservative = buildScenarioResult(stock, scenarios.conservative);
-  const base = buildScenarioResult(stock, scenarios.base);
-  const optimistic = buildScenarioResult(stock, scenarios.optimistic);
+  const history = state.roeHistoryByCode.get(stock.code) || null;
+  const impliedDuration = estimateImpliedDuration(stock);
+  const roeRange = inferRoeRange(stock, history);
+  const durationRange = inferDurationRange(impliedDuration);
+
+  const conservativeRoe = roeRange.conservative === null ? null : clamp(roeRange.conservative + state.roeAdjustment, 1, 100);
+  const baseRoe = roeRange.base === null ? null : clamp(roeRange.base + state.roeAdjustment, 1, 100);
+  const optimisticRoe = roeRange.optimistic === null ? null : clamp(roeRange.optimistic + state.roeAdjustment, 1, 100);
+
+  const scenarios = {
+    conservative: buildScenarioResult(stock, {
+      assumedRoe: conservativeRoe,
+      durationYears: durationRange.conservative,
+      growthRate: clamp(state.growthRate - 1, 0, 10),
+      discountRate: state.discountRate
+    }),
+    base: buildScenarioResult(stock, {
+      assumedRoe: baseRoe,
+      durationYears: durationRange.base,
+      growthRate: state.growthRate,
+      discountRate: state.discountRate
+    }),
+    optimistic: buildScenarioResult(stock, {
+      assumedRoe: optimisticRoe,
+      durationYears: durationRange.optimistic,
+      growthRate: clamp(state.growthRate + 1, 0, 10),
+      discountRate: state.discountRate
+    })
+  };
 
   return {
     ...stock,
     bps: getBookValuePerShare(stock),
-    impliedDuration: estimateImpliedDuration(stock),
-    scenarios: {
-      conservative,
-      base,
-      optimistic
-    },
-    fairPriceConservative: conservative.fairPrice,
-    fairPriceBase: base.fairPrice,
-    fairPriceOptimistic: optimistic.fairPrice,
-    gapRateConservative: conservative.gapRate,
-    gapRateBase: base.gapRate,
-    gapRateOptimistic: optimistic.gapRate,
-    kellyRatioConservative: conservative.kellyRatio,
-    kellyRatioBase: base.kellyRatio,
-    kellyRatioOptimistic: optimistic.kellyRatio,
+    impliedDuration,
+    marketDurationBase: durationRange.marketBase,
+    recommendedRoeConservative: roeRange.conservative,
+    recommendedRoeBase: roeRange.base,
+    recommendedRoeOptimistic: roeRange.optimistic,
+    roeInferenceSource: roeRange.source,
+    roeHistory: history,
+    scenarios,
+    fairPriceConservative: scenarios.conservative.fairPrice,
+    fairPriceBase: scenarios.base.fairPrice,
+    fairPriceOptimistic: scenarios.optimistic.fairPrice,
+    gapRateConservative: scenarios.conservative.gapRate,
+    gapRateBase: scenarios.base.gapRate,
+    gapRateOptimistic: scenarios.optimistic.gapRate,
+    kellyRatioConservative: scenarios.conservative.kellyRatio,
+    kellyRatioBase: scenarios.base.kellyRatio,
+    kellyRatioOptimistic: scenarios.optimistic.kellyRatio,
     is_suspended: stock.is_suspended ?? isSuspendedLike(stock)
   };
 }
@@ -360,7 +442,7 @@ function renderTable(stocks) {
   const summaryBadge = document.getElementById("table-summary-badge");
 
   countBadge.textContent = `${stocks.length} Stocks`;
-  summaryBadge.textContent = `ROE ${state.threshold}% 이상`;
+  summaryBadge.textContent = `ROE ${state.threshold}% 이상 · 과거 ROE 반영`;
 
   if (!stocks.length) {
     tbody.innerHTML = `
@@ -420,8 +502,8 @@ function renderSelectedSummary(stock) {
       <div class="summary-code">${stock.code}</div>
       <div class="summary-name">${stock.name}</div>
       <div class="summary-caption">
-        현재 시장이 부여한 PBR과 현재 ROE를 기준으로 시장 내재 지속연수를 추정하고,
-        보수적·기준·낙관적 3개 시나리오로 적정가 범위와 켈리 범위를 계산합니다.
+        FnGuide 과거 ROE 이력으로 미래 수익성을 추정하고,
+        현재 시장이 반영한 지속연수를 N으로 사용해 적정가 범위와 켈리 범위를 계산합니다.
       </div>
     </div>
 
@@ -439,16 +521,16 @@ function renderSelectedSummary(stock) {
         <span class="value">${formatMarketCap(stock.market_cap_krw_100m)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">시장 내재 지속연수</span>
+        <span class="label">추정 ROE 범위</span>
+        <span class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">시장 기준 N</span>
         <span class="value">${formatYears(stock.impliedDuration)}</span>
       </div>
       <div class="summary-card">
         <span class="label">적정가 범위</span>
         <span class="value">${formatRange(stock.fairPriceConservative, stock.fairPriceOptimistic, formatPrice)}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">켈리 범위</span>
-        <span class="value">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</span>
       </div>
     </div>
   `;
@@ -473,17 +555,29 @@ function renderDurationPanel(stock) {
         <div class="value">${formatNumber(stock.pbr, 2)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">할인율</div>
-        <div class="value">10.0%</div>
+        <div class="label">시장 기준 N</div>
+        <div class="value">${formatYears(stock.impliedDuration)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">시장 내재 지속연수</div>
-        <div class="value">${formatYears(stock.impliedDuration)}</div>
+        <div class="label">적용 N 보정치</div>
+        <div class="value">${formatSignedYears(state.durationOffset)}</div>
+      </div>
+      <div class="calc-item">
+        <div class="label">보수적·기준·낙관적 N</div>
+        <div class="value">
+          ${stock.scenarios.conservative.params.durationYears}년 /
+          ${stock.scenarios.base.params.durationYears}년 /
+          ${stock.scenarios.optimistic.params.durationYears}년
+        </div>
+      </div>
+      <div class="calc-item">
+        <div class="label">시장 내재 지속연수 계산 할인율</div>
+        <div class="value">10.0%</div>
       </div>
     </div>
     <div class="calc-note">
-      현재 PBR을 만족시키는 N년을 역산합니다. 각 연도의 EPS 현재가치와 마지막 BPS 현재가치를 합산해
-      시장이 이 ROE를 몇 년 유지된다고 보고 있는지 추정합니다.
+      N은 별도 예측치 대신 현재 PBR이 반영한 시장 내재 지속연수를 기준으로 사용합니다.
+      보정 슬라이더는 이 시장 N에 소폭 가감하는 용도입니다.
     </div>
   `;
 }
@@ -518,12 +612,20 @@ function renderFairValuePanel(stock) {
     </div>
     <div class="calc-grid">
       <div class="calc-item">
-        <div class="label">기준 ROE 가정</div>
-        <div class="value">${formatPercent(state.assumedRoe, 1)}</div>
+        <div class="label">FnGuide 추정 ROE 범위</div>
+        <div class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</div>
       </div>
       <div class="calc-item">
-        <div class="label">기준 지속기간 N</div>
-        <div class="value">${state.durationYears}년</div>
+        <div class="label">추정 ROE 보정치</div>
+        <div class="value">${formatSignedPercent(state.roeAdjustment, 1)}</div>
+      </div>
+      <div class="calc-item">
+        <div class="label">시장 기준 N</div>
+        <div class="value">${formatYears(stock.impliedDuration)}</div>
+      </div>
+      <div class="calc-item">
+        <div class="label">시장 N 보정치</div>
+        <div class="value">${formatSignedYears(state.durationOffset)}</div>
       </div>
       <div class="calc-item">
         <div class="label">영구성장률</div>
@@ -533,18 +635,10 @@ function renderFairValuePanel(stock) {
         <div class="label">할인율</div>
         <div class="value">${formatPercent(state.discountRate, 1)}</div>
       </div>
-      <div class="calc-item">
-        <div class="label">추정 BPS</div>
-        <div class="value">${formatPrice(stock.bps)}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">적정가 범위</div>
-        <div class="value">${formatRange(stock.fairPriceConservative, stock.fairPriceOptimistic, formatPrice)}</div>
-      </div>
     </div>
     <div class="calc-note">
-      연도별로 <strong>BPS × ROE = EPS</strong>를 계산하고, 각 연도의 EPS를 할인한 뒤 마지막 BPS 현재가치를 더합니다.
-      시나리오 차이는 기준 가정 대비 ROE, 지속기간, 성장률을 보수적으로 낮추거나 낙관적으로 높여 만든 범위입니다.
+      ROE는 FnGuide 과거 ROE 이력에서 보수적 최저치, 기준 평균치, 낙관적 최고치로 추정합니다.
+      N은 현재 시장 내재 지속연수를 기준으로 사용하고, 적정가 계산은 연도별 <strong>BPS × ROE = EPS</strong>를 할인해 합산합니다.
     </div>
   `;
 }
@@ -601,8 +695,8 @@ function renderKellyPanel(stock) {
       </div>
     </div>
     <div class="calc-note">
-      켈리 공식은 <strong>K = p - (1-p) / b</strong>를 사용합니다. 현재 단계에서는 승률과 패배확률을 각각 50%로 고정하고,
-      보수적·기준·낙관적 적정가에 따라 배당률 b와 켈리 범위를 계산합니다.
+      켈리 공식은 <strong>K = p - (1-p) / b</strong>를 사용합니다.
+      현재 단계에서는 승률과 패배확률을 각각 50%로 두고, 과거 ROE 추정치와 시장 N 기준의 적정가 범위로 켈리 범위를 계산합니다.
     </div>
   `;
 }
@@ -625,20 +719,20 @@ function renderDashboard() {
 
 function syncControlLabels() {
   document.getElementById("discount-value").textContent = `${formatNumber(state.discountRate, 1)}%`;
-  document.getElementById("duration-value").textContent = `${state.durationYears}년`;
+  document.getElementById("duration-value").textContent = formatSignedYears(state.durationOffset);
 }
 
 function bindControls() {
   const thresholdSelect = document.getElementById("roe-threshold-select");
   const discountRange = document.getElementById("discount-range");
   const durationRange = document.getElementById("duration-range");
-  const assumedRoeInput = document.getElementById("assumed-roe-input");
+  const roeAdjustmentInput = document.getElementById("assumed-roe-input");
   const growthRateInput = document.getElementById("growth-rate-input");
 
   thresholdSelect.value = String(state.threshold);
   discountRange.value = String(state.discountRate);
-  durationRange.value = String(state.durationYears);
-  assumedRoeInput.value = String(state.assumedRoe);
+  durationRange.value = String(state.durationOffset);
+  roeAdjustmentInput.value = String(state.roeAdjustment);
   growthRateInput.value = String(state.growthRate);
   syncControlLabels();
 
@@ -654,13 +748,13 @@ function bindControls() {
   });
 
   durationRange.addEventListener("input", (event) => {
-    state.durationYears = Number(event.target.value);
+    state.durationOffset = Number(event.target.value);
     syncControlLabels();
     renderDashboard();
   });
 
-  assumedRoeInput.addEventListener("input", (event) => {
-    state.assumedRoe = Number(event.target.value);
+  roeAdjustmentInput.addEventListener("input", (event) => {
+    state.roeAdjustment = Number(event.target.value);
     renderDashboard();
   });
 
@@ -693,16 +787,42 @@ function renderError(message) {
   document.getElementById("kelly-panel").innerHTML = `<div class="empty-state">${message}</div>`;
 }
 
+function buildRoeHistoryMap(payload) {
+  const map = new Map();
+  const rows = payload?.stocks || [];
+
+  rows.forEach((row) => {
+    if (row?.code) {
+      map.set(row.code, row);
+    }
+  });
+
+  return map;
+}
+
 async function loadStocks() {
   try {
-    const response = await fetch(DATA_URL);
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
+    const marketPromise = fetch(MARKET_DATA_URL).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} for market data`);
+      }
+      return response.json();
+    });
 
-    const payload = await response.json();
-    state.rawStocks = payload.stocks || [];
-    updateLastUpdated(payload.crawled_at_utc);
+    const roePromise = fetch(ROE_HISTORY_URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} for ROE history`);
+        }
+        return response.json();
+      })
+      .catch(() => ({ stocks: [] }));
+
+    const [marketPayload, roePayload] = await Promise.all([marketPromise, roePromise]);
+
+    state.rawStocks = marketPayload.stocks || [];
+    state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
+    updateLastUpdated(marketPayload.crawled_at_utc);
     bindControls();
     bindTableSortHeaders();
     renderDashboard();
