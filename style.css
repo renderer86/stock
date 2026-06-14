@@ -149,6 +149,10 @@ h1 {
   border-radius: 18px;
 }
 
+.compact-table {
+  max-height: 34vh;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -177,7 +181,8 @@ th.is-active {
   color: var(--text);
 }
 
-th[data-sort-key]::after {
+th[data-sort-key]::after,
+th[data-priority-sort-key]::after {
   content: "";
   display: inline-block;
   width: 0;

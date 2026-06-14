@@ -31,6 +31,39 @@
       <section class="panel">
         <div class="section-head">
           <div>
+            <p class="section-kicker">0. Priority Ideas</p>
+            <h2>우선 검토 후보</h2>
+          </div>
+          <div class="section-side">
+            <span class="stat-pill" id="priority-count-badge">Loading</span>
+            <span class="stat-pill subtle">평균 ROE 15% 이상 · PBR 2 이하 · 재무제표 추정 N 우위</span>
+          </div>
+        </div>
+
+        <div class="table-wrap compact-table">
+          <table>
+            <thead>
+              <tr>
+                <th data-priority-sort-key="priorityRank">순위</th>
+                <th data-priority-sort-key="name">종목명</th>
+                <th data-priority-sort-key="recommendedRoeBase">평균 ROE</th>
+                <th data-priority-sort-key="pbr">PBR</th>
+                <th data-priority-sort-key="estimatedNBase">재무제표 추정 N</th>
+                <th data-priority-sort-key="marketImpliedN">시장 추정 N</th>
+                <th data-priority-sort-key="current_price">현재주가</th>
+                <th data-priority-sort-key="fairPriceBase">기준 적정가</th>
+                <th data-priority-sort-key="gapRateBase">괴리율</th>
+                <th data-priority-sort-key="kellyRatioBase">켈리 범위</th>
+              </tr>
+            </thead>
+            <tbody id="priority-candidates-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
             <p class="section-kicker">1. Top Table</p>
             <h2>현재 ROE 기준 가치평가 테이블</h2>
           </div>

@@ -12,7 +12,9 @@ const state = {
   roeAdjustment: 0,
   growthRate: 3,
   sortKey: "roe",
-  sortDirection: "desc"
+  sortDirection: "desc",
+  prioritySortKey: "gapRateBase",
+  prioritySortDirection: "desc"
 };
 
 function formatNumber(value, digits = 2) {
@@ -490,6 +492,23 @@ function getFilteredStocks() {
     .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
 }
 
+function getPriorityCandidates(stocks) {
+  const candidates = stocks
+    .filter((stock) =>
+      typeof stock.recommendedRoeBase === "number" &&
+      stock.recommendedRoeBase >= 15 &&
+      typeof stock.pbr === "number" &&
+      stock.pbr <= 2 &&
+      typeof stock.estimatedNBase === "number" &&
+      typeof stock.marketImpliedN === "number" &&
+      stock.estimatedNBase > stock.marketImpliedN
+    )
+    .sort((a, b) => compareValues(a.gapRateBase, b.gapRateBase, "desc"))
+    .map((stock, index) => ({ ...stock, priorityRank: index + 1 }));
+
+  return candidates.sort((a, b) => compareStocks(a, b, state.prioritySortKey, state.prioritySortDirection));
+}
+
 function metricClass(value) {
   if (value === null || value === undefined || Number.isNaN(value)) {
     return "metric-neutral";
@@ -516,6 +535,76 @@ function updateSortHeaders() {
     th.classList.toggle("is-active", isActive);
     th.classList.toggle("asc", isActive && state.sortDirection === "asc");
     th.classList.toggle("desc", isActive && state.sortDirection === "desc");
+  });
+}
+
+function updatePrioritySortHeaders() {
+  Array.from(document.querySelectorAll("th[data-priority-sort-key]")).forEach((th) => {
+    const isActive = th.dataset.prioritySortKey === state.prioritySortKey;
+    th.classList.toggle("is-active", isActive);
+    th.classList.toggle("asc", isActive && state.prioritySortDirection === "asc");
+    th.classList.toggle("desc", isActive && state.prioritySortDirection === "desc");
+  });
+}
+
+function renderPriorityCandidates(stocks) {
+  const tbody = document.getElementById("priority-candidates-body");
+  const countBadge = document.getElementById("priority-count-badge");
+  const candidates = getPriorityCandidates(stocks);
+
+  countBadge.textContent = `${candidates.length} Ideas`;
+
+  if (!candidates.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="10" class="empty-state">조건에 맞는 우선 검토 후보가 없습니다.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  updatePrioritySortHeaders();
+
+  tbody.innerHTML = candidates.map((stock) => `
+    <tr data-code="${stock.code}">
+      <td><span class="rank-chip">${stock.priorityRank}</span></td>
+      <td>
+        <span class="name-cell">
+          <span>${stock.name}</span>
+          <span class="${getMarketBadgeClass(stock)}">${getMarketLabel(stock)}</span>
+        </span>
+      </td>
+      <td>${formatPercent(stock.recommendedRoeBase, 1)}</td>
+      <td>${formatNumber(stock.pbr, 2)}</td>
+      <td>${formatYears(stock.estimatedNBase)}</td>
+      <td>${formatYears(stock.marketImpliedN)}</td>
+      <td>${formatPrice(stock.current_price)}</td>
+      <td>${formatPrice(stock.fairPriceBase)}</td>
+      <td class="${metricClass(stock.gapRateBase)}">${formatPercent(stock.gapRateBase, 1)}</td>
+      <td class="${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</td>
+    </tr>
+  `).join("");
+
+  Array.from(tbody.querySelectorAll("tr[data-code]")).forEach((row) => {
+    row.addEventListener("click", () => {
+      state.selectedCode = row.dataset.code;
+      renderDashboard();
+    });
+  });
+}
+
+function bindPrioritySortHeaders() {
+  Array.from(document.querySelectorAll("th[data-priority-sort-key]")).forEach((th) => {
+    th.addEventListener("click", () => {
+      const { prioritySortKey } = th.dataset;
+      if (state.prioritySortKey === prioritySortKey) {
+        state.prioritySortDirection = state.prioritySortDirection === "desc" ? "asc" : "desc";
+      } else {
+        state.prioritySortKey = prioritySortKey;
+        state.prioritySortDirection = prioritySortKey === "name" ? "asc" : "desc";
+      }
+      renderDashboard();
+    });
   });
 }
 
@@ -793,6 +882,7 @@ function renderDashboard() {
 
   const selectedStock = stocks.find((stock) => stock.code === state.selectedCode) ?? null;
 
+  renderPriorityCandidates(stocks);
   renderTable(stocks);
   renderSelectedSummary(selectedStock);
   renderDurationPanel(selectedStock);
@@ -863,6 +953,7 @@ function bindTableSortHeaders() {
 }
 
 function renderError(message) {
+  document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="10" class="empty-state">${message}</td></tr>`;
   document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="14" class="empty-state">${message}</td></tr>`;
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
@@ -907,6 +998,7 @@ async function loadStocks() {
     state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
     updateLastUpdated(marketPayload.crawled_at_utc);
     bindControls();
+    bindPrioritySortHeaders();
     bindTableSortHeaders();
     renderDashboard();
   } catch (error) {
