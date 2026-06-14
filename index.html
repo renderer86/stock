@@ -16,8 +16,8 @@
         <p class="eyebrow">Value Framework Dashboard</p>
         <h1>최재혁 방식 가치평가</h1>
         <p class="intro">
-          ROE, PBR, PER, 적정주가, 괴리율, 켈리비율을 한 화면에서 보고
-          클릭한 종목에 대해 지속기간과 적정주가를 바로 계산합니다.
+          ROE와 현재 PBR이 시장에서 몇 년의 지속성을 반영하는지 역산하고,
+          보수적·기준·낙관적 3개 시나리오로 적정가 범위와 켈리 비율 범위를 함께 봅니다.
         </p>
       </div>
       <div class="topbar-meta">
@@ -50,10 +50,12 @@
                 <th data-sort-key="per">PER</th>
                 <th data-sort-key="market_cap_krw_100m">시가총액</th>
                 <th data-sort-key="impliedDuration">현재 ROE 반영 지속연수</th>
-                <th data-sort-key="fairPrice">적정주가</th>
                 <th data-sort-key="current_price">현재주가</th>
-                <th data-sort-key="gapRate">괴리율</th>
-                <th data-sort-key="kellyRatio">켈리비율</th>
+                <th data-sort-key="fairPriceConservative">보수적 적정가</th>
+                <th data-sort-key="fairPriceBase">기준 적정가</th>
+                <th data-sort-key="fairPriceOptimistic">낙관적 적정가</th>
+                <th data-sort-key="gapRateBase">괴리율 범위</th>
+                <th data-sort-key="kellyRatioBase">켈리 범위</th>
               </tr>
             </thead>
             <tbody id="roe-table-body"></tbody>
@@ -78,7 +80,7 @@
             <span class="calc-tag">A</span>
             <div>
               <h3>현재 ROE 기반 지속기간 추정</h3>
-              <p>할인율 10% 고정, 현재 PBR과 현재 ROE 기준 시장이 반영한 지속기간을 역산합니다.</p>
+              <p>할인율 10% 고정, 현재 PBR과 현재 ROE 기준으로 시장이 반영한 지속연수를 역산합니다.</p>
             </div>
           </div>
           <div id="duration-panel" class="calc-body"></div>
@@ -88,13 +90,13 @@
           <div class="calc-head">
             <span class="calc-tag">B</span>
             <div>
-              <h3>적정주가 계산기</h3>
-              <p>연도별 EPS 현재가치와 최종 BPS 현재가치를 합산하는 방식으로 계산합니다.</p>
+              <h3>적정가 범위 계산기</h3>
+              <p>기준 가정에서 보수적·기준·낙관적 3개 시나리오를 만들어 적정가 범위를 계산합니다.</p>
             </div>
           </div>
           <div class="inline-controls">
             <label>
-              <span>ROE 가정</span>
+              <span>기준 ROE 가정</span>
               <input id="assumed-roe-input" type="number" min="1" max="100" step="0.5" value="20">
             </label>
             <label>
@@ -110,7 +112,7 @@
             <span class="calc-tag">C</span>
             <div>
               <h3>켈리 기준 베팅 비율</h3>
-              <p>승률 50%, 패배확률 50%를 기본값으로 두고 적정가 대비 현재가 기준으로 계산합니다.</p>
+              <p>승률 50%, 패배확률 50%를 두고 보수적·기준·낙관적 적정가 범위에서 켈리 범위를 계산합니다.</p>
             </div>
           </div>
           <div id="kelly-panel" class="calc-body"></div>
@@ -121,7 +123,7 @@
         <div class="section-head">
           <div>
             <p class="section-kicker">3. Filters & Settings</p>
-            <h2>필터 및 전역 설정</h2>
+            <h2>필터 및 기본 가정</h2>
           </div>
         </div>
 
@@ -142,7 +144,7 @@
           </label>
 
           <label class="control-card">
-            <span class="control-label">지속기간 N</span>
+            <span class="control-label">기준 지속기간 N</span>
             <input id="duration-range" type="range" min="1" max="15" step="1" value="3">
             <strong id="duration-value">3년</strong>
           </label>
@@ -152,7 +154,7 @@
             <select id="sector-select" disabled>
               <option value="all">전체</option>
             </select>
-            <small>현재 데이터셋에 섹터 정보가 없어 추후 연결 예정</small>
+            <small>현재 데이터셋에는 섹터 정보가 없어 추후 연결 예정</small>
           </label>
         </div>
       </section>

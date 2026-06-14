@@ -40,6 +40,22 @@ function formatPercent(value, digits = 1) {
   return `${formatNumber(value, digits)}%`;
 }
 
+function formatPrice(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) {
+    return "N/A";
+  }
+
+  return `${formatInteger(value)}원`;
+}
+
+function formatYears(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) {
+    return "N/A";
+  }
+
+  return `${formatNumber(value, 1)}년`;
+}
+
 function formatMarketCap(value) {
   if (value === null || value === undefined || Number.isNaN(value)) {
     return "N/A";
@@ -76,6 +92,10 @@ function updateLastUpdated(value) {
     month: "2-digit",
     day: "2-digit"
   });
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 function getBookValuePerShare(stock) {
@@ -151,8 +171,8 @@ function estimateImpliedDuration(stock) {
     return 0;
   }
 
-  let prevYears = 0;
-  let prevValue = marketImpliedPbr(stock.roe, prevYears);
+  let previousYears = 0;
+  let previousValue = marketImpliedPbr(stock.roe, previousYears);
 
   for (let years = 1; years <= maxYears; years += 1) {
     const currentValue = marketImpliedPbr(stock.roe, years);
@@ -161,17 +181,17 @@ function estimateImpliedDuration(stock) {
     }
 
     if (currentValue >= targetPbr) {
-      const range = currentValue - prevValue;
+      const range = currentValue - previousValue;
       if (range <= 0) {
         return years;
       }
 
-      const ratio = (targetPbr - prevValue) / range;
-      return Number((prevYears + ratio).toFixed(1));
+      const ratio = (targetPbr - previousValue) / range;
+      return Number((previousYears + ratio).toFixed(1));
     }
 
-    prevYears = years;
-    prevValue = currentValue;
+    previousYears = years;
+    previousValue = currentValue;
   }
 
   return maxYears;
@@ -195,21 +215,70 @@ function isSuspendedLike(stock) {
   return stock.volume === 0 && stock.diff === 0 && stock.diff_rate === 0;
 }
 
-function enrichStock(stock) {
-  const fairPrice = compoundFairPrice(stock, state);
+function buildScenarioParams() {
+  const base = {
+    assumedRoe: state.assumedRoe,
+    durationYears: state.durationYears,
+    growthRate: state.growthRate,
+    discountRate: state.discountRate
+  };
+
+  const conservative = {
+    assumedRoe: clamp(base.assumedRoe - 4, 1, 100),
+    durationYears: clamp(base.durationYears - 1, 1, 30),
+    growthRate: clamp(base.growthRate - 1, 0, 10),
+    discountRate: base.discountRate
+  };
+
+  const optimistic = {
+    assumedRoe: clamp(base.assumedRoe + 4, 1, 100),
+    durationYears: clamp(base.durationYears + 2, 1, 30),
+    growthRate: clamp(base.growthRate + 1, 0, 10),
+    discountRate: base.discountRate
+  };
+
+  return { conservative, base, optimistic };
+}
+
+function buildScenarioResult(stock, params) {
+  const fairPrice = compoundFairPrice(stock, params);
   const gapRate = fairPrice && stock.current_price
     ? ((fairPrice - stock.current_price) / stock.current_price) * 100
     : null;
   const kellyRatio = estimateKellyRatio(stock, fairPrice);
-  const impliedDuration = estimateImpliedDuration(stock);
+
+  return {
+    params,
+    fairPrice,
+    gapRate,
+    kellyRatio
+  };
+}
+
+function enrichStock(stock) {
+  const scenarios = buildScenarioParams();
+  const conservative = buildScenarioResult(stock, scenarios.conservative);
+  const base = buildScenarioResult(stock, scenarios.base);
+  const optimistic = buildScenarioResult(stock, scenarios.optimistic);
 
   return {
     ...stock,
     bps: getBookValuePerShare(stock),
-    fairPrice,
-    gapRate,
-    kellyRatio,
-    impliedDuration,
+    impliedDuration: estimateImpliedDuration(stock),
+    scenarios: {
+      conservative,
+      base,
+      optimistic
+    },
+    fairPriceConservative: conservative.fairPrice,
+    fairPriceBase: base.fairPrice,
+    fairPriceOptimistic: optimistic.fairPrice,
+    gapRateConservative: conservative.gapRate,
+    gapRateBase: base.gapRate,
+    gapRateOptimistic: optimistic.gapRate,
+    kellyRatioConservative: conservative.kellyRatio,
+    kellyRatioBase: base.kellyRatio,
+    kellyRatioOptimistic: optimistic.kellyRatio,
     is_suspended: stock.is_suspended ?? isSuspendedLike(stock)
   };
 }
@@ -265,6 +334,17 @@ function metricClass(value) {
   return "metric-neutral";
 }
 
+function formatRange(start, end, formatter) {
+  if (start === null && end === null) {
+    return "N/A";
+  }
+  if (start === null || end === null) {
+    return formatter(start ?? end);
+  }
+
+  return `${formatter(start)} ~ ${formatter(end)}`;
+}
+
 function updateSortHeaders() {
   Array.from(document.querySelectorAll("th[data-sort-key]")).forEach((th) => {
     const isActive = th.dataset.sortKey === state.sortKey;
@@ -285,7 +365,7 @@ function renderTable(stocks) {
   if (!stocks.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="11" class="empty-state">조건에 맞는 종목이 없습니다.</td>
+        <td colspan="13" class="empty-state">조건에 맞는 종목이 없습니다.</td>
       </tr>
     `;
     return;
@@ -309,11 +389,13 @@ function renderTable(stocks) {
       <td>${formatNumber(stock.pbr, 2)}</td>
       <td>${formatNumber(stock.per, 2)}</td>
       <td>${formatMarketCap(stock.market_cap_krw_100m)}</td>
-      <td>${stock.impliedDuration === null ? "N/A" : `${formatNumber(stock.impliedDuration, 1)}년`}</td>
-      <td>${stock.fairPrice === null ? "N/A" : `${formatInteger(stock.fairPrice)}원`}</td>
-      <td>${stock.current_price ? `${formatInteger(stock.current_price)}원` : "N/A"}</td>
-      <td class="${metricClass(stock.gapRate)}">${formatPercent(stock.gapRate, 1)}</td>
-      <td class="${metricClass(stock.kellyRatio)}">${stock.kellyRatio === null ? "N/A" : formatPercent(stock.kellyRatio * 100, 1)}</td>
+      <td>${formatYears(stock.impliedDuration)}</td>
+      <td>${formatPrice(stock.current_price)}</td>
+      <td>${formatPrice(stock.fairPriceConservative)}</td>
+      <td>${formatPrice(stock.fairPriceBase)}</td>
+      <td>${formatPrice(stock.fairPriceOptimistic)}</td>
+      <td class="${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateConservative, stock.gapRateOptimistic, (value) => formatPercent(value, 1))}</td>
+      <td class="${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</td>
     </tr>
   `).join("");
 
@@ -338,35 +420,35 @@ function renderSelectedSummary(stock) {
       <div class="summary-code">${stock.code}</div>
       <div class="summary-name">${stock.name}</div>
       <div class="summary-caption">
-        현재 시장이 부여한 PBR과 현재 ROE를 기준으로 시장 내재 지속기간을 추정하고,
-        사용자가 설정한 ROE/할인율/N년 가정으로 적정주가를 다시 계산합니다.
+        현재 시장이 부여한 PBR과 현재 ROE를 기준으로 시장 내재 지속연수를 추정하고,
+        보수적·기준·낙관적 3개 시나리오로 적정가 범위와 켈리 범위를 계산합니다.
       </div>
     </div>
 
     <div class="summary-grid">
       <div class="summary-card">
         <span class="label">현재주가</span>
-        <span class="value">${stock.current_price ? `${formatInteger(stock.current_price)}원` : "N/A"}</span>
+        <span class="value">${formatPrice(stock.current_price)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">BPS 추정</span>
-        <span class="value">${stock.bps ? `${formatInteger(stock.bps)}원` : "N/A"}</span>
+        <span class="label">추정 BPS</span>
+        <span class="value">${formatPrice(stock.bps)}</span>
       </div>
       <div class="summary-card">
         <span class="label">시가총액</span>
         <span class="value">${formatMarketCap(stock.market_cap_krw_100m)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">ROE</span>
-        <span class="value">${formatPercent(stock.roe, 2)}</span>
+        <span class="label">시장 내재 지속연수</span>
+        <span class="value">${formatYears(stock.impliedDuration)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">PBR</span>
-        <span class="value">${formatNumber(stock.pbr, 2)}</span>
+        <span class="label">적정가 범위</span>
+        <span class="value">${formatRange(stock.fairPriceConservative, stock.fairPriceOptimistic, formatPrice)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">PER</span>
-        <span class="value">${formatNumber(stock.per, 2)}</span>
+        <span class="label">켈리 범위</span>
+        <span class="value">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</span>
       </div>
     </div>
   `;
@@ -395,12 +477,12 @@ function renderDurationPanel(stock) {
         <div class="value">10.0%</div>
       </div>
       <div class="calc-item">
-        <div class="label">시장 내재 지속기간</div>
-        <div class="value">${stock.impliedDuration === null ? "N/A" : `${formatNumber(stock.impliedDuration, 1)}년`}</div>
+        <div class="label">시장 내재 지속연수</div>
+        <div class="value">${formatYears(stock.impliedDuration)}</div>
       </div>
     </div>
     <div class="calc-note">
-      현재 PBR이 동일해지도록 연도별 EPS 현재가치 합과 최종 BPS 현재가치를 역산해,
+      현재 PBR을 만족시키는 N년을 역산합니다. 각 연도의 EPS 현재가치와 마지막 BPS 현재가치를 합산해
       시장이 이 ROE를 몇 년 유지된다고 보고 있는지 추정합니다.
     </div>
   `;
@@ -414,14 +496,33 @@ function renderFairValuePanel(stock) {
     return;
   }
 
+  const scenarios = [
+    ["보수적", stock.scenarios.conservative],
+    ["기준", stock.scenarios.base],
+    ["낙관적", stock.scenarios.optimistic]
+  ];
+
   container.innerHTML = `
+    <div class="scenario-grid">
+      ${scenarios.map(([label, scenario]) => `
+        <div class="calc-item">
+          <div class="label">${label} 시나리오</div>
+          <div class="value">${formatPrice(scenario.fairPrice)}</div>
+          <div class="table-subtext">
+            ROE ${formatPercent(scenario.params.assumedRoe, 1)} ·
+            N ${scenario.params.durationYears}년 ·
+            g ${formatPercent(scenario.params.growthRate, 1)}
+          </div>
+        </div>
+      `).join("")}
+    </div>
     <div class="calc-grid">
       <div class="calc-item">
-        <div class="label">ROE 가정</div>
+        <div class="label">기준 ROE 가정</div>
         <div class="value">${formatPercent(state.assumedRoe, 1)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">지속기간</div>
+        <div class="label">기준 지속기간 N</div>
         <div class="value">${state.durationYears}년</div>
       </div>
       <div class="calc-item">
@@ -434,16 +535,16 @@ function renderFairValuePanel(stock) {
       </div>
       <div class="calc-item">
         <div class="label">추정 BPS</div>
-        <div class="value">${stock.bps ? `${formatInteger(stock.bps)}원` : "N/A"}</div>
+        <div class="value">${formatPrice(stock.bps)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">적정주가</div>
-        <div class="value">${stock.fairPrice ? `${formatInteger(stock.fairPrice)}원` : "N/A"}</div>
+        <div class="label">적정가 범위</div>
+        <div class="value">${formatRange(stock.fairPriceConservative, stock.fairPriceOptimistic, formatPrice)}</div>
       </div>
     </div>
     <div class="calc-note">
-      연도별로 <strong>BPS × ROE = EPS</strong>를 계산하고, 각 연도의 EPS를 할인한 뒤
-      마지막 BPS 현재가치를 더하는 방식으로 적정주가를 계산합니다.
+      연도별로 <strong>BPS × ROE = EPS</strong>를 계산하고, 각 연도의 EPS를 할인한 뒤 마지막 BPS 현재가치를 더합니다.
+      시나리오 차이는 기준 가정 대비 ROE, 지속기간, 성장률을 보수적으로 낮추거나 낙관적으로 높여 만든 범위입니다.
     </div>
   `;
 }
@@ -456,11 +557,31 @@ function renderKellyPanel(stock) {
     return;
   }
 
-  const payoutMultiple = stock.fairPrice && stock.current_price
-    ? stock.fairPrice / stock.current_price
-    : null;
+  const scenarios = [
+    ["보수적", stock.scenarios.conservative],
+    ["기준", stock.scenarios.base],
+    ["낙관적", stock.scenarios.optimistic]
+  ];
 
   container.innerHTML = `
+    <div class="scenario-grid">
+      ${scenarios.map(([label, scenario]) => {
+        const payoutMultiple = scenario.fairPrice && stock.current_price
+          ? scenario.fairPrice / stock.current_price
+          : null;
+
+        return `
+          <div class="calc-item">
+            <div class="label">${label} 켈리</div>
+            <div class="value ${metricClass(scenario.kellyRatio)}">${scenario.kellyRatio === null ? "N/A" : formatPercent(scenario.kellyRatio * 100, 1)}</div>
+            <div class="table-subtext">
+              b ${payoutMultiple === null ? "N/A" : formatNumber(payoutMultiple, 2)} ·
+              괴리율 ${formatPercent(scenario.gapRate, 1)}
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
     <div class="calc-grid">
       <div class="calc-item">
         <div class="label">승률 p</div>
@@ -471,25 +592,17 @@ function renderKellyPanel(stock) {
         <div class="value">50.0%</div>
       </div>
       <div class="calc-item">
-        <div class="label">배당률 b</div>
-        <div class="value">${payoutMultiple === null ? "N/A" : formatNumber(payoutMultiple, 2)}</div>
+        <div class="label">괴리율 범위</div>
+        <div class="value ${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateConservative, stock.gapRateOptimistic, (value) => formatPercent(value, 1))}</div>
       </div>
       <div class="calc-item">
-        <div class="label">켈리비율</div>
-        <div class="value ${metricClass(stock.kellyRatio)}">${stock.kellyRatio === null ? "N/A" : formatPercent(stock.kellyRatio * 100, 1)}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">현재가 대비 괴리율</div>
-        <div class="value ${metricClass(stock.gapRate)}">${formatPercent(stock.gapRate, 1)}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">기준식</div>
-        <div class="value">K = p - (1-p) / b</div>
+        <div class="label">켈리 범위</div>
+        <div class="value ${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</div>
       </div>
     </div>
     <div class="calc-note">
-      현재 단계에서는 승률과 패배확률을 각각 50%로 고정하고,
-      배당률 b는 적정가 ÷ 현재가로 단순화해 계산합니다.
+      켈리 공식은 <strong>K = p - (1-p) / b</strong>를 사용합니다. 현재 단계에서는 승률과 패배확률을 각각 50%로 고정하고,
+      보수적·기준·낙관적 적정가에 따라 배당률 b와 켈리 범위를 계산합니다.
     </div>
   `;
 }
@@ -573,7 +686,7 @@ function bindTableSortHeaders() {
 }
 
 function renderError(message) {
-  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="11" class="empty-state">${message}</td></tr>`;
+  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="13" class="empty-state">${message}</td></tr>`;
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("fair-value-panel").innerHTML = `<div class="empty-state">${message}</div>`;

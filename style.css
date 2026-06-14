@@ -404,8 +404,21 @@ tbody tr.is-suspended.is-selected {
   gap: 10px;
 }
 
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .calc-item {
   padding: 14px;
+}
+
+.table-subtext {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .calc-note {
@@ -501,6 +514,7 @@ input[type="range"] {
   .detail-grid,
   .summary-grid,
   .controls-grid,
+  .scenario-grid,
   .inline-controls,
   .calc-grid {
     grid-template-columns: 1fr;
