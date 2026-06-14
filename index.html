@@ -16,8 +16,9 @@
         <p class="eyebrow">Value Framework Dashboard</p>
         <h1>최재혁 방식 가치평가</h1>
         <p class="intro">
-          FnGuide 과거 ROE 이력으로 기준 수익성을 추정하고,
-          현재 PBR이 반영한 시장 내재 지속연수를 N으로 사용해 적정가 범위와 켈리 비율 범위를 함께 봅니다.
+          기업분석의 귀결점은 ROE와 N이라고 봅니다. ROE 추정은 과거 ROE를 기준으로 하고, ROE 지속기간 N은 높은 ROE의 지속성,
+          마진 안정성, 성장 안정성, 재무 체력의 함수로 1차 추정합니다. 할인율은 기본 10%를 사용하며, 낮은 PBR에서 높은 ROE가
+          더 오래 지속될 수 있는 기업을 찾는 관점으로 가치평가를 정리합니다.
         </p>
       </div>
       <div class="topbar-meta">
@@ -49,7 +50,8 @@
                 <th data-sort-key="pbr">PBR</th>
                 <th data-sort-key="per">PER</th>
                 <th data-sort-key="market_cap_krw_100m">시가총액</th>
-                <th data-sort-key="impliedDuration">현재 ROE 반영 지속연수</th>
+                <th data-sort-key="estimatedNBase">재무제표 추정 N</th>
+                <th data-sort-key="marketImpliedN">시장 추정 N</th>
                 <th data-sort-key="current_price">현재주가</th>
                 <th data-sort-key="fairPriceConservative">보수적 적정가</th>
                 <th data-sort-key="fairPriceBase">기준 적정가</th>
@@ -79,8 +81,8 @@
           <div class="calc-head">
             <span class="calc-tag">A</span>
             <div>
-              <h3>현재 ROE 기반 지속기간 추정</h3>
-              <p>할인율 10% 고정, 현재 PBR과 현재 ROE 기준으로 시장이 반영한 지속연수를 역산합니다.</p>
+              <h3>N 추정 비교</h3>
+              <p>현재 PBR과 현재 ROE로 역산한 시장 N과, 재무제표 점수 기반으로 추정한 N을 함께 비교합니다.</p>
             </div>
           </div>
           <div id="duration-panel" class="calc-body"></div>
@@ -91,7 +93,7 @@
             <span class="calc-tag">B</span>
             <div>
               <h3>적정가 범위 계산기</h3>
-              <p>과거 ROE 이력으로 추정한 수익성과 현재 시장 N을 기준으로 보수적·기준·낙관적 3개 시나리오를 계산합니다.</p>
+              <p>과거 ROE 이력과 재무제표 기반 N 추정치를 바탕으로 보수적·기준·낙관적 3개 시나리오를 계산합니다.</p>
             </div>
           </div>
           <div class="inline-controls">
@@ -112,7 +114,7 @@
             <span class="calc-tag">C</span>
             <div>
               <h3>켈리 기준 베팅 비율</h3>
-              <p>승률 50%, 패배확률 50%를 두고 과거 ROE 추정치와 시장 N 기준의 적정가 범위에서 켈리 범위를 계산합니다.</p>
+              <p>승률 50%, 패배확률 50%를 두고 과거 ROE 추정치와 재무제표 기반 N 기준의 적정가 범위에서 켈리 범위를 계산합니다.</p>
             </div>
           </div>
           <div id="kelly-panel" class="calc-body"></div>
@@ -144,7 +146,7 @@
           </label>
 
           <label class="control-card">
-            <span class="control-label">시장 N 보정치</span>
+            <span class="control-label">추정 N 보정치</span>
             <input id="duration-range" type="range" min="-3" max="3" step="1" value="0">
             <strong id="duration-value">0년</strong>
           </label>

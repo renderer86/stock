@@ -82,6 +82,111 @@ def extract_relevant_lines(soup: BeautifulSoup) -> list[str]:
     return [clean_text(text) for text in soup.stripped_strings if clean_text(text)]
 
 
+def extract_periods_from_lines(section_lines: list[str]) -> list[str]:
+    periods: list[str] = []
+    for line in section_lines[:12]:
+        for period in PERIOD_SCAN_PATTERN.findall(line):
+            if period not in periods:
+                periods.append(period)
+
+    if len(periods) >= 4:
+        return periods[:5]
+
+    raise RuntimeError("Failed to parse period headers from annual section.")
+
+
+def extract_roe_values_from_lines(section_lines: list[str], period_count: int) -> list[float | None]:
+    for index, line in enumerate(section_lines):
+        if "ROE" not in line:
+            continue
+
+        for candidate in section_lines[index + 1 : index + 12]:
+            number_texts = NUMBER_PATTERN.findall(candidate.replace(",", ""))
+            if len(number_texts) < period_count:
+                continue
+
+            values = [float(number_text) for number_text in number_texts[:period_count]]
+            if len(values) == period_count:
+                return values
+
+    raise RuntimeError("Failed to parse ROE row from annual section.")
+
+
+def extract_table_rows(table: BeautifulSoup) -> list[list[str]]:
+    rows: list[list[str]] = []
+    for tr in table.select("tr"):
+        cells = [clean_text(cell.get_text(" ", strip=True)) for cell in tr.find_all(["th", "td"])]
+        if cells:
+            rows.append(cells)
+    return rows
+
+
+def find_annual_ratio_table(soup: BeautifulSoup) -> list[list[str]] | None:
+    candidates: list[tuple[int, int, list[list[str]]]] = []
+
+    for table in soup.select("table"):
+        rows = extract_table_rows(table)
+        if not rows:
+            continue
+
+        flattened = " ".join(" ".join(row) for row in rows)
+        if "ROE" not in flattened:
+            continue
+        if "IFRS" not in flattened:
+            continue
+
+        periods: list[str] = []
+        for row in rows[:8]:
+            for cell in row:
+                for period in PERIOD_SCAN_PATTERN.findall(cell):
+                    if period not in periods:
+                        periods.append(period)
+
+        if len(periods) < 4:
+            continue
+
+        annual_count = sum(period.endswith("/12") for period in periods)
+        has_roe_row = any(any("ROE" in cell for cell in row[:3]) for row in rows)
+        if not has_roe_row:
+            continue
+
+        candidates.append((annual_count, len(periods), rows))
+
+    if not candidates:
+        return None
+
+    candidates.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    return candidates[0][2]
+
+
+def extract_periods_and_roe_from_table(rows: list[list[str]]) -> tuple[list[str], list[float | None]]:
+    periods: list[str] = []
+    for row in rows[:8]:
+        for cell in row:
+            for period in PERIOD_SCAN_PATTERN.findall(cell):
+                if period not in periods:
+                    periods.append(period)
+
+    periods = periods[:5]
+    if len(periods) < 4:
+        raise RuntimeError("Failed to parse period headers from annual ratio table.")
+
+    period_count = len(periods)
+
+    for row in rows:
+        label = " ".join(row[:3])
+        if "ROE" not in label:
+            continue
+
+        trailing = row[-period_count:]
+        values = [parse_float(cell) for cell in trailing]
+        numeric_count = sum(value is not None for value in values)
+        if numeric_count >= max(3, period_count - 1):
+            return periods, values
+
+    return periods, [None] * period_count
+
+
 def extract_annual_section(lines: list[str]) -> list[str]:
     start_index = -1
     end_index = len(lines)
@@ -101,36 +206,6 @@ def extract_annual_section(lines: list[str]) -> list[str]:
             break
 
     return lines[start_index:end_index]
-
-
-def extract_periods(section_lines: list[str]) -> list[str]:
-    periods: list[str] = []
-    for line in section_lines[:12]:
-        for period in PERIOD_SCAN_PATTERN.findall(line):
-            if period not in periods:
-                periods.append(period)
-
-    if len(periods) >= 4:
-        return periods[:5]
-
-    raise RuntimeError("Failed to parse period headers from annual section.")
-
-
-def extract_roe_values(section_lines: list[str], period_count: int) -> list[float | None]:
-    for index, line in enumerate(section_lines):
-        if "ROE" not in line:
-            continue
-
-        for candidate in section_lines[index + 1 : index + 12]:
-            number_texts = NUMBER_PATTERN.findall(candidate.replace(",", ""))
-            if len(number_texts) < period_count:
-                continue
-
-            values = [float(number_text) for number_text in number_texts[:period_count]]
-            if len(values) == period_count:
-                return values
-
-    raise RuntimeError("Failed to parse ROE row from annual section.")
 
 
 def split_histories(periods: list[str], values: list[float | None]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
@@ -157,9 +232,16 @@ def fetch_roe_history(session: requests.Session, code: str) -> dict[str, Any]:
     soup = BeautifulSoup(response.text, "html.parser")
     lines = extract_relevant_lines(soup)
     try:
-        annual_section = extract_annual_section(lines)
-        periods = extract_periods(annual_section)
-        roe_values = extract_roe_values(annual_section, len(periods))
+        annual_table_rows = find_annual_ratio_table(soup)
+        if annual_table_rows is not None:
+            periods, roe_values = extract_periods_and_roe_from_table(annual_table_rows)
+        else:
+            annual_section = extract_annual_section(lines)
+            periods = extract_periods_from_lines(annual_section)
+            try:
+                roe_values = extract_roe_values_from_lines(annual_section, len(periods))
+            except RuntimeError:
+                roe_values = [None] * len(periods)
     except Exception:
         write_debug_files(code, response.text, lines)
         raise

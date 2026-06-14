@@ -122,6 +122,16 @@ function average(values) {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
+function standardDeviation(values) {
+  if (values.length < 2) {
+    return 0;
+  }
+
+  const mean = average(values);
+  const variance = values.reduce((sum, value) => sum + ((value - mean) ** 2), 0) / values.length;
+  return Math.sqrt(variance);
+}
+
 function getBookValuePerShare(stock) {
   if (!stock.current_price || !stock.pbr || stock.pbr <= 0) {
     return null;
@@ -183,7 +193,7 @@ function marketImpliedPbr(roePercent, years, discountRate = MARKET_IMPLIED_DISCO
   return price;
 }
 
-function estimateImpliedDuration(stock) {
+function estimateMarketImpliedDuration(stock) {
   if (!stock.roe || !stock.pbr || stock.roe <= 0 || stock.pbr <= 0) {
     return null;
   }
@@ -243,10 +253,7 @@ function getMarketLabel(stock) {
   if (stock.market_label) {
     return stock.market_label;
   }
-  if (stock.market === "KOSDAQ") {
-    return "코스닥";
-  }
-  return "코스피";
+  return stock.market === "KOSDAQ" ? "코스닥" : "코스피";
 }
 
 function getMarketBadgeClass(stock) {
@@ -265,11 +272,7 @@ function getRoeHistoryValues(history) {
   const allValues = (history?.roe_values || [])
     .filter((value) => typeof value === "number" && Number.isFinite(value));
 
-  if (allValues.length) {
-    return allValues;
-  }
-
-  return [];
+  return allValues;
 }
 
 function inferRoeRange(stock, history) {
@@ -278,14 +281,15 @@ function inferRoeRange(stock, history) {
   if (!values.length) {
     const fallback = typeof stock.roe === "number" ? stock.roe : null;
     if (fallback === null) {
-      return { conservative: null, base: null, optimistic: null, source: "none" };
+      return { conservative: null, base: null, optimistic: null, source: "none", values: [] };
     }
 
     return {
       conservative: clamp(fallback - 4, 1, 100),
       base: clamp(fallback, 1, 100),
       optimistic: clamp(fallback + 4, 1, 100),
-      source: "current_roe"
+      source: "current_roe",
+      values: [fallback]
     };
   }
 
@@ -293,19 +297,89 @@ function inferRoeRange(stock, history) {
     conservative: clamp(Math.min(...values), 1, 100),
     base: clamp(average(values), 1, 100),
     optimistic: clamp(Math.max(...values), 1, 100),
-    source: values.length >= 2 ? "history_avg" : "latest_mix"
+    source: values.length >= 2 ? "history_avg" : "latest_mix",
+    values
   };
 }
 
-function inferDurationRange(impliedDuration) {
-  const marketYears = clamp(Math.round(impliedDuration ?? 0), 1, 30);
-  const base = clamp(marketYears + state.durationOffset, 1, 30);
+function estimateFinancialN(stock, historyValues) {
+  const values = historyValues.filter((value) => typeof value === "number" && Number.isFinite(value));
+  const avgRoe = average(values);
+  const roeStd = standardDeviation(values);
+  const highRoeYears = values.filter((value) => value >= 15).length;
+  const underTenYears = values.filter((value) => value < 10).length;
+
+  let score = 0;
+
+  if (avgRoe !== null) {
+    if (avgRoe >= 20) score += 2;
+    else if (avgRoe >= 15) score += 1;
+  }
+
+  if (roeStd <= 3) score += 2;
+  else if (roeStd <= 6) score += 1;
+
+  if (values.length && highRoeYears === values.length) score += 2;
+  else if (highRoeYears >= Math.max(2, values.length - 1)) score += 1;
+
+  if (underTenYears === 0 && values.length >= 3) score += 1;
+
+  if (typeof stock.sales_increasing_rate === "number") {
+    if (stock.sales_increasing_rate >= 10) score += 1;
+    else if (stock.sales_increasing_rate >= 0) score += 0.5;
+  }
+
+  if (typeof stock.operating_profit_increasing_rate === "number") {
+    if (stock.operating_profit_increasing_rate >= 10) score += 1;
+    else if (stock.operating_profit_increasing_rate >= 0) score += 0.5;
+  }
+
+  if (typeof stock.roa === "number") {
+    if (stock.roa >= 8) score += 1;
+    else if (stock.roa >= 5) score += 0.5;
+  }
+
+  if (typeof stock.reserve_ratio === "number") {
+    if (stock.reserve_ratio >= 1000) score += 1;
+    else if (stock.reserve_ratio >= 300) score += 0.5;
+  }
+
+  const debtRatio = (
+    typeof stock.debt_total_krw_100m === "number" &&
+    typeof stock.property_total_krw_100m === "number" &&
+    stock.property_total_krw_100m > 0
+  )
+    ? stock.debt_total_krw_100m / stock.property_total_krw_100m
+    : null;
+
+  if (debtRatio !== null) {
+    if (debtRatio <= 0.5) score += 1;
+    else if (debtRatio <= 1) score += 0.5;
+  }
+
+  let estimatedN = 2;
+  if (score >= 9) estimatedN = 10;
+  else if (score >= 7) estimatedN = 8;
+  else if (score >= 5) estimatedN = 6;
+  else if (score >= 3) estimatedN = 4;
+
+  return {
+    score: Number(score.toFixed(1)),
+    estimatedN,
+    avgRoe,
+    roeStd,
+    highRoeYears,
+    debtRatio
+  };
+}
+
+function inferDurationRange(estimatedN) {
+  const base = clamp(estimatedN + state.durationOffset, 1, 30);
 
   return {
     conservative: clamp(base - 1, 1, 30),
     base,
-    optimistic: clamp(base + 2, 1, 30),
-    marketBase: marketYears
+    optimistic: clamp(base + 2, 1, 30)
   };
 }
 
@@ -326,9 +400,10 @@ function buildScenarioResult(stock, params) {
 
 function enrichStock(stock) {
   const history = state.roeHistoryByCode.get(stock.code) || null;
-  const impliedDuration = estimateImpliedDuration(stock);
+  const marketImpliedN = estimateMarketImpliedDuration(stock);
   const roeRange = inferRoeRange(stock, history);
-  const durationRange = inferDurationRange(impliedDuration);
+  const nModel = estimateFinancialN(stock, roeRange.values);
+  const durationRange = inferDurationRange(nModel.estimatedN);
 
   const conservativeRoe = roeRange.conservative === null ? null : clamp(roeRange.conservative + state.roeAdjustment, 1, 100);
   const baseRoe = roeRange.base === null ? null : clamp(roeRange.base + state.roeAdjustment, 1, 100);
@@ -358,13 +433,18 @@ function enrichStock(stock) {
   return {
     ...stock,
     bps: getBookValuePerShare(stock),
-    impliedDuration,
-    marketDurationBase: durationRange.marketBase,
+    marketImpliedN,
+    estimatedNBase: durationRange.base,
+    estimatedNScore: nModel.score,
+    estimatedNRaw: nModel.estimatedN,
+    estimatedNConservative: durationRange.conservative,
+    estimatedNOptimistic: durationRange.optimistic,
     recommendedRoeConservative: roeRange.conservative,
     recommendedRoeBase: roeRange.base,
     recommendedRoeOptimistic: roeRange.optimistic,
     roeInferenceSource: roeRange.source,
     roeHistory: history,
+    nModel,
     scenarios,
     fairPriceConservative: scenarios.conservative.fairPrice,
     fairPriceBase: scenarios.base.fairPrice,
@@ -383,15 +463,9 @@ function compareValues(aValue, bValue, direction) {
   const aMissing = aValue === null || aValue === undefined || Number.isNaN(aValue);
   const bMissing = bValue === null || bValue === undefined || Number.isNaN(bValue);
 
-  if (aMissing && bMissing) {
-    return 0;
-  }
-  if (aMissing) {
-    return 1;
-  }
-  if (bMissing) {
-    return -1;
-  }
+  if (aMissing && bMissing) return 0;
+  if (aMissing) return 1;
+  if (bMissing) return -1;
 
   if (typeof aValue === "string" || typeof bValue === "string") {
     const result = String(aValue).localeCompare(String(bValue), "ko");
@@ -406,7 +480,6 @@ function compareStocks(a, b, sortKey, direction) {
   if (primary !== 0) {
     return primary;
   }
-
   return compareValues(a.rank, b.rank, "asc");
 }
 
@@ -421,12 +494,8 @@ function metricClass(value) {
   if (value === null || value === undefined || Number.isNaN(value)) {
     return "metric-neutral";
   }
-  if (value > 0) {
-    return "metric-positive";
-  }
-  if (value < 0) {
-    return "metric-negative";
-  }
+  if (value > 0) return "metric-positive";
+  if (value < 0) return "metric-negative";
   return "metric-neutral";
 }
 
@@ -456,12 +525,12 @@ function renderTable(stocks) {
   const summaryBadge = document.getElementById("table-summary-badge");
 
   countBadge.textContent = `${stocks.length} Stocks`;
-  summaryBadge.textContent = `ROE ${state.threshold}% 이상 · 과거 ROE 반영`;
+  summaryBadge.textContent = `ROE ${state.threshold}% 이상 · 재무제표 N 반영`;
 
   if (!stocks.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="13" class="empty-state">조건에 맞는 종목이 없습니다.</td>
+        <td colspan="14" class="empty-state">조건에 맞는 종목이 없습니다.</td>
       </tr>
     `;
     return;
@@ -486,7 +555,8 @@ function renderTable(stocks) {
       <td>${formatNumber(stock.pbr, 2)}</td>
       <td>${formatNumber(stock.per, 2)}</td>
       <td>${formatMarketCap(stock.market_cap_krw_100m)}</td>
-      <td>${formatYears(stock.impliedDuration)}</td>
+      <td>${formatYears(stock.estimatedNBase)}</td>
+      <td>${formatYears(stock.marketImpliedN)}</td>
       <td>${formatPrice(stock.current_price)}</td>
       <td>${formatPrice(stock.fairPriceConservative)}</td>
       <td>${formatPrice(stock.fairPriceBase)}</td>
@@ -517,8 +587,7 @@ function renderSelectedSummary(stock) {
       <div class="summary-code">${stock.code}</div>
       <div class="summary-name">${stock.name}</div>
       <div class="summary-caption">
-        FnGuide 과거 ROE 이력으로 미래 수익성을 추정하고,
-        현재 시장이 반영한 지속연수를 N으로 사용해 적정가 범위와 켈리 범위를 계산합니다.
+        ROE는 FnGuide 과거 이력으로 추정하고, N은 높은 ROE의 지속성, 마진 안정성, 성장 안정성, 재무 체력을 점수화해 1차 추정합니다.
       </div>
     </div>
 
@@ -528,24 +597,24 @@ function renderSelectedSummary(stock) {
         <span class="value">${formatPrice(stock.current_price)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">추정 BPS</span>
-        <span class="value">${formatPrice(stock.bps)}</span>
-      </div>
-      <div class="summary-card">
         <span class="label">시가총액</span>
         <span class="value">${formatMarketCap(stock.market_cap_krw_100m)}</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">추정 BPS</span>
+        <span class="value">${formatPrice(stock.bps)}</span>
       </div>
       <div class="summary-card">
         <span class="label">추정 ROE 범위</span>
         <span class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</span>
       </div>
       <div class="summary-card">
-        <span class="label">시장 기준 N</span>
-        <span class="value">${formatYears(stock.impliedDuration)}</span>
+        <span class="label">재무제표 추정 N</span>
+        <span class="value">${formatYears(stock.estimatedNBase)}</span>
       </div>
       <div class="summary-card">
-        <span class="label">적정가 범위</span>
-        <span class="value">${formatRange(stock.fairPriceConservative, stock.fairPriceOptimistic, formatPrice)}</span>
+        <span class="label">시장 내재 N</span>
+        <span class="value">${formatYears(stock.marketImpliedN)}</span>
       </div>
     </div>
   `;
@@ -562,37 +631,36 @@ function renderDurationPanel(stock) {
   container.innerHTML = `
     <div class="calc-grid">
       <div class="calc-item">
-        <div class="label">현재 ROE</div>
-        <div class="value">${formatPercent(stock.roe, 2)}</div>
+        <div class="label">재무제표 추정 N</div>
+        <div class="value">${formatYears(stock.estimatedNBase)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">현재 PBR</div>
-        <div class="value">${formatNumber(stock.pbr, 2)}</div>
+        <div class="label">시장 내재 N</div>
+        <div class="value">${formatYears(stock.marketImpliedN)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">시장 기준 N</div>
-        <div class="value">${formatYears(stock.impliedDuration)}</div>
+        <div class="label">N 추정 점수</div>
+        <div class="value">${formatNumber(stock.estimatedNScore, 1)}점</div>
       </div>
       <div class="calc-item">
-        <div class="label">적용 N 보정치</div>
+        <div class="label">추정 N 보정치</div>
         <div class="value">${formatSignedYears(state.durationOffset)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">보수적·기준·낙관적 N</div>
+        <div class="label">ROE 평균 / 변동성</div>
         <div class="value">
-          ${stock.scenarios.conservative.params.durationYears}년 /
-          ${stock.scenarios.base.params.durationYears}년 /
-          ${stock.scenarios.optimistic.params.durationYears}년
+          ${formatPercent(stock.nModel.avgRoe, 1)} /
+          ${formatNumber(stock.nModel.roeStd, 1)}
         </div>
       </div>
       <div class="calc-item">
-        <div class="label">시장 내재 지속연수 계산 할인율</div>
-        <div class="value">10.0%</div>
+        <div class="label">고ROE 유지연수</div>
+        <div class="value">${stock.nModel.highRoeYears}년</div>
       </div>
     </div>
     <div class="calc-note">
-      N은 별도 예측치 대신 현재 PBR이 반영한 시장 내재 지속연수를 기준으로 사용합니다.
-      보정 슬라이더는 이 시장 N에 소폭 가감하는 용도입니다.
+      N은 높은 ROE의 지속성, 마진 안정성, 성장 안정성, 재무 체력을 점수화해 2년, 4년, 6년, 8년, 10년 구간으로 자동 추정합니다.
+      시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산한 비교값입니다.
     </div>
   `;
 }
@@ -627,7 +695,7 @@ function renderFairValuePanel(stock) {
     </div>
     <div class="calc-grid">
       <div class="calc-item">
-        <div class="label">FnGuide 추정 ROE 범위</div>
+        <div class="label">추정 ROE 범위</div>
         <div class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</div>
       </div>
       <div class="calc-item">
@@ -635,12 +703,12 @@ function renderFairValuePanel(stock) {
         <div class="value">${formatSignedPercent(state.roeAdjustment, 1)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">시장 기준 N</div>
-        <div class="value">${formatYears(stock.impliedDuration)}</div>
+        <div class="label">재무제표 추정 N</div>
+        <div class="value">${formatYears(stock.estimatedNBase)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">시장 N 보정치</div>
-        <div class="value">${formatSignedYears(state.durationOffset)}</div>
+        <div class="label">시장 내재 N</div>
+        <div class="value">${formatYears(stock.marketImpliedN)}</div>
       </div>
       <div class="calc-item">
         <div class="label">영구성장률</div>
@@ -652,8 +720,8 @@ function renderFairValuePanel(stock) {
       </div>
     </div>
     <div class="calc-note">
-      ROE는 FnGuide 과거 ROE 이력에서 보수적 최저치, 기준 평균치, 낙관적 최고치로 추정합니다.
-      N은 현재 시장 내재 지속연수를 기준으로 사용하고, 적정가 계산은 연도별 <strong>BPS × ROE = EPS</strong>를 할인해 합산합니다.
+      ROE는 과거 ROE 기준으로, N은 재무제표 자동추정치를 기준으로 적정가를 계산합니다. 할인율은 기본 10%이며,
+      계산식은 연도별 <strong>BPS × ROE = EPS</strong>를 할인해 합산하는 방식입니다.
     </div>
   `;
 }
@@ -711,7 +779,7 @@ function renderKellyPanel(stock) {
     </div>
     <div class="calc-note">
       켈리 공식은 <strong>K = p - (1-p) / b</strong>를 사용합니다.
-      현재 단계에서는 승률과 패배확률을 각각 50%로 두고, 과거 ROE 추정치와 시장 N 기준의 적정가 범위로 켈리 범위를 계산합니다.
+      현재 단계에서는 승률과 패배확률을 각각 50%로 두고, 재무제표 추정 N과 과거 ROE 추정치 기반의 적정가 범위로 켈리 범위를 계산합니다.
     </div>
   `;
 }
@@ -795,7 +863,7 @@ function bindTableSortHeaders() {
 }
 
 function renderError(message) {
-  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="13" class="empty-state">${message}</td></tr>`;
+  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="14" class="empty-state">${message}</td></tr>`;
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("fair-value-panel").innerHTML = `<div class="empty-state">${message}</div>`;
