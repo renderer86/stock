@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">KOREA EQUITY DASHBOARD</p>
+        <h1>ROE 중심으로 보는 국내 시가총액 대시보드</h1>
+        <p class="hero-text">
+          우선은 대시보드 골격과 ROE 상위 섹션부터 구성했습니다.
+          실제 네이버 금융 크롤링 데이터는 다음 단계에서 연결할 수 있게 분리해둘 예정입니다.
+        </p>
+      </div>
+
+      <div class="hero-panel">
+        <div class="metric-card accent">
+          <span class="metric-label">정렬 기준</span>
+          <strong class="metric-value">ROE</strong>
+          <span class="metric-sub">내림차순</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">현재 상태</span>
+          <strong class="metric-value">Mock</strong>
+          <span class="metric-sub">실데이터 연결 전</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">다음 단계</span>
+          <strong class="metric-value">Crawler</strong>
+          <span class="metric-sub">Naver Finance</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-grid">
+      <section class="panel wide">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Top Ranking</p>
+            <h2>ROE 10% 초과 종목</h2>
+          </div>
+          <span class="badge" id="roe-count-badge">Loading</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>종목명</th>
+                <th>티커</th>
+                <th>ROE</th>
+                <th>PER</th>
+                <th>외국인비율</th>
+                <th>시가총액</th>
+              </tr>
+            </thead>
+            <tbody id="roe-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Snapshot</p>
+            <h2>최상위 ROE 종목</h2>
+          </div>
+        </div>
+        <div id="top-highlight" class="highlight-card"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Roadmap</p>
+            <h2>다음 구현 순서</h2>
+          </div>
+        </div>
+        <ol class="roadmap">
+          <li>정적 대시보드 UI 확정</li>
+          <li>네이버 금융 전 페이지 크롤러 추가</li>
+          <li>ROE 정렬용 JSON 생성</li>
+          <li>대시보드와 데이터 연결</li>
+        </ol>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
