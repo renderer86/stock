@@ -42,6 +42,9 @@ FIELD_GROUPS: list[list[str]] = [
         "roe",
     ],
     [
+        "quant",
+        "frgn_rate",
+        "listed_stock_cnt",
         "roa",
         "pbr",
         "reserve_ratio",
@@ -260,6 +263,11 @@ def parse_stock_rows(html: str, page: int) -> list[dict[str, Any]]:
                 **raw_selected,
             },
         }
+        stock["is_suspended"] = (
+            stock.get("volume") == 0
+            and stock.get("diff") == 0
+            and stock.get("diff_rate") == 0
+        )
         stocks.append(stock)
 
     return stocks

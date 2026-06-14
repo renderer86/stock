@@ -1,5 +1,5 @@
 const DATA_URL = "./data/market_sum_by_roe.json";
-const MARKET_IMPLIED_DISCOUNT = 0.10;
+const MARKET_IMPLIED_DISCOUNT = 0.1;
 
 const state = {
   rawStocks: [],
@@ -71,12 +71,10 @@ function updateLastUpdated(value) {
     return;
   }
 
-  node.textContent = date.toLocaleString("ko-KR", {
+  node.textContent = date.toLocaleDateString("ko-KR", {
     year: "numeric",
     month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit"
+    day: "2-digit"
   });
 }
 
@@ -193,6 +191,10 @@ function estimateKellyRatio(stock, fairPrice) {
   return p - ((1 - p) / b);
 }
 
+function isSuspendedLike(stock) {
+  return stock.volume === 0 && stock.diff === 0 && stock.diff_rate === 0;
+}
+
 function enrichStock(stock) {
   const fairPrice = compoundFairPrice(stock, state);
   const gapRate = fairPrice && stock.current_price
@@ -207,17 +209,9 @@ function enrichStock(stock) {
     fairPrice,
     gapRate,
     kellyRatio,
-    impliedDuration
+    impliedDuration,
+    is_suspended: stock.is_suspended ?? isSuspendedLike(stock)
   };
-}
-
-function getFilteredStocks() {
-  const stocks = state.rawStocks
-    .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
-    .map(enrichStock)
-    .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
-
-  return stocks;
 }
 
 function compareValues(aValue, bValue, direction) {
@@ -251,6 +245,26 @@ function compareStocks(a, b, sortKey, direction) {
   return compareValues(a.rank, b.rank, "asc");
 }
 
+function getFilteredStocks() {
+  return state.rawStocks
+    .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
+    .map(enrichStock)
+    .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
+}
+
+function metricClass(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) {
+    return "metric-neutral";
+  }
+  if (value > 0) {
+    return "metric-positive";
+  }
+  if (value < 0) {
+    return "metric-negative";
+  }
+  return "metric-neutral";
+}
+
 function updateSortHeaders() {
   Array.from(document.querySelectorAll("th[data-sort-key]")).forEach((th) => {
     const isActive = th.dataset.sortKey === state.sortKey;
@@ -258,38 +272,6 @@ function updateSortHeaders() {
     th.classList.toggle("asc", isActive && state.sortDirection === "asc");
     th.classList.toggle("desc", isActive && state.sortDirection === "desc");
   });
-}
-
-function bindTableSortHeaders() {
-  Array.from(document.querySelectorAll("th[data-sort-key]")).forEach((th) => {
-    th.addEventListener("click", () => {
-      const { sortKey } = th.dataset;
-      if (state.sortKey === sortKey) {
-        state.sortDirection = state.sortDirection === "desc" ? "asc" : "desc";
-      } else {
-        state.sortKey = sortKey;
-        state.sortDirection = sortKey === "name" ? "asc" : "desc";
-      }
-
-      renderDashboard();
-    });
-  });
-}
-
-function metricClass(value) {
-  if (value === null || value === undefined || Number.isNaN(value)) {
-    return "metric-neutral";
-  }
-
-  if (value > 0) {
-    return "metric-positive";
-  }
-
-  if (value < 0) {
-    return "metric-negative";
-  }
-
-  return "metric-neutral";
 }
 
 function renderTable(stocks) {
@@ -312,7 +294,10 @@ function renderTable(stocks) {
   updateSortHeaders();
 
   tbody.innerHTML = stocks.map((stock, index) => `
-    <tr data-code="${stock.code}" class="${stock.code === state.selectedCode ? "is-selected" : ""}">
+    <tr
+      data-code="${stock.code}"
+      class="${stock.code === state.selectedCode ? "is-selected" : ""} ${stock.is_suspended ? "is-suspended" : ""}"
+    >
       <td><span class="rank-chip">${index + 1}</span></td>
       <td>${stock.name}</td>
       <td>${formatPercent(stock.roe, 2)}</td>
@@ -410,7 +395,7 @@ function renderDurationPanel(stock) {
       </div>
     </div>
     <div class="calc-note">
-      현재 PBR이 동일해지도록 “연도별 EPS 현재가치 합 + 최종 BPS 현재가치” 모델을 역으로 풀어
+      현재 PBR이 동일해지도록 연도별 EPS 현재가치 합과 최종 BPS 현재가치를 역산해,
       시장이 이 ROE를 몇 년 유지된다고 보고 있는지 추정합니다.
     </div>
   `;
@@ -453,7 +438,7 @@ function renderFairValuePanel(stock) {
     </div>
     <div class="calc-note">
       연도별로 <strong>BPS × ROE = EPS</strong>를 계산하고, 각 연도의 EPS를 할인한 뒤
-      마지막 BPS의 현재가치를 더하는 방식으로 적정주가를 계산합니다.
+      마지막 BPS 현재가치를 더하는 방식으로 적정주가를 계산합니다.
     </div>
   `;
 }
@@ -564,6 +549,21 @@ function bindControls() {
   growthRateInput.addEventListener("input", (event) => {
     state.growthRate = Number(event.target.value);
     renderDashboard();
+  });
+}
+
+function bindTableSortHeaders() {
+  Array.from(document.querySelectorAll("th[data-sort-key]")).forEach((th) => {
+    th.addEventListener("click", () => {
+      const { sortKey } = th.dataset;
+      if (state.sortKey === sortKey) {
+        state.sortDirection = state.sortDirection === "desc" ? "asc" : "desc";
+      } else {
+        state.sortKey = sortKey;
+        state.sortDirection = sortKey === "name" ? "asc" : "desc";
+      }
+      renderDashboard();
+    });
   });
 }
 

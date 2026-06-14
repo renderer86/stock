@@ -210,6 +210,23 @@ tbody tr.is-selected {
   background: rgba(184, 92, 56, 0.12);
 }
 
+tbody tr.is-suspended {
+  opacity: 0.44;
+}
+
+tbody tr.is-suspended td {
+  color: rgba(25, 21, 17, 0.48);
+}
+
+tbody tr.is-suspended .rank-chip {
+  background: rgba(31, 27, 23, 0.5);
+  color: rgba(255, 248, 241, 0.8);
+}
+
+tbody tr.is-suspended.is-selected {
+  background: rgba(184, 92, 56, 0.08);
+}
+
 .rank-chip {
   display: inline-flex;
   align-items: center;
