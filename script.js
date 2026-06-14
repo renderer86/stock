@@ -299,7 +299,12 @@ function renderTable(stocks) {
       class="${stock.code === state.selectedCode ? "is-selected" : ""} ${stock.is_suspended ? "is-suspended" : ""}"
     >
       <td><span class="rank-chip">${index + 1}</span></td>
-      <td>${stock.name}</td>
+      <td>
+        <span class="name-cell">
+          <span>${stock.name}</span>
+          ${stock.is_suspended ? '<span class="status-badge">거래정지</span>' : ""}
+        </span>
+      </td>
       <td>${formatPercent(stock.roe, 2)}</td>
       <td>${formatNumber(stock.pbr, 2)}</td>
       <td>${formatNumber(stock.per, 2)}</td>
