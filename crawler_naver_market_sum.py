@@ -23,7 +23,11 @@ USER_AGENT = (
     "Chrome/137.0.0.0 Safari/537.36"
 )
 
-# Requested financial fields, split into groups because Naver allows at most 6.
+MARKETS = [
+    {"sosok": "0", "market": "KOSPI", "market_label": "코스피"},
+    {"sosok": "1", "market": "KOSDAQ", "market_label": "코스닥"},
+]
+
 FIELD_GROUPS: list[list[str]] = [
     [
         "market_sum",
@@ -52,32 +56,23 @@ FIELD_GROUPS: list[list[str]] = [
 ]
 
 FIELD_LABELS = {
-    "quant": "거래량",
-    "ask_buy": "매수호가",
-    "amount": "거래대금",
     "market_sum": "시가총액",
-    "operating_profit": "영업이익",
-    "per": "PER",
-    "open_val": "시가",
-    "ask_sell": "매도호가",
-    "prev_quant": "전일거래량",
     "property_total": "자산총계",
-    "operating_profit_increasing_rate": "영업이익증가율",
-    "roe": "ROE",
-    "high_val": "고가",
-    "buy_total": "매수총잔량",
-    "frgn_rate": "외국인비율",
     "debt_total": "부채총계",
-    "net_income": "당기순이익",
-    "roa": "ROA",
-    "low_val": "저가",
-    "sell_total": "매도총잔량",
-    "listed_stock_cnt": "상장주식수",
     "sales": "매출액",
-    "eps": "주당순이익",
-    "pbr": "PBR",
     "sales_increasing_rate": "매출액증가율",
+    "operating_profit": "영업이익",
+    "operating_profit_increasing_rate": "영업이익증가율",
+    "net_income": "당기순이익",
+    "eps": "주당순이익",
     "dividend": "보통주배당금",
+    "per": "PER",
+    "roe": "ROE",
+    "quant": "거래량",
+    "frgn_rate": "외국인비율",
+    "listed_stock_cnt": "상장주식수",
+    "roa": "ROA",
+    "pbr": "PBR",
     "reserve_ratio": "유보율",
 }
 
@@ -164,19 +159,19 @@ def create_session() -> requests.Session:
     return session
 
 
-def fetch_page(session: requests.Session, page: int) -> str:
-    response = session.get(BASE_URL, params={"page": page}, timeout=20)
+def fetch_page(session: requests.Session, page: int, sosok: str) -> str:
+    response = session.get(BASE_URL, params={"page": page, "sosok": sosok}, timeout=20)
     response.raise_for_status()
     response.encoding = "euc-kr"
     return response.text
 
 
-def apply_field_selection(session: requests.Session, field_ids: list[str], page: int) -> None:
+def apply_field_selection(session: requests.Session, field_ids: list[str], page: int, sosok: str) -> None:
     body: list[tuple[str, str]] = [
         ("menu", "market_sum"),
         (
             "returnUrl",
-            f"http://finance.naver.com/sise/sise_market_sum.naver?page={page}",
+            f"http://finance.naver.com/sise/sise_market_sum.naver?page={page}&sosok={sosok}",
         ),
     ]
     body.extend(("fieldIds", field_id) for field_id in field_ids)
@@ -220,7 +215,7 @@ def extract_selected_field_ids(soup: BeautifulSoup) -> list[str]:
     return selected_field_ids
 
 
-def parse_stock_rows(html: str, page: int) -> list[dict[str, Any]]:
+def parse_stock_rows(html: str, page: int, market_info: dict[str, str]) -> list[dict[str, Any]]:
     soup = BeautifulSoup(html, "html.parser")
     selected_field_ids = extract_selected_field_ids(soup)
     stocks: list[dict[str, Any]] = []
@@ -245,6 +240,9 @@ def parse_stock_rows(html: str, page: int) -> list[dict[str, Any]]:
             parsed_selected[FIELD_OUTPUT_KEYS[field_id]] = parse_by_field(field_id, raw_value)
 
         stock = {
+            "market": market_info["market"],
+            "market_label": market_info["market_label"],
+            "sosok": market_info["sosok"],
             "page": page,
             "rank": parse_int(cells[0]),
             "name": clean_text(name_link.get_text(strip=True)),
@@ -285,7 +283,6 @@ def merge_stock_maps(base: dict[str, dict[str, Any]], updates: list[dict[str, An
             if key == "raw":
                 current.setdefault("raw", {}).update(value)
                 continue
-
             if value is not None:
                 current[key] = value
 
@@ -293,15 +290,16 @@ def merge_stock_maps(base: dict[str, dict[str, Any]], updates: list[dict[str, An
 def crawl_field_group(
     session: requests.Session,
     field_ids: list[str],
+    market_info: dict[str, str],
     total_pages: int,
     delay: float,
 ) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
 
     for page in range(1, total_pages + 1):
-        apply_field_selection(session, field_ids, page)
-        html = fetch_page(session, page)
-        results.extend(parse_stock_rows(html, page))
+        apply_field_selection(session, field_ids, page, market_info["sosok"])
+        html = fetch_page(session, page, market_info["sosok"])
+        results.extend(parse_stock_rows(html, page, market_info))
         time.sleep(delay)
 
     return results
@@ -309,20 +307,16 @@ def crawl_field_group(
 
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def crawl_all(delay: float) -> tuple[int, list[dict[str, Any]]]:
-    session = create_session()
-    first_html = fetch_page(session, 1)
+def crawl_market(session: requests.Session, market_info: dict[str, str], delay: float) -> tuple[int, list[dict[str, Any]]]:
+    first_html = fetch_page(session, 1, market_info["sosok"])
     total_pages = get_total_pages(first_html)
 
     merged: dict[str, dict[str, Any]] = {}
     for field_ids in FIELD_GROUPS:
-        grouped_rows = crawl_field_group(session, field_ids, total_pages, delay)
+        grouped_rows = crawl_field_group(session, field_ids, market_info, total_pages, delay)
         merge_stock_maps(merged, grouped_rows)
 
     stocks = sorted(
@@ -332,9 +326,29 @@ def crawl_all(delay: float) -> tuple[int, list[dict[str, Any]]]:
     return total_pages, stocks
 
 
+def crawl_all(delay: float) -> tuple[dict[str, int], list[dict[str, Any]]]:
+    session = create_session()
+    pages_by_market: dict[str, int] = {}
+    all_stocks: list[dict[str, Any]] = []
+
+    for market_info in MARKETS:
+        total_pages, stocks = crawl_market(session, market_info, delay)
+        pages_by_market[market_info["market"]] = total_pages
+        all_stocks.extend(stocks)
+
+    all_stocks.sort(
+        key=lambda item: (
+            item.get("market") != "KOSPI",
+            item.get("rank") is None,
+            item.get("rank") or 999999,
+        )
+    )
+    return pages_by_market, all_stocks
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Crawl Naver market cap pages and merge extended financial fields."
+        description="Crawl Naver market cap pages for both KOSPI and KOSDAQ."
     )
     parser.add_argument(
         "--output",
@@ -354,13 +368,14 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    total_pages, stocks = crawl_all(delay=args.delay)
+    pages_by_market, stocks = crawl_all(delay=args.delay)
     crawled_at = datetime.now(timezone.utc).isoformat()
 
     all_payload = {
-        "source": BASE_URL,
+        "source": [f"{BASE_URL}?sosok=0", f"{BASE_URL}?sosok=1"],
+        "markets": MARKETS,
         "field_groups": FIELD_GROUPS,
-        "total_pages": total_pages,
+        "pages_by_market": pages_by_market,
         "count": len(stocks),
         "crawled_at_utc": crawled_at,
         "stocks": stocks,
@@ -368,13 +383,19 @@ def main() -> None:
 
     roe_sorted = sorted(
         stocks,
-        key=lambda item: (item.get("roe") is None, -(item.get("roe") or 0), item.get("rank") or 999999),
+        key=lambda item: (
+            item.get("roe") is None,
+            -(item.get("roe") or 0),
+            item.get("market") != "KOSPI",
+            item.get("rank") or 999999,
+        ),
     )
     roe_payload = {
-        "source": BASE_URL,
+        "source": [f"{BASE_URL}?sosok=0", f"{BASE_URL}?sosok=1"],
         "sort": "roe_desc",
+        "markets": MARKETS,
         "field_groups": FIELD_GROUPS,
-        "total_pages": total_pages,
+        "pages_by_market": pages_by_market,
         "count": len(roe_sorted),
         "crawled_at_utc": crawled_at,
         "stocks": roe_sorted,
@@ -383,7 +404,7 @@ def main() -> None:
     write_json(Path(args.output), all_payload)
     write_json(Path(args.roe_output), roe_payload)
 
-    print(f"Total pages: {total_pages}")
+    print(f"Pages by market: {pages_by_market}")
     print(f"Total stocks: {len(stocks)}")
     print(f"Full output: {args.output}")
     print(f"ROE output: {args.roe_output}")

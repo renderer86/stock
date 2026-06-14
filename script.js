@@ -239,6 +239,20 @@ function isSuspendedLike(stock) {
   return stock.volume === 0 && stock.diff === 0 && stock.diff_rate === 0;
 }
 
+function getMarketLabel(stock) {
+  if (stock.market_label) {
+    return stock.market_label;
+  }
+  if (stock.market === "KOSDAQ") {
+    return "코스닥";
+  }
+  return "코스피";
+}
+
+function getMarketBadgeClass(stock) {
+  return stock.market === "KOSDAQ" ? "market-badge kosdaq" : "market-badge kospi";
+}
+
 function getRoeHistoryValues(history) {
   const fullYearValues = (history?.full_years || [])
     .map((item) => item?.roe)
@@ -464,6 +478,7 @@ function renderTable(stocks) {
       <td>
         <span class="name-cell">
           <span>${stock.name}</span>
+          <span class="${getMarketBadgeClass(stock)}">${getMarketLabel(stock)}</span>
           ${stock.is_suspended ? '<span class="status-badge">거래정지</span>' : ""}
         </span>
       </td>
