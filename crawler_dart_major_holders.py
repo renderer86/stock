@@ -22,6 +22,20 @@ DEFAULT_MARKET_PATH = Path("data/market_sum_by_roe.json")
 DEFAULT_ROE_PATH = Path("data/fnguide_roe_history.json")
 DEFAULT_OUTPUT = Path("data/dart_major_holders.json")
 DEFAULT_API_KEY_ENV = "DART_API_KEY"
+DEFAULT_MIN_ROA = 7.0
+FINANCIAL_ROA_EXEMPT_KEYWORDS = (
+    "은행",
+    "금융",
+    "증권",
+    "보험",
+    "화재",
+    "생명",
+    "손해",
+    "카드",
+    "캐피탈",
+    "리츠",
+    "스팩",
+)
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -216,11 +230,28 @@ def estimate_financial_n(stock: dict[str, Any], values: list[float]) -> int:
     return 2
 
 
+def is_financial_roa_exempt(stock: dict[str, Any]) -> bool:
+    name = str(stock.get("name") or "")
+    return any(keyword in name for keyword in FINANCIAL_ROA_EXEMPT_KEYWORDS)
+
+
+def passes_roa_filter(stock: dict[str, Any], min_roa: float | None, exempt_financial_roa: bool) -> bool:
+    if min_roa is None:
+        return True
+    if exempt_financial_roa and is_financial_roa_exempt(stock):
+        return True
+
+    roa = stock.get("roa")
+    return isinstance(roa, (int, float)) and roa >= min_roa
+
+
 def get_dart_targets(
     market_payload: dict[str, Any],
     roe_payload: dict[str, Any],
     scope: str,
     min_roe: float,
+    min_roa: float | None,
+    exempt_financial_roa: bool,
 ) -> list[DartTarget]:
     roe_map = {item["code"]: item for item in roe_payload.get("stocks", []) if item.get("code")}
     targets: list[DartTarget] = []
@@ -230,6 +261,8 @@ def get_dart_targets(
         if not isinstance(current_roe, (int, float)):
             continue
         if scope in {"roe", "priority"} and current_roe < min_roe:
+            continue
+        if scope in {"roe", "priority"} and not passes_roa_filter(stock, min_roa, exempt_financial_roa):
             continue
 
         history = roe_map.get(stock.get("code"))
@@ -399,6 +432,8 @@ def main() -> None:
     parser.add_argument("--api-key-env", default=DEFAULT_API_KEY_ENV, help="Environment variable for OpenDART API key")
     parser.add_argument("--scope", choices=["roe", "priority", "all"], default="roe", help="Target scope: ROE table, priority ideas, or all stocks")
     parser.add_argument("--min-roe", type=float, default=10.0, help="Minimum current ROE for scope=roe")
+    parser.add_argument("--min-roa", type=float, default=DEFAULT_MIN_ROA, help="Minimum current ROA for scope=roe/priority. Use a negative value to disable.")
+    parser.add_argument("--no-financial-roa-exempt", action="store_true", help="Apply the ROA filter to bank, securities, insurance, REIT, and SPAC-like names too.")
     parser.add_argument("--limit", type=int, default=0, help="Optional cap on number of target stocks")
     parser.add_argument("--delay", type=float, default=0.2, help="Sleep time between OpenDART requests in seconds")
     args = parser.parse_args()
@@ -411,7 +446,14 @@ def main() -> None:
 
     market_payload = load_json(Path(args.market_data))
     roe_payload = load_json(Path(args.roe_history))
-    candidates = get_dart_targets(market_payload, roe_payload, args.scope, args.min_roe)
+    candidates = get_dart_targets(
+        market_payload,
+        roe_payload,
+        args.scope,
+        args.min_roe,
+        None if args.min_roa < 0 else args.min_roa,
+        not args.no_financial_roa_exempt,
+    )
     if args.limit > 0:
         candidates = candidates[: args.limit]
 
@@ -474,6 +516,8 @@ def main() -> None:
         "source": "OpenDART majorstock.json",
         "scope": args.scope,
         "min_roe": args.min_roe,
+        "min_roa": None if args.min_roa < 0 else args.min_roa,
+        "financial_roa_exempt": not args.no_financial_roa_exempt,
         "count": len(rows),
         "crawled_at_utc": datetime.now(timezone.utc).isoformat(),
         "stocks": rows,

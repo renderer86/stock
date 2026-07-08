@@ -9,6 +9,8 @@ const state = {
   dartMajorByCode: new Map(),
   selectedCode: null,
   threshold: 10,
+  minRoa: 7,
+  exemptFinancialRoa: true,
   discountRate: 10,
   durationOffset: 0,
   roeAdjustment: 0,
@@ -556,9 +558,45 @@ function compareStocks(a, b, sortKey, direction) {
   return compareValues(a.rank, b.rank, "asc");
 }
 
+const FINANCIAL_ROA_EXEMPT_KEYWORDS = [
+  "은행",
+  "금융",
+  "증권",
+  "보험",
+  "화재",
+  "생명",
+  "손해",
+  "카드",
+  "캐피탈",
+  "리츠",
+  "스팩",
+  "제1호",
+  "제2호",
+  "제3호",
+  "제4호",
+  "제5호",
+  "제6호",
+  "제7호",
+  "제8호",
+  "제9호"
+];
+
+function isFinancialRoaExempt(stock) {
+  const name = String(stock.name || "");
+  return FINANCIAL_ROA_EXEMPT_KEYWORDS.some((keyword) => name.includes(keyword));
+}
+
+function passesRoaFilter(stock) {
+  if (state.exemptFinancialRoa && isFinancialRoaExempt(stock)) {
+    return true;
+  }
+  return typeof stock.roa === "number" && stock.roa >= state.minRoa;
+}
+
 function getFilteredStocks() {
   return state.rawStocks
     .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
+    .filter(passesRoaFilter)
     .map(enrichStock)
     .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
 }
@@ -692,12 +730,12 @@ function renderTable(stocks) {
   const summaryBadge = document.getElementById("table-summary-badge");
 
   countBadge.textContent = `${stocks.length} Stocks`;
-  summaryBadge.textContent = `ROE ${state.threshold}% 이상 · 재무제표 N 반영`;
+  summaryBadge.textContent = `ROE ${state.threshold}% 이상 · ROA ${state.minRoa}% 이상${state.exemptFinancialRoa ? " (금융업 예외)" : ""}`;
 
   if (!stocks.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="15" class="empty-state">조건에 맞는 종목이 없습니다.</td>
+        <td colspan="16" class="empty-state">조건에 맞는 종목이 없습니다.</td>
       </tr>
     `;
     return;
@@ -719,6 +757,7 @@ function renderTable(stocks) {
         </span>
       </td>
       <td>${formatPercent(stock.roe, 2)}</td>
+      <td>${formatPercent(stock.roa, 2)}</td>
       <td>${formatNumber(stock.pbr, 2)}</td>
       <td>${formatNumber(stock.per, 2)}</td>
       <td>${formatMarketCap(stock.market_cap_krw_100m)}</td>
@@ -976,12 +1015,16 @@ function syncControlLabels() {
 
 function bindControls() {
   const thresholdSelect = document.getElementById("roe-threshold-select");
+  const roaThresholdSelect = document.getElementById("roa-threshold-select");
+  const financialRoaExemptInput = document.getElementById("financial-roa-exempt-input");
   const discountRange = document.getElementById("discount-range");
   const durationRange = document.getElementById("duration-range");
   const roeAdjustmentInput = document.getElementById("assumed-roe-input");
   const growthRateInput = document.getElementById("growth-rate-input");
 
   thresholdSelect.value = String(state.threshold);
+  roaThresholdSelect.value = String(state.minRoa);
+  financialRoaExemptInput.checked = state.exemptFinancialRoa;
   discountRange.value = String(state.discountRate);
   durationRange.value = String(state.durationOffset);
   roeAdjustmentInput.value = String(state.roeAdjustment);
@@ -990,6 +1033,16 @@ function bindControls() {
 
   thresholdSelect.addEventListener("change", (event) => {
     state.threshold = Number(event.target.value);
+    renderDashboard();
+  });
+
+  roaThresholdSelect.addEventListener("change", (event) => {
+    state.minRoa = Number(event.target.value);
+    renderDashboard();
+  });
+
+  financialRoaExemptInput.addEventListener("change", (event) => {
+    state.exemptFinancialRoa = event.target.checked;
     renderDashboard();
   });
 
@@ -1033,7 +1086,7 @@ function bindTableSortHeaders() {
 
 function renderError(message) {
   document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="14" class="empty-state">${message}</td></tr>`;
-  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="15" class="empty-state">${message}</td></tr>`;
+  document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="16" class="empty-state">${message}</td></tr>`;
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("fair-value-panel").innerHTML = `<div class="empty-state">${message}</div>`;

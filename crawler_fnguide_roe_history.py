@@ -13,6 +13,10 @@ from bs4 import BeautifulSoup
 
 
 FN_GUIDE_URL = (
+    "https://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp"
+    "?pGB=1&gicode=A{code}&cID=&MenuYn=Y&ReportGB=&NewMenuID=103&stkGb=701"
+)
+FN_GUIDE_RATIO_URL = (
     "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp"
     "?pGB=1&gicode=A{code}&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701"
 )
@@ -20,6 +24,20 @@ DEFAULT_INPUT = Path("data/market_sum.json")
 DEFAULT_OUTPUT = Path("data/fnguide_roe_history.json")
 DEBUG_DIR = Path("data/fnguide_debug")
 DEFAULT_MIN_ROE = 10.0
+DEFAULT_MIN_ROA = 7.0
+FINANCIAL_ROA_EXEMPT_KEYWORDS = (
+    "은행",
+    "금융",
+    "증권",
+    "보험",
+    "화재",
+    "생명",
+    "손해",
+    "카드",
+    "캐피탈",
+    "리츠",
+    "스팩",
+)
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -66,15 +84,35 @@ def load_stock_universe(path: Path) -> list[dict[str, Any]]:
     return stocks
 
 
-def filter_by_min_roe(stocks: list[dict[str, Any]], min_roe: float | None) -> list[dict[str, Any]]:
-    if min_roe is None:
+def is_financial_roa_exempt(stock: dict[str, Any]) -> bool:
+    name = str(stock.get("name") or "")
+    return any(keyword in name for keyword in FINANCIAL_ROA_EXEMPT_KEYWORDS)
+
+
+def filter_by_quality(
+    stocks: list[dict[str, Any]],
+    min_roe: float | None,
+    min_roa: float | None,
+    exempt_financial_roa: bool,
+) -> list[dict[str, Any]]:
+    if min_roe is None and min_roa is None:
         return stocks
 
     filtered: list[dict[str, Any]] = []
     for stock in stocks:
         roe = stock.get("roe")
-        if isinstance(roe, (int, float)) and roe >= min_roe:
-            filtered.append(stock)
+        if min_roe is not None and (not isinstance(roe, (int, float)) or roe < min_roe):
+            continue
+
+        roa = stock.get("roa")
+        if (
+            min_roa is not None
+            and not (exempt_financial_roa and is_financial_roa_exempt(stock))
+            and (not isinstance(roa, (int, float)) or roa < min_roa)
+        ):
+            continue
+
+        filtered.append(stock)
     return filtered
 
 
@@ -116,6 +154,19 @@ def extract_table_rows(table: BeautifulSoup) -> list[list[str]]:
     rows: list[list[str]] = []
     for tr in table.select("tr"):
         cells = [clean_text(cell.get_text(" ", strip=True)) for cell in tr.find_all(["th", "td"])]
+        if cells:
+            rows.append(cells)
+    return rows
+
+
+def extract_table_rows_with_titles(table: BeautifulSoup) -> list[list[str]]:
+    rows: list[list[str]] = []
+    for tr in table.select("tr"):
+        cells: list[str] = []
+        for cell in tr.find_all(["th", "td"]):
+            title = cell.get("title")
+            text = title if isinstance(title, str) and title.strip() else cell.get_text(" ", strip=True)
+            cells.append(clean_text(text))
         if cells:
             rows.append(cells)
     return rows
@@ -208,14 +259,117 @@ def extract_annual_section(lines: list[str]) -> list[str]:
     return lines[start_index:end_index]
 
 
-def split_histories(periods: list[str], values: list[float | None]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def extract_periods_from_rows(rows: list[list[str]]) -> list[str]:
+    periods: list[str] = []
+    for row in rows[:8]:
+        for cell in row:
+            for period in PERIOD_SCAN_PATTERN.findall(cell):
+                if period not in periods:
+                    periods.append(period)
+    return periods
+
+
+def find_row_values(rows: list[list[str]], label_patterns: list[str], period_count: int) -> list[float | None] | None:
+    for row in rows:
+        label = clean_text(row[0]) if row else ""
+        if not all(pattern in label for pattern in label_patterns):
+            continue
+
+        values = [parse_float(cell) for cell in row[1 : 1 + period_count]]
+        if sum(value is not None for value in values) >= min(2, period_count):
+            return values
+
+    return None
+
+
+def keep_dominant_annual_month(periods: list[str]) -> list[tuple[int, str]]:
+    if not periods:
+        return []
+
+    month_counts: dict[str, int] = {}
+    for period in periods:
+        month = period.split("/")[1]
+        month_counts[month] = month_counts.get(month, 0) + 1
+
+    annual_month = max(
+        month_counts,
+        key=lambda month: (
+            month_counts[month],
+            -next(index for index, period in enumerate(periods) if period.endswith(f"/{month}")),
+        ),
+    )
+    return [
+        (index, period)
+        for index, period in enumerate(periods)
+        if period.endswith(f"/{annual_month}")
+    ]
+
+
+def extract_periods_and_roe_from_finance_statement(soup: BeautifulSoup) -> tuple[list[str], list[float | None]] | None:
+    income_container = soup.select_one("#divSonikY")
+    equity_container = soup.select_one("#divDaechaY")
+    if income_container is None or equity_container is None:
+        return None
+
+    income_table = income_container.select_one("table")
+    equity_table = equity_container.select_one("table")
+    if income_table is None or equity_table is None:
+        return None
+
+    income_rows = extract_table_rows_with_titles(income_table)
+    equity_rows = extract_table_rows_with_titles(equity_table)
+    raw_periods = extract_periods_from_rows(income_rows)[:4]
+    annual_periods = keep_dominant_annual_month(raw_periods)
+    periods = [period for _, period in annual_periods]
+    if not periods:
+        raise RuntimeError("Failed to parse annual periods from finance statement.")
+
+    raw_period_count = len(raw_periods)
+    net_income_all = (
+        find_row_values(income_rows, ["지배", "순이익"], raw_period_count)
+        or find_row_values(income_rows, ["당기순이익"], raw_period_count)
+    )
+    equity_all = (
+        find_row_values(equity_rows, ["지배", "주주", "지분"], raw_period_count)
+        or find_row_values(equity_rows, ["자본"], raw_period_count)
+    )
+    if net_income_all is None or equity_all is None:
+        raise RuntimeError("Failed to parse net income or controlling equity from finance statement.")
+
+    net_income = [net_income_all[index] for index, _ in annual_periods]
+    equity = [equity_all[index] for index, _ in annual_periods]
+
+    roe_values: list[float | None] = []
+    for index, income in enumerate(net_income):
+        current_equity = equity[index]
+        previous_equity = equity[index - 1] if index > 0 else None
+        if income is None or current_equity in (None, 0):
+            roe_values.append(None)
+            continue
+
+        equity_base = (
+            (previous_equity + current_equity) / 2
+            if previous_equity not in (None, 0)
+            else current_equity
+        )
+        roe_values.append(round(income / equity_base * 100, 2))
+
+    return periods, roe_values
+
+
+def split_histories(
+    periods: list[str],
+    values: list[float | None],
+    *,
+    all_periods_are_full_years: bool = False,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     full_years: list[dict[str, Any]] = []
     latest_periods: list[dict[str, Any]] = []
 
     for period, value in zip(periods, values, strict=True):
         item = {"period": period, "roe": value}
         month = int(period.split("/")[1])
-        if month == 12:
+        if all_periods_are_full_years or month == 12:
             full_years.append(item)
         else:
             latest_periods.append(item)
@@ -232,20 +386,41 @@ def fetch_roe_history(session: requests.Session, code: str) -> dict[str, Any]:
     soup = BeautifulSoup(response.text, "html.parser")
     lines = extract_relevant_lines(soup)
     try:
-        annual_table_rows = find_annual_ratio_table(soup)
-        if annual_table_rows is not None:
-            periods, roe_values = extract_periods_and_roe_from_table(annual_table_rows)
+        all_periods_are_full_years = False
+        finance_statement = extract_periods_and_roe_from_finance_statement(soup)
+        if finance_statement is not None:
+            periods, roe_values = finance_statement
+            all_periods_are_full_years = True
         else:
-            annual_section = extract_annual_section(lines)
-            periods = extract_periods_from_lines(annual_section)
-            try:
-                roe_values = extract_roe_values_from_lines(annual_section, len(periods))
-            except RuntimeError:
-                roe_values = [None] * len(periods)
+            annual_table_rows = find_annual_ratio_table(soup)
+            if annual_table_rows is None:
+                ratio_url = FN_GUIDE_RATIO_URL.format(code=code)
+                ratio_response = session.get(ratio_url, timeout=20)
+                ratio_response.raise_for_status()
+                ratio_response.encoding = "utf-8"
+                ratio_soup = BeautifulSoup(ratio_response.text, "html.parser")
+                annual_table_rows = find_annual_ratio_table(ratio_soup)
+                if annual_table_rows is not None:
+                    soup = ratio_soup
+                    lines = extract_relevant_lines(ratio_soup)
+
+            if annual_table_rows is not None:
+                periods, roe_values = extract_periods_and_roe_from_table(annual_table_rows)
+            else:
+                annual_section = extract_annual_section(lines)
+                periods = extract_periods_from_lines(annual_section)
+                try:
+                    roe_values = extract_roe_values_from_lines(annual_section, len(periods))
+                except RuntimeError:
+                    roe_values = [None] * len(periods)
     except Exception:
         write_debug_files(code, response.text, lines)
         raise
-    full_years, latest_periods = split_histories(periods, roe_values)
+    full_years, latest_periods = split_histories(
+        periods,
+        roe_values,
+        all_periods_are_full_years=all_periods_are_full_years,
+    )
 
     return {
         "code": code,
@@ -316,6 +491,17 @@ def main() -> None:
         default=DEFAULT_MIN_ROE,
         help="Only crawl stocks whose current ROE in the input JSON is at least this value. Use a negative value to disable.",
     )
+    parser.add_argument(
+        "--min-roa",
+        type=float,
+        default=DEFAULT_MIN_ROA,
+        help="Only crawl stocks whose current ROA in the input JSON is at least this value. Use a negative value to disable.",
+    )
+    parser.add_argument(
+        "--no-financial-roa-exempt",
+        action="store_true",
+        help="Apply the ROA filter to bank, securities, insurance, REIT, and SPAC-like names too.",
+    )
     args = parser.parse_args()
 
     if args.codes.strip():
@@ -323,7 +509,12 @@ def main() -> None:
         universe = [{"code": code, "name": None} for code in requested_codes]
     else:
         universe = load_stock_universe(Path(args.input))
-        universe = filter_by_min_roe(universe, None if args.min_roe < 0 else args.min_roe)
+        universe = filter_by_quality(
+            universe,
+            None if args.min_roe < 0 else args.min_roe,
+            None if args.min_roa < 0 else args.min_roa,
+            not args.no_financial_roa_exempt,
+        )
 
     if args.limit > 0:
         universe = universe[: args.limit]
@@ -361,12 +552,14 @@ def main() -> None:
         time.sleep(args.delay)
 
     payload = {
-        "source": "FnGuide SVD_FinanceRatio.asp",
+        "source": "FnGuide SVD_Finance.asp",
         "input": args.input,
         "min_roe": None if args.min_roe < 0 else args.min_roe,
+        "min_roa": None if args.min_roa < 0 else args.min_roa,
+        "financial_roa_exempt": not args.no_financial_roa_exempt,
         "note": (
-            "FnGuide public finance ratio page currently exposes the most recent annual periods "
-            "plus the latest interim period in the visible annual table. "
+            "FnGuide SVD_FinanceRatio.asp currently returns an error page, so annual ROE is "
+            "calculated from controlling net income and controlling equity in SVD_Finance.asp. "
             "full_years contains completed fiscal years only."
         ),
         "count": len(rows),

@@ -56,6 +56,17 @@ def main() -> None:
         help="Minimum current ROE for FnGuide targets. Use a negative value for all.",
     )
     parser.add_argument(
+        "--min-roa",
+        type=float,
+        default=7.0,
+        help="Minimum current ROA for FnGuide and OpenDART targets. Use a negative value to disable.",
+    )
+    parser.add_argument(
+        "--no-financial-roa-exempt",
+        action="store_true",
+        help="Apply the ROA filter to bank, securities, insurance, REIT, and SPAC-like names too.",
+    )
+    parser.add_argument(
         "--fnguide-limit",
         type=int,
         default=0,
@@ -100,8 +111,11 @@ def main() -> None:
             str(args.fnguide_delay),
             "--min-roe",
             str(args.fnguide_min_roe),
+            "--min-roa",
+            str(args.min_roa),
             "--limit",
             str(args.fnguide_limit),
+            *(["--no-financial-roa-exempt"] if args.no_financial_roa_exempt else []),
         ],
     )
 
@@ -116,8 +130,11 @@ def main() -> None:
                 args.dart_scope,
                 "--min-roe",
                 str(args.fnguide_min_roe),
+                "--min-roa",
+                str(args.min_roa),
                 "--limit",
                 str(args.dart_limit),
+                *(["--no-financial-roa-exempt"] if args.no_financial_roa_exempt else []),
             ],
         )
 

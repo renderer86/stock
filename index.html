@@ -85,6 +85,7 @@
                 <th data-sort-key="rank">순위</th>
                 <th data-sort-key="name">종목명</th>
                 <th data-sort-key="roe">ROE</th>
+                <th data-sort-key="roa">ROA</th>
                 <th data-sort-key="pbr">PBR</th>
                 <th data-sort-key="per">PER</th>
                 <th data-sort-key="market_cap_krw_100m">시가총액</th>
@@ -176,6 +177,21 @@
               <option value="15">15%</option>
               <option value="20">20%</option>
             </select>
+          </label>
+
+          <label class="control-card">
+            <span class="control-label">ROA 기준선</span>
+            <select id="roa-threshold-select">
+              <option value="7">7%</option>
+              <option value="8">8%</option>
+              <option value="10">10%</option>
+            </select>
+          </label>
+
+          <label class="control-card">
+            <span class="control-label">금융업 ROA 예외</span>
+            <input id="financial-roa-exempt-input" type="checkbox" checked>
+            <small>은행·증권·보험 등 이름 키워드 기준</small>
           </label>
 
           <label class="control-card">

@@ -80,6 +80,8 @@ OpenDART를 제외하고 네이버와 FnGuide만 실행:
 
 - `--skip-dart`: OpenDART 수집 생략
 - `--fnguide-min-roe`: FnGuide 대상의 최소 현재 ROE, 음수이면 필터 해제
+- `--min-roa`: FnGuide/OpenDART 대상의 최소 현재 ROA, 기본 7, 음수이면 필터 해제
+- `--no-financial-roa-exempt`: 은행·증권·보험 등 금융업 이름 키워드도 ROA 필터 적용
 - `--fnguide-limit`: FnGuide 대상 수 제한, `0`이면 제한 없음
 - `--dart-scope`: OpenDART 대상 범위 (`roe`, `priority`, `all`)
 - `--dart-limit`: OpenDART 대상 수 제한, `0`이면 제한 없음
