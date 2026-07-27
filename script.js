@@ -198,11 +198,11 @@ function renderRateTicker(payload) {
           : "— 0.00";
 
     return `
-      <span class="rate-ticker-item">
+      <span class="rate-ticker-item ${direction}">
         <span class="rate-country">${countryCode}</span>
         <span class="rate-maturity">${escapeHtml(item?.label || item?.maturity || "")}</span>
         <strong>${Number.isNaN(value) ? "N/A" : `${formatNumber(value, 2)}%`}</strong>
-        ${changeText ? `<span class="rate-change ${direction}">${changeText}</span>` : ""}
+        ${changeText ? `<span class="rate-change">${changeText}</span>` : ""}
       </span>
     `;
   };
