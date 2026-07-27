@@ -27,18 +27,46 @@
       </div>
     </header>
 
-    <section class="rate-ticker" aria-label="한국 및 미국 국채 금리">
-      <div class="rate-ticker-label">
-        <span class="rate-live-dot" aria-hidden="true"></span>
-        <span>국채 금리</span>
-      </div>
-      <div class="rate-ticker-viewport">
-        <div id="rate-ticker-track" class="rate-ticker-track">
-          <div class="rate-ticker-loading">한국·미국 국채 금리를 불러오는 중입니다.</div>
+    <div class="market-ticker-stack">
+      <section class="rate-ticker" aria-label="한국 및 미국 국채 금리">
+        <div class="rate-ticker-label">
+          <span class="rate-live-dot" aria-hidden="true"></span>
+          <span>국채 금리</span>
         </div>
-      </div>
-      <div id="rate-ticker-date" class="rate-ticker-date">Loading</div>
-    </section>
+        <div class="rate-ticker-viewport">
+          <div id="rate-ticker-track" class="rate-ticker-track">
+            <div class="rate-ticker-loading">한국·미국 국채 금리를 불러오는 중입니다.</div>
+          </div>
+        </div>
+        <div id="rate-ticker-date" class="rate-ticker-date">Loading</div>
+      </section>
+
+      <section class="rate-ticker etf-ticker etf-ticker-koact" aria-label="KoAct ETF 시세">
+        <div class="rate-ticker-label">
+          <span class="rate-live-dot" aria-hidden="true"></span>
+          <span>KoAct ETF</span>
+        </div>
+        <div class="rate-ticker-viewport">
+          <div id="koact-etf-ticker-track" class="rate-ticker-track">
+            <div class="rate-ticker-loading">KoAct ETF 시세를 불러오는 중입니다.</div>
+          </div>
+        </div>
+        <div id="koact-etf-ticker-date" class="rate-ticker-date">Naver</div>
+      </section>
+
+      <section class="rate-ticker etf-ticker etf-ticker-time" aria-label="TIME ETF 시세">
+        <div class="rate-ticker-label">
+          <span class="rate-live-dot" aria-hidden="true"></span>
+          <span>TIME ETF</span>
+        </div>
+        <div class="rate-ticker-viewport">
+          <div id="time-etf-ticker-track" class="rate-ticker-track">
+            <div class="rate-ticker-loading">TIME ETF 시세를 불러오는 중입니다.</div>
+          </div>
+        </div>
+        <div id="time-etf-ticker-date" class="rate-ticker-date">Naver</div>
+      </section>
+    </div>
 
     <main class="dashboard-layout">
       <section class="panel">

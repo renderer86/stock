@@ -2,6 +2,7 @@ const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
 const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
 const DART_MAJOR_URL = "./data/dart_major_holders.json";
 const TREASURY_YIELDS_URL = "./data/treasury_yields.json";
+const ETF_BRANDS_URL = "./data/naver_etf_brands.json";
 const MARKET_IMPLIED_DISCOUNT = 0.1;
 
 const state = {
@@ -170,6 +171,50 @@ function formatTickerDate(value) {
   return escapeHtml(value);
 }
 
+function orderTreasuryYields(koreaYields, usYields) {
+  const allMonths = new Set(
+    [...koreaYields, ...usYields]
+      .map((item) => Number(item?.months))
+      .filter((months) => !Number.isNaN(months))
+  );
+  const orderedMonths = [...allMonths].sort((left, right) => {
+    const leftIsAnnual = left >= 12;
+    const rightIsAnnual = right >= 12;
+    if (leftIsAnnual !== rightIsAnnual) {
+      return leftIsAnnual ? -1 : 1;
+    }
+    return left - right;
+  });
+
+  return orderedMonths.flatMap((months) => [
+    ...koreaYields
+      .filter((item) => Number(item?.months) === months)
+      .map((item) => ({ item, countryCode: "KR" })),
+    ...usYields
+      .filter((item) => Number(item?.months) === months)
+      .map((item) => ({ item, countryCode: "US" }))
+  ]);
+}
+
+function fillLoopingTicker(track, items, secondsPerItem = 4.5) {
+  const segment = `
+    <div class="rate-ticker-segment">
+      ${items.join("<span class='rate-ticker-divider' aria-hidden='true'>•</span>")}
+      <span class="rate-ticker-divider market-divider" aria-hidden="true">◆</span>
+    </div>
+  `;
+
+  track.classList.remove("is-static");
+  track.style.setProperty(
+    "--ticker-duration",
+    `${Math.max(40, items.length * secondsPerItem)}s`
+  );
+  track.innerHTML = `${segment}${segment.replace(
+    'class="rate-ticker-segment"',
+    'class="rate-ticker-segment" aria-hidden="true"'
+  )}`;
+}
+
 function renderRateTicker(payload) {
   const track = document.getElementById("rate-ticker-track");
   const dateNode = document.getElementById("rate-ticker-date");
@@ -207,10 +252,8 @@ function renderRateTicker(payload) {
     `;
   };
 
-  const items = [
-    ...koreaYields.map((item) => renderYield(item, "KR")),
-    ...usYields.map((item) => renderYield(item, "US"))
-  ];
+  const items = orderTreasuryYields(koreaYields, usYields)
+    .map(({ item, countryCode }) => renderYield(item, countryCode));
 
   if (!items.length) {
     track.innerHTML = "<div class='rate-ticker-loading'>표시할 국채 금리 데이터가 없습니다.</div>";
@@ -219,19 +262,7 @@ function renderRateTicker(payload) {
     return;
   }
 
-  const segment = `
-    <div class="rate-ticker-segment">
-      ${items.join("<span class='rate-ticker-divider' aria-hidden='true'>•</span>")}
-      <span class="rate-ticker-divider market-divider" aria-hidden="true">◆</span>
-    </div>
-  `;
-
-  track.classList.remove("is-static");
-  track.style.setProperty("--ticker-duration", `${Math.max(52, items.length * 4.5)}s`);
-  track.innerHTML = `${segment}${segment.replace(
-    'class="rate-ticker-segment"',
-    'class="rate-ticker-segment" aria-hidden="true"'
-  )}`;
+  fillLoopingTicker(track, items);
   dateNode.textContent = `KR ${formatTickerDate(korea?.as_of_date)} · US ${formatTickerDate(unitedStates?.as_of_date)}`;
 }
 
@@ -249,6 +280,88 @@ async function loadTreasuryTicker() {
     track.classList.add("is-static");
     track.innerHTML = "<div class='rate-ticker-loading'>국채 금리 데이터를 불러오지 못했습니다.</div>";
     dateNode.textContent = "Unavailable";
+    console.error(error);
+  }
+}
+
+function renderEtfBrandTicker(payload, brand, trackId, dateId) {
+  const track = document.getElementById(trackId);
+  const dateNode = document.getElementById(dateId);
+  const brandData = (payload?.brands || []).find(
+    (item) => String(item?.brand || "").toLocaleLowerCase() === brand.toLocaleLowerCase()
+  );
+  const etfs = Array.isArray(brandData?.etfs) ? brandData.etfs : [];
+
+  if (!etfs.length) {
+    track.classList.add("is-static");
+    track.innerHTML = `<div class="rate-ticker-loading">${escapeHtml(brand)} ETF 데이터가 없습니다.</div>`;
+    dateNode.textContent = "No data";
+    return;
+  }
+
+  const items = etfs.map((item) => {
+    const changeRate = Number(item?.change_rate);
+    const direction = Number.isNaN(changeRate) || changeRate === 0
+      ? "is-flat"
+      : changeRate > 0
+        ? "is-up"
+        : "is-down";
+    const changeText = Number.isNaN(changeRate)
+      ? "N/A"
+      : changeRate > 0
+        ? `▲ +${formatNumber(changeRate, 2)}%`
+        : changeRate < 0
+          ? `▼ ${formatNumber(changeRate, 2)}%`
+          : "— 0.00%";
+    const code = encodeURIComponent(String(item?.code || ""));
+
+    return `
+      <a
+        class="rate-ticker-item etf-ticker-item ${direction}"
+        href="https://finance.naver.com/item/main.naver?code=${code}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="rate-maturity">${escapeHtml(item?.short_name || item?.name || "")}</span>
+        <strong>${formatInteger(Number(item?.current_price))}원</strong>
+        <span class="rate-change">${changeText}</span>
+      </a>
+    `;
+  });
+
+  fillLoopingTicker(track, items, 3);
+  dateNode.textContent = `Naver · ${etfs.length}개`;
+}
+
+async function loadEtfBrandTickers() {
+  try {
+    const response = await fetch(ETF_BRANDS_URL, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} for ETF brands`);
+    }
+    const payload = await response.json();
+    renderEtfBrandTicker(
+      payload,
+      "KoAct",
+      "koact-etf-ticker-track",
+      "koact-etf-ticker-date"
+    );
+    renderEtfBrandTicker(
+      payload,
+      "TIME",
+      "time-etf-ticker-track",
+      "time-etf-ticker-date"
+    );
+  } catch (error) {
+    [
+      ["koact-etf-ticker-track", "koact-etf-ticker-date", "KoAct"],
+      ["time-etf-ticker-track", "time-etf-ticker-date", "TIME"]
+    ].forEach(([trackId, dateId, brand]) => {
+      const track = document.getElementById(trackId);
+      track.classList.add("is-static");
+      track.innerHTML = `<div class="rate-ticker-loading">${brand} ETF 데이터를 불러오지 못했습니다.</div>`;
+      document.getElementById(dateId).textContent = "Unavailable";
+    });
     console.error(error);
   }
 }
@@ -1259,4 +1372,5 @@ async function loadStocks() {
 }
 
 loadTreasuryTicker();
+loadEtfBrandTickers();
 loadStocks();

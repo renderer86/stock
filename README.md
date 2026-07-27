@@ -1,6 +1,6 @@
 # stock
 
-한국·미국 국채 금리, 네이버 금융 시가총액 데이터, FnGuide 과거 ROE,
+한국·미국 국채 금리, 네이버 금융 ETF·시가총액 데이터, FnGuide 과거 ROE,
 OpenDART 5% 이상 보유 공시를 수집해 보여주는 정적 주식 대시보드입니다.
 
 ## 준비
@@ -51,9 +51,10 @@ $env:ECOS_API_KEY="발급받은키"
 `run_all.py`가 다음 작업을 순서대로 실행합니다.
 
 1. 한국은행 ECOS·FRED 국채 금리 수집
-2. 네이버 금융 시가총액 데이터 수집
-3. FnGuide 과거 ROE 수집
-4. OpenDART 5% 이상 보유 공시 수집
+2. 네이버 금융 KoAct·TIME ETF 현재가/등락률 수집
+3. 네이버 금융 시가총액 데이터 수집
+4. FnGuide 과거 ROE 수집
+5. OpenDART 5% 이상 보유 공시 수집
 
 전체 실행:
 
@@ -96,6 +97,8 @@ $env:ECOS_API_KEY="발급받은키"
 
 - `--skip-dart`: OpenDART 수집 생략
 - `--skip-rates`: ECOS·FRED 국채 금리 수집 생략
+- `--skip-etf-tickers`: 네이버 금융 ETF 브랜드 수집 생략
+- `--etf-brands`: ETF 티커로 수집할 브랜드 목록, 기본 `KoAct TIME`
 - `--rates-lookback-days`: 금리의 최근 유효값을 찾을 조회 기간, 기본 21일
 - `--fnguide-min-roe`: FnGuide 대상의 최소 현재 ROE, 음수이면 필터 해제
 - `--min-roa`: FnGuide/OpenDART 대상의 최소 현재 ROA, 기본 7, 음수이면 필터 해제
@@ -112,6 +115,7 @@ $env:ECOS_API_KEY="발급받은키"
 - `data/fnguide_roe_history.json`: FnGuide 과거 ROE 데이터
 - `data/dart_major_holders.json`: OpenDART 5% 이상 보유 공시 데이터
 - `data/treasury_yields.json`: ECOS 한국 국고채 및 FRED 미국 국채 만기별 금리
+- `data/naver_etf_brands.json`: 네이버 금융 ETF 브랜드별 현재가와 등락률
 
 FnGuide 파싱 실패 시 아래 디버그 파일이 추가로 생성됩니다.
 
@@ -142,6 +146,9 @@ http://localhost:8000
 $env:ECOS_API_KEY="발급받은키"
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_treasury_yields.py
 
+# KoAct·TIME ETF (브랜드 인수를 바꾸면 다른 브랜드도 수집)
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_naver_etf_brands.py KoAct TIME
+
 # 네이버 금융
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_naver_market_sum.py
 
@@ -159,7 +166,8 @@ OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니�
 ## 현재 대시보드 동작
 
 - `data/market_sum_by_roe.json`을 읽고 기본적으로 ROE 10% 이상 종목을 표시합니다.
-- 우선 검토 후보 위에서 한국·미국 국채 금리 전체 만기가 한 줄 티커로 흐릅니다.
+- 우선 검토 후보 위에서 한국·미국 국채 금리, KoAct ETF, TIME ETF가 각각 한 줄 티커로 흐릅니다.
+- 국채 금리는 같은 만기에서 한국과 미국이 연이어 보이도록 배치되며, ETF는 상승 빨강·하락 파랑으로 표시됩니다.
 - 거래정지 추정 종목은 흐리게 표시하고 `거래정지` 배지를 붙입니다.
 - 테이블 헤더를 클릭해 정렬할 수 있습니다.
 - OpenDART 기준 5% 공시, 주요 보유자, 보유비율, 최근 보고일을 표시합니다.

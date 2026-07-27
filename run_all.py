@@ -31,7 +31,8 @@ def run_step(name: str, script: str, arguments: list[str]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Run the treasury yield, Naver, FnGuide, and OpenDART crawlers in order."
+            "Run the treasury yield, ETF ticker, Naver, FnGuide, and OpenDART "
+            "crawlers in order."
         )
     )
     parser.add_argument(
@@ -44,6 +45,17 @@ def main() -> None:
         type=int,
         default=21,
         help="Lookback window for the latest valid treasury yield observations.",
+    )
+    parser.add_argument(
+        "--skip-etf-tickers",
+        action="store_true",
+        help="Skip the Naver ETF brand ticker crawler.",
+    )
+    parser.add_argument(
+        "--etf-brands",
+        nargs="+",
+        default=["KoAct", "TIME"],
+        help="ETF name prefixes to collect for the ticker.",
     )
     parser.add_argument(
         "--skip-dart",
@@ -121,6 +133,13 @@ def main() -> None:
             "Korea and US treasury yields",
             "crawler_treasury_yields.py",
             ["--lookback-days", str(args.rates_lookback_days)],
+        )
+
+    if not args.skip_etf_tickers:
+        run_step(
+            "Naver ETF brand tickers",
+            "crawler_naver_etf_brands.py",
+            args.etf_brands,
         )
 
     run_step(
