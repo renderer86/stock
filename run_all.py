@@ -30,12 +30,25 @@ def run_step(name: str, script: str, arguments: list[str]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run the Naver, FnGuide, and OpenDART crawlers in order."
+        description=(
+            "Run the treasury yield, Naver, FnGuide, and OpenDART crawlers in order."
+        )
+    )
+    parser.add_argument(
+        "--skip-rates",
+        action="store_true",
+        help="Skip the ECOS and FRED treasury yield crawler.",
+    )
+    parser.add_argument(
+        "--rates-lookback-days",
+        type=int,
+        default=21,
+        help="Lookback window for the latest valid treasury yield observations.",
     )
     parser.add_argument(
         "--skip-dart",
         action="store_true",
-        help="Run only the Naver and FnGuide crawlers.",
+        help="Skip the OpenDART crawler.",
     )
     parser.add_argument(
         "--naver-delay",
@@ -92,12 +105,24 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    if not args.skip_rates and not os.environ.get("ECOS_API_KEY", "").strip():
+        parser.error(
+            "ECOS_API_KEY is not set. Set it before running, or pass --skip-rates."
+        )
+
     if not args.skip_dart and not os.environ.get("DART_API_KEY", "").strip():
         parser.error(
             "DART_API_KEY is not set. Set it before running, or pass --skip-dart."
         )
 
     total_started_at = time.monotonic()
+    if not args.skip_rates:
+        run_step(
+            "Korea and US treasury yields",
+            "crawler_treasury_yields.py",
+            ["--lookback-days", str(args.rates_lookback_days)],
+        )
+
     run_step(
         "Naver market data",
         "crawler_naver_market_sum.py",

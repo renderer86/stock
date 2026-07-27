@@ -1,6 +1,7 @@
 # stock
 
-네이버 금융 시가총액 데이터, FnGuide 과거 ROE, OpenDART 5% 이상 보유 공시를 수집해 보여주는 정적 주식 대시보드입니다.
+한국·미국 국채 금리, 네이버 금융 시가총액 데이터, FnGuide 과거 ROE,
+OpenDART 5% 이상 보유 공시를 수집해 보여주는 정적 주식 대시보드입니다.
 
 ## 준비
 
@@ -33,25 +34,40 @@ $env:DART_API_KEY="발급받은키"
 
 API 키는 소스 코드나 Git 저장소에 저장하지 않습니다. 새 PowerShell 창을 열면 환경변수를 다시 설정해야 합니다.
 
+### 한국은행 ECOS API 키 설정
+
+국채 금리 수집에는 한국은행 ECOS 인증키가 필요합니다. 미국 국채 금리는
+인증키가 필요 없는 FRED 공개 CSV에서 함께 수집합니다.
+
+```powershell
+$env:ECOS_API_KEY="발급받은키"
+```
+
+인증키는 소스에 넣지 않습니다. `.env` 계열 파일은 Git에서 제외되어 있지만,
+현재 크롤러는 운영체제 환경변수를 기준으로 읽습니다.
+
 ## 데이터 한 번에 수집
 
 `run_all.py`가 다음 작업을 순서대로 실행합니다.
 
-1. 네이버 금융 시가총액 데이터 수집
-2. FnGuide 과거 ROE 수집
-3. OpenDART 5% 이상 보유 공시 수집
+1. 한국은행 ECOS·FRED 국채 금리 수집
+2. 네이버 금융 시가총액 데이터 수집
+3. FnGuide 과거 ROE 수집
+4. OpenDART 5% 이상 보유 공시 수집
 
 전체 실행:
 
 ```powershell
 cd C:\stock
+$env:ECOS_API_KEY="발급받은키"
 $env:DART_API_KEY="발급받은키"
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py
 ```
 
-OpenDART를 제외하고 네이버와 FnGuide만 실행:
+OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
 
 ```powershell
+$env:ECOS_API_KEY="발급받은키"
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --skip-dart
 ```
 
@@ -79,6 +95,8 @@ OpenDART를 제외하고 네이버와 FnGuide만 실행:
 주요 옵션:
 
 - `--skip-dart`: OpenDART 수집 생략
+- `--skip-rates`: ECOS·FRED 국채 금리 수집 생략
+- `--rates-lookback-days`: 금리의 최근 유효값을 찾을 조회 기간, 기본 21일
 - `--fnguide-min-roe`: FnGuide 대상의 최소 현재 ROE, 음수이면 필터 해제
 - `--min-roa`: FnGuide/OpenDART 대상의 최소 현재 ROA, 기본 7, 음수이면 필터 해제
 - `--no-financial-roa-exempt`: 은행·증권·보험 등 금융업 이름 키워드도 ROA 필터 적용
@@ -93,6 +111,7 @@ OpenDART를 제외하고 네이버와 FnGuide만 실행:
 - `data/market_sum_by_roe.json`: ROE 기준 정렬 데이터
 - `data/fnguide_roe_history.json`: FnGuide 과거 ROE 데이터
 - `data/dart_major_holders.json`: OpenDART 5% 이상 보유 공시 데이터
+- `data/treasury_yields.json`: ECOS 한국 국고채 및 FRED 미국 국채 만기별 금리
 
 FnGuide 파싱 실패 시 아래 디버그 파일이 추가로 생성됩니다.
 
@@ -119,6 +138,10 @@ http://localhost:8000
 문제 진단이나 특정 단계만 다시 실행할 때 사용합니다.
 
 ```powershell
+# 한국·미국 국채 금리
+$env:ECOS_API_KEY="발급받은키"
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_treasury_yields.py
+
 # 네이버 금융
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_naver_market_sum.py
 
@@ -136,6 +159,7 @@ OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니�
 ## 현재 대시보드 동작
 
 - `data/market_sum_by_roe.json`을 읽고 기본적으로 ROE 10% 이상 종목을 표시합니다.
+- 우선 검토 후보 위에서 한국·미국 국채 금리 전체 만기가 한 줄 티커로 흐릅니다.
 - 거래정지 추정 종목은 흐리게 표시하고 `거래정지` 배지를 붙입니다.
 - 테이블 헤더를 클릭해 정렬할 수 있습니다.
 - OpenDART 기준 5% 공시, 주요 보유자, 보유비율, 최근 보고일을 표시합니다.

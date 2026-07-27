@@ -1,6 +1,7 @@
 const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
 const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
 const DART_MAJOR_URL = "./data/dart_major_holders.json";
+const TREASURY_YIELDS_URL = "./data/treasury_yields.json";
 const MARKET_IMPLIED_DISCOUNT = 0.1;
 
 const state = {
@@ -155,6 +156,101 @@ function updateLastUpdated(value) {
     month: "2-digit",
     day: "2-digit"
   });
+}
+
+function formatTickerDate(value) {
+  if (!value) {
+    return "N/A";
+  }
+
+  const normalized = String(value).replaceAll("-", "");
+  if (/^\d{8}$/.test(normalized)) {
+    return `${normalized.slice(4, 6)}.${normalized.slice(6, 8)}`;
+  }
+  return escapeHtml(value);
+}
+
+function renderRateTicker(payload) {
+  const track = document.getElementById("rate-ticker-track");
+  const dateNode = document.getElementById("rate-ticker-date");
+  const korea = payload?.markets?.korea;
+  const unitedStates = payload?.markets?.united_states;
+  const koreaYields = Array.isArray(korea?.yields) ? korea.yields : [];
+  const usYields = Array.isArray(unitedStates?.yields) ? unitedStates.yields : [];
+
+  const renderYield = (item, countryCode) => {
+    const value = Number(item?.value);
+    const change = item?.change === null || item?.change === undefined
+      ? null
+      : Number(item.change);
+    const hasChange = change !== null && !Number.isNaN(change);
+    const direction = !hasChange || change === 0
+      ? "is-flat"
+      : change > 0
+        ? "is-up"
+        : "is-down";
+    const changeText = !hasChange
+      ? ""
+      : change > 0
+        ? `▲ +${formatNumber(change, 2)}`
+        : change < 0
+          ? `▼ ${formatNumber(change, 2)}`
+          : "— 0.00";
+
+    return `
+      <span class="rate-ticker-item">
+        <span class="rate-country">${countryCode}</span>
+        <span class="rate-maturity">${escapeHtml(item?.label || item?.maturity || "")}</span>
+        <strong>${Number.isNaN(value) ? "N/A" : `${formatNumber(value, 2)}%`}</strong>
+        ${changeText ? `<span class="rate-change ${direction}">${changeText}</span>` : ""}
+      </span>
+    `;
+  };
+
+  const items = [
+    ...koreaYields.map((item) => renderYield(item, "KR")),
+    ...usYields.map((item) => renderYield(item, "US"))
+  ];
+
+  if (!items.length) {
+    track.innerHTML = "<div class='rate-ticker-loading'>표시할 국채 금리 데이터가 없습니다.</div>";
+    track.classList.add("is-static");
+    dateNode.textContent = "No data";
+    return;
+  }
+
+  const segment = `
+    <div class="rate-ticker-segment">
+      ${items.join("<span class='rate-ticker-divider' aria-hidden='true'>•</span>")}
+      <span class="rate-ticker-divider market-divider" aria-hidden="true">◆</span>
+    </div>
+  `;
+
+  track.classList.remove("is-static");
+  track.style.setProperty("--ticker-duration", `${Math.max(52, items.length * 4.5)}s`);
+  track.innerHTML = `${segment}${segment.replace(
+    'class="rate-ticker-segment"',
+    'class="rate-ticker-segment" aria-hidden="true"'
+  )}`;
+  dateNode.textContent = `KR ${formatTickerDate(korea?.as_of_date)} · US ${formatTickerDate(unitedStates?.as_of_date)}`;
+}
+
+async function loadTreasuryTicker() {
+  const track = document.getElementById("rate-ticker-track");
+  const dateNode = document.getElementById("rate-ticker-date");
+
+  try {
+    const response = await fetch(TREASURY_YIELDS_URL, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} for treasury yields`);
+    }
+    renderRateTicker(await response.json());
+  } catch (error) {
+    track.classList.add("is-static");
+    track.innerHTML = "<div class='rate-ticker-loading'>국채 금리 데이터를 불러오지 못했습니다.</div>";
+    dateNode.textContent = "Unavailable";
+    console.error(error);
+  }
 }
 
 function clamp(value, min, max) {
@@ -1162,4 +1258,5 @@ async function loadStocks() {
   }
 }
 
+loadTreasuryTicker();
 loadStocks();

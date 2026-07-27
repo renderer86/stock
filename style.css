@@ -92,6 +92,182 @@ h1 {
   font-size: 1rem;
 }
 
+.rate-ticker {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 52px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  background: #1f1b17;
+  color: #fff8f1;
+  box-shadow: 0 14px 30px rgba(42, 29, 18, 0.16);
+}
+
+.rate-ticker-label,
+.rate-ticker-date {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  background: #1f1b17;
+}
+
+.rate-ticker-label {
+  gap: 9px;
+  padding: 0 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff8f1;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.rate-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f08b64;
+  box-shadow: 0 0 0 4px rgba(240, 139, 100, 0.13);
+  animation: rate-live-pulse 1.8s ease-in-out infinite;
+}
+
+.rate-ticker-date {
+  padding: 0 15px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 248, 241, 0.56);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.rate-ticker-viewport {
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+}
+
+.rate-ticker-track {
+  --ticker-duration: 80s;
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  min-height: 100%;
+  align-items: center;
+  animation: rate-ticker-scroll var(--ticker-duration) linear infinite;
+  will-change: transform;
+}
+
+.rate-ticker:hover .rate-ticker-track {
+  animation-play-state: paused;
+}
+
+.rate-ticker-track.is-static {
+  width: 100%;
+  animation: none;
+}
+
+.rate-ticker-segment {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-right: 28px;
+}
+
+.rate-ticker-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 0 11px;
+  white-space: nowrap;
+  font-size: 0.86rem;
+}
+
+.rate-ticker-item strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.94rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rate-country {
+  display: inline-flex;
+  align-items: center;
+  min-height: 21px;
+  padding: 0 6px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 248, 241, 0.74);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.rate-maturity {
+  color: rgba(255, 248, 241, 0.72);
+}
+
+.rate-change {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.73rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rate-change.is-up {
+  color: #f59471;
+}
+
+.rate-change.is-down {
+  color: #78b8e8;
+}
+
+.rate-change.is-flat {
+  color: rgba(255, 248, 241, 0.46);
+}
+
+.rate-ticker-divider {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 0.7rem;
+}
+
+.rate-ticker-divider.market-divider {
+  margin: 0 4px;
+  color: rgba(240, 139, 100, 0.54);
+}
+
+.rate-ticker-loading {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  padding: 0 18px;
+  color: rgba(255, 248, 241, 0.62);
+  font-size: 0.84rem;
+}
+
+@keyframes rate-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes rate-live-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
 .dashboard-layout {
   display: grid;
   gap: 18px;
@@ -541,6 +717,18 @@ input[type="range"] {
     justify-items: start;
   }
 
+  .rate-ticker {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .rate-ticker-date {
+    display: none;
+  }
+
+  .rate-ticker-label {
+    padding: 0 12px;
+  }
+
   .selected-stock-summary,
   .detail-grid,
   .summary-grid,
@@ -553,5 +741,24 @@ input[type="range"] {
 
   .panel {
     padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rate-live-dot {
+    animation: none;
+  }
+
+  .rate-ticker-viewport {
+    overflow-x: auto;
+    mask-image: none;
+  }
+
+  .rate-ticker-track {
+    animation: none;
+  }
+
+  .rate-ticker-segment[aria-hidden="true"] {
+    display: none;
   }
 }
