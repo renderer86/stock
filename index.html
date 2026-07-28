@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260728-etf-ticker-2">
+  <link rel="stylesheet" href="style.css?v=20260729-market-workspaces">
 </head>
 <body>
   <div class="page-shell">
@@ -68,7 +68,17 @@
       </section>
     </div>
 
+    <nav class="workspace-tabs" aria-label="대시보드 기능">
+      <button class="workspace-tab is-active" type="button" data-workspace="valuation">가치평가</button>
+      <button class="workspace-tab" type="button" data-workspace="korea">국내 수급·공매도</button>
+      <button class="workspace-tab" type="button" data-workspace="disclosures">공시·임원매수</button>
+      <button class="workspace-tab" type="button" data-workspace="us">미국 시장</button>
+      <button class="workspace-tab" type="button" data-workspace="intelligence">뉴스·브리핑</button>
+      <button class="workspace-tab" type="button" data-workspace="data">데이터 상태</button>
+    </nav>
+
     <main class="dashboard-layout">
+      <div id="workspace-valuation" class="workspace-view is-active" data-workspace-view="valuation">
       <section class="panel">
         <div class="section-head">
           <div>
@@ -256,9 +266,307 @@
           </label>
         </div>
       </section>
+      </div>
+
+      <div id="workspace-korea" class="workspace-view" data-workspace-view="korea">
+        <section class="feature-hero panel">
+          <div>
+            <p class="section-kicker">Korea Market</p>
+            <h2>국내 수급·공매도</h2>
+            <p>코스피·코스닥 투자자별 순매수와 종목별 공매도 거래·잔고를 같은 기준일로 비교합니다.</p>
+          </div>
+          <div id="korea-market-kpis" class="kpi-grid feature-kpis"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Investor Flow</p>
+              <h2>시장 수급 추이</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="flow-market-select" aria-label="수급 시장">
+                <option value="KOSPI">코스피</option>
+                <option value="KOSDAQ">코스닥</option>
+              </select>
+            </div>
+          </div>
+          <div id="flow-summary-cards" class="kpi-grid"></div>
+          <div id="flow-chart" class="flow-chart" aria-label="최근 투자자별 순매수 추이"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Ticker Flow</p>
+              <h2>종목별 순매수</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="flow-investor-select" aria-label="투자자">
+                <option value="foreign">외국인</option>
+                <option value="institution">기관</option>
+                <option value="individual">개인</option>
+              </select>
+              <select id="flow-direction-select" aria-label="정렬">
+                <option value="buy">순매수 상위</option>
+                <option value="sell">순매도 상위</option>
+              </select>
+              <input id="flow-search-input" type="search" placeholder="종목명·코드">
+            </div>
+          </div>
+          <div class="table-wrap feature-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>순위</th><th>종목</th><th>순매수 금액</th><th>순매수 수량</th>
+                  <th>매수 금액</th><th>매도 금액</th>
+                </tr>
+              </thead>
+              <tbody id="flow-ticker-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Short Selling</p>
+              <h2>공매도 거래·잔고</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="short-market-select" aria-label="공매도 시장">
+                <option value="KOSPI">코스피</option>
+                <option value="KOSDAQ">코스닥</option>
+              </select>
+              <select id="short-mode-select" aria-label="공매도 자료">
+                <option value="trade">당일 거래비중</option>
+                <option value="balance">잔고 상위 50</option>
+              </select>
+              <input id="short-search-input" type="search" placeholder="종목명·코드">
+            </div>
+          </div>
+          <p id="short-delay-note" class="data-note"></p>
+          <div class="table-wrap feature-table">
+            <table>
+              <thead id="short-table-head"></thead>
+              <tbody id="short-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="workspace-disclosures" class="workspace-view" data-workspace-view="disclosures">
+        <section class="feature-hero panel">
+          <div>
+            <p class="section-kicker">DART Intelligence</p>
+            <h2>공시 이벤트·임원매수</h2>
+            <p>자사주·배당·수주·CB의 실제 금액과 임원 보유증감을 원문 기준으로 분리해 봅니다.</p>
+          </div>
+          <div id="disclosure-kpis" class="kpi-grid feature-kpis"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Corporate Events</p>
+              <h2>주주환원·수주·희석 이벤트</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="event-type-select" aria-label="공시 이벤트">
+                <option value="buybacks">자사주</option>
+                <option value="dividends">배당</option>
+                <option value="contracts">수주</option>
+                <option value="convertible_bonds">CB</option>
+              </select>
+              <select id="event-sort-select" aria-label="공시 정렬">
+                <option value="impact">영향 큰 순</option>
+                <option value="date">최신 순</option>
+              </select>
+              <input id="event-search-input" type="search" placeholder="종목명·코드">
+            </div>
+          </div>
+          <div id="event-cards" class="event-card-grid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Peter Lynch Lens</p>
+              <h2>임원·주요주주 매수</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="insider-mode-select" aria-label="임원매수 구분">
+                <option value="confirmed">원문 확인 매수</option>
+                <option value="candidate">보유증가 후보</option>
+                <option value="all">전체 증감</option>
+              </select>
+              <input id="insider-search-input" type="search" placeholder="종목·회사·임원">
+            </div>
+          </div>
+          <p class="data-note">보유수량 증가는 스톡옵션·증여 등도 포함할 수 있어, 원문에서 장내·장외·시간외매수가 확인된 건만 ‘확정 매수’로 구분합니다.</p>
+          <div class="table-wrap feature-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>보고일</th><th>종목</th><th>보고자</th><th>직위</th><th>구분</th>
+                  <th>증감 수량</th><th>추정 변화금액</th><th>변동 사유</th><th>원문</th>
+                </tr>
+              </thead>
+              <tbody id="insider-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Disclosure Feed</p>
+              <h2>최근 DART 공시</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="filing-category-select" aria-label="공시 분류">
+                <option value="all">전체 유형</option>
+                <option value="ownership">지분</option>
+                <option value="buyback">자사주</option>
+                <option value="earnings">실적</option>
+                <option value="dividend">배당</option>
+                <option value="contract">수주</option>
+                <option value="capital">증자·사채</option>
+                <option value="major_event">주요 이벤트</option>
+              </select>
+              <input id="filing-search-input" type="search" placeholder="종목·회사·제목">
+            </div>
+          </div>
+          <div id="filing-feed" class="filing-feed"></div>
+        </section>
+      </div>
+
+      <div id="workspace-us" class="workspace-view" data-workspace-view="us">
+        <section class="feature-hero panel">
+          <div>
+            <p class="section-kicker">US Market</p>
+            <h2>미국 종목·공매도</h2>
+            <p>Nasdaq 종목 스냅샷과 차트 기술지표, FINRA 공매도 거래·잔고를 함께 탐색합니다.</p>
+          </div>
+          <div id="us-market-kpis" class="kpi-grid feature-kpis"></div>
+        </section>
+
+        <section class="us-detail-grid">
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Stock Explorer</p>
+                <h2>미국 종목 탐색</h2>
+              </div>
+              <div class="feature-controls">
+                <select id="us-stock-sort-select">
+                  <option value="market_cap">시가총액</option>
+                  <option value="change">당일 등락</option>
+                  <option value="return_1m">1개월 수익률</option>
+                  <option value="rsi">RSI</option>
+                </select>
+                <input id="us-stock-search-input" type="search" placeholder="티커·회사·섹터">
+              </div>
+            </div>
+            <div class="table-wrap feature-table us-stock-list">
+              <table>
+                <thead><tr><th>티커</th><th>회사</th><th>현재가</th><th>당일</th><th>1M</th><th>RSI</th><th>시총</th></tr></thead>
+                <tbody id="us-stock-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel us-chart-panel">
+            <div id="us-selected-summary"></div>
+            <div id="us-price-chart" class="us-price-chart"></div>
+            <div id="us-analyst-summary" class="us-analyst-summary"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">FINRA</p>
+              <h2>미국 공매도</h2>
+            </div>
+            <div class="feature-controls">
+              <select id="us-short-mode-select">
+                <option value="interest">격주 잔고</option>
+                <option value="volume">일일 거래비중</option>
+              </select>
+              <input id="us-short-search-input" type="search" placeholder="티커·회사">
+            </div>
+          </div>
+          <p class="data-note">FINRA 공매도 잔고는 격주·지연 자료이며, 일일 공매도 거래량과 같은 의미가 아닙니다.</p>
+          <div class="table-wrap feature-table">
+            <table>
+              <thead id="us-short-table-head"></thead>
+              <tbody id="us-short-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="workspace-intelligence" class="workspace-view" data-workspace-view="intelligence">
+        <section class="feature-hero panel">
+          <div>
+            <p class="section-kicker">Market Intelligence</p>
+            <h2>뉴스·AI 브리핑·공시</h2>
+            <p>수집된 국내외 뉴스와 주요 SEC 공시, 자동 생성된 시장 브리핑을 한곳에서 확인합니다.</p>
+          </div>
+          <div id="intelligence-kpis" class="kpi-grid feature-kpis"></div>
+        </section>
+
+        <section class="intelligence-grid">
+          <article class="panel briefing-panel">
+            <div class="section-head">
+              <div><p class="section-kicker">AI Briefing</p><h2>오늘의 시장 브리핑</h2></div>
+            </div>
+            <div id="ai-briefing-content" class="briefing-content"></div>
+          </article>
+          <article class="panel">
+            <div class="section-head">
+              <div><p class="section-kicker">NAVER News</p><h2>최신 뉴스</h2></div>
+              <div class="feature-controls">
+                <select id="news-category-select"><option value="all">전체</option></select>
+                <input id="news-search-input" type="search" placeholder="뉴스 검색">
+              </div>
+            </div>
+            <div id="news-feed" class="news-feed"></div>
+          </article>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div><p class="section-kicker">SEC Filings</p><h2>미국 주요 공시</h2></div>
+            <div class="feature-controls">
+              <select id="sec-category-select"><option value="all">전체</option></select>
+              <input id="sec-search-input" type="search" placeholder="티커·회사·공시">
+            </div>
+          </div>
+          <div id="sec-filing-feed" class="filing-feed"></div>
+        </section>
+      </div>
+
+      <div id="workspace-data" class="workspace-view" data-workspace-view="data">
+        <section class="feature-hero panel">
+          <div>
+            <p class="section-kicker">Data Trust</p>
+            <h2>데이터 신뢰도 센터</h2>
+            <p>각 JSON의 출처·기준일·파일 크기와 브라우저 연결 상태를 확인합니다.</p>
+          </div>
+          <div id="data-trust-kpis" class="kpi-grid feature-kpis"></div>
+        </section>
+        <section class="panel">
+          <div class="section-head">
+            <div><p class="section-kicker">Collection Status</p><h2>수집 파일 상태</h2></div>
+            <button id="refresh-data-status" class="action-button" type="button">상태 다시 확인</button>
+          </div>
+          <div id="data-status-grid" class="data-status-grid"></div>
+        </section>
+      </div>
     </main>
   </div>
 
-  <script src="script.js?v=20260728-etf-ticker-2"></script>
+  <script src="script.js?v=20260729-market-workspaces"></script>
 </body>
 </html>
