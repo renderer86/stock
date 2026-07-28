@@ -1,17 +1,17 @@
 {
-  "generated_at_utc": "2026-07-28T16:07:33.356742+00:00",
-  "file_count": 10,
+  "generated_at_utc": "2026-07-28T16:22:55.833330+00:00",
+  "file_count": 11,
   "files": [
     {
       "file": "data/dart_major_holders.json",
-      "bytes": 628362,
+      "bytes": 608736,
       "source": "OpenDART majorstock.json",
       "count": 377,
       "data_date": "2026-07-28T13:38:50.956085+00:00"
     },
     {
       "file": "data/fnguide_roe_history.json",
-      "bytes": 297093,
+      "bytes": 284899,
       "source": "FnGuide SVD_Finance.asp",
       "count": 369,
       "data_date": "2026-07-28T13:31:52.363016+00:00"
@@ -25,7 +25,7 @@
     },
     {
       "file": "data/market_sum.json",
-      "bytes": 6780895,
+      "bytes": 6551229,
       "source": [
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0",
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1"
@@ -35,7 +35,7 @@
     },
     {
       "file": "data/market_sum_by_roe.json",
-      "bytes": 6780918,
+      "bytes": 6551251,
       "source": [
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0",
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1"
@@ -45,35 +45,42 @@
     },
     {
       "file": "data/naver_etf_brands.json",
-      "bytes": 24113,
+      "bytes": 23448,
       "source": "Naver Finance ETF",
       "count": null,
       "data_date": "2026-07-28T13:18:15Z"
     },
     {
+      "file": "data/naver_news.json",
+      "bytes": 220603,
+      "source": "NAVER Search API / news",
+      "count": 291,
+      "data_date": "2026-07-28T16:22:55.268739+00:00"
+    },
+    {
       "file": "data/treasury_yields.json",
-      "bytes": 7747,
+      "bytes": 7473,
       "source": null,
       "count": null,
       "data_date": "2026-07-28T13:18:13Z"
     },
     {
       "file": "data/us_finra_short_interest.json",
-      "bytes": 10550531,
+      "bytes": 10550530,
       "source": "FINRA Consolidated Short Interest API",
       "count": 22375,
       "data_date": "2026-07-15"
     },
     {
       "file": "data/us_finra_short_volume.json",
-      "bytes": 4554138,
+      "bytes": 4332753,
       "source": "FINRA Reg SHO Daily Short Sale Volume",
       "count": 15068,
       "data_date": "2026-07-27"
     },
     {
       "file": "data/us_market_snapshot.json",
-      "bytes": 8804261,
+      "bytes": 8804260,
       "source": [
         "Nasdaq stock screener",
         "Yahoo Finance Chart"
