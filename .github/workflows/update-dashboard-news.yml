@@ -1,0 +1,77 @@
+name: Update dashboard news
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/update-dashboard-news.yml"
+  schedule:
+    # Every two hours. NAVER Search API requests stay lightweight and separate
+    # from the 35-40 minute full market-data collection.
+    - cron: "17 */2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-dashboard-news-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  collect-news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+      NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install lightweight dependency
+        run: python -m pip install "requests>=2.31,<3"
+
+      - name: Collect categorized NAVER news
+        run: python crawler_naver_news.py --display 40
+
+      - name: Refresh data manifest
+        run: python build_data_manifest.py
+
+      - name: Commit refreshed news
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/naver_news.json data/data_manifest.json
+          if git diff --cached --quiet; then
+            echo "No news changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(data): refresh dashboard news"
+
+          for attempt in 1 2 3; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+              git rebase --abort || true
+              echo "::error::News data conflicted with newer remote data."
+              exit 1
+            fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            sleep 3
+          done
+
+          echo "::error::Failed to push news after 3 attempts."
+          exit 1

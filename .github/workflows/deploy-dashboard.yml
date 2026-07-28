@@ -9,6 +9,8 @@ on:
       - "style.css"
       - "script.js"
       - "assets/**"
+      - "data/naver_news.json"
+      - "data/market_indices.json"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 

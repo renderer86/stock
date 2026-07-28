@@ -4,6 +4,7 @@ import argparse
 import html
 import os
 import re
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 
@@ -17,20 +18,41 @@ ROOT_DIR = Path(__file__).resolve().parent
 API_URL = "https://openapi.naver.com/v1/search/news.json"
 DEFAULT_OUTPUT = Path("data/naver_news.json")
 DEFAULT_QUERIES = [
-    ("korea_market", "코스피 OR 코스닥 증시"),
+    ("semiconductor", "반도체 OR HBM OR 파운드리 주식"),
+    ("it", "IT OR 인공지능 OR 소프트웨어 OR 빅테크 주식"),
+    ("us", "미국 증시 OR 뉴욕증시 OR 나스닥 OR S&P500"),
+    ("kospi", "코스피 증시"),
+    ("kosdaq", "코스닥 증시"),
     ("korea_rates", "국고채 금리 한국은행"),
     ("korea_flow", "외국인 기관 순매수 증시"),
-    ("us_market", "미국 증시 나스닥 S&P500"),
     ("us_rates", "미국 국채 금리 연준"),
-    ("semiconductor", "반도체 주식"),
     ("battery", "2차전지 주식"),
     ("bio", "바이오 주식"),
 ]
+CATEGORY_LABELS = {
+    "semiconductor": "반도체",
+    "it": "IT",
+    "us": "미국",
+    "kospi": "코스피",
+    "kosdaq": "코스닥",
+    "korea_rates": "국내 금리",
+    "korea_flow": "국내 수급",
+    "us_rates": "미국 금리",
+    "battery": "2차전지",
+    "bio": "바이오",
+}
 
 
 def clean_text(value: Any) -> str:
     text = re.sub(r"<[^>]+>", "", str(value or ""))
     return " ".join(html.unescape(text).split())
+
+
+def published_timestamp(value: Any) -> float:
+    try:
+        return parsedate_to_datetime(str(value or "")).timestamp()
+    except (TypeError, ValueError, OverflowError):
+        return 0.0
 
 
 def main() -> None:
@@ -108,12 +130,13 @@ def main() -> None:
 
     items = sorted(
         by_link.values(),
-        key=lambda row: str(row.get("published_at") or ""),
+        key=lambda row: published_timestamp(row.get("published_at")),
         reverse=True,
     )
     payload = {
         "source": "NAVER Search API / news",
         "crawled_at_utc": utc_now_iso(),
+        "category_labels": CATEGORY_LABELS,
         "queries": [{"category": category, "query": query} for category, query in queries],
         "raw_counts": categories,
         "count": len(items),

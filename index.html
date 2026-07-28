@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260729-market-pulse">
+  <link rel="stylesheet" href="style.css?v=20260729-today-news">
 </head>
 <body>
   <div class="page-shell">
@@ -98,6 +98,30 @@
         <div id="market-index-chart" class="market-index-chart">
           <div class="market-overview-loading">차트 준비 중입니다.</div>
         </div>
+      </div>
+    </section>
+
+    <section class="today-news-board" aria-labelledby="today-news-title">
+      <div class="today-news-head">
+        <div>
+          <p class="section-kicker">Today's News</p>
+          <h2 id="today-news-title">오늘의 뉴스</h2>
+          <p>시장에 영향을 줄 만한 최신 기사를 분야별로 빠르게 확인합니다.</p>
+        </div>
+        <div class="today-news-head-meta">
+          <span id="today-news-updated">뉴스 불러오는 중</span>
+          <button id="open-intelligence-news" type="button">전체 뉴스 화면</button>
+        </div>
+      </div>
+      <div class="today-news-tabs" role="tablist" aria-label="오늘의 뉴스 분야">
+        <button type="button" role="tab" data-today-news-category="semiconductor" class="is-active" aria-selected="true">반도체</button>
+        <button type="button" role="tab" data-today-news-category="it" aria-selected="false">IT</button>
+        <button type="button" role="tab" data-today-news-category="us" aria-selected="false">미국</button>
+        <button type="button" role="tab" data-today-news-category="kospi" aria-selected="false">코스피</button>
+        <button type="button" role="tab" data-today-news-category="kosdaq" aria-selected="false">코스닥</button>
+      </div>
+      <div id="today-news-content" class="today-news-content" aria-live="polite">
+        <div class="today-news-loading">반도체 뉴스를 불러오는 중입니다.</div>
       </div>
     </section>
 
@@ -600,6 +624,6 @@
     </main>
   </div>
 
-  <script src="script.js?v=20260729-market-pulse"></script>
+  <script src="script.js?v=20260729-today-news"></script>
 </body>
 </html>

@@ -14,6 +14,9 @@
 - `뉴스·브리핑`: NAVER 뉴스, Gemini 브리핑, SEC 주요 공시
 - `데이터 상태`: 생성된 전체 JSON의 기준일·건수·크기·출처
 
+국채·ETF 자막 아래에는 8개 주요 시장 차트와 `오늘의 뉴스`가 표시됩니다. 오늘의
+뉴스는 `반도체`가 기본 선택이며 `IT`, `미국`, `코스피`, `코스닥`으로 전환할 수 있습니다.
+
 각 작업공간은 처음 선택할 때 필요한 JSON만 읽으며, 파일이 아직 생성되지 않은 경우에는
 다른 화면을 막지 않고 대기 상태를 표시합니다.
 
@@ -160,6 +163,7 @@ OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, �
 - `data/dart_major_holders.json`: OpenDART 5% 이상 보유 공시 데이터
 - `data/treasury_yields.json`: ECOS 한국 국고채 및 FRED 미국 국채 만기별 금리
 - `data/naver_etf_brands.json`: 네이버 금융 ETF 브랜드별 현재가와 등락률
+- `data/market_indices.json`: 한·미 주요 지수와 비트코인·이더리움 2년 일봉
 - `data/us_finra_short_volume.json`: FINRA 최신 미국 종목별 장외 공매도 거래량
 - `data/us_finra_short_interest.json`: FINRA 최신 격주 종목별 공매도 잔고
 - `data/us_market_snapshot.json`: Nasdaq 전체 미국 종목과 Yahoo 상위 종목 차트·기술지표
@@ -272,6 +276,10 @@ GitHub Actions에서 다음 일정으로 실행됩니다.
 - 평일 08:30 KST: ECOS·FRED 한국/미국 국채 금리
 - 평일 16:30 KST: 국내외 전체 시장·공시·뉴스·AI 브리핑
 - 수동 실행: GitHub의 `Actions` → `Update market data` → `Run workflow`
+
+`Update dashboard news`는 전체 크롤링과 분리되어 2시간마다 반도체·IT·미국·코스피·
+코스닥 뉴스를 갱신합니다. 뉴스 JSON이 바뀌면 `Deploy dashboard page`가 자동으로
+기존 시장 데이터와 함께 페이지를 다시 배포합니다.
 
 자동 실행 전에 GitHub 저장소의 `Settings` → `Secrets and variables` →
 `Actions` → `New repository secret`에서 다음 이름을 등록합니다.

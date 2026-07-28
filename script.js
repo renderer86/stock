@@ -64,7 +64,11 @@ const state = {
   secSearch: "",
   marketAssets: [],
   selectedMarketAsset: "sp500",
-  marketChartRange: "3m"
+  marketChartRange: "3m",
+  todayNewsCategory: "semiconductor",
+  todayNewsItems: [],
+  todayNewsLabels: {},
+  todayNewsCrawledAt: null
 };
 
 function formatNumber(value, digits = 2) {
@@ -631,6 +635,157 @@ async function loadMarketOverview() {
     document.getElementById("market-index-chart").innerHTML =
       "<div class='market-overview-loading'>다음 데이터 수집 후 표시됩니다.</div>";
     document.getElementById("market-overview-updated").textContent = "Unavailable";
+    console.error(error);
+  }
+}
+
+const TODAY_NEWS_LABELS = {
+  semiconductor: "반도체",
+  it: "IT",
+  us: "미국",
+  kospi: "코스피",
+  kosdaq: "코스닥",
+  korea_rates: "국내 금리",
+  korea_flow: "국내 수급",
+  us_rates: "미국 금리",
+  battery: "2차전지",
+  bio: "바이오"
+};
+
+function newsCategoryLabel(category) {
+  return state.todayNewsLabels?.[category]
+    || TODAY_NEWS_LABELS[category]
+    || category;
+}
+
+function kstDateKey(value) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+  return new Date(date.getTime() + 9 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+}
+
+function newsSourceName(link) {
+  try {
+    return new URL(link).hostname.replace(/^www\./, "");
+  } catch {
+    return "뉴스";
+  }
+}
+
+function formatNewsTimestamp(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "시간 미상";
+  }
+  const elapsedMinutes = Math.max(0, Math.floor((Date.now() - date.getTime()) / 60000));
+  if (elapsedMinutes < 60) {
+    return `${elapsedMinutes}분 전`;
+  }
+  if (elapsedMinutes < 1440) {
+    return `${Math.floor(elapsedMinutes / 60)}시간 전`;
+  }
+  return formatCompactDate(value);
+}
+
+function todayNewsRows() {
+  const categoryRows = state.todayNewsItems.filter(
+    (row) => (row.categories || []).includes(state.todayNewsCategory)
+  );
+  const todayKey = kstDateKey(new Date());
+  const todaysRows = categoryRows.filter(
+    (row) => kstDateKey(row.published_at) === todayKey
+  );
+  return {
+    rows: (todaysRows.length ? todaysRows : categoryRows).slice(0, 9),
+    isToday: todaysRows.length > 0,
+    categoryCount: todaysRows.length || categoryRows.length
+  };
+}
+
+function renderTodayNews() {
+  const container = document.getElementById("today-news-content");
+  const { rows, isToday, categoryCount } = todayNewsRows();
+  document.querySelectorAll("[data-today-news-category]").forEach((button) => {
+    const selected = button.dataset.todayNewsCategory === state.todayNewsCategory;
+    button.classList.toggle("is-active", selected);
+    button.setAttribute("aria-selected", selected ? "true" : "false");
+  });
+  if (!rows.length) {
+    container.innerHTML = `
+      <div class="today-news-loading">
+        ${escapeHtml(newsCategoryLabel(state.todayNewsCategory))} 뉴스가 아직 없습니다. 다음 뉴스 수집 후 표시됩니다.
+      </div>
+    `;
+    return;
+  }
+  const [featured, ...rest] = rows;
+  const featuredSource = newsSourceName(featured.link);
+  const featuredLink = escapeHtml(featured.link || "#");
+  container.innerHTML = `
+    <a class="today-news-feature" href="${featuredLink}" target="_blank" rel="noopener">
+      <span class="today-news-feature-tag">${escapeHtml(newsCategoryLabel(state.todayNewsCategory))} · ${isToday ? "오늘" : "최근"}</span>
+      <h3>${escapeHtml(featured.title || "-")}</h3>
+      <p>${escapeHtml(featured.description || "")}</p>
+      <span class="today-news-feature-meta">
+        <span>${escapeHtml(featuredSource)}</span>
+        <span>·</span>
+        <span>${escapeHtml(formatNewsTimestamp(featured.published_at))}</span>
+      </span>
+    </a>
+    <div class="today-news-list">
+      ${rest.slice(0, 8).map((row, index) => `
+        <a class="today-news-item" href="${escapeHtml(row.link || "#")}" target="_blank" rel="noopener">
+          <span class="today-news-rank">${index + 2}</span>
+          <span class="today-news-item-main">
+            <h3>${escapeHtml(row.title || "-")}</h3>
+            <span class="today-news-item-meta">
+              <span>${escapeHtml(newsSourceName(row.link))}</span>
+              <span>·</span>
+              <span>${escapeHtml(formatNewsTimestamp(row.published_at))}</span>
+            </span>
+          </span>
+        </a>
+      `).join("")}
+    </div>
+  `;
+  document.getElementById("today-news-updated").textContent =
+    `${isToday ? "오늘" : "최근"} ${categoryCount}건 · ${newsCategoryLabel(state.todayNewsCategory)}`;
+}
+
+function bindTodayNews() {
+  document.querySelectorAll("[data-today-news-category]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.todayNewsCategory = button.dataset.todayNewsCategory;
+      renderTodayNews();
+    });
+  });
+  document.getElementById("open-intelligence-news")?.addEventListener("click", () => {
+    switchWorkspace("intelligence");
+  });
+}
+
+async function loadTodayNews() {
+  try {
+    const response = await fetch(`${NAVER_NEWS_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} for NAVER news`);
+    }
+    const payload = await response.json();
+    state.todayNewsItems = Array.isArray(payload.items) ? payload.items : [];
+    state.todayNewsLabels = payload.category_labels || {};
+    state.todayNewsCrawledAt = payload.crawled_at_utc || null;
+    state.featureData.news = payload;
+    renderTodayNews();
+  } catch (error) {
+    document.getElementById("today-news-content").innerHTML =
+      "<div class='today-news-loading'>오늘의 뉴스는 다음 뉴스 수집 후 표시됩니다.</div>";
+    document.getElementById("today-news-updated").textContent = "Unavailable";
     console.error(error);
   }
 }
@@ -2337,7 +2492,7 @@ function populateNewsCategories() {
   const select = document.getElementById("news-category-select");
   const categories = new Set((state.featureData.news?.items || []).flatMap((row) => row.categories || []));
   const current = state.newsCategory;
-  select.innerHTML = `<option value="all">전체</option>${[...categories].sort().map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
+  select.innerHTML = `<option value="all">전체</option>${[...categories].sort().map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(newsCategoryLabel(category))}</option>`).join("")}`;
   select.value = categories.has(current) ? current : "all";
   state.newsCategory = select.value;
 }
@@ -2536,6 +2691,7 @@ function bindFeatureControls() {
 
 bindFeatureControls();
 bindMarketOverview();
+bindTodayNews();
 const initialWorkspace = location.hash.replace("#", "");
 if (["valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
   switchWorkspace(initialWorkspace, false);
@@ -2543,4 +2699,5 @@ if (["valuation", "korea", "disclosures", "us", "intelligence", "data"].includes
 loadTreasuryTicker();
 loadEtfBrandTickers();
 loadMarketOverview();
+loadTodayNews();
 loadStocks();
