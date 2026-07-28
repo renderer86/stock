@@ -53,6 +53,18 @@ NON_PURCHASE_INCREASE_RULES = (
 )
 
 
+def should_log_progress(current: int, total: int, every: int) -> bool:
+    return (
+        current == 1
+        or current == total
+        or current % max(every, 1) == 0
+    )
+
+
+def progress_percent(current: int, total: int) -> float:
+    return current / total * 100 if total else 100.0
+
+
 def load_json(path: Path) -> dict[str, Any]:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -282,10 +294,12 @@ def collect_document_events(
     api_key: str,
     filings: list[dict[str, Any]],
     delay: float,
+    progress_every: int,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]:
     dividends: list[dict[str, Any]] = []
     contracts: list[dict[str, Any]] = []
     errors: list[str] = []
+    targets: list[tuple[dict[str, Any], str, str]] = []
     for row in filings:
         name = str(row.get("report_nm") or "")
         kind: str | None = None
@@ -299,20 +313,44 @@ def collect_document_events(
         receipt = receipt_number(row)
         if not receipt:
             continue
+        targets.append((row, kind, receipt))
+
+    started_at = time.monotonic()
+    print(
+        f"[DART 1/3] Dividend/contract documents: "
+        f"{len(targets):,} targets from {len(filings):,} filings",
+        flush=True,
+    )
+    for index, (row, kind, receipt) in enumerate(targets, start=1):
         document = fetch_document(session, api_key, receipt)
         if not document:
             errors.append(f"document:{receipt}")
-            continue
-        text = clean_document(document)
-        parsed = parse_dividend(text) if kind == "dividend" else parse_contract(text)
-        if kind == "dividend":
-            if parsed.get("record_date") or parsed.get("dps_common_krw") is not None:
-                dividends.append({**base_event(row), **parsed})
-        elif (
-            parsed.get("contract_amount_krw") is not None
-            or parsed.get("sales_ratio_pct") is not None
-        ):
-            contracts.append({**base_event(row), **parsed})
+        else:
+            text = clean_document(document)
+            parsed = (
+                parse_dividend(text)
+                if kind == "dividend"
+                else parse_contract(text)
+            )
+            if kind == "dividend":
+                if (
+                    parsed.get("record_date")
+                    or parsed.get("dps_common_krw") is not None
+                ):
+                    dividends.append({**base_event(row), **parsed})
+            elif (
+                parsed.get("contract_amount_krw") is not None
+                or parsed.get("sales_ratio_pct") is not None
+            ):
+                contracts.append({**base_event(row), **parsed})
+        if should_log_progress(index, len(targets), progress_every):
+            print(
+                f"[DART 1/3] documents {index}/{len(targets)} "
+                f"({progress_percent(index, len(targets)):.0f}%) | "
+                f"dividends {len(dividends)} | contracts {len(contracts)} | "
+                f"errors {len(errors)} | {time.monotonic() - started_at:.1f}s",
+                flush=True,
+            )
         time.sleep(delay)
 
     dividends.sort(
@@ -322,6 +360,10 @@ def collect_document_events(
     contracts.sort(
         key=lambda row: float(row.get("sales_ratio_pct") or 0),
         reverse=True,
+    )
+    print(
+        f"[DART 1/3] completed in {time.monotonic() - started_at:.1f}s",
+        flush=True,
     )
     return dividends, contracts, errors
 
@@ -333,6 +375,7 @@ def collect_structured_events(
     begin: str,
     end: str,
     delay: float,
+    progress_every: int,
 ) -> tuple[list[dict[str, Any]], list[str]]:
     targets: dict[tuple[str, str, str], dict[str, dict[str, Any]]] = defaultdict(dict)
     for filing in filings:
@@ -346,7 +389,17 @@ def collect_structured_events(
 
     events: list[dict[str, Any]] = []
     errors: list[str] = []
-    for (corp_code, category, endpoint), wanted in targets.items():
+    started_at = time.monotonic()
+    target_items = list(targets.items())
+    print(
+        f"[DART 2/3] Buyback/CB structured APIs: "
+        f"{len(target_items):,} company-endpoint targets",
+        flush=True,
+    )
+    for index, ((corp_code, category, endpoint), wanted) in enumerate(
+        target_items,
+        start=1,
+    ):
         rows, error = dart_rows(
             session,
             api_key,
@@ -355,29 +408,41 @@ def collect_structured_events(
         )
         if error:
             errors.append(error)
-            continue
-        for raw in rows:
-            receipt = str(raw.get("rcept_no") or "").strip()
-            source = wanted.get(receipt)
-            if not source:
-                continue
-            details = {
-                key: value
-                for key, value in summarize_event(endpoint, raw).items()
-                if value is not None
-            }
-            if not details:
-                continue
-            events.append(
-                {
-                    **base_event(source),
-                    "category": category,
-                    "dart_api": endpoint,
-                    **details,
+        else:
+            for raw in rows:
+                receipt = str(raw.get("rcept_no") or "").strip()
+                source = wanted.get(receipt)
+                if not source:
+                    continue
+                details = {
+                    key: value
+                    for key, value in summarize_event(endpoint, raw).items()
+                    if value is not None
                 }
+                if not details:
+                    continue
+                events.append(
+                    {
+                        **base_event(source),
+                        "category": category,
+                        "dart_api": endpoint,
+                        **details,
+                    }
+                )
+        if should_log_progress(index, len(target_items), progress_every):
+            print(
+                f"[DART 2/3] API targets {index}/{len(target_items)} "
+                f"({progress_percent(index, len(target_items)):.0f}%) | "
+                f"events {len(events)} | errors {len(errors)} | "
+                f"{time.monotonic() - started_at:.1f}s",
+                flush=True,
             )
         time.sleep(delay)
     events.sort(key=lambda row: row.get("file_date") or "", reverse=True)
+    print(
+        f"[DART 2/3] completed in {time.monotonic() - started_at:.1f}s",
+        flush=True,
+    )
     return events, errors
 
 
@@ -416,6 +481,7 @@ def collect_insiders(
     cutoff: str,
     prices: dict[str, int],
     delay: float,
+    progress_every: int,
 ) -> tuple[list[dict[str, Any]], list[str]]:
     sources_by_corp: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
     for row in filings:
@@ -430,7 +496,16 @@ def collect_insiders(
     insider_rows: list[dict[str, Any]] = []
     errors: list[str] = []
     document_cache: dict[str, str | None] = {}
-    for corp_code, sources in sources_by_corp.items():
+    source_items = list(sources_by_corp.items())
+    source_receipt_count = sum(len(sources) for _, sources in source_items)
+    started_at = time.monotonic()
+    document_processed = 0
+    print(
+        f"[DART 3/3] Insider ownership: {len(source_items):,} companies, "
+        f"{source_receipt_count:,} disclosure receipts",
+        flush=True,
+    )
+    for corp_index, (corp_code, sources) in enumerate(source_items, start=1):
         rows, error = dart_rows(
             session,
             api_key,
@@ -439,66 +514,86 @@ def collect_insiders(
         )
         if error:
             errors.append(error)
-            continue
-        for raw in rows:
-            receipt = str(raw.get("rcept_no") or "").strip()
-            source = sources.get(receipt)
-            file_date = normalized_date(raw.get("rcept_dt"))
-            if not source or file_date < cutoff:
-                continue
-            shares_change = integer(raw.get("sp_stock_lmp_irds_cnt"))
-            ticker = str(source.get("stock_code") or "").zfill(6)
-            current_price = prices.get(ticker)
-            if shares_change is None:
-                direction = "unknown"
-            elif shares_change > 0:
-                direction = "increase"
-            elif shares_change < 0:
-                direction = "decrease"
-            else:
-                direction = "unchanged"
+        else:
+            for raw in rows:
+                receipt = str(raw.get("rcept_no") or "").strip()
+                source = sources.get(receipt)
+                file_date = normalized_date(raw.get("rcept_dt"))
+                if not source or file_date < cutoff:
+                    continue
+                shares_change = integer(raw.get("sp_stock_lmp_irds_cnt"))
+                ticker = str(source.get("stock_code") or "").zfill(6)
+                current_price = prices.get(ticker)
+                if shares_change is None:
+                    direction = "unknown"
+                elif shares_change > 0:
+                    direction = "increase"
+                elif shares_change < 0:
+                    direction = "decrease"
+                else:
+                    direction = "unchanged"
 
-            if receipt not in document_cache:
-                document = fetch_document(session, api_key, receipt)
-                document_cache[receipt] = (
-                    clean_document(document) if document else None
+                if receipt not in document_cache:
+                    document = fetch_document(session, api_key, receipt)
+                    document_cache[receipt] = (
+                        clean_document(document) if document else None
+                    )
+                    document_processed += 1
+                    if (
+                        document_processed == 1
+                        or document_processed % max(progress_every, 1) == 0
+                    ):
+                        print(
+                            f"[DART 3/3] ownership documents "
+                            f"{document_processed}/{source_receipt_count} | "
+                            f"rows {len(insider_rows)} | "
+                            f"{time.monotonic() - started_at:.1f}s",
+                            flush=True,
+                        )
+                    time.sleep(delay)
+                reasons, confirmed_purchase = reason_from_document(
+                    document_cache[receipt]
                 )
-                time.sleep(delay)
-            reasons, confirmed_purchase = reason_from_document(
-                document_cache[receipt]
-            )
-            estimated_value = (
-                abs(shares_change) * current_price
-                if shares_change is not None and current_price is not None
-                else None
-            )
-            insider_rows.append(
-                {
-                    **base_event(source),
-                    "filer": str(raw.get("repror") or "").strip(),
-                    "position": str(raw.get("isu_exctv_ofcps") or "").strip(),
-                    "registered": str(
-                        raw.get("isu_exctv_rgist_at") or ""
-                    ).strip(),
-                    "holder_type": str(
-                        raw.get("isu_main_shrholdr") or ""
-                    ).strip(),
-                    "shares": integer(raw.get("sp_stock_lmp_cnt")),
-                    "shares_change": shares_change,
-                    "direction": direction,
-                    "change_reasons": reasons,
-                    "purchase_candidate": direction == "increase",
-                    "confirmed_purchase": (
-                        direction == "increase" and confirmed_purchase
-                    ),
-                    "current_price_krw": current_price,
-                    "estimated_change_value_krw": estimated_value,
-                    "estimate_note": (
-                        "공시 수량 변화 × 수집 시점 현재가이며 실제 거래금액이 아님"
-                        if estimated_value is not None
-                        else None
-                    ),
-                }
+                estimated_value = (
+                    abs(shares_change) * current_price
+                    if shares_change is not None and current_price is not None
+                    else None
+                )
+                insider_rows.append(
+                    {
+                        **base_event(source),
+                        "filer": str(raw.get("repror") or "").strip(),
+                        "position": str(raw.get("isu_exctv_ofcps") or "").strip(),
+                        "registered": str(
+                            raw.get("isu_exctv_rgist_at") or ""
+                        ).strip(),
+                        "holder_type": str(
+                            raw.get("isu_main_shrholdr") or ""
+                        ).strip(),
+                        "shares": integer(raw.get("sp_stock_lmp_cnt")),
+                        "shares_change": shares_change,
+                        "direction": direction,
+                        "change_reasons": reasons,
+                        "purchase_candidate": direction == "increase",
+                        "confirmed_purchase": (
+                            direction == "increase" and confirmed_purchase
+                        ),
+                        "current_price_krw": current_price,
+                        "estimated_change_value_krw": estimated_value,
+                        "estimate_note": (
+                            "공시 수량 변화 × 수집 시점 현재가이며 실제 거래금액이 아님"
+                            if estimated_value is not None
+                            else None
+                        ),
+                    }
+                )
+        if should_log_progress(corp_index, len(source_items), progress_every):
+            print(
+                f"[DART 3/3] companies {corp_index}/{len(source_items)} "
+                f"({progress_percent(corp_index, len(source_items)):.0f}%) | "
+                f"ownership rows {len(insider_rows)} | errors {len(errors)} | "
+                f"{time.monotonic() - started_at:.1f}s",
+                flush=True,
             )
         time.sleep(delay)
 
@@ -508,6 +603,10 @@ def collect_insiders(
             abs(int(row.get("shares_change") or 0)),
         ),
         reverse=True,
+    )
+    print(
+        f"[DART 3/3] completed in {time.monotonic() - started_at:.1f}s",
+        flush=True,
     )
     return insider_rows, errors
 
@@ -524,7 +623,14 @@ def main() -> None:
     parser.add_argument("--events-output", default=str(DEFAULT_EVENTS_OUTPUT))
     parser.add_argument("--insiders-output", default=str(DEFAULT_INSIDERS_OUTPUT))
     parser.add_argument("--delay", type=float, default=0.15)
+    parser.add_argument(
+        "--progress-every",
+        type=int,
+        default=5,
+        help="Print progress after this many documents or companies.",
+    )
     args = parser.parse_args()
+    progress_every = max(args.progress_every, 1)
 
     api_key = os.environ.get("DART_API_KEY", "").strip()
     if not api_key:
@@ -543,6 +649,12 @@ def main() -> None:
     end_date = str(period.get("end") or today.isoformat())
     begin = begin_date.replace("-", "")
     end = end_date.replace("-", "")
+    overall_started_at = time.monotonic()
+    print(
+        f"[DART] Event details started: {len(filings):,} filings, "
+        f"period {begin_date} to {end_date}",
+        flush=True,
+    )
 
     session = requests.Session()
     session.headers.update(
@@ -558,6 +670,7 @@ def main() -> None:
         api_key,
         filings,
         args.delay,
+        progress_every,
     )
     structured_events, structured_errors = collect_structured_events(
         session,
@@ -566,6 +679,7 @@ def main() -> None:
         begin,
         end,
         args.delay,
+        progress_every,
     )
     insiders, insider_errors = collect_insiders(
         session,
@@ -574,6 +688,7 @@ def main() -> None:
         begin_date,
         load_prices(Path(args.market_data)),
         args.delay,
+        progress_every,
     )
 
     buybacks = [
@@ -644,15 +759,22 @@ def main() -> None:
     print(
         "[DART details] "
         f"dividends={len(dividends)}, contracts={len(contracts)}, "
-        f"buybacks={len(buybacks)}, CB={len(convertible_bonds)}"
+        f"buybacks={len(buybacks)}, CB={len(convertible_bonds)}",
+        flush=True,
     )
     print(
         "[DART insiders] "
         f"rows={len(insiders)}, candidates={len(purchase_candidates)}, "
-        f"confirmed={len(confirmed_purchases)}"
+        f"confirmed={len(confirmed_purchases)}",
+        flush=True,
     )
-    print(f"Output: {args.events_output}")
-    print(f"Output: {args.insiders_output}")
+    print(f"Output: {args.events_output}", flush=True)
+    print(f"Output: {args.insiders_output}", flush=True)
+    print(
+        f"[DART] Event details completed in "
+        f"{time.monotonic() - overall_started_at:.1f}s",
+        flush=True,
+    )
 
 
 if __name__ == "__main__":
