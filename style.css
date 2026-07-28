@@ -458,6 +458,10 @@ a.rate-ticker-item:hover {
   background: rgba(255, 253, 249, 0.82);
 }
 
+.market-chart-shell[hidden] {
+  display: none;
+}
+
 .market-chart-summary {
   min-height: 48px;
 }
@@ -657,14 +661,29 @@ a.rate-ticker-item:hover {
 .today-news-feature::before {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 12%, rgba(20, 15, 12, 0.3));
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(20, 15, 12, 0.08), rgba(20, 15, 12, 0.78));
   content: "";
   pointer-events: none;
 }
 
 .today-news-feature > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+.today-news-feature-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 280ms ease;
+}
+
+.today-news-feature:hover .today-news-feature-image {
+  transform: scale(1.025);
 }
 
 .today-news-feature-tag {
@@ -725,6 +744,10 @@ a.rate-ticker-item:hover {
   transition: border-color 140ms ease, transform 140ms ease;
 }
 
+.today-news-item.has-thumbnail {
+  grid-template-columns: auto minmax(0, 1fr) 92px;
+}
+
 .today-news-item:hover {
   transform: translateX(2px);
   border-color: rgba(184, 92, 56, 0.4);
@@ -746,6 +769,13 @@ a.rate-ticker-item:hover {
 
 .today-news-item-main {
   min-width: 0;
+}
+
+.today-news-item-image {
+  width: 92px;
+  height: 62px;
+  border-radius: 9px;
+  object-fit: cover;
 }
 
 .today-news-item h3 {

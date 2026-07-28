@@ -63,7 +63,7 @@ const state = {
   secCategory: "all",
   secSearch: "",
   marketAssets: [],
-  selectedMarketAsset: "sp500",
+  selectedMarketAsset: null,
   marketChartRange: "3m",
   todayNewsCategory: "semiconductor",
   todayNewsItems: [],
@@ -474,7 +474,12 @@ function marketSparkline(history, change) {
     const y = pad + (max - value) / range * (height - pad * 2);
     return `${x.toFixed(2)},${y.toFixed(2)}`;
   }).join(" ");
-  const color = Number(change) >= 0 ? "#d8483f" : "#3478c7";
+  const numericChange = Number(change);
+  const color = numericChange > 0
+    ? "#d8483f"
+    : numericChange < 0
+      ? "#3478c7"
+      : "#83776a";
   return `
     <svg class="market-sparkline" viewBox="0 0 ${width} ${height}" aria-hidden="true">
       <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
@@ -488,8 +493,11 @@ function renderMarketOverviewCards() {
     container.innerHTML = "<div class='market-overview-loading'>표시할 시장 차트 데이터가 없습니다.</div>";
     return;
   }
-  if (!state.marketAssets.some((asset) => asset.id === state.selectedMarketAsset)) {
-    state.selectedMarketAsset = state.marketAssets[0].id;
+  if (
+    state.selectedMarketAsset
+    && !state.marketAssets.some((asset) => asset.id === state.selectedMarketAsset)
+  ) {
+    state.selectedMarketAsset = null;
   }
   container.innerHTML = state.marketAssets.map((asset) => {
     const tone = marketTone(asset.change_pct);
@@ -520,13 +528,16 @@ function renderMarketMainChart() {
   const asset = state.marketAssets.find(
     (item) => item.id === state.selectedMarketAsset
   );
+  const shell = document.getElementById("market-chart-shell");
   const summary = document.getElementById("market-chart-summary");
   const container = document.getElementById("market-index-chart");
   if (!asset) {
+    shell.hidden = true;
     summary.innerHTML = "";
-    container.innerHTML = "<div class='market-overview-loading'>차트 자산을 선택하세요.</div>";
+    container.innerHTML = "";
     return;
   }
+  shell.hidden = false;
   const rows = marketHistoryForRange(asset.history, state.marketChartRange);
   const closes = rows.map((row) => Number(row.close)).filter(Number.isFinite);
   if (closes.length < 2) {
@@ -561,7 +572,11 @@ function renderMarketMainChart() {
     (value, index) => `${x(index).toFixed(2)},${y(value).toFixed(2)}`
   ).join(" ");
   const bottom = height - pad.bottom;
-  const color = periodReturn >= 0 ? "#d8483f" : "#3478c7";
+  const color = periodReturn > 0
+    ? "#d8483f"
+    : periodReturn < 0
+      ? "#3478c7"
+      : "#83776a";
   const fillId = `market-fill-${escapeHtml(asset.id)}`;
   const firstDate = formatCompactDate(rows[0]?.date);
   const lastDate = formatCompactDate(rows.at(-1)?.date);
@@ -602,7 +617,9 @@ function bindMarketOverview() {
     if (!card) {
       return;
     }
-    state.selectedMarketAsset = card.dataset.marketAsset;
+    state.selectedMarketAsset = state.selectedMarketAsset === card.dataset.marketAsset
+      ? null
+      : card.dataset.marketAsset;
     renderMarketOverview();
   });
   document.querySelectorAll("[data-market-range]").forEach((button) => {
@@ -632,8 +649,7 @@ async function loadMarketOverview() {
   } catch (error) {
     document.getElementById("market-overview-cards").innerHTML =
       "<div class='market-overview-loading'>시장 차트 데이터를 불러오지 못했습니다.</div>";
-    document.getElementById("market-index-chart").innerHTML =
-      "<div class='market-overview-loading'>다음 데이터 수집 후 표시됩니다.</div>";
+    document.getElementById("market-chart-shell").hidden = true;
     document.getElementById("market-overview-updated").textContent = "Unavailable";
     console.error(error);
   }
@@ -673,6 +689,15 @@ function newsSourceName(link) {
     return new URL(link).hostname.replace(/^www\./, "");
   } catch {
     return "뉴스";
+  }
+}
+
+function newsThumbnailUrl(row) {
+  try {
+    const url = new URL(row?.thumbnail_url || "");
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch {
+    return "";
   }
 }
 
@@ -725,8 +750,18 @@ function renderTodayNews() {
   const [featured, ...rest] = rows;
   const featuredSource = newsSourceName(featured.link);
   const featuredLink = escapeHtml(featured.link || "#");
+  const featuredThumbnail = newsThumbnailUrl(featured);
   container.innerHTML = `
-    <a class="today-news-feature" href="${featuredLink}" target="_blank" rel="noopener">
+    <a class="today-news-feature ${featuredThumbnail ? "has-thumbnail" : ""}" href="${featuredLink}" target="_blank" rel="noopener">
+      ${featuredThumbnail ? `
+        <img
+          class="today-news-feature-image"
+          src="${escapeHtml(featuredThumbnail)}"
+          alt=""
+          referrerpolicy="no-referrer"
+          decoding="async"
+        >
+      ` : ""}
       <span class="today-news-feature-tag">${escapeHtml(newsCategoryLabel(state.todayNewsCategory))} · ${isToday ? "오늘" : "최근"}</span>
       <h3>${escapeHtml(featured.title || "-")}</h3>
       <p>${escapeHtml(featured.description || "")}</p>
@@ -737,21 +772,40 @@ function renderTodayNews() {
       </span>
     </a>
     <div class="today-news-list">
-      ${rest.slice(0, 8).map((row, index) => `
-        <a class="today-news-item" href="${escapeHtml(row.link || "#")}" target="_blank" rel="noopener">
-          <span class="today-news-rank">${index + 2}</span>
-          <span class="today-news-item-main">
-            <h3>${escapeHtml(row.title || "-")}</h3>
-            <span class="today-news-item-meta">
-              <span>${escapeHtml(newsSourceName(row.link))}</span>
-              <span>·</span>
-              <span>${escapeHtml(formatNewsTimestamp(row.published_at))}</span>
+      ${rest.slice(0, 8).map((row, index) => {
+        const thumbnail = newsThumbnailUrl(row);
+        return `
+          <a class="today-news-item ${thumbnail ? "has-thumbnail" : ""}" href="${escapeHtml(row.link || "#")}" target="_blank" rel="noopener">
+            <span class="today-news-rank">${index + 2}</span>
+            <span class="today-news-item-main">
+              <h3>${escapeHtml(row.title || "-")}</h3>
+              <span class="today-news-item-meta">
+                <span>${escapeHtml(newsSourceName(row.link))}</span>
+                <span>·</span>
+                <span>${escapeHtml(formatNewsTimestamp(row.published_at))}</span>
+              </span>
             </span>
-          </span>
-        </a>
-      `).join("")}
+            ${thumbnail ? `
+              <img
+                class="today-news-item-image"
+                src="${escapeHtml(thumbnail)}"
+                alt=""
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                decoding="async"
+              >
+            ` : ""}
+          </a>
+        `;
+      }).join("")}
     </div>
   `;
+  container.querySelectorAll(".today-news-feature-image, .today-news-item-image").forEach((image) => {
+    image.addEventListener("error", () => {
+      image.closest(".has-thumbnail")?.classList.remove("has-thumbnail");
+      image.remove();
+    }, { once: true });
+  });
   document.getElementById("today-news-updated").textContent =
     `${isToday ? "오늘" : "최근"} ${categoryCount}건 · ${newsCategoryLabel(state.todayNewsCategory)}`;
 }
