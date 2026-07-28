@@ -4,6 +4,7 @@ on:
   push:
     # A workflow-only push can start the first news refresh without running
     # the much heavier full market-data workflow.
+    # Subsequent refreshes are handled by the schedule below.
     branches:
       - main
     paths:
