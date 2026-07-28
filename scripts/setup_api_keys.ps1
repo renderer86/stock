@@ -1,7 +1,3 @@
-param(
-    [switch]$IncludeFutureKrx
-)
-
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
@@ -41,11 +37,19 @@ $lines = @(
     "DART_API_KEY=$dartKey"
 )
 
-if ($IncludeFutureKrx) {
-    $krxId = Read-Host "KRX 계정 ID (향후 공매도 수집용)"
-    $krxPassword = Read-SecretText "KRX 계정 비밀번호 (향후 공매도 수집용)"
-    $lines += "KRX_ID=$krxId"
-    $lines += "KRX_PW=$krxPassword"
+foreach ($entry in @(
+    @("KRX_API_KEY", "KRX Open API 인증키"),
+    @("FINNHUB_API_KEY", "Finnhub API 키"),
+    @("NAVER_CLIENT_ID", "NAVER Client ID"),
+    @("NAVER_CLIENT_SECRET", "NAVER Client Secret"),
+    @("GEMINI_API_KEY", "Gemini API 키"),
+    @("TELEGRAM_BOT_TOKEN", "Telegram Bot Token"),
+    @("TELEGRAM_CHAT_ID", "Telegram Chat ID")
+)) {
+    $value = Read-SecretText "$($entry[1]) (없으면 Enter)"
+    if (-not [string]::IsNullOrWhiteSpace($value)) {
+        $lines += "$($entry[0])=$value"
+    }
 }
 
 [IO.File]::WriteAllLines(

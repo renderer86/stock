@@ -1,0 +1,78 @@
+{
+  "generated_at_utc": "2026-07-28T14:34:22.166988+00:00",
+  "file_count": 9,
+  "files": [
+    {
+      "file": "data/dart_major_holders.json",
+      "bytes": 628362,
+      "source": "OpenDART majorstock.json",
+      "count": 377,
+      "data_date": "2026-07-28T13:38:50.956085+00:00"
+    },
+    {
+      "file": "data/fnguide_roe_history.json",
+      "bytes": 297093,
+      "source": "FnGuide SVD_Finance.asp",
+      "count": 369,
+      "data_date": "2026-07-28T13:31:52.363016+00:00"
+    },
+    {
+      "file": "data/market_sum.json",
+      "bytes": 6780895,
+      "source": [
+        "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0",
+        "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1"
+      ],
+      "count": 4297,
+      "data_date": "2026-07-28T13:22:52.254438+00:00"
+    },
+    {
+      "file": "data/market_sum_by_roe.json",
+      "bytes": 6780918,
+      "source": [
+        "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0",
+        "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1"
+      ],
+      "count": 4297,
+      "data_date": "2026-07-28T13:22:52.254438+00:00"
+    },
+    {
+      "file": "data/naver_etf_brands.json",
+      "bytes": 24113,
+      "source": "Naver Finance ETF",
+      "count": null,
+      "data_date": "2026-07-28T13:18:15Z"
+    },
+    {
+      "file": "data/treasury_yields.json",
+      "bytes": 7747,
+      "source": null,
+      "count": null,
+      "data_date": "2026-07-28T13:18:13Z"
+    },
+    {
+      "file": "data/us_finra_short_interest.json",
+      "bytes": 10550531,
+      "source": "FINRA Consolidated Short Interest API",
+      "count": 22375,
+      "data_date": "2026-07-15"
+    },
+    {
+      "file": "data/us_finra_short_volume.json",
+      "bytes": 4554138,
+      "source": "FINRA Reg SHO Daily Short Sale Volume",
+      "count": 15068,
+      "data_date": "2026-07-27"
+    },
+    {
+      "file": "data/us_market_snapshot.json",
+      "bytes": 8804261,
+      "source": [
+        "Nasdaq stock screener",
+        "Yahoo Finance Chart"
+      ],
+      "count": 6656,
+      "data_date": "2026-07-28T14:23:05.038975+00:00"
+    }
+  ]
+}
