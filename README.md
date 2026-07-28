@@ -27,7 +27,7 @@ cd C:\stock
 | 이름 | 용도 | 필수 시점 |
 | --- | --- | --- |
 | `ECOS_API_KEY` | 한국은행 국내 국채 금리 | 금리 수집 |
-| `DART_API_KEY` | OpenDART 5% 이상 보유 공시 | 장 마감/전체 수집 |
+| `DART_API_KEY` | OpenDART 지분·주요사항·배당·수주·임원 공시 | 장 마감/전체 수집 |
 | `KRX_API_KEY` | KRX 공식 주식·ETF·지수·채권 일별 데이터 | 전체 수집 |
 | `KRX_ID`, `KRX_PW` | KRX 로그인 기반 국내 투자자 수급·공매도 | 장 마감/전체 수집 |
 | `FINNHUB_API_KEY` | 미국 기업 지표·애널리스트 추천·EPS 서프라이즈 | 전체 수집 |
@@ -62,7 +62,7 @@ cd C:\stock
 6. KRX Open API 주식·ETF·지수·국채 일별 데이터
 7. KRX 로그인 기반 코스피·코스닥 투자자 수급·공매도
 8. 네이버 금융 국내 시총·재무지표와 FnGuide 과거 ROE
-9. OpenDART 지분 및 최근 전체 공시
+9. OpenDART 지분, 최근 전체 공시와 자사주·배당·수주·CB·임원매수 상세
 10. NAVER 검색 뉴스와 Gemini 시장 브리핑
 
 전체 실행:
@@ -140,6 +140,8 @@ OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
 - `data/korea_investor_flow.json`: 코스피·코스닥 개인·외국인·기관 종목별 수급과 일별 추이
 - `data/korea_short_selling.json`: 코스피·코스닥 종목별 공매도 거래, 거래비중·잔고 상위 50
 - `data/dart_disclosures.json`: 최근 코스피·코스닥 DART 공시와 이벤트 분류
+- `data/dart_event_details.json`: 자사주·배당·수주·CB 공시의 금액·수량·비율 상세
+- `data/dart_insider_trades.json`: 임원·주요주주 보유증감과 원문에서 확인한 매수 구분
 - `data/naver_news.json`: 카테고리별 NAVER 검색 뉴스
 - `data/ai_market_briefing.json`: 수집 데이터 기반 Gemini 브리핑
 - `data/us_sec_filings.json`: SEC 내부자·13D/G·8-K·IPO 공시 메타데이터
@@ -204,6 +206,7 @@ http://localhost:8000
 # OpenDART
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_dart_major_holders.py
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_dart_disclosures.py
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_dart_event_details.py
 
 # 뉴스·AI 브리핑·텔레그램 시험 알림
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_naver_news.py
@@ -214,6 +217,14 @@ http://localhost:8000
 FnGuide는 기본적으로 `data/market_sum.json`에서 현재 ROE가 10% 이상인 종목을 수집합니다. 공개 재무비율 페이지에 보이는 기간에 따라 최근 연간 결산과 최신 중간기 데이터가 함께 포함될 수 있습니다.
 
 OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니다. `data/dart_major_holders.json`이 없어도 대시보드는 해당 공시 항목을 비운 상태로 동작합니다.
+
+공시 상세는 미르의 방식처럼 최근 7일 코스피·코스닥 전체 공시를 먼저 수집한 뒤
+필요한 보고서만 추가 조회합니다. 배당·수주는 공시 원문 표준 양식을 파싱하고,
+자사주·CB는 OpenDART 주요사항보고서 API의 금액·수량·전환가·희석률을 사용합니다.
+임원 보유수량 증가는 곧바로 매수로 단정하지 않습니다. 원문에 장내매수·장외매수·
+시간외매수가 확인된 경우만 `confirmed_purchase=true`, 나머지는
+`purchase_candidate=true`로 저장합니다. `estimated_change_value_krw`는
+공시 수량 변화에 현재가를 곱한 참고값이며 실제 거래금액이 아닙니다.
 
 ## 현재 대시보드 동작
 

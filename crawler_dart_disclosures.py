@@ -40,8 +40,13 @@ def main() -> None:
     load_env_file(ROOT_DIR / ".env")
     parser = argparse.ArgumentParser(description="Collect recent KOSPI/KOSDAQ OpenDART filings.")
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
-    parser.add_argument("--days", type=int, default=30)
-    parser.add_argument("--max-pages", type=int, default=50)
+    parser.add_argument(
+        "--days",
+        type=int,
+        default=7,
+        help="Recent calendar-day window. Seven days matches the Mir full-market method.",
+    )
+    parser.add_argument("--max-pages", type=int, default=60)
     args = parser.parse_args()
 
     api_key = os.environ.get("DART_API_KEY", "").strip()

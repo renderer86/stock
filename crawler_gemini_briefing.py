@@ -34,6 +34,8 @@ def compact_context() -> dict[str, Any]:
     us = load_json(Path("data/us_market_snapshot.json"))
     news = load_json(Path("data/naver_news.json"))
     dart = load_json(Path("data/dart_disclosures.json"))
+    dart_events = load_json(Path("data/dart_event_details.json"))
+    dart_insiders = load_json(Path("data/dart_insider_trades.json"))
     finnhub = load_json(Path("data/us_finnhub.json"))
     short_interest = load_json(Path("data/us_finra_short_interest.json"))
     sec = load_json(Path("data/us_sec_filings.json"))
@@ -89,6 +91,23 @@ def compact_context() -> dict[str, Any]:
         "latest_news": (news.get("items") or [])[:30],
         "dart_category_counts": dart.get("category_counts") or {},
         "latest_dart_filings": (dart.get("filings") or [])[:20],
+        "dart_event_details": {
+            "counts": dart_events.get("counts") or {},
+            "dividends": (dart_events.get("dividends") or [])[:10],
+            "contracts": (dart_events.get("contracts") or [])[:10],
+            "buybacks": (dart_events.get("buybacks") or [])[:10],
+            "convertible_bonds": (
+                dart_events.get("convertible_bonds") or []
+            )[:10],
+        },
+        "dart_insider_purchases": {
+            "confirmed": (
+                dart_insiders.get("confirmed_purchases") or []
+            )[:20],
+            "ownership_increase_candidates": (
+                dart_insiders.get("purchase_candidates") or []
+            )[:20],
+        },
         "finnhub_count": finnhub.get("count") or 0,
         "largest_short_interest": (short_interest.get("rows") or [])[:20],
         "sec_category_counts": sec.get("category_counts") or {},

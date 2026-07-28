@@ -32,6 +32,8 @@ def build_message(status: str, profile: str) -> str:
     korea_short = load_json("data/korea_short_selling.json")
     news = load_json("data/naver_news.json")
     dart = load_json("data/dart_disclosures.json")
+    dart_events = load_json("data/dart_event_details.json")
+    dart_insiders = load_json("data/dart_insider_trades.json")
     finnhub = load_json("data/us_finnhub.json")
     short_interest = load_json("data/us_finra_short_interest.json")
     sec = load_json("data/us_sec_filings.json")
@@ -48,6 +50,7 @@ def build_message(status: str, profile: str) -> str:
         int(market.get("count") or 0)
         for market in (korea_short.get("markets") or {}).values()
     )
+    event_counts = dart_events.get("counts") or {}
     marker = "✅" if status == "success" else "❌"
     lines = [
         f"{marker} stock 데이터 자동 갱신: {status}",
@@ -61,6 +64,18 @@ def build_message(status: str, profile: str) -> str:
         f"국내 공매도: {korea_short_count:,}종목 ({korea_short.get('transaction_date') or '-'})",
         f"네이버 뉴스: {news.get('count', 0):,}건",
         f"DART 공시: {dart.get('count', 0):,}건",
+        (
+            "DART 상세: "
+            f"배당 {event_counts.get('dividends', 0):,} / "
+            f"수주 {event_counts.get('contracts', 0):,} / "
+            f"자사주 {event_counts.get('buybacks', 0):,} / "
+            f"CB {event_counts.get('convertible_bonds', 0):,}"
+        ),
+        (
+            "임원 매수: "
+            f"확정 {dart_insiders.get('confirmed_purchase_count', 0):,} / "
+            f"보유증가 후보 {dart_insiders.get('purchase_candidate_count', 0):,}"
+        ),
     ]
     return "\n".join(lines)
 

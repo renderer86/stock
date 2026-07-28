@@ -319,7 +319,11 @@ def main() -> None:
             "OpenDART recent disclosures",
             "crawler_dart_disclosures.py",
             [],
-            optional=True,
+        )
+        run_step(
+            "OpenDART event details and insider ownership changes",
+            "crawler_dart_event_details.py",
+            [],
         )
 
     if not args.skip_news:
