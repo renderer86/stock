@@ -17,6 +17,11 @@
 각 작업공간은 처음 선택할 때 필요한 JSON만 읽으며, 파일이 아직 생성되지 않은 경우에는
 다른 화면을 막지 않고 대기 상태를 표시합니다.
 
+화면 파일(`index.html`, `style.css`, `script.js`, `assets/`)을 수정해 `main`에
+푸시하면 `Deploy dashboard page`가 크롤링 없이 기존 JSON으로 GitHub Pages만
+배포합니다. 즉시 다시 배포하려면 Actions에서 이 워크플로의 `Run workflow`를
+실행합니다. 데이터 갱신은 별도의 `Update market data` 워크플로가 담당합니다.
+
 ## 준비
 
 ### Python 확인
