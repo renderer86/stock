@@ -293,15 +293,50 @@ def crawl_field_group(
     market_info: dict[str, str],
     total_pages: int,
     delay: float,
+    *,
+    group_index: int,
+    group_count: int,
+    market_started_at: float,
+    progress_every: int,
 ) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
+    labels = ", ".join(FIELD_LABELS[field_id] for field_id in field_ids)
+    group_started_at = time.monotonic()
+    print(
+        f"[NAVER] {market_info['market']} field group "
+        f"{group_index}/{group_count} started: {labels}",
+        flush=True,
+    )
 
     for page in range(1, total_pages + 1):
         apply_field_selection(session, field_ids, page, market_info["sosok"])
         html = fetch_page(session, page, market_info["sosok"])
         results.extend(parse_stock_rows(html, page, market_info))
+        if (
+            page == 1
+            or page == total_pages
+            or page % max(progress_every, 1) == 0
+        ):
+            group_percent = page / total_pages * 100
+            overall_completed = (group_index - 1) * total_pages + page
+            overall_total = group_count * total_pages
+            overall_percent = overall_completed / overall_total * 100
+            market_elapsed = time.monotonic() - market_started_at
+            print(
+                f"[NAVER] {market_info['market']} group {group_index}/{group_count} "
+                f"page {page}/{total_pages} ({group_percent:.0f}%) | "
+                f"market {overall_percent:.0f}% | rows {len(results):,} | "
+                f"{market_elapsed:.1f}s elapsed",
+                flush=True,
+            )
         time.sleep(delay)
 
+    print(
+        f"[NAVER] {market_info['market']} field group "
+        f"{group_index}/{group_count} completed "
+        f"({len(results):,} rows, {time.monotonic() - group_started_at:.1f}s)",
+        flush=True,
+    )
     return results
 
 
@@ -310,29 +345,73 @@ def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def crawl_market(session: requests.Session, market_info: dict[str, str], delay: float) -> tuple[int, list[dict[str, Any]]]:
+def crawl_market(
+    session: requests.Session,
+    market_info: dict[str, str],
+    delay: float,
+    progress_every: int,
+) -> tuple[int, list[dict[str, Any]]]:
+    market_started_at = time.monotonic()
+    print(
+        f"[NAVER] {market_info['market']} detecting page count...",
+        flush=True,
+    )
     first_html = fetch_page(session, 1, market_info["sosok"])
     total_pages = get_total_pages(first_html)
+    print(
+        f"[NAVER] {market_info['market']} has {total_pages} pages; "
+        f"{len(FIELD_GROUPS)} field groups will be collected.",
+        flush=True,
+    )
 
     merged: dict[str, dict[str, Any]] = {}
-    for field_ids in FIELD_GROUPS:
-        grouped_rows = crawl_field_group(session, field_ids, market_info, total_pages, delay)
+    for group_index, field_ids in enumerate(FIELD_GROUPS, start=1):
+        grouped_rows = crawl_field_group(
+            session,
+            field_ids,
+            market_info,
+            total_pages,
+            delay,
+            group_index=group_index,
+            group_count=len(FIELD_GROUPS),
+            market_started_at=market_started_at,
+            progress_every=progress_every,
+        )
         merge_stock_maps(merged, grouped_rows)
 
     stocks = sorted(
         merged.values(),
         key=lambda item: (item.get("rank") is None, item.get("rank") or 999999),
     )
+    print(
+        f"[NAVER] {market_info['market']} completed: "
+        f"{len(stocks):,} stocks in {time.monotonic() - market_started_at:.1f}s",
+        flush=True,
+    )
     return total_pages, stocks
 
 
-def crawl_all(delay: float) -> tuple[dict[str, int], list[dict[str, Any]]]:
+def crawl_all(
+    delay: float,
+    progress_every: int,
+) -> tuple[dict[str, int], list[dict[str, Any]]]:
     session = create_session()
     pages_by_market: dict[str, int] = {}
     all_stocks: list[dict[str, Any]] = []
+    started_at = time.monotonic()
 
-    for market_info in MARKETS:
-        total_pages, stocks = crawl_market(session, market_info, delay)
+    for market_index, market_info in enumerate(MARKETS, start=1):
+        print(
+            f"[NAVER] Market {market_index}/{len(MARKETS)}: "
+            f"{market_info['market']} ({market_info['market_label']})",
+            flush=True,
+        )
+        total_pages, stocks = crawl_market(
+            session,
+            market_info,
+            delay,
+            progress_every,
+        )
         pages_by_market[market_info["market"]] = total_pages
         all_stocks.extend(stocks)
 
@@ -342,6 +421,11 @@ def crawl_all(delay: float) -> tuple[dict[str, int], list[dict[str, Any]]]:
             item.get("rank") is None,
             item.get("rank") or 999999,
         )
+    )
+    print(
+        f"[NAVER] All markets collected: {len(all_stocks):,} stocks, "
+        f"{time.monotonic() - started_at:.1f}s elapsed",
+        flush=True,
     )
     return pages_by_market, all_stocks
 
@@ -366,9 +450,18 @@ def main() -> None:
         default=0.2,
         help="Sleep time between page requests in seconds.",
     )
+    parser.add_argument(
+        "--progress-every",
+        type=int,
+        default=5,
+        help="Print progress after this many pages (default: 5).",
+    )
     args = parser.parse_args()
 
-    pages_by_market, stocks = crawl_all(delay=args.delay)
+    pages_by_market, stocks = crawl_all(
+        delay=args.delay,
+        progress_every=max(args.progress_every, 1),
+    )
     crawled_at = datetime.now(timezone.utc).isoformat()
 
     all_payload = {
@@ -401,13 +494,18 @@ def main() -> None:
         "stocks": roe_sorted,
     }
 
+    print(
+        f"[NAVER] Writing {len(stocks):,} stocks to {args.output}...",
+        flush=True,
+    )
     write_json(Path(args.output), all_payload)
+    print(f"[NAVER] Writing ROE-sorted data to {args.roe_output}...", flush=True)
     write_json(Path(args.roe_output), roe_payload)
 
-    print(f"Pages by market: {pages_by_market}")
-    print(f"Total stocks: {len(stocks)}")
-    print(f"Full output: {args.output}")
-    print(f"ROE output: {args.roe_output}")
+    print(f"Pages by market: {pages_by_market}", flush=True)
+    print(f"Total stocks: {len(stocks)}", flush=True)
+    print(f"Full output: {args.output}", flush=True)
+    print(f"ROE output: {args.roe_output}", flush=True)
 
 
 if __name__ == "__main__":

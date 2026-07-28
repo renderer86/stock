@@ -11,6 +11,7 @@ from env_loader import load_env_file
 
 
 ROOT_DIR = Path(__file__).resolve().parent
+HEARTBEAT_SECONDS = 30
 
 
 def run_step(
@@ -26,19 +27,34 @@ def run_step(
     print(f"{'=' * 60}", flush=True)
 
     started_at = time.monotonic()
-    result = subprocess.run(command, cwd=ROOT_DIR, check=False)
+    print(
+        f"[COMMAND] {Path(command[1]).name} {' '.join(arguments)}".rstrip(),
+        flush=True,
+    )
+    process = subprocess.Popen(command, cwd=ROOT_DIR)
+    while True:
+        try:
+            return_code = process.wait(timeout=HEARTBEAT_SECONDS)
+            break
+        except subprocess.TimeoutExpired:
+            elapsed = time.monotonic() - started_at
+            print(f"[RUNNING] {name} ({elapsed:.0f}s elapsed)", flush=True)
+        except KeyboardInterrupt:
+            process.terminate()
+            process.wait()
+            raise
     elapsed = time.monotonic() - started_at
 
-    if result.returncode != 0:
+    if return_code != 0:
         if optional:
             print(
                 f"[WARN] {name} failed and was skipped "
-                f"(exit code: {result.returncode}, {elapsed:.1f}s)",
+                f"(exit code: {return_code}, {elapsed:.1f}s)",
                 flush=True,
             )
             return False
         raise SystemExit(
-            f"\n[FAIL] {name} (exit code: {result.returncode}, {elapsed:.1f}s)"
+            f"\n[FAIL] {name} (exit code: {return_code}, {elapsed:.1f}s)"
         )
     print(f"[DONE] {name} ({elapsed:.1f}s)", flush=True)
     return True
@@ -276,6 +292,29 @@ def main() -> None:
         else:
             print("[SKIP] KRX_ID/KRX_PW are not set.", flush=True)
 
+    remaining_after_naver = ["FnGuide ROE history"]
+    if not args.skip_dart:
+        remaining_after_naver.extend(
+            [
+                "OpenDART major holders",
+                "OpenDART recent disclosures",
+                "OpenDART event details and insider ownership changes",
+            ]
+        )
+    if (
+        not args.skip_news
+        and os.environ.get("NAVER_CLIENT_ID", "").strip()
+        and os.environ.get("NAVER_CLIENT_SECRET", "").strip()
+    ):
+        remaining_after_naver.append("NAVER categorized market news")
+    if not args.skip_ai_briefing and os.environ.get("GEMINI_API_KEY", "").strip():
+        remaining_after_naver.append("Gemini market briefing")
+    remaining_after_naver.append("Build data manifest")
+    print(
+        "[PIPELINE] Naver market data is not the final step. "
+        f"After it: {' -> '.join(remaining_after_naver)}",
+        flush=True,
+    )
     run_step(
         "Naver market data",
         "crawler_naver_market_sum.py",
