@@ -15,6 +15,8 @@ from typing import Any
 
 import requests
 
+from env_loader import load_env_file
+
 
 ROOT_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = ROOT_DIR / "data" / "treasury_yields.json"
@@ -489,6 +491,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    load_env_file(ROOT_DIR / ".env")
     args = build_parser().parse_args()
     output_path = args.output
     if not output_path.is_absolute():

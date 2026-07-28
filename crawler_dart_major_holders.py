@@ -15,7 +15,10 @@ from xml.etree import ElementTree
 
 import requests
 
+from env_loader import load_env_file
 
+
+ROOT_DIR = Path(__file__).resolve().parent
 CORP_CODE_URL = "https://opendart.fss.or.kr/api/corpCode.xml"
 MAJOR_STOCK_URL = "https://opendart.fss.or.kr/api/majorstock.json"
 DEFAULT_MARKET_PATH = Path("data/market_sum_by_roe.json")
@@ -422,6 +425,8 @@ def write_json(path: Path, payload: Any) -> None:
 
 
 def main() -> None:
+    load_env_file(ROOT_DIR / ".env")
+
     parser = argparse.ArgumentParser(
         description="Fetch OpenDART 5% major holder disclosures for dashboard stocks."
     )

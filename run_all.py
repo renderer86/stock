@@ -7,6 +7,8 @@ import sys
 import time
 from pathlib import Path
 
+from env_loader import load_env_file
+
 
 ROOT_DIR = Path(__file__).resolve().parent
 
@@ -29,6 +31,8 @@ def run_step(name: str, script: str, arguments: list[str]) -> None:
 
 
 def main() -> None:
+    load_env_file(ROOT_DIR / ".env")
+
     parser = argparse.ArgumentParser(
         description=(
             "Run the treasury yield, ETF ticker, Naver, FnGuide, and OpenDART "

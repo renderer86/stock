@@ -20,31 +20,29 @@ cd C:\stock
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" -m pip install -r requirements.txt
 ```
 
-### OpenDART API 키 설정
+### API 키 설정
 
-전체 수집을 실행하려면 OpenDART API 키가 필요합니다.
+현재 수집기에 필요한 키는 두 개입니다.
 
-1. [OpenDART 공식 사이트](https://opendart.fss.or.kr/)에 로그인합니다.
-2. `인증키 신청/관리`에서 인증키를 발급하거나 기존 키를 확인합니다.
-3. 현재 PowerShell 창에 환경변수를 설정합니다.
+| 이름 | 용도 | 필수 시점 |
+| --- | --- | --- |
+| `ECOS_API_KEY` | 한국은행 국내 국채 금리 | 금리 수집 |
+| `DART_API_KEY` | OpenDART 5% 이상 보유 공시 | 장 마감/전체 수집 |
+| `KRX_ID`, `KRX_PW` | 향후 KRX 공매도·수급 확장 | 현재는 사용하지 않음 |
 
-```powershell
-$env:DART_API_KEY="발급받은키"
-```
+네이버 금융, FnGuide, FRED 미국 국채 금리에는 별도 API 키가 필요하지 않습니다.
 
-API 키는 소스 코드나 Git 저장소에 저장하지 않습니다. 새 PowerShell 창을 열면 환경변수를 다시 설정해야 합니다.
-
-### 한국은행 ECOS API 키 설정
-
-국채 금리 수집에는 한국은행 ECOS 인증키가 필요합니다. 미국 국채 금리는
-인증키가 필요 없는 FRED 공개 CSV에서 함께 수집합니다.
+1. [한국은행 ECOS](https://ecos.bok.or.kr/api/)에서 인증키를 발급합니다.
+2. [OpenDART](https://opendart.fss.or.kr/)의 `인증키 신청/관리`에서 인증키를 발급합니다.
+3. 아래 스크립트를 실행해 로컬 `.env` 파일에 입력합니다.
 
 ```powershell
-$env:ECOS_API_KEY="발급받은키"
+cd C:\stock
+.\scripts\setup_api_keys.ps1
 ```
 
-인증키는 소스에 넣지 않습니다. `.env` 계열 파일은 Git에서 제외되어 있지만,
-현재 크롤러는 운영체제 환경변수를 기준으로 읽습니다.
+`run_all.py`, 국채 크롤러, DART 크롤러는 `.env`를 자동으로 읽습니다.
+`.env`는 Git에서 제외되며 키 값은 소스와 JSON에 저장하지 않습니다.
 
 ## 데이터 한 번에 수집
 
@@ -60,15 +58,12 @@ $env:ECOS_API_KEY="발급받은키"
 
 ```powershell
 cd C:\stock
-$env:ECOS_API_KEY="발급받은키"
-$env:DART_API_KEY="발급받은키"
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py
 ```
 
 OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
 
 ```powershell
-$env:ECOS_API_KEY="발급받은키"
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --skip-dart
 ```
 
@@ -143,7 +138,6 @@ http://localhost:8000
 
 ```powershell
 # 한국·미국 국채 금리
-$env:ECOS_API_KEY="발급받은키"
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_treasury_yields.py
 
 # KoAct·TIME ETF (브랜드 인수를 바꾸면 다른 브랜드도 수집)
@@ -173,6 +167,39 @@ OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니�
 - OpenDART 기준 5% 공시, 주요 보유자, 보유비율, 최근 보고일을 표시합니다.
 - 보수적, 기준, 낙관적 시나리오 기반 적정가 범위와 켈리 범위를 보여줍니다.
 
+## 자동 수집
+
+[`.github/workflows/update-market-data.yml`](.github/workflows/update-market-data.yml)이
+GitHub Actions에서 다음 일정으로 실행됩니다.
+
+- 평일 08:30 KST: ECOS·FRED 한국/미국 국채 금리
+- 평일 16:30 KST: 네이버 ETF·시가총액, FnGuide, OpenDART
+- 수동 실행: GitHub의 `Actions` → `Update market data` → `Run workflow`
+
+자동 실행 전에 GitHub 저장소의 `Settings` → `Secrets and variables` →
+`Actions` → `New repository secret`에서 다음 두 개를 등록합니다.
+
+- `ECOS_API_KEY`
+- `DART_API_KEY`
+
+그리고 `Settings` → `Pages` → `Build and deployment`의 `Source`를
+`GitHub Actions`로 한 번 설정합니다.
+
+워크플로는 갱신된 `data/*.json`을 `github-actions[bot]` 이름으로 자동 커밋하고
+현재 브랜치에 푸시한 다음, 같은 실행 안에서 갱신된 대시보드를 GitHub Pages에
+직접 배포합니다. 예약 실행은 GitHub 서버 상황에 따라 몇 분 늦어질 수 있습니다.
+
+로컬에서 예약 실행 구성을 실제 네트워크 요청 없이 확인할 수도 있습니다.
+
+```powershell
+python scheduled_update.py rates --dry-run
+python scheduled_update.py market-close --dry-run
+python scheduled_update.py all --dry-run
+```
+
 ## GitHub Pages 배포
 
-GitHub Pages에서는 Python 크롤러가 실행되지 않습니다. 로컬에서 `run_all.py`를 실행해 `data/*.json`을 갱신한 뒤 커밋하고 푸시해야 합니다. `.nojekyll`이 포함되어 있어 정적 파일 그대로 배포됩니다.
+GitHub Pages 자체에서는 Python이 실행되지 않지만, 위 GitHub Actions가 Python
+크롤러를 실행하고 결과 JSON을 저장소에 커밋한 후 Pages까지 직접 배포합니다.
+Pages 배포 소스는 `GitHub Actions`로 설정해야 합니다. `.nojekyll`이 포함되어
+있어 정적 파일 그대로 배포됩니다.
