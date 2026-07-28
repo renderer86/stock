@@ -28,6 +28,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def compact_context() -> dict[str, Any]:
     rates = load_json(Path("data/treasury_yields.json"))
+    market_indices = load_json(Path("data/market_indices.json"))
     krx = load_json(Path("data/krx_openapi.json"))
     korea_flow = load_json(Path("data/korea_investor_flow.json"))
     korea_short = load_json(Path("data/korea_short_selling.json"))
@@ -58,6 +59,17 @@ def compact_context() -> dict[str, Any]:
 
     return {
         "treasury_yields": rates,
+        "market_indices": [
+            {
+                "id": row.get("id"),
+                "name": row.get("name"),
+                "current": row.get("current"),
+                "change_pct": row.get("change_pct"),
+                "latest_date": row.get("latest_date"),
+                "returns": row.get("returns"),
+            }
+            for row in (market_indices.get("assets") or [])
+        ],
         "krx_summary": krx_summary,
         "korea_investor_flow": {
             "trade_date": korea_flow.get("trade_date"),

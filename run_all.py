@@ -92,6 +92,11 @@ def main() -> None:
         help="ETF name prefixes to collect for the ticker.",
     )
     parser.add_argument(
+        "--skip-market-indices",
+        action="store_true",
+        help="Skip major market index and cryptocurrency charts.",
+    )
+    parser.add_argument(
         "--skip-dart",
         action="store_true",
         help="Skip the OpenDART crawler.",
@@ -227,6 +232,14 @@ def main() -> None:
             "Naver ETF brand tickers",
             "crawler_naver_etf_brands.py",
             args.etf_brands,
+        )
+
+    if not args.skip_market_indices:
+        run_step(
+            "Global market indices and crypto charts",
+            "crawler_market_indices.py",
+            [],
+            optional=True,
         )
 
     if not args.skip_finra:

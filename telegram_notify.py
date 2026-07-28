@@ -27,6 +27,7 @@ def load_json(path: str) -> dict[str, Any]:
 
 def build_message(status: str, profile: str) -> str:
     us = load_json("data/us_market_snapshot.json")
+    market_indices = load_json("data/market_indices.json")
     krx = load_json("data/krx_openapi.json")
     korea_flow = load_json("data/korea_investor_flow.json")
     korea_short = load_json("data/korea_short_selling.json")
@@ -56,6 +57,7 @@ def build_message(status: str, profile: str) -> str:
         f"{marker} stock 데이터 자동 갱신: {status}",
         f"프로필: {profile}",
         f"미국 종목: {us.get('count', 0):,}개 (차트 {us.get('history_count', 0):,}개)",
+        f"시장 지수·가상자산 차트: {market_indices.get('count', 0):,}개",
         f"Finnhub 보강: {finnhub.get('count', 0):,}개",
         f"FINRA 공매도 잔고: {short_interest.get('count', 0):,}개",
         f"SEC 확인 기업: {sec.get('company_count', 0):,}개",

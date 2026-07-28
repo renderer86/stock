@@ -75,14 +75,15 @@ cd C:\stock
 
 1. 한국은행 ECOS·FRED 국채 금리
 2. 네이버 금융 KoAct·TIME ETF 현재가/등락률
-3. FINRA 미국 일일 공매도 거래량
-4. Nasdaq 전체 미국 종목과 Yahoo 상위 200종목 1년 차트·기술지표
-5. Finnhub 상위 100종목 기업지표·추천·EPS 서프라이즈
-6. KRX Open API 주식·ETF·지수·국채 일별 데이터
-7. KRX 로그인 기반 코스피·코스닥 투자자 수급·공매도
-8. 네이버 금융 국내 시총·재무지표와 FnGuide 과거 ROE
-9. OpenDART 지분, 최근 전체 공시와 자사주·배당·수주·CB·임원매수 상세
-10. NAVER 검색 뉴스와 Gemini 시장 브리핑
+3. 다우·나스닥·S&P 500·러셀 2000·코스피·코스닥·비트코인·이더리움 2년 차트
+4. FINRA 미국 일일 공매도 거래량
+5. Nasdaq 전체 미국 종목과 Yahoo 상위 200종목 1년 차트·기술지표
+6. Finnhub 상위 100종목 기업지표·추천·EPS 서프라이즈
+7. KRX Open API 주식·ETF·지수·국채 일별 데이터
+8. KRX 로그인 기반 코스피·코스닥 투자자 수급·공매도
+9. 네이버 금융 국내 시총·재무지표와 FnGuide 과거 ROE
+10. OpenDART 지분, 최근 전체 공시와 자사주·배당·수주·CB·임원매수 상세
+11. NAVER 검색 뉴스와 Gemini 시장 브리핑
 
 전체 실행:
 
@@ -130,6 +131,7 @@ OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, �
 - `--skip-dart`: OpenDART 수집 생략
 - `--skip-rates`: ECOS·FRED 국채 금리 수집 생략
 - `--skip-etf-tickers`: 네이버 금융 ETF 브랜드 수집 생략
+- `--skip-market-indices`: 주요 지수·가상자산 차트 수집 생략
 - `--skip-finra`: FINRA 미국 공매도 거래량 수집 생략
 - `--skip-krx`: KRX Open API와 로그인 기반 수급·공매도 수집 생략
 - `--skip-us-market`: Nasdaq·Yahoo 미국시장 수집 생략

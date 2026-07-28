@@ -3,6 +3,7 @@ const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
 const DART_MAJOR_URL = "./data/dart_major_holders.json";
 const TREASURY_YIELDS_URL = "./data/treasury_yields.json";
 const ETF_BRANDS_URL = "./data/naver_etf_brands.json";
+const MARKET_INDICES_URL = "./data/market_indices.json";
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -60,7 +61,10 @@ const state = {
   newsCategory: "all",
   newsSearch: "",
   secCategory: "all",
-  secSearch: ""
+  secSearch: "",
+  marketAssets: [],
+  selectedMarketAsset: "sp500",
+  marketChartRange: "3m"
 };
 
 function formatNumber(value, digits = 2) {
@@ -402,6 +406,231 @@ async function loadEtfBrandTickers() {
       track.innerHTML = `<div class="rate-ticker-loading">${brand} ETF 데이터를 불러오지 못했습니다.</div>`;
       document.getElementById(dateId).textContent = "Unavailable";
     });
+    console.error(error);
+  }
+}
+
+function marketTone(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number === 0) {
+    return "market-tone-flat";
+  }
+  return number > 0 ? "market-tone-up" : "market-tone-down";
+}
+
+function formatMarketAssetValue(asset, value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) {
+    return "N/A";
+  }
+  const digits = Number(asset?.decimals ?? 2);
+  const prefix = asset?.group === "Crypto" ? "$" : "";
+  return `${prefix}${formatNumber(number, digits)}`;
+}
+
+function marketHistoryForRange(history, range) {
+  if (!Array.isArray(history) || !history.length || range === "2y") {
+    return Array.isArray(history) ? history : [];
+  }
+  const daysByRange = {
+    "1m": 31,
+    "3m": 93,
+    "6m": 186,
+    "1y": 366
+  };
+  const days = daysByRange[range] || 93;
+  const lastDate = new Date(`${history.at(-1).date}T00:00:00Z`);
+  if (Number.isNaN(lastDate.getTime())) {
+    return history;
+  }
+  const cutoff = lastDate.getTime() - days * 86400000;
+  const filtered = history.filter((row) => {
+    const time = new Date(`${row.date}T00:00:00Z`).getTime();
+    return Number.isFinite(time) && time >= cutoff;
+  });
+  return filtered.length >= 2 ? filtered : history.slice(-2);
+}
+
+function marketSparkline(history, change) {
+  const rows = marketHistoryForRange(history, "3m");
+  const closes = rows
+    .map((row) => Number(row.close))
+    .filter(Number.isFinite);
+  if (closes.length < 2) {
+    return "";
+  }
+  const width = 92;
+  const height = 46;
+  const pad = 3;
+  const min = Math.min(...closes);
+  const max = Math.max(...closes);
+  const range = Math.max(max - min, 0.0001);
+  const points = closes.map((value, index) => {
+    const x = pad + index / (closes.length - 1) * (width - pad * 2);
+    const y = pad + (max - value) / range * (height - pad * 2);
+    return `${x.toFixed(2)},${y.toFixed(2)}`;
+  }).join(" ");
+  const color = Number(change) >= 0 ? "#d8483f" : "#3478c7";
+  return `
+    <svg class="market-sparkline" viewBox="0 0 ${width} ${height}" aria-hidden="true">
+      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+    </svg>
+  `;
+}
+
+function renderMarketOverviewCards() {
+  const container = document.getElementById("market-overview-cards");
+  if (!state.marketAssets.length) {
+    container.innerHTML = "<div class='market-overview-loading'>표시할 시장 차트 데이터가 없습니다.</div>";
+    return;
+  }
+  if (!state.marketAssets.some((asset) => asset.id === state.selectedMarketAsset)) {
+    state.selectedMarketAsset = state.marketAssets[0].id;
+  }
+  container.innerHTML = state.marketAssets.map((asset) => {
+    const tone = marketTone(asset.change_pct);
+    const direction = Number(asset.change_pct) > 0
+      ? "▲"
+      : Number(asset.change_pct) < 0
+        ? "▼"
+        : "—";
+    return `
+      <button
+        class="market-asset-card ${asset.id === state.selectedMarketAsset ? "is-selected" : ""}"
+        type="button"
+        data-market-asset="${escapeHtml(asset.id)}"
+        aria-pressed="${asset.id === state.selectedMarketAsset ? "true" : "false"}"
+      >
+        <span class="market-asset-main">
+          <span class="market-asset-label">${escapeHtml(asset.name)}</span>
+          <span class="market-asset-value">${escapeHtml(formatMarketAssetValue(asset, asset.current))}</span>
+          <span class="market-asset-change ${tone}">${direction} ${escapeHtml(formatSignedPercent(asset.change_pct, 2))}</span>
+        </span>
+        ${marketSparkline(asset.history, asset.change_pct)}
+      </button>
+    `;
+  }).join("");
+}
+
+function renderMarketMainChart() {
+  const asset = state.marketAssets.find(
+    (item) => item.id === state.selectedMarketAsset
+  );
+  const summary = document.getElementById("market-chart-summary");
+  const container = document.getElementById("market-index-chart");
+  if (!asset) {
+    summary.innerHTML = "";
+    container.innerHTML = "<div class='market-overview-loading'>차트 자산을 선택하세요.</div>";
+    return;
+  }
+  const rows = marketHistoryForRange(asset.history, state.marketChartRange);
+  const closes = rows.map((row) => Number(row.close)).filter(Number.isFinite);
+  if (closes.length < 2) {
+    summary.innerHTML = "";
+    container.innerHTML = "<div class='market-overview-loading'>유효한 차트 이력이 없습니다.</div>";
+    return;
+  }
+  const periodReturn = closes[0]
+    ? (closes.at(-1) / closes[0] - 1) * 100
+    : null;
+  const tone = marketTone(periodReturn);
+  summary.innerHTML = `
+    <p class="section-kicker">${escapeHtml(asset.group || "")} · ${escapeHtml(asset.symbol || "")}</p>
+    <h3>${escapeHtml(asset.name)} <span class="${tone}">${escapeHtml(state.marketChartRange.toUpperCase())}</span></h3>
+    <div class="market-chart-summary-line">
+      <strong>${escapeHtml(formatMarketAssetValue(asset, closes.at(-1)))}</strong>
+      <span class="${tone}">${escapeHtml(formatSignedPercent(periodReturn, 2))}</span>
+    </div>
+  `;
+
+  const width = 1120;
+  const height = 300;
+  const pad = { left: 62, right: 18, top: 18, bottom: 30 };
+  const min = Math.min(...closes);
+  const max = Math.max(...closes);
+  const valueRange = Math.max(max - min, 0.0001);
+  const x = (index) => pad.left
+    + index / Math.max(closes.length - 1, 1) * (width - pad.left - pad.right);
+  const y = (value) => pad.top
+    + (max - value) / valueRange * (height - pad.top - pad.bottom);
+  const points = closes.map(
+    (value, index) => `${x(index).toFixed(2)},${y(value).toFixed(2)}`
+  ).join(" ");
+  const bottom = height - pad.bottom;
+  const color = periodReturn >= 0 ? "#d8483f" : "#3478c7";
+  const fillId = `market-fill-${escapeHtml(asset.id)}`;
+  const firstDate = formatCompactDate(rows[0]?.date);
+  const lastDate = formatCompactDate(rows.at(-1)?.date);
+  const mid = min + valueRange / 2;
+  container.innerHTML = `
+    <svg class="market-main-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" role="img" aria-label="${escapeHtml(asset.name)} ${escapeHtml(state.marketChartRange)} 가격 차트">
+      <defs>
+        <linearGradient id="${fillId}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="${color}" stop-opacity=".24"></stop>
+          <stop offset="1" stop-color="${color}" stop-opacity=".02"></stop>
+        </linearGradient>
+      </defs>
+      <polygon points="${pad.left},${bottom} ${points} ${width - pad.right},${bottom}" fill="url(#${fillId})"></polygon>
+      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <text class="market-chart-axis" x="${pad.left - 8}" y="${pad.top + 4}" text-anchor="end">${escapeHtml(formatMarketAssetValue(asset, max))}</text>
+      <text class="market-chart-axis" x="${pad.left - 8}" y="${y(mid) + 4}" text-anchor="end">${escapeHtml(formatMarketAssetValue(asset, mid))}</text>
+      <text class="market-chart-axis" x="${pad.left - 8}" y="${bottom}" text-anchor="end">${escapeHtml(formatMarketAssetValue(asset, min))}</text>
+      <text class="market-chart-axis" x="${pad.left}" y="${height - 8}">${escapeHtml(firstDate)}</text>
+      <text class="market-chart-axis" x="${width - pad.right}" y="${height - 8}" text-anchor="end">${escapeHtml(lastDate)}</text>
+    </svg>
+  `;
+}
+
+function renderMarketOverview() {
+  renderMarketOverviewCards();
+  renderMarketMainChart();
+  document.querySelectorAll("[data-market-range]").forEach((button) => {
+    button.classList.toggle(
+      "is-active",
+      button.dataset.marketRange === state.marketChartRange
+    );
+  });
+}
+
+function bindMarketOverview() {
+  document.getElementById("market-overview-cards")?.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-market-asset]");
+    if (!card) {
+      return;
+    }
+    state.selectedMarketAsset = card.dataset.marketAsset;
+    renderMarketOverview();
+  });
+  document.querySelectorAll("[data-market-range]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.marketChartRange = button.dataset.marketRange;
+      renderMarketOverview();
+    });
+  });
+}
+
+async function loadMarketOverview() {
+  try {
+    const response = await fetch(`${MARKET_INDICES_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} for market indices`);
+    }
+    const payload = await response.json();
+    state.marketAssets = Array.isArray(payload.assets) ? payload.assets : [];
+    const updated = new Date(payload.crawled_at_utc);
+    document.getElementById("market-overview-updated").textContent =
+      Number.isNaN(updated.getTime())
+        ? "갱신일 확인 불가"
+        : `${updated.toLocaleString("ko-KR")} 갱신`;
+    renderMarketOverview();
+  } catch (error) {
+    document.getElementById("market-overview-cards").innerHTML =
+      "<div class='market-overview-loading'>시장 차트 데이터를 불러오지 못했습니다.</div>";
+    document.getElementById("market-index-chart").innerHTML =
+      "<div class='market-overview-loading'>다음 데이터 수집 후 표시됩니다.</div>";
+    document.getElementById("market-overview-updated").textContent = "Unavailable";
     console.error(error);
   }
 }
@@ -2178,6 +2407,7 @@ function friendlyDataName(path) {
     "data/naver_news.json": "NAVER 뉴스",
     "data/ai_market_briefing.json": "AI 시장 브리핑",
     "data/treasury_yields.json": "한·미 국채 금리",
+    "data/market_indices.json": "주요 지수·가상자산 차트",
     "data/naver_etf_brands.json": "KoAct·TIME ETF",
     "data/market_sum.json": "국내 종목 시세",
     "data/market_sum_by_roe.json": "국내 가치평가 원본",
@@ -2204,6 +2434,7 @@ function renderDataWorkspace() {
     "data/fnguide_roe_history.json",
     "data/dart_major_holders.json",
     "data/treasury_yields.json",
+    "data/market_indices.json",
     "data/naver_etf_brands.json",
     "data/korea_investor_flow.json",
     "data/korea_short_selling.json",
@@ -2304,10 +2535,12 @@ function bindFeatureControls() {
 }
 
 bindFeatureControls();
+bindMarketOverview();
 const initialWorkspace = location.hash.replace("#", "");
 if (["valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
   switchWorkspace(initialWorkspace, false);
 }
 loadTreasuryTicker();
 loadEtfBrandTickers();
+loadMarketOverview();
 loadStocks();

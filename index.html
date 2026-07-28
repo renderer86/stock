@@ -68,6 +68,39 @@
       </section>
     </div>
 
+    <section class="market-overview" aria-labelledby="market-overview-title">
+      <div class="market-overview-head">
+        <div>
+          <p class="section-kicker">Global Market Pulse</p>
+          <h2 id="market-overview-title">주요 지수·가상자산 차트</h2>
+        </div>
+        <div class="market-overview-meta">
+          <span id="market-overview-updated">데이터 불러오는 중</span>
+          <span>Yahoo Finance · 일봉</span>
+        </div>
+      </div>
+
+      <div id="market-overview-cards" class="market-overview-cards">
+        <div class="market-overview-loading">8개 시장 차트를 불러오는 중입니다.</div>
+      </div>
+
+      <div class="market-chart-shell">
+        <div class="market-chart-toolbar">
+          <div id="market-chart-summary" class="market-chart-summary"></div>
+          <div class="market-range-buttons" aria-label="차트 기간">
+            <button type="button" data-market-range="1m">1개월</button>
+            <button type="button" data-market-range="3m" class="is-active">3개월</button>
+            <button type="button" data-market-range="6m">6개월</button>
+            <button type="button" data-market-range="1y">1년</button>
+            <button type="button" data-market-range="2y">2년</button>
+          </div>
+        </div>
+        <div id="market-index-chart" class="market-index-chart">
+          <div class="market-overview-loading">차트 준비 중입니다.</div>
+        </div>
+      </div>
+    </section>
+
     <nav class="workspace-tabs" aria-label="대시보드 기능">
       <button class="workspace-tab is-active" type="button" data-workspace="valuation">가치평가</button>
       <button class="workspace-tab" type="button" data-workspace="korea">국내 수급·공매도</button>
