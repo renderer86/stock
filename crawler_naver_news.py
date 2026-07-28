@@ -18,11 +18,11 @@ ROOT_DIR = Path(__file__).resolve().parent
 API_URL = "https://openapi.naver.com/v1/search/news.json"
 DEFAULT_OUTPUT = Path("data/naver_news.json")
 DEFAULT_QUERIES = [
-    ("semiconductor", "반도체 OR HBM OR 파운드리 주식"),
-    ("it", "IT OR 인공지능 OR 소프트웨어 OR 빅테크 주식"),
-    ("us", "미국 증시 OR 뉴욕증시 OR 나스닥 OR S&P500"),
-    ("kospi", "코스피 증시"),
-    ("kosdaq", "코스닥 증시"),
+    ("semiconductor", "반도체"),
+    ("it", "IT 산업"),
+    ("us", "미국 증시"),
+    ("kospi", "코스피"),
+    ("kosdaq", "코스닥"),
     ("korea_rates", "국고채 금리 한국은행"),
     ("korea_flow", "외국인 기관 순매수 증시"),
     ("us_rates", "미국 국채 금리 연준"),
