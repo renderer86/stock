@@ -39,6 +39,8 @@ $lines = @(
 
 foreach ($entry in @(
     @("KRX_API_KEY", "KRX Open API 인증키"),
+    @("KRX_ID", "KRX 로그인 아이디"),
+    @("KRX_PW", "KRX 로그인 비밀번호"),
     @("FINNHUB_API_KEY", "Finnhub API 키"),
     @("NAVER_CLIENT_ID", "NAVER Client ID"),
     @("NAVER_CLIENT_SECRET", "NAVER Client Secret"),

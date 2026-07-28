@@ -29,6 +29,7 @@ cd C:\stock
 | `ECOS_API_KEY` | 한국은행 국내 국채 금리 | 금리 수집 |
 | `DART_API_KEY` | OpenDART 5% 이상 보유 공시 | 장 마감/전체 수집 |
 | `KRX_API_KEY` | KRX 공식 주식·ETF·지수·채권 일별 데이터 | 전체 수집 |
+| `KRX_ID`, `KRX_PW` | KRX 로그인 기반 국내 투자자 수급·공매도 | 장 마감/전체 수집 |
 | `FINNHUB_API_KEY` | 미국 기업 지표·애널리스트 추천·EPS 서프라이즈 | 전체 수집 |
 | `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` | 국내외 시장 뉴스 검색 | 전체 수집 |
 | `GEMINI_API_KEY` | 수집 데이터 기반 AI 브리핑 | 전체 수집 |
@@ -59,9 +60,10 @@ cd C:\stock
 4. Nasdaq 전체 미국 종목과 Yahoo 상위 200종목 1년 차트·기술지표
 5. Finnhub 상위 100종목 기업지표·추천·EPS 서프라이즈
 6. KRX Open API 주식·ETF·지수·국채 일별 데이터
-7. 네이버 금융 국내 시총·재무지표와 FnGuide 과거 ROE
-8. OpenDART 지분 및 최근 전체 공시
-9. NAVER 검색 뉴스와 Gemini 시장 브리핑
+7. KRX 로그인 기반 코스피·코스닥 투자자 수급·공매도
+8. 네이버 금융 국내 시총·재무지표와 FnGuide 과거 ROE
+9. OpenDART 지분 및 최근 전체 공시
+10. NAVER 검색 뉴스와 Gemini 시장 브리핑
 
 전체 실행:
 
@@ -103,7 +105,7 @@ OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
 - `--skip-rates`: ECOS·FRED 국채 금리 수집 생략
 - `--skip-etf-tickers`: 네이버 금융 ETF 브랜드 수집 생략
 - `--skip-finra`: FINRA 미국 공매도 거래량 수집 생략
-- `--skip-krx`: KRX Open API 수집 생략
+- `--skip-krx`: KRX Open API와 로그인 기반 수급·공매도 수집 생략
 - `--skip-us-market`: Nasdaq·Yahoo 미국시장 수집 생략
 - `--skip-sec`: SEC 내부자·13D/G·8-K·IPO 공시 수집 생략
 - `--skip-finnhub`: Finnhub 보강 수집 생략
@@ -135,6 +137,8 @@ OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
 - `data/us_market_snapshot.json`: Nasdaq 전체 미국 종목과 Yahoo 상위 종목 차트·기술지표
 - `data/us_finnhub.json`: Finnhub 기업지표·추천 추이·EPS 서프라이즈
 - `data/krx_openapi.json`: KRX 공식 일별 주식·ETF·지수·국채 데이터
+- `data/korea_investor_flow.json`: 코스피·코스닥 개인·외국인·기관 종목별 수급과 일별 추이
+- `data/korea_short_selling.json`: 코스피·코스닥 종목별 공매도 거래, 거래비중·잔고 상위 50
 - `data/dart_disclosures.json`: 최근 코스피·코스닥 DART 공시와 이벤트 분류
 - `data/naver_news.json`: 카테고리별 NAVER 검색 뉴스
 - `data/ai_market_briefing.json`: 수집 데이터 기반 Gemini 브리핑
@@ -188,6 +192,9 @@ http://localhost:8000
 # KRX 공식 Open API
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_krx_openapi.py
 
+# KRX 로그인 기반 국내 투자자 수급·공매도
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_krx_flow_short.py
+
 # 네이버 금융
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_naver_market_sum.py
 
@@ -233,6 +240,8 @@ GitHub Actions에서 다음 일정으로 실행됩니다.
 - `ECOS_API_KEY`
 - `DART_API_KEY`
 - `KRX_API_KEY`
+- `KRX_ID`
+- `KRX_PW`
 - `FINNHUB_API_KEY`
 - `NAVER_CLIENT_ID`
 - `NAVER_CLIENT_SECRET`
@@ -248,10 +257,12 @@ GitHub Actions에서 다음 일정으로 실행됩니다.
 직접 배포합니다. 예약 실행은 GitHub 서버 상황에 따라 몇 분 늦어질 수 있습니다.
 수집 성공·실패 요약은 등록한 Telegram 채팅으로 전송됩니다.
 
-KRX 인증키만 발급받는 것과 각 API 사용 승인은 별개입니다. `krx_openapi.json`에서
+KRX Open API 인증키만 발급받는 것과 각 API 사용 승인은 별개입니다. `krx_openapi.json`에서
 특정 데이터셋이 `not_authorized`로 나오면 KRX Open API 사이트에서 해당 서비스의
-`API 이용신청`을 추가로 승인받아야 합니다. KRX Open API 서비스 목록에는 종목별
-공매도 잔고와 투자자별 수급이 없으므로 이 두 항목은 현재 파일에 포함되지 않습니다.
+`API 이용신청`을 추가로 승인받아야 합니다. 종목별 투자자 수급과 공매도는
+`KRX_ID`/`KRX_PW` 로그인 세션으로 별도 수집됩니다. 공매도 잔고는 거래소 공개
+시차 때문에 거래 데이터보다 기준일이 늦을 수 있으므로 `korea_short_selling.json`의
+`transaction_date`와 `balance_date`를 따로 확인해야 합니다.
 
 로컬에서 예약 실행 구성을 실제 네트워크 요청 없이 확인할 수도 있습니다.
 

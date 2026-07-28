@@ -28,6 +28,8 @@ def load_json(path: str) -> dict[str, Any]:
 def build_message(status: str, profile: str) -> str:
     us = load_json("data/us_market_snapshot.json")
     krx = load_json("data/krx_openapi.json")
+    korea_flow = load_json("data/korea_investor_flow.json")
+    korea_short = load_json("data/korea_short_selling.json")
     news = load_json("data/naver_news.json")
     dart = load_json("data/dart_disclosures.json")
     finnhub = load_json("data/us_finnhub.json")
@@ -38,6 +40,14 @@ def build_message(status: str, profile: str) -> str:
         dataset.get("status") == "ok"
         for dataset in (krx.get("datasets") or {}).values()
     )
+    flow_count = sum(
+        int(market.get("count") or 0)
+        for market in (korea_flow.get("markets") or {}).values()
+    )
+    korea_short_count = sum(
+        int(market.get("count") or 0)
+        for market in (korea_short.get("markets") or {}).values()
+    )
     marker = "✅" if status == "success" else "❌"
     lines = [
         f"{marker} stock 데이터 자동 갱신: {status}",
@@ -47,6 +57,8 @@ def build_message(status: str, profile: str) -> str:
         f"FINRA 공매도 잔고: {short_interest.get('count', 0):,}개",
         f"SEC 확인 기업: {sec.get('company_count', 0):,}개",
         f"KRX 성공 데이터셋: {krx_ok}개",
+        f"국내 수급: {flow_count:,}종목 ({korea_flow.get('trade_date') or '-'})",
+        f"국내 공매도: {korea_short_count:,}종목 ({korea_short.get('transaction_date') or '-'})",
         f"네이버 뉴스: {news.get('count', 0):,}건",
         f"DART 공시: {dart.get('count', 0):,}건",
     ]

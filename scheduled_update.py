@@ -17,8 +17,8 @@ PROFILE_COMMANDS = {
 }
 PROFILE_REQUIRED_ENV = {
     "rates": ("ECOS_API_KEY",),
-    "market-close": ("DART_API_KEY",),
-    "all": ("ECOS_API_KEY", "DART_API_KEY"),
+    "market-close": ("DART_API_KEY", "KRX_ID", "KRX_PW"),
+    "all": ("ECOS_API_KEY", "DART_API_KEY", "KRX_ID", "KRX_PW"),
 }
 
 

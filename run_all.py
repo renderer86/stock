@@ -88,7 +88,7 @@ def main() -> None:
     parser.add_argument(
         "--skip-krx",
         action="store_true",
-        help="Skip official KRX Open API EOD datasets.",
+        help="Skip KRX Open API and login-based investor/short datasets.",
     )
     parser.add_argument(
         "--skip-us-market",
@@ -264,6 +264,17 @@ def main() -> None:
             )
         else:
             print("[SKIP] KRX_API_KEY is not set.", flush=True)
+        if (
+            os.environ.get("KRX_ID", "").strip()
+            and os.environ.get("KRX_PW", "").strip()
+        ):
+            run_step(
+                "KRX investor flow and short selling",
+                "crawler_krx_flow_short.py",
+                [],
+            )
+        else:
+            print("[SKIP] KRX_ID/KRX_PW are not set.", flush=True)
 
     run_step(
         "Naver market data",

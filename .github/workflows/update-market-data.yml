@@ -1,6 +1,13 @@
 name: Update market data
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.py"
+      - "requirements.txt"
+      - ".github/workflows/update-market-data.yml"
   schedule:
     # 08:30 KST Monday-Friday (23:30 UTC Sunday-Thursday)
     - cron: "30 23 * * 0-4"
@@ -36,6 +43,8 @@ jobs:
       DART_API_KEY: ${{ secrets.DART_API_KEY }}
       FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
       KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+      KRX_ID: ${{ secrets.KRX_ID }}
+      KRX_PW: ${{ secrets.KRX_PW }}
       NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
       NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

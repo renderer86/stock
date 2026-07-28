@@ -29,6 +29,8 @@ def load_json(path: Path) -> dict[str, Any]:
 def compact_context() -> dict[str, Any]:
     rates = load_json(Path("data/treasury_yields.json"))
     krx = load_json(Path("data/krx_openapi.json"))
+    korea_flow = load_json(Path("data/korea_investor_flow.json"))
+    korea_short = load_json(Path("data/korea_short_selling.json"))
     us = load_json(Path("data/us_market_snapshot.json"))
     news = load_json(Path("data/naver_news.json"))
     dart = load_json(Path("data/dart_disclosures.json"))
@@ -55,6 +57,34 @@ def compact_context() -> dict[str, Any]:
     return {
         "treasury_yields": rates,
         "krx_summary": krx_summary,
+        "korea_investor_flow": {
+            "trade_date": korea_flow.get("trade_date"),
+            "markets": {
+                market: {
+                    "daily_net_value": (data.get("daily_net_value") or [])[-10:],
+                    "leaders": {
+                        investor: {
+                            "net_buy": (ranking.get("net_buy") or [])[:10],
+                            "net_sell": (ranking.get("net_sell") or [])[:10],
+                        }
+                        for investor, ranking in (data.get("top50") or {}).items()
+                    },
+                }
+                for market, data in (korea_flow.get("markets") or {}).items()
+            },
+        },
+        "korea_short_selling": {
+            "transaction_date": korea_short.get("transaction_date"),
+            "balance_date": korea_short.get("balance_date"),
+            "markets": {
+                market: {
+                    "trade_ratio_top50": (data.get("trade_ratio_top50") or [])[:20],
+                    "balance_top50": (data.get("balance_top50") or [])[:20],
+                    "investor_daily_value": (data.get("investor_daily_value") or [])[-10:],
+                }
+                for market, data in (korea_short.get("markets") or {}).items()
+            },
+        },
         "us_top_absolute_movers": us_ranked,
         "latest_news": (news.get("items") or [])[:30],
         "dart_category_counts": dart.get("category_counts") or {},
