@@ -2000,6 +2000,233 @@ input[type="range"] {
   }
 }
 
+@media (max-width: 640px) {
+  .market-overview {
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .market-overview > *,
+  .market-overview-head > * {
+    min-width: 0;
+  }
+
+  .market-overview-head {
+    gap: 7px;
+  }
+
+  .market-overview-head h2 {
+    margin-top: 3px;
+    font-size: 1.22rem;
+    line-height: 1.25;
+  }
+
+  .market-overview-head .section-kicker {
+    margin: 0;
+    font-size: 0.64rem;
+  }
+
+  .market-overview-meta {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.66rem;
+  }
+
+  .market-overview-meta span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .market-overview-cards {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    grid-auto-columns: initial;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-bottom: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .market-asset-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 42px;
+    gap: 5px;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 112px;
+    padding: 9px 10px 7px;
+    overflow: hidden;
+    border-radius: 13px;
+    box-shadow: 0 5px 14px rgba(63, 42, 18, 0.05);
+  }
+
+  .market-asset-card::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: #83776a;
+    content: "";
+    opacity: 0.7;
+  }
+
+  .market-asset-card.market-card-up::before {
+    background: #d8483f;
+  }
+
+  .market-asset-card.market-card-down::before {
+    background: #3478c7;
+  }
+
+  .market-asset-card:hover {
+    transform: none;
+  }
+
+  .market-asset-card.is-selected {
+    transform: none;
+    border-color: rgba(184, 92, 56, 0.5);
+    box-shadow:
+      0 0 0 2px rgba(184, 92, 56, 0.1),
+      0 8px 18px rgba(63, 42, 18, 0.08);
+  }
+
+  .market-asset-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    column-gap: 5px;
+    min-width: 0;
+  }
+
+  .market-asset-label {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 0.7rem;
+  }
+
+  .market-asset-change {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+    font-size: 0.66rem;
+  }
+
+  .market-asset-value {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 3px;
+    font-size: clamp(0.86rem, 4vw, 1rem);
+  }
+
+  .market-sparkline {
+    width: 100%;
+    height: 42px;
+    align-self: end;
+  }
+
+  .market-chart-shell {
+    gap: 10px;
+    padding: 11px;
+    border-radius: 15px;
+  }
+
+  .market-chart-toolbar {
+    gap: 9px;
+  }
+
+  .market-chart-summary {
+    min-height: 0;
+  }
+
+  .market-chart-summary .section-kicker {
+    margin: 0;
+    font-size: 0.62rem;
+  }
+
+  .market-chart-summary h3 {
+    margin-top: 2px;
+    font-size: 1.06rem;
+  }
+
+  .market-chart-summary-line {
+    gap: 7px;
+    margin-top: 2px;
+  }
+
+  .market-chart-summary-line strong {
+    font-size: 1.08rem;
+  }
+
+  .market-chart-summary-line span {
+    font-size: 0.74rem;
+  }
+
+  .market-range-buttons {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+    width: 100%;
+    padding: 3px;
+    overflow: visible;
+    border-radius: 10px;
+  }
+
+  .market-range-buttons button {
+    min-width: 0;
+    min-height: 30px;
+    padding: 0 2px;
+    font-size: 0.66rem;
+  }
+
+  .market-index-chart,
+  .market-main-chart {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .market-index-chart {
+    border-radius: 11px;
+    background-size: 100% 25%, 25% 100%;
+  }
+
+  .market-chart-axis {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 360px) {
+  .market-overview {
+    padding: 12px;
+  }
+
+  .market-overview-cards {
+    gap: 6px;
+  }
+
+  .market-asset-card {
+    padding-inline: 8px;
+  }
+
+  .market-asset-change {
+    font-size: 0.61rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rate-live-dot {
     animation: none;

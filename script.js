@@ -474,6 +474,7 @@ function marketSparkline(history, change) {
     const y = pad + (max - value) / range * (height - pad * 2);
     return `${x.toFixed(2)},${y.toFixed(2)}`;
   }).join(" ");
+  const areaPoints = `${pad},${height - pad} ${points} ${width - pad},${height - pad}`;
   const numericChange = Number(change);
   const color = numericChange > 0
     ? "#d8483f"
@@ -482,6 +483,7 @@ function marketSparkline(history, change) {
       : "#83776a";
   return `
     <svg class="market-sparkline" viewBox="0 0 ${width} ${height}" aria-hidden="true">
+      <polygon points="${areaPoints}" fill="${color}" fill-opacity=".09"></polygon>
       <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
     </svg>
   `;
@@ -501,6 +503,11 @@ function renderMarketOverviewCards() {
   }
   container.innerHTML = state.marketAssets.map((asset) => {
     const tone = marketTone(asset.change_pct);
+    const cardTone = Number(asset.change_pct) > 0
+      ? "market-card-up"
+      : Number(asset.change_pct) < 0
+        ? "market-card-down"
+        : "market-card-flat";
     const direction = Number(asset.change_pct) > 0
       ? "▲"
       : Number(asset.change_pct) < 0
@@ -508,10 +515,11 @@ function renderMarketOverviewCards() {
         : "—";
     return `
       <button
-        class="market-asset-card ${asset.id === state.selectedMarketAsset ? "is-selected" : ""}"
+        class="market-asset-card ${cardTone} ${asset.id === state.selectedMarketAsset ? "is-selected" : ""}"
         type="button"
         data-market-asset="${escapeHtml(asset.id)}"
         aria-pressed="${asset.id === state.selectedMarketAsset ? "true" : "false"}"
+        aria-label="${escapeHtml(asset.name)} ${escapeHtml(formatMarketAssetValue(asset, asset.current))}, ${direction} ${escapeHtml(formatSignedPercent(asset.change_pct, 2))}. 상세 차트 ${asset.id === state.selectedMarketAsset ? "닫기" : "열기"}"
       >
         <span class="market-asset-main">
           <span class="market-asset-label">${escapeHtml(asset.name)}</span>
@@ -558,9 +566,12 @@ function renderMarketMainChart() {
     </div>
   `;
 
-  const width = 1120;
-  const height = 300;
-  const pad = { left: 62, right: 18, top: 18, bottom: 30 };
+  const compactChart = window.matchMedia("(max-width: 640px)").matches;
+  const width = compactChart ? 360 : 1120;
+  const height = compactChart ? 220 : 300;
+  const pad = compactChart
+    ? { left: 48, right: 10, top: 14, bottom: 26 }
+    : { left: 62, right: 18, top: 18, bottom: 30 };
   const min = Math.min(...closes);
   const max = Math.max(...closes);
   const valueRange = Math.max(max - min, 0.0001);
@@ -627,6 +638,12 @@ function bindMarketOverview() {
       state.marketChartRange = button.dataset.marketRange;
       renderMarketOverview();
     });
+  });
+  const compactMarketChart = window.matchMedia("(max-width: 640px)");
+  compactMarketChart.addEventListener?.("change", () => {
+    if (state.selectedMarketAsset) {
+      renderMarketMainChart();
+    }
   });
 }
 
