@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260729-market-heatmap">
+  <link rel="stylesheet" href="style.css?v=20260730-priority-workbench">
 </head>
 <body>
   <div class="page-shell">
@@ -126,7 +126,8 @@
     </section>
 
     <nav class="workspace-tabs" aria-label="대시보드 기능">
-      <button class="workspace-tab is-active" type="button" data-workspace="valuation">가치평가</button>
+      <button class="workspace-tab is-active" type="button" data-workspace="priority">우선 검토 후보</button>
+      <button class="workspace-tab" type="button" data-workspace="valuation">가치평가</button>
       <button class="workspace-tab" type="button" data-workspace="korea">국내 수급·공매도</button>
       <button class="workspace-tab" type="button" data-workspace="disclosures">공시·임원매수</button>
       <button class="workspace-tab" type="button" data-workspace="us">미국 시장</button>
@@ -135,12 +136,13 @@
     </nav>
 
     <main class="dashboard-layout">
-      <div id="workspace-valuation" class="workspace-view is-active" data-workspace-view="valuation">
-      <section class="panel">
+      <div id="workspace-priority" class="workspace-view is-active" data-workspace-view="priority">
+      <section class="panel priority-workspace-panel">
         <div class="section-head">
           <div>
             <p class="section-kicker">0. Priority Ideas</p>
             <h2>우선 검토 후보</h2>
+            <p class="section-description">수익성·가격·ROE 지속기간 조건을 동시에 통과한 종목입니다. 종목을 누르면 가치평가 작업공간의 상세 계산으로 이어집니다.</p>
           </div>
           <div class="section-side">
             <span class="stat-pill" id="priority-count-badge">Loading</span>
@@ -173,7 +175,9 @@
           </table>
         </div>
       </section>
+      </div>
 
+      <div id="workspace-valuation" class="workspace-view" data-workspace-view="valuation">
       <section class="panel">
         <div class="section-head">
           <div>
@@ -213,13 +217,40 @@
         </div>
       </section>
 
-      <section class="detail-grid">
-        <div class="panel selected-panel">
-          <div class="section-head">
-            <div>
-              <p class="section-kicker">2. Detail Panel</p>
-              <h2>선택 종목 상세 계산</h2>
+      <section id="selected-stock-workbench" class="selected-stock-workbench" aria-labelledby="selected-workbench-title">
+        <header class="selected-workbench-head">
+          <div>
+            <div class="selected-workbench-breadcrumb" aria-label="상세 계산 위치">
+              <span>가치평가 테이블</span>
+              <span aria-hidden="true">→</span>
+              <strong>선택 종목</strong>
+              <span aria-hidden="true">→</span>
+              <span>상세 계산</span>
             </div>
+            <p class="section-kicker">Selected Stock Workbench</p>
+            <h2 id="selected-workbench-title"><span id="selected-workbench-name">선택 종목</span> 상세 가치 계산</h2>
+            <p>바로 위 가치평가 테이블에서 선택한 한 종목에만 적용되는 계산 영역입니다. 아래 A·B·C 계산 카드는 모두 현재 선택 종목을 기준으로 함께 갱신됩니다.</p>
+          </div>
+          <div class="selected-workbench-identity" aria-live="polite">
+            <span>현재 선택</span>
+            <strong id="selected-workbench-code">Loading</strong>
+            <small id="selected-workbench-market">종목 데이터 준비 중</small>
+          </div>
+        </header>
+
+        <div class="selected-workbench-connector">
+          <span aria-hidden="true"></span>
+          <strong>이 종목의 계산 결과</strong>
+        </div>
+
+        <div class="detail-grid selected-workbench-grid">
+        <div class="panel selected-panel selected-overview-panel">
+          <div class="section-head selected-panel-head">
+            <div>
+              <p class="section-kicker">Selected Overview</p>
+              <h2>선택 종목 기준값</h2>
+            </div>
+            <span class="selected-child-badge">현재 선택에 연결됨</span>
           </div>
 
           <div id="selected-stock-summary" class="selected-stock-summary"></div>
@@ -266,6 +297,7 @@
             </div>
           </div>
           <div id="kelly-panel" class="calc-body"></div>
+        </div>
         </div>
       </section>
 
@@ -704,6 +736,6 @@
     </section>
   </div>
 
-  <script src="script.js?v=20260729-market-heatmap"></script>
+  <script src="script.js?v=20260730-priority-workbench"></script>
 </body>
 </html>

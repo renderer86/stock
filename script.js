@@ -36,7 +36,7 @@ const state = {
   sortDirection: "desc",
   prioritySortKey: "gapRateBase",
   prioritySortDirection: "desc",
-  activeWorkspace: "valuation",
+  activeWorkspace: "priority",
   loadedWorkspaces: new Set(),
   loadingWorkspaces: new Set(),
   featureData: {},
@@ -1166,7 +1166,7 @@ function bindMarketMap() {
         switchWorkspace("valuation");
         renderDashboard();
         setTimeout(() => {
-          document.getElementById("selected-stock-summary")
+          document.getElementById("selected-stock-workbench")
             ?.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 120);
       }
@@ -1946,6 +1946,11 @@ function renderPriorityCandidates(stocks) {
     row.addEventListener("click", () => {
       state.selectedCode = row.dataset.code;
       renderDashboard();
+      switchWorkspace("valuation");
+      setTimeout(() => {
+        document.getElementById("selected-stock-workbench")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 180);
     });
   });
 }
@@ -2018,16 +2023,32 @@ function renderTable(stocks) {
     row.addEventListener("click", () => {
       state.selectedCode = row.dataset.code;
       renderDashboard();
+      setTimeout(() => {
+        document.getElementById("selected-stock-workbench")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
     });
   });
 }
 
 function renderSelectedSummary(stock) {
   const container = document.getElementById("selected-stock-summary");
+  const name = document.getElementById("selected-workbench-name");
+  const code = document.getElementById("selected-workbench-code");
+  const market = document.getElementById("selected-workbench-market");
 
   if (!stock) {
+    if (name) name.textContent = "선택 종목";
+    if (code) code.textContent = "선택 없음";
+    if (market) market.textContent = "가치평가 테이블에서 종목을 선택하세요";
     container.innerHTML = "<div class='empty-state'>선택된 종목이 없습니다.</div>";
     return;
+  }
+
+  if (name) name.textContent = stock.name;
+  if (code) code.textContent = stock.code;
+  if (market) {
+    market.textContent = `${getMarketLabel(stock)} · 현재가 ${formatPrice(stock.current_price)}`;
   }
 
   container.innerHTML = `
@@ -2483,7 +2504,7 @@ function setWorkspaceLoading(name, loading) {
 }
 
 async function loadWorkspaceData(name, force = false) {
-  if (name === "valuation") {
+  if (name === "valuation" || name === "priority") {
     return;
   }
   if ((!force && state.loadedWorkspaces.has(name)) || state.loadingWorkspaces.has(name)) {
@@ -2568,7 +2589,7 @@ function switchWorkspace(name, updateHash = true) {
     button.classList.toggle("is-active", button.dataset.workspace === name);
   });
   if (updateHash) {
-    history.replaceState(null, "", name === "valuation" ? "#valuation" : `#${name}`);
+    history.replaceState(null, "", `#${name}`);
   }
   loadWorkspaceData(name);
   window.scrollTo({ top: document.querySelector(".workspace-tabs").offsetTop - 8, behavior: "smooth" });
@@ -3413,7 +3434,7 @@ function bindFeatureControls() {
         state.selectedCode = code;
         switchWorkspace("valuation");
         renderDashboard();
-        document.getElementById("selected-stock-summary")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        document.getElementById("selected-stock-workbench")?.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
   });
@@ -3470,7 +3491,7 @@ bindTodayNews();
 bindMarketMap();
 initResponsiveTables();
 const initialWorkspace = location.hash.replace("#", "");
-if (["valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
+if (["priority", "valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
   switchWorkspace(initialWorkspace, false);
 }
 loadTreasuryTicker();
