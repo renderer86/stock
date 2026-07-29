@@ -137,6 +137,7 @@ OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, �
 - `--skip-rates`: ECOS·FRED 국채 금리 수집 생략
 - `--skip-etf-tickers`: 네이버 금융 ETF 브랜드 수집 생략
 - `--skip-market-indices`: 주요 지수·가상자산 차트 수집 생략
+- `--skip-market-heatmap`: 한·미 종목 섹터 히트맵 수집 생략
 - `--skip-finra`: FINRA 미국 공매도 거래량 수집 생략
 - `--skip-krx`: KRX Open API와 로그인 기반 수급·공매도 수집 생략
 - `--skip-us-market`: Nasdaq·Yahoo 미국시장 수집 생략
@@ -166,6 +167,7 @@ OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, �
 - `data/treasury_yields.json`: ECOS 한국 국고채 및 FRED 미국 국채 만기별 금리
 - `data/naver_etf_brands.json`: 네이버 금융 ETF 브랜드별 현재가와 등락률
 - `data/market_indices.json`: 한·미 주요 지수와 비트코인·이더리움 2년 일봉
+- `data/market_heatmap.json`: 네이버 국내 업종과 Nasdaq·Yahoo 미국 섹터를 결합한 종목 히트맵
 - `data/us_finra_short_volume.json`: FINRA 최신 미국 종목별 장외 공매도 거래량
 - `data/us_finra_short_interest.json`: FINRA 최신 격주 종목별 공매도 잔고
 - `data/us_market_snapshot.json`: Nasdaq 전체 미국 종목과 Yahoo 상위 종목 차트·기술지표
@@ -211,6 +213,9 @@ http://localhost:8000
 
 # KoAct·TIME ETF (브랜드 인수를 바꾸면 다른 브랜드도 수집)
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_naver_etf_brands.py KoAct TIME
+
+# 한국·미국 시장 섹터 히트맵
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_market_heatmap.py
 
 # FINRA 미국 일일 공매도 거래량
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" crawler_finra_short_volume.py

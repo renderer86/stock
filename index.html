@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260729-mobile-workspace-cards">
+  <link rel="stylesheet" href="style.css?v=20260729-market-heatmap">
 </head>
 <body>
   <div class="page-shell">
@@ -622,8 +622,88 @@
         </section>
       </div>
     </main>
+
+    <section id="market-map-board" class="market-map-board" aria-labelledby="market-map-title">
+      <div class="market-map-head">
+        <div>
+          <p class="section-kicker">Interactive Market Map</p>
+          <h2 id="market-map-title">시장 히트맵</h2>
+          <p>시장·그룹·섹터를 고르고 색상과 타일 크기 기준을 바꿔 종목 흐름을 한눈에 비교합니다.</p>
+        </div>
+        <div class="market-map-head-meta">
+          <span id="market-map-updated">데이터 불러오는 중</span>
+          <span id="market-map-source">Naver · Nasdaq · Yahoo</span>
+        </div>
+      </div>
+
+      <div class="market-map-controls" aria-label="시장 히트맵 설정">
+        <label>
+          <span>시장</span>
+          <select id="market-map-market">
+            <option value="US">미국</option>
+            <option value="KR">한국</option>
+          </select>
+        </label>
+        <label>
+          <span>지수 / 그룹</span>
+          <select id="market-map-group"></select>
+        </label>
+        <label>
+          <span>섹터</span>
+          <select id="market-map-sector"></select>
+        </label>
+        <label>
+          <span>색상 기준</span>
+          <select id="market-map-color"></select>
+        </label>
+        <label>
+          <span>타일 크기</span>
+          <select id="market-map-size">
+            <option value="market_cap">시가총액</option>
+            <option value="volume">거래량</option>
+          </select>
+        </label>
+        <label>
+          <span>표시 종목</span>
+          <select id="market-map-limit">
+            <option value="40">40개</option>
+            <option value="60" selected>60개</option>
+            <option value="100">100개</option>
+          </select>
+        </label>
+        <label class="market-map-search">
+          <span>종목 찾기</span>
+          <input id="market-map-search" type="search" placeholder="종목명·티커·코드">
+        </label>
+        <button id="market-map-reset" class="market-map-reset" type="button">초기화</button>
+      </div>
+
+      <div id="market-map-kpis" class="market-map-kpis">
+        <div class="market-map-loading">시장 히트맵 데이터를 준비하고 있습니다.</div>
+      </div>
+
+      <div class="market-map-legend" aria-label="히트맵 색상 범례">
+        <span class="market-map-legend-down">강한 하락</span>
+        <span class="market-map-legend-down-soft">하락</span>
+        <span class="market-map-legend-flat">중립</span>
+        <span class="market-map-legend-up-soft">상승</span>
+        <span class="market-map-legend-up">강한 상승</span>
+      </div>
+
+      <div class="market-map-layout">
+        <div id="market-heatmap" class="market-heatmap" aria-live="polite">
+          <div class="market-map-loading">히트맵을 불러오는 중입니다.</div>
+        </div>
+        <aside id="market-map-detail" class="market-map-detail" aria-live="polite">
+          <div class="market-map-detail-empty">
+            <strong>종목을 선택하세요</strong>
+            <span>히트맵 타일을 누르면 가격·등락·핵심 지표가 표시됩니다.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
   </div>
 
-  <script src="script.js?v=20260729-mobile-workspace-cards"></script>
+  <script src="script.js?v=20260729-market-heatmap"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@ const DART_MAJOR_URL = "./data/dart_major_holders.json";
 const TREASURY_YIELDS_URL = "./data/treasury_yields.json";
 const ETF_BRANDS_URL = "./data/naver_etf_brands.json";
 const MARKET_INDICES_URL = "./data/market_indices.json";
+const MARKET_HEATMAP_URL = "./data/market_heatmap.json";
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -68,7 +69,16 @@ const state = {
   todayNewsCategory: "semiconductor",
   todayNewsItems: [],
   todayNewsLabels: {},
-  todayNewsCrawledAt: null
+  todayNewsCrawledAt: null,
+  marketMapData: null,
+  marketMapMarket: "US",
+  marketMapGroup: "top100",
+  marketMapSector: "all",
+  marketMapColor: "change_pct",
+  marketMapSize: "market_cap",
+  marketMapLimit: 60,
+  marketMapSearch: "",
+  marketMapSelected: null
 };
 
 function formatNumber(value, digits = 2) {
@@ -668,6 +678,533 @@ async function loadMarketOverview() {
       "<div class='market-overview-loading'>시장 차트 데이터를 불러오지 못했습니다.</div>";
     document.getElementById("market-chart-shell").hidden = true;
     document.getElementById("market-overview-updated").textContent = "Unavailable";
+    console.error(error);
+  }
+}
+
+function marketMapGroupOptions(market) {
+  if (market === "KR") {
+    return [
+      ["all", "한국 전체"],
+      ["KOSPI", "코스피"],
+      ["KOSDAQ", "코스닥"],
+      ["top100", "시가총액 상위 100"],
+      ["top200", "시가총액 상위 200"]
+    ];
+  }
+  return [
+    ["all", "미국 전체"],
+    ["top100", "시가총액 상위 100"],
+    ["top500", "시가총액 상위 500"],
+    ["mega", "메가캡 · $200B 이상"],
+    ["large", "대형주 · $10B 이상"]
+  ];
+}
+
+function marketMapColorOptions(market) {
+  if (market === "KR") {
+    return [
+      ["change_pct", "당일 등락률"],
+      ["roe", "ROE"],
+      ["foreigner_ratio", "외국인 보유율"]
+    ];
+  }
+  return [
+    ["change_pct", "당일 등락률"],
+    ["return_1m", "1개월 수익률"],
+    ["rsi14", "RSI(14)"]
+  ];
+}
+
+function setSelectOptions(select, options, selectedValue) {
+  if (!select) {
+    return selectedValue;
+  }
+  select.innerHTML = options.map(([value, label]) => `
+    <option value="${escapeHtml(value)}">${escapeHtml(label)}</option>
+  `).join("");
+  const available = options.some(([value]) => value === selectedValue);
+  select.value = available ? selectedValue : options[0]?.[0] || "";
+  return select.value;
+}
+
+function marketMapAllStocks() {
+  return state.marketMapData?.markets?.[state.marketMapMarket]?.stocks || [];
+}
+
+function marketMapGroupStocks() {
+  const stocks = marketMapAllStocks()
+    .filter((stock) => Number.isFinite(Number(stock.market_cap)))
+    .sort((a, b) => Number(b.market_cap) - Number(a.market_cap));
+  const group = state.marketMapGroup;
+  if (state.marketMapMarket === "KR") {
+    if (group === "KOSPI" || group === "KOSDAQ") {
+      return stocks.filter((stock) => stock.group === group);
+    }
+    if (group === "top100" || group === "top200") {
+      return stocks.slice(0, group === "top100" ? 100 : 200);
+    }
+    return stocks;
+  }
+  if (group === "top100" || group === "top500") {
+    return stocks.slice(0, group === "top100" ? 100 : 500);
+  }
+  if (group === "mega") {
+    return stocks.filter((stock) => Number(stock.market_cap) >= 200e9);
+  }
+  if (group === "large") {
+    return stocks.filter((stock) => Number(stock.market_cap) >= 10e9);
+  }
+  return stocks;
+}
+
+function renderMarketMapFilterOptions() {
+  state.marketMapGroup = setSelectOptions(
+    document.getElementById("market-map-group"),
+    marketMapGroupOptions(state.marketMapMarket),
+    state.marketMapGroup
+  );
+  state.marketMapColor = setSelectOptions(
+    document.getElementById("market-map-color"),
+    marketMapColorOptions(state.marketMapMarket),
+    state.marketMapColor
+  );
+  const sectors = Array.from(
+    new Set(marketMapGroupStocks().map((stock) => stock.sector || "Other"))
+  ).sort((a, b) => a.localeCompare(b, state.marketMapMarket === "KR" ? "ko" : "en"));
+  state.marketMapSector = setSelectOptions(
+    document.getElementById("market-map-sector"),
+    [["all", "전체 섹터"], ...sectors.map((sector) => [sector, sector])],
+    state.marketMapSector
+  );
+}
+
+function filteredMarketMapStocks() {
+  const search = state.marketMapSearch.trim().toLocaleLowerCase();
+  return marketMapGroupStocks()
+    .filter((stock) =>
+      state.marketMapSector === "all" || stock.sector === state.marketMapSector
+    )
+    .filter((stock) => {
+      if (!search) {
+        return true;
+      }
+      return [stock.symbol, stock.name, stock.sector, stock.industry]
+        .some((value) => String(value || "").toLocaleLowerCase().includes(search));
+    });
+}
+
+function marketMapMetricConfig() {
+  const configs = {
+    change_pct: { label: "당일", center: 0, scale: 6, digits: 2, suffix: "%" },
+    return_1m: { label: "1개월", center: 0, scale: 20, digits: 1, suffix: "%" },
+    rsi14: { label: "RSI", center: 50, scale: 30, digits: 1, suffix: "" },
+    roe: { label: "ROE", center: 0, scale: 25, digits: 1, suffix: "%" },
+    foreigner_ratio: {
+      label: "외국인",
+      center: 20,
+      scale: 25,
+      digits: 1,
+      suffix: "%"
+    }
+  };
+  return configs[state.marketMapColor] || configs.change_pct;
+}
+
+function marketMapMetricValue(stock) {
+  const value = Number(stock?.[state.marketMapColor]);
+  return Number.isFinite(value) ? value : null;
+}
+
+function marketMapMetricText(stock) {
+  const value = marketMapMetricValue(stock);
+  if (value === null) {
+    return "N/A";
+  }
+  const config = marketMapMetricConfig();
+  const sign = value > 0 && ["change_pct", "return_1m", "roe"].includes(state.marketMapColor)
+    ? "+"
+    : "";
+  return `${sign}${formatNumber(value, config.digits)}${config.suffix}`;
+}
+
+function marketMapTileStyle(stock) {
+  const value = marketMapMetricValue(stock);
+  const config = marketMapMetricConfig();
+  if (value === null) {
+    return "--map-tile-bg:#e9e2d8;--map-tile-color:#62584e;--map-tile-border:rgba(71,55,40,.12)";
+  }
+  const delta = (value - config.center) / config.scale;
+  const intensity = Math.min(Math.abs(delta), 1);
+  if (intensity < 0.05) {
+    return "--map-tile-bg:#ddd5ca;--map-tile-color:#534a42;--map-tile-border:rgba(71,55,40,.14)";
+  }
+  const rising = delta > 0;
+  const rgb = rising ? "216,72,63" : "52,120,199";
+  const alpha = 0.28 + intensity * 0.64;
+  return `--map-tile-bg:rgba(${rgb},${alpha.toFixed(3)});--map-tile-color:#fff;--map-tile-border:rgba(${rgb},.5)`;
+}
+
+function marketMapTileClass(index) {
+  if (index < 3) {
+    return "is-xl";
+  }
+  if (index < 12) {
+    return "is-lg";
+  }
+  if (index < 30) {
+    return "is-md";
+  }
+  return "is-sm";
+}
+
+function marketMapPrice(stock) {
+  return stock.market === "KR"
+    ? formatPrice(Number(stock.price))
+    : `$${formatNumber(Number(stock.price), 2)}`;
+}
+
+function marketMapCap(stock) {
+  return stock.market === "KR"
+    ? formatMarketCap(Number(stock.market_cap))
+    : formatUsdCompact(Number(stock.market_cap));
+}
+
+function formatMarketMapOptional(value, formatter) {
+  if (value === null || value === undefined || value === "") {
+    return "N/A";
+  }
+  const number = Number(value);
+  return Number.isFinite(number) ? formatter(number) : "N/A";
+}
+
+function renderMarketMapKpis(stocks) {
+  const container = document.getElementById("market-map-kpis");
+  if (!container) {
+    return;
+  }
+  const capTotal = stocks.reduce((sum, stock) => sum + (Number(stock.market_cap) || 0), 0);
+  const weightedChange = capTotal
+    ? stocks.reduce(
+      (sum, stock) => sum
+        + (Number(stock.change_pct) || 0) * (Number(stock.market_cap) || 0),
+      0
+    ) / capTotal
+    : 0;
+  const rising = stocks.filter((stock) => Number(stock.change_pct) > 0).length;
+  const sectors = new Set(stocks.map((stock) => stock.sector)).size;
+  const capText = state.marketMapMarket === "KR"
+    ? formatMarketCap(capTotal)
+    : formatUsdCompact(capTotal);
+  container.innerHTML = [
+    ["표시 대상", `${formatInteger(stocks.length)}개`, `${sectors}개 섹터`],
+    ["시총 합계", capText, "현재 필터 기준"],
+    ["가중 등락", formatSignedPercent(weightedChange, 2), "시가총액 가중"],
+    ["상승 비율", stocks.length ? formatPercent(rising / stocks.length * 100, 1) : "N/A", `${rising}개 상승`]
+  ].map(([label, value, note]) => `
+    <div class="market-map-kpi">
+      <span>${escapeHtml(label)}</span>
+      <strong class="${label === "가중 등락" ? marketTone(weightedChange) : ""}">${escapeHtml(value)}</strong>
+      <small>${escapeHtml(note)}</small>
+    </div>
+  `).join("");
+}
+
+function renderMarketMapDetail(stock) {
+  const container = document.getElementById("market-map-detail");
+  if (!container) {
+    return;
+  }
+  if (!stock) {
+    container.innerHTML = `
+      <div class="market-map-detail-empty">
+        <strong>종목을 선택하세요</strong>
+        <span>히트맵 타일을 누르면 가격·등락·핵심 지표가 표시됩니다.</span>
+      </div>
+    `;
+    return;
+  }
+  const isKorea = stock.market === "KR";
+  const metrics = isKorea
+    ? [
+      ["시가총액", marketMapCap(stock)],
+      ["거래량", formatMarketMapOptional(stock.volume, formatInteger)],
+      ["ROE", formatMarketMapOptional(stock.roe, (value) => formatPercent(value, 1))],
+      ["PBR", formatMarketMapOptional(stock.pbr, (value) => formatNumber(value, 2))],
+      ["PER", formatMarketMapOptional(stock.per, (value) => formatNumber(value, 2))],
+      ["외국인", formatMarketMapOptional(
+        stock.foreigner_ratio,
+        (value) => formatPercent(value, 1)
+      )]
+    ]
+    : [
+      ["시가총액", marketMapCap(stock)],
+      ["거래량", formatMarketMapOptional(stock.volume, formatInteger)],
+      ["RSI(14)", formatMarketMapOptional(stock.rsi14, (value) => formatNumber(value, 1))],
+      ["1주 수익률", formatMarketMapOptional(
+        stock.return_1w,
+        (value) => formatSignedPercent(value, 1)
+      )],
+      ["1개월 수익률", formatMarketMapOptional(
+        stock.return_1m,
+        (value) => formatSignedPercent(value, 1)
+      )],
+      ["3개월 수익률", formatMarketMapOptional(
+        stock.return_3m,
+        (value) => formatSignedPercent(value, 1)
+      )]
+    ];
+  container.innerHTML = `
+    <div class="market-map-detail-head">
+      <div>
+        <p>${escapeHtml(stock.sector || "Other")}</p>
+        <h3>${escapeHtml(isKorea ? stock.name : stock.symbol)}</h3>
+        <span>${escapeHtml(isKorea ? stock.symbol : stock.name)}</span>
+      </div>
+      <span class="market-map-detail-change ${marketTone(stock.change_pct)}">
+        ${escapeHtml(formatSignedPercent(Number(stock.change_pct), 2))}
+      </span>
+    </div>
+    <div class="market-map-detail-price">${escapeHtml(marketMapPrice(stock))}</div>
+    <div class="market-map-detail-grid">
+      ${metrics.map(([label, value]) => `
+        <div>
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(value)}</strong>
+        </div>
+      `).join("")}
+    </div>
+    <div class="market-map-detail-actions">
+      <button type="button" data-market-map-jump="${isKorea ? "valuation" : "us"}" data-market-map-symbol="${escapeHtml(stock.symbol)}">
+        ${isKorea ? "가치평가에서 보기" : "미국 시장에서 보기"}
+      </button>
+      <a href="${escapeHtml(stock.url)}" target="_blank" rel="noopener noreferrer">원문 시세 ↗</a>
+    </div>
+  `;
+}
+
+function renderMarketHeatmap(stocks) {
+  const container = document.getElementById("market-heatmap");
+  if (!container) {
+    return;
+  }
+  const sorted = [...stocks].sort(
+    (a, b) => Number(b[state.marketMapSize] || 0) - Number(a[state.marketMapSize] || 0)
+  );
+  const visible = sorted.slice(0, state.marketMapLimit);
+  if (!visible.length) {
+    container.innerHTML = `
+      <div class="market-map-loading">현재 조건에 맞는 종목이 없습니다.</div>
+    `;
+    renderMarketMapDetail(null);
+    return;
+  }
+  const visibleKeys = new Set(visible.map((stock) => `${stock.market}:${stock.symbol}`));
+  if (state.marketMapSelected && !visibleKeys.has(state.marketMapSelected)) {
+    state.marketMapSelected = null;
+  }
+  const grouped = new Map();
+  visible.forEach((stock, index) => {
+    const sector = stock.sector || "Other";
+    if (!grouped.has(sector)) {
+      grouped.set(sector, []);
+    }
+    grouped.get(sector).push({ stock, index });
+  });
+  const sectorGroups = Array.from(grouped.entries())
+    .map(([sector, rows]) => ({
+      sector,
+      rows,
+      size: rows.reduce(
+        (sum, row) => sum + (Number(row.stock[state.marketMapSize]) || 0),
+        0
+      ),
+      cap: rows.reduce((sum, row) => sum + (Number(row.stock.market_cap) || 0), 0)
+    }))
+    .sort((a, b) => b.size - a.size);
+  const totalSize = sectorGroups.reduce((sum, group) => sum + group.size, 0);
+  container.innerHTML = sectorGroups.map((group) => {
+    const weightedChange = group.cap
+      ? group.rows.reduce(
+        (sum, row) => sum
+          + (Number(row.stock.change_pct) || 0) * (Number(row.stock.market_cap) || 0),
+        0
+      ) / group.cap
+      : 0;
+    const share = totalSize ? group.size / totalSize : 0;
+    const span = state.marketMapSector !== "all"
+      ? 3
+      : share >= 0.28
+        ? 3
+        : share >= 0.1
+          ? 2
+          : 1;
+    return `
+      <section class="market-heatmap-sector" style="--sector-span:${span}">
+        <div class="market-heatmap-sector-head">
+          <strong>${escapeHtml(group.sector)}</strong>
+          <span class="${marketTone(weightedChange)}">${escapeHtml(formatSignedPercent(weightedChange, 2))}</span>
+        </div>
+        <div class="market-heatmap-tiles">
+          ${group.rows.map(({ stock, index }) => {
+            const key = `${stock.market}:${stock.symbol}`;
+            const primary = stock.market === "KR" ? stock.name : stock.symbol;
+            const secondary = stock.market === "KR" ? stock.symbol : stock.name;
+            return `
+              <button
+                type="button"
+                class="market-heatmap-tile ${marketMapTileClass(index)} ${key === state.marketMapSelected ? "is-selected" : ""}"
+                style="${marketMapTileStyle(stock)}"
+                data-market-map-key="${escapeHtml(key)}"
+                aria-pressed="${key === state.marketMapSelected ? "true" : "false"}"
+                title="${escapeHtml(`${primary} · ${marketMapMetricConfig().label} ${marketMapMetricText(stock)}`)}"
+              >
+                <strong>${escapeHtml(primary)}</strong>
+                <span class="market-heatmap-tile-name">${escapeHtml(secondary)}</span>
+                <span class="market-heatmap-tile-value">${escapeHtml(marketMapMetricText(stock))}</span>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+  const selected = visible.find(
+    (stock) => `${stock.market}:${stock.symbol}` === state.marketMapSelected
+  );
+  renderMarketMapDetail(selected || null);
+}
+
+function renderMarketMap() {
+  if (!state.marketMapData) {
+    return;
+  }
+  const stocks = filteredMarketMapStocks();
+  renderMarketMapKpis(stocks);
+  renderMarketHeatmap(stocks);
+}
+
+function resetMarketMap() {
+  state.marketMapMarket = "US";
+  state.marketMapGroup = "top100";
+  state.marketMapSector = "all";
+  state.marketMapColor = "change_pct";
+  state.marketMapSize = "market_cap";
+  state.marketMapLimit = 60;
+  state.marketMapSearch = "";
+  state.marketMapSelected = null;
+  document.getElementById("market-map-market").value = state.marketMapMarket;
+  document.getElementById("market-map-size").value = state.marketMapSize;
+  document.getElementById("market-map-limit").value = String(state.marketMapLimit);
+  document.getElementById("market-map-search").value = "";
+  renderMarketMapFilterOptions();
+  renderMarketMap();
+}
+
+function bindMarketMap() {
+  const bindings = [
+    ["market-map-market", "change", (event) => {
+      state.marketMapMarket = event.target.value;
+      state.marketMapGroup = state.marketMapMarket === "KR" ? "KOSPI" : "top100";
+      state.marketMapSector = "all";
+      state.marketMapColor = "change_pct";
+      state.marketMapSelected = null;
+      renderMarketMapFilterOptions();
+      renderMarketMap();
+    }],
+    ["market-map-group", "change", (event) => {
+      state.marketMapGroup = event.target.value;
+      state.marketMapSector = "all";
+      state.marketMapSelected = null;
+      renderMarketMapFilterOptions();
+      renderMarketMap();
+    }],
+    ["market-map-sector", "change", (event) => {
+      state.marketMapSector = event.target.value;
+      state.marketMapSelected = null;
+      renderMarketMap();
+    }],
+    ["market-map-color", "change", (event) => {
+      state.marketMapColor = event.target.value;
+      renderMarketMap();
+    }],
+    ["market-map-size", "change", (event) => {
+      state.marketMapSize = event.target.value;
+      renderMarketMap();
+    }],
+    ["market-map-limit", "change", (event) => {
+      state.marketMapLimit = Number(event.target.value) || 60;
+      renderMarketMap();
+    }],
+    ["market-map-search", "input", (event) => {
+      state.marketMapSearch = event.target.value;
+      state.marketMapSelected = null;
+      renderMarketMap();
+    }]
+  ];
+  bindings.forEach(([id, eventName, handler]) => {
+    document.getElementById(id)?.addEventListener(eventName, handler);
+  });
+  document.getElementById("market-map-reset")?.addEventListener("click", resetMarketMap);
+  document.getElementById("market-heatmap")?.addEventListener("click", (event) => {
+    const tile = event.target.closest("[data-market-map-key]");
+    if (!tile) {
+      return;
+    }
+    state.marketMapSelected = tile.dataset.marketMapKey;
+    renderMarketMap();
+  });
+  document.getElementById("market-map-detail")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-market-map-jump]");
+    if (!button) {
+      return;
+    }
+    const symbol = button.dataset.marketMapSymbol;
+    if (button.dataset.marketMapJump === "valuation") {
+      if (state.rawStocks.some((stock) => stock.code === symbol)) {
+        state.selectedCode = symbol;
+        switchWorkspace("valuation");
+        renderDashboard();
+        setTimeout(() => {
+          document.getElementById("selected-stock-summary")
+            ?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 120);
+      }
+    } else {
+      state.usSelectedSymbol = symbol;
+      switchWorkspace("us");
+      setTimeout(() => {
+        renderUsWorkspace();
+        document.getElementById("us-selected-summary")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 900);
+    }
+  });
+}
+
+async function loadMarketMap() {
+  const heatmap = document.getElementById("market-heatmap");
+  try {
+    const response = await fetch(`${MARKET_HEATMAP_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} for market heatmap`);
+    }
+    const payload = await response.json();
+    state.marketMapData = payload;
+    const updated = new Date(payload.crawled_at_utc);
+    document.getElementById("market-map-updated").textContent =
+      Number.isNaN(updated.getTime())
+        ? "갱신 시각 확인 불가"
+        : `${updated.toLocaleString("ko-KR")} 갱신`;
+    renderMarketMapFilterOptions();
+    renderMarketMap();
+  } catch (error) {
+    heatmap.innerHTML = `
+      <div class="market-map-loading">시장 히트맵 데이터를 불러오지 못했습니다.</div>
+    `;
+    document.getElementById("market-map-updated").textContent = "Unavailable";
     console.error(error);
   }
 }
@@ -2754,6 +3291,7 @@ function friendlyDataName(path) {
     "data/ai_market_briefing.json": "AI 시장 브리핑",
     "data/treasury_yields.json": "한·미 국채 금리",
     "data/market_indices.json": "주요 지수·가상자산 차트",
+    "data/market_heatmap.json": "한·미 시장 히트맵",
     "data/naver_etf_brands.json": "KoAct·TIME ETF",
     "data/market_sum.json": "국내 종목 시세",
     "data/market_sum_by_roe.json": "국내 가치평가 원본",
@@ -2781,6 +3319,7 @@ function renderDataWorkspace() {
     "data/dart_major_holders.json",
     "data/treasury_yields.json",
     "data/market_indices.json",
+    "data/market_heatmap.json",
     "data/naver_etf_brands.json",
     "data/korea_investor_flow.json",
     "data/korea_short_selling.json",
@@ -2928,6 +3467,7 @@ function initResponsiveTables() {
 bindFeatureControls();
 bindMarketOverview();
 bindTodayNews();
+bindMarketMap();
 initResponsiveTables();
 const initialWorkspace = location.hash.replace("#", "");
 if (["valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
@@ -2937,4 +3477,5 @@ loadTreasuryTicker();
 loadEtfBrandTickers();
 loadMarketOverview();
 loadTodayNews();
+loadMarketMap();
 loadStocks();

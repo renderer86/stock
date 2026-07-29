@@ -97,6 +97,11 @@ def main() -> None:
         help="Skip major market index and cryptocurrency charts.",
     )
     parser.add_argument(
+        "--skip-market-heatmap",
+        action="store_true",
+        help="Skip the Korea/U.S. stock heatmap dataset.",
+    )
+    parser.add_argument(
         "--skip-dart",
         action="store_true",
         help="Skip the OpenDART crawler.",
@@ -305,7 +310,10 @@ def main() -> None:
         else:
             print("[SKIP] KRX_ID/KRX_PW are not set.", flush=True)
 
-    remaining_after_naver = ["FnGuide ROE history"]
+    remaining_after_naver = []
+    if not args.skip_market_heatmap:
+        remaining_after_naver.append("Korea and U.S. market heatmap")
+    remaining_after_naver.append("FnGuide ROE history")
     if not args.skip_dart:
         remaining_after_naver.extend(
             [
@@ -333,6 +341,13 @@ def main() -> None:
         "crawler_naver_market_sum.py",
         ["--delay", str(args.naver_delay)],
     )
+    if not args.skip_market_heatmap:
+        run_step(
+            "Korea and U.S. market heatmap",
+            "crawler_market_heatmap.py",
+            [],
+            optional=True,
+        )
     run_step(
         "FnGuide ROE history",
         "crawler_fnguide_roe_history.py",
