@@ -71,8 +71,8 @@ const state = {
   todayNewsLabels: {},
   todayNewsCrawledAt: null,
   marketMapData: null,
-  marketMapMarket: "US",
-  marketMapGroup: "top500",
+  marketMapMarket: "KR",
+  marketMapGroup: "KOSPI",
   marketMapSector: "all",
   marketMapColor: "change_pct",
   marketMapSize: "market_cap",
@@ -953,20 +953,18 @@ function renderMarketMapKpis(stocks) {
 
 function renderMarketMapDetail(stock) {
   const container = document.getElementById("market-map-detail");
-  if (!container) {
+  const modal = document.getElementById("market-map-modal");
+  if (!container || !modal) {
     return;
   }
   if (!stock) {
-    container.hidden = true;
-    container.innerHTML = `
-      <div class="market-map-detail-empty">
-        <strong>종목을 선택하세요</strong>
-        <span>히트맵 타일을 누르면 가격·등락·핵심 지표가 표시됩니다.</span>
-      </div>
-    `;
+    modal.hidden = true;
+    container.innerHTML = "";
+    document.body.classList.remove("market-map-modal-open");
     return;
   }
-  container.hidden = false;
+  modal.hidden = false;
+  document.body.classList.add("market-map-modal-open");
   const isKorea = stock.market === "KR";
   const hierarchy = marketMapHierarchy(stock);
   const metrics = isKorea
@@ -999,10 +997,16 @@ function renderMarketMapDetail(stock) {
       )]
     ];
   container.innerHTML = `
+    <button
+      type="button"
+      class="market-map-modal-close"
+      data-market-map-close
+      aria-label="종목 상세 팝업 닫기"
+    >×</button>
     <div class="market-map-detail-head">
       <div>
         <p>${escapeHtml(`${hierarchy.sector} · ${hierarchy.industry}`)}</p>
-        <h3>${escapeHtml(isKorea ? stock.name : stock.symbol)}</h3>
+        <h3 id="market-map-modal-title">${escapeHtml(isKorea ? stock.name : stock.symbol)}</h3>
         <span>${escapeHtml(isKorea ? stock.symbol : stock.name)}</span>
       </div>
       <span class="market-map-detail-change ${marketTone(stock.change_pct)}">
@@ -1025,6 +1029,15 @@ function renderMarketMapDetail(stock) {
       <a href="${escapeHtml(stock.url)}" target="_blank" rel="noopener noreferrer">원문 시세 ↗</a>
     </div>
   `;
+}
+
+function closeMarketMapModal({ render = true } = {}) {
+  state.marketMapSelected = null;
+  document.getElementById("market-map-modal")?.setAttribute("hidden", "");
+  document.body.classList.remove("market-map-modal-open");
+  if (render) {
+    renderMarketMap();
+  }
 }
 
 function marketMapWeight(item) {
@@ -1209,8 +1222,14 @@ function renderMarketHeatmap(stocks) {
     return;
   }
 
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+  const containerRect = container.getBoundingClientRect();
+  const containerStyle = window.getComputedStyle(container);
+  const horizontalBorder = (Number.parseFloat(containerStyle.borderLeftWidth) || 0)
+    + (Number.parseFloat(containerStyle.borderRightWidth) || 0);
+  const verticalBorder = (Number.parseFloat(containerStyle.borderTopWidth) || 0)
+    + (Number.parseFloat(containerStyle.borderBottomWidth) || 0);
+  const width = Math.max(0, Math.floor(containerRect.width - horizontalBorder));
+  const height = Math.max(0, Math.floor(containerRect.height - verticalBorder));
   if (width < 20 || height < 20) {
     window.requestAnimationFrame(() => renderMarketHeatmap(stocks));
     return;
@@ -1319,8 +1338,8 @@ function renderMarketMap() {
 }
 
 function resetMarketMap() {
-  state.marketMapMarket = "US";
-  state.marketMapGroup = "top500";
+  state.marketMapMarket = "KR";
+  state.marketMapGroup = "KOSPI";
   state.marketMapSector = "all";
   state.marketMapColor = "change_pct";
   state.marketMapSize = "market_cap";
@@ -1386,12 +1405,6 @@ function bindMarketMap() {
     if (tile) {
       state.marketMapSelected = tile.dataset.marketMapKey;
       renderMarketMap();
-      if (window.matchMedia("(max-width: 860px)").matches) {
-        window.setTimeout(() => {
-          document.getElementById("market-map-detail")
-            ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 60);
-      }
       return;
     }
     const sector = event.target.closest("[data-market-map-sector-filter]");
@@ -1402,12 +1415,18 @@ function bindMarketMap() {
       renderMarketMap();
     }
   });
+  document.getElementById("market-map-modal")?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-market-map-close]")) {
+      closeMarketMapModal();
+    }
+  });
   document.getElementById("market-map-detail")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-market-map-jump]");
     if (!button) {
       return;
     }
     const symbol = button.dataset.marketMapSymbol;
+    closeMarketMapModal({ render: false });
     if (button.dataset.marketMapJump === "valuation") {
       if (state.rawStocks.some((stock) => stock.code === symbol)) {
         state.selectedCode = symbol;
@@ -1426,6 +1445,11 @@ function bindMarketMap() {
         document.getElementById("us-selected-summary")
           ?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 900);
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !document.getElementById("market-map-modal")?.hidden) {
+      closeMarketMapModal();
     }
   });
   let resizeTimer = null;
@@ -1450,6 +1474,7 @@ async function loadMarketMap() {
     }
     const payload = await response.json();
     state.marketMapData = payload;
+    document.getElementById("market-map-market").value = state.marketMapMarket;
     const updated = new Date(payload.crawled_at_utc);
     document.getElementById("market-map-updated").textContent =
       Number.isNaN(updated.getTime())
