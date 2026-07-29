@@ -14,14 +14,16 @@ from bs4 import BeautifulSoup
 from collector_common import atomic_write_json
 
 
-FN_GUIDE_URL = (
+FN_GUIDE_LEGACY_URL = (
     "https://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp"
     "?pGB=1&gicode=A{code}&cID=&MenuYn=Y&ReportGB=&NewMenuID=103&stkGb=701"
 )
-FN_GUIDE_RATIO_URL = (
+FN_GUIDE_LEGACY_RATIO_URL = (
     "https://comp.fnguide.com/SVO2/ASP/SVD_FinanceRatio.asp"
     "?pGB=1&gicode=A{code}&cID=&MenuYn=Y&ReportGB=&NewMenuID=104&stkGb=701"
 )
+FN_GUIDE_URL = "https://wcomp.fnguide.com/CompanyInfo/FinanceRatio?cmp_cd={code}"
+FN_GUIDE_RATIO_API_URL = "https://wcomp.fnguide.com/CompanyInfo/getRtoAccumulate"
 DEFAULT_INPUT = Path("data/market_sum.json")
 DEFAULT_OUTPUT = Path("data/fnguide_roe_history.json")
 DEBUG_DIR = Path("data/fnguide_debug")
@@ -359,19 +361,81 @@ def extract_periods_and_roe_from_finance_statement(soup: BeautifulSoup) -> tuple
     return periods, roe_values
 
 
+def extract_periods_and_roe_from_ratio_dataset(
+    payload: Any,
+) -> tuple[list[str], list[float | None], list[bool]]:
+    if not isinstance(payload, dict):
+        raise RuntimeError("FnGuide ratio API returned a non-object payload.")
+
+    dataset = payload.get("dataset")
+    if not isinstance(dataset, dict):
+        raise RuntimeError("FnGuide ratio API response has no dataset.")
+
+    headers = dataset.get("header")
+    rows = dataset.get("data")
+    if not isinstance(headers, list) or not isinstance(rows, list):
+        raise RuntimeError("FnGuide ratio API dataset has invalid header or data.")
+
+    columns: list[tuple[str, str, bool]] = []
+    for header in headers:
+        if not isinstance(header, dict):
+            continue
+
+        period_match = PERIOD_SCAN_PATTERN.search(str(header.get("YYMM") or ""))
+        value_key = str(header.get("CD") or "")
+        if period_match is None or not value_key:
+            continue
+
+        line = header.get("LINE")
+        is_full_year = line in (0, "0", None, "")
+        columns.append((period_match.group(0), value_key, is_full_year))
+
+    if len(columns) < 2:
+        raise RuntimeError("FnGuide ratio API response has too few period headers.")
+
+    roe_row: dict[str, Any] | None = None
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        label = clean_text(str(row.get("NM") or "")).upper()
+        if label == "ROE" or label.startswith("ROE("):
+            roe_row = row
+            break
+
+    if roe_row is None:
+        raise RuntimeError("FnGuide ratio API response has no ROE row.")
+
+    periods = [period for period, _, _ in columns]
+    roe_values = [parse_float(str(roe_row.get(value_key) or "")) for _, value_key, _ in columns]
+    full_year_flags = [is_full_year for _, _, is_full_year in columns]
+    if not any(value is not None for value in roe_values):
+        raise RuntimeError("FnGuide ratio API ROE row contains no numeric values.")
+
+    return periods, roe_values, full_year_flags
+
+
 def split_histories(
     periods: list[str],
     values: list[float | None],
     *,
     all_periods_are_full_years: bool = False,
+    full_year_flags: list[bool] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if full_year_flags is not None and len(full_year_flags) != len(periods):
+        raise RuntimeError("Full-year flags do not match period count.")
+
     full_years: list[dict[str, Any]] = []
     latest_periods: list[dict[str, Any]] = []
 
-    for period, value in zip(periods, values, strict=True):
+    for index, (period, value) in enumerate(zip(periods, values, strict=True)):
         item = {"period": period, "roe": value}
         month = int(period.split("/")[1])
-        if all_periods_are_full_years or month == 12:
+        is_full_year = (
+            full_year_flags[index]
+            if full_year_flags is not None
+            else all_periods_are_full_years or month == 12
+        )
+        if is_full_year:
             full_years.append(item)
         else:
             latest_periods.append(item)
@@ -381,52 +445,48 @@ def split_histories(
 
 def fetch_roe_history(session: requests.Session, code: str) -> dict[str, Any]:
     url = FN_GUIDE_URL.format(code=code)
-    response = session.get(url, timeout=20)
-    response.raise_for_status()
-    response.encoding = "utf-8"
+    api_response: requests.Response | None = None
+    errors: list[str] = []
+    statement_basis = ""
 
-    soup = BeautifulSoup(response.text, "html.parser")
-    lines = extract_relevant_lines(soup)
-    try:
-        all_periods_are_full_years = False
-        finance_statement = extract_periods_and_roe_from_finance_statement(soup)
-        if finance_statement is not None:
-            periods, roe_values = finance_statement
-            all_periods_are_full_years = True
-        else:
-            annual_table_rows = find_annual_ratio_table(soup)
-            if annual_table_rows is None:
-                ratio_url = FN_GUIDE_RATIO_URL.format(code=code)
-                ratio_response = session.get(ratio_url, timeout=20)
-                ratio_response.raise_for_status()
-                ratio_response.encoding = "utf-8"
-                ratio_soup = BeautifulSoup(ratio_response.text, "html.parser")
-                annual_table_rows = find_annual_ratio_table(ratio_soup)
-                if annual_table_rows is not None:
-                    soup = ratio_soup
-                    lines = extract_relevant_lines(ratio_soup)
+    for consol_typ, basis_name in (("C", "consolidated"), ("S", "separate")):
+        try:
+            api_response = session.get(
+                FN_GUIDE_RATIO_API_URL,
+                params={"cmp_cd": code, "consol_typ": consol_typ},
+                headers={
+                    "Accept": "application/json, text/javascript, */*; q=0.01",
+                    "Referer": url,
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                timeout=20,
+            )
+            api_response.raise_for_status()
+            periods, roe_values, full_year_flags = extract_periods_and_roe_from_ratio_dataset(
+                api_response.json()
+            )
+            statement_basis = basis_name
+            break
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"{consol_typ}: {exc}")
+    else:
+        debug_text = api_response.text if api_response is not None else ""
+        write_debug_files(code, debug_text, [*errors, debug_text])
+        raise RuntimeError(
+            "FnGuide ratio API failed for consolidated and separate statements: "
+            + " | ".join(errors)
+        )
 
-            if annual_table_rows is not None:
-                periods, roe_values = extract_periods_and_roe_from_table(annual_table_rows)
-            else:
-                annual_section = extract_annual_section(lines)
-                periods = extract_periods_from_lines(annual_section)
-                try:
-                    roe_values = extract_roe_values_from_lines(annual_section, len(periods))
-                except RuntimeError:
-                    roe_values = [None] * len(periods)
-    except Exception:
-        write_debug_files(code, response.text, lines)
-        raise
     full_years, latest_periods = split_histories(
         periods,
         roe_values,
-        all_periods_are_full_years=all_periods_are_full_years,
+        full_year_flags=full_year_flags,
     )
 
     return {
         "code": code,
         "fnguide_url": url,
+        "statement_basis": statement_basis,
         "periods": periods,
         "roe_values": roe_values,
         "full_years": full_years,
@@ -524,9 +584,14 @@ def main() -> None:
     rows: list[dict[str, Any]] = []
 
     for index, stock in enumerate(universe, start=1):
-        code = str(stock.get("code") or "").zfill(6)
+        raw_code = str(stock.get("code") or "").strip().upper()
+        code = raw_code.zfill(6) if raw_code.isdigit() else raw_code
         name = stock.get("name")
-        if not re.fullmatch(r"\d{6}", code):
+        if not re.fullmatch(r"[0-9A-Z]{6}", code):
+            print(
+                f"[{index}/{len(universe)}] SKIP {raw_code or '(empty)'} "
+                f"{name or ''} -> Invalid KRX stock code.".rstrip()
+            )
             continue
 
         try:
@@ -553,15 +618,14 @@ def main() -> None:
         time.sleep(args.delay)
 
     payload = {
-        "source": "FnGuide SVD_Finance.asp",
+        "source": "FnGuide CompanyInfo/getRtoAccumulate",
         "input": args.input,
         "min_roe": None if args.min_roe < 0 else args.min_roe,
         "min_roa": None if args.min_roa < 0 else args.min_roa,
         "financial_roa_exempt": not args.no_financial_roa_exempt,
         "note": (
-            "FnGuide SVD_FinanceRatio.asp currently returns an error page, so annual ROE is "
-            "calculated from controlling net income and controlling equity in SVD_Finance.asp. "
-            "full_years contains completed fiscal years only."
+            "FnGuide's legacy SVO2 pages were retired. Historical ROE is read from the new "
+            "CompanyInfo annual ratio dataset. full_years contains completed fiscal years only."
         ),
         "count": len(rows),
         "crawled_at_utc": datetime.now(timezone.utc).isoformat(),
