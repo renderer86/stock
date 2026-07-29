@@ -2880,9 +2880,55 @@ function bindFeatureControls() {
   });
 }
 
+function syncResponsiveTableLabels(table) {
+  const headers = Array.from(table.querySelectorAll("thead th")).map(
+    (header) => header.textContent.trim()
+  );
+  const hasSortableColumns = table.querySelector(
+    "th[data-sort-key], th[data-priority-sort-key]"
+  );
+  table.classList.toggle("has-mobile-sort", Boolean(hasSortableColumns));
+
+  table.querySelectorAll("tbody tr").forEach((row) => {
+    Array.from(row.cells).forEach((cell, index) => {
+      const label = headers[index];
+      if (label) {
+        cell.dataset.label = label;
+      } else {
+        cell.removeAttribute("data-label");
+      }
+    });
+  });
+}
+
+function initResponsiveTables() {
+  const root = document.querySelector(".dashboard-layout");
+  if (!root) {
+    return;
+  }
+
+  let syncFrame = null;
+  const syncAll = () => {
+    syncFrame = null;
+    root.querySelectorAll(".table-wrap table").forEach(syncResponsiveTableLabels);
+  };
+  const scheduleSync = () => {
+    if (syncFrame === null) {
+      syncFrame = requestAnimationFrame(syncAll);
+    }
+  };
+
+  syncAll();
+  new MutationObserver(scheduleSync).observe(root, {
+    childList: true,
+    subtree: true
+  });
+}
+
 bindFeatureControls();
 bindMarketOverview();
 bindTodayNews();
+initResponsiveTables();
 const initialWorkspace = location.hash.replace("#", "");
 if (["valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
   switchWorkspace(initialWorkspace, false);
