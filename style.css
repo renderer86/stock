@@ -1210,10 +1210,108 @@ a.rate-ticker-item:hover {
 
 .briefing-content {
   max-height: 62vh;
+  padding-right: 8px;
   overflow-y: auto;
   color: #3f372f;
-  line-height: 1.75;
-  white-space: pre-wrap;
+  line-height: 1.72;
+}
+
+.briefing-content h3,
+.briefing-content h4,
+.briefing-content h5 {
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.briefing-content h3 {
+  margin: 4px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.25rem;
+}
+
+.briefing-content h4 {
+  margin: 24px 0 10px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  font-size: 1.05rem;
+}
+
+.briefing-content h5 {
+  margin: 18px 0 8px;
+  font-size: 0.95rem;
+}
+
+.briefing-content p {
+  margin: 0 0 14px;
+}
+
+.briefing-content ul,
+.briefing-content ol {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+
+.briefing-content li {
+  padding-left: 3px;
+}
+
+.briefing-content li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.briefing-content strong {
+  color: #1f1b17;
+  font-weight: 700;
+}
+
+.briefing-content em {
+  color: var(--accent);
+}
+
+.briefing-content hr {
+  margin: 22px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.briefing-content blockquote {
+  margin: 14px 0 18px;
+  padding: 12px 14px;
+  border-left: 3px solid #d49a72;
+  border-radius: 0 10px 10px 0;
+  background: #f7ede1;
+  color: var(--muted);
+}
+
+.briefing-content code {
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: #efe5d7;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.86em;
+}
+
+.briefing-content pre {
+  margin: 14px 0 18px;
+  padding: 14px;
+  overflow-x: auto;
+  border-radius: 10px;
+  background: #27211c;
+  color: #fff8f1;
+}
+
+.briefing-content pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.briefing-empty {
+  color: var(--muted);
 }
 
 .data-status-grid {

@@ -2523,6 +2523,124 @@ function renderUsShortTable() {
   }
 }
 
+function renderBriefingInline(value) {
+  const codeTokens = [];
+  let text = escapeHtml(value || "").replace(/`([^`\n]+)`/g, (_, code) => {
+    const token = `@@BRIEFING_CODE_${codeTokens.length}@@`;
+    codeTokens.push(`<code>${code}</code>`);
+    return token;
+  });
+  text = text
+    .replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/__([^_\n]+)__/g, "<strong>$1</strong>")
+    .replace(/(^|[\s(])\*([^*\n]+)\*(?=$|[\s).,!?:;])/g, "$1<em>$2</em>");
+  return text.replace(
+    /@@BRIEFING_CODE_(\d+)@@/g,
+    (_, index) => codeTokens[Number(index)] || ""
+  );
+}
+
+function renderBriefingMarkdown(markdown) {
+  const lines = String(markdown || "").replace(/\r\n?/g, "\n").split("\n");
+  const output = [];
+  let paragraph = [];
+  let listType = "";
+  let codeLines = [];
+  let inCodeBlock = false;
+
+  const flushParagraph = () => {
+    if (!paragraph.length) {
+      return;
+    }
+    output.push(`<p>${paragraph.join("<br>")}</p>`);
+    paragraph = [];
+  };
+  const closeList = () => {
+    if (!listType) {
+      return;
+    }
+    output.push(`</${listType}>`);
+    listType = "";
+  };
+  const openList = (type) => {
+    flushParagraph();
+    if (listType === type) {
+      return;
+    }
+    closeList();
+    output.push(`<${type}>`);
+    listType = type;
+  };
+
+  lines.forEach((rawLine) => {
+    const line = rawLine.trimEnd();
+    if (/^\s*```/.test(line)) {
+      flushParagraph();
+      closeList();
+      if (inCodeBlock) {
+        output.push(`<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`);
+        codeLines = [];
+      }
+      inCodeBlock = !inCodeBlock;
+      return;
+    }
+    if (inCodeBlock) {
+      codeLines.push(rawLine);
+      return;
+    }
+    if (!line.trim()) {
+      flushParagraph();
+      closeList();
+      return;
+    }
+
+    const heading = line.match(/^\s*(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      closeList();
+      const level = Math.min(5, heading[1].length + 2);
+      output.push(`<h${level}>${renderBriefingInline(heading[2])}</h${level}>`);
+      return;
+    }
+    if (/^\s*(?:---+|\*\*\*+|___+)\s*$/.test(line)) {
+      flushParagraph();
+      closeList();
+      output.push("<hr>");
+      return;
+    }
+
+    const unordered = line.match(/^\s*[-+*]\s+(.+)$/);
+    if (unordered) {
+      openList("ul");
+      output.push(`<li>${renderBriefingInline(unordered[1])}</li>`);
+      return;
+    }
+    const ordered = line.match(/^\s*\d+[.)]\s+(.+)$/);
+    if (ordered) {
+      openList("ol");
+      output.push(`<li>${renderBriefingInline(ordered[1])}</li>`);
+      return;
+    }
+    const quote = line.match(/^\s*>\s?(.*)$/);
+    if (quote) {
+      flushParagraph();
+      closeList();
+      output.push(`<blockquote>${renderBriefingInline(quote[1])}</blockquote>`);
+      return;
+    }
+
+    closeList();
+    paragraph.push(renderBriefingInline(line.trim()));
+  });
+
+  if (inCodeBlock && codeLines.length) {
+    output.push(`<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`);
+  }
+  flushParagraph();
+  closeList();
+  return output.join("");
+}
+
 function renderIntelligenceWorkspace() {
   const news = state.featureData.news || {};
   const briefing = state.featureData.briefing || {};
@@ -2534,8 +2652,10 @@ function renderIntelligenceWorkspace() {
     kpiCard("Finnhub", `${finnhub.count || 0}개`, "지표·애널리스트"),
     kpiCard("AI 브리핑", briefing.generated_at_utc ? "생성 완료" : "연결 대기", formatCompactDate(briefing.generated_at_utc))
   ].join("");
-  document.getElementById("ai-briefing-content").textContent =
-    briefing.briefing || "AI 브리핑 데이터가 아직 없습니다.";
+  document.getElementById("ai-briefing-content").innerHTML =
+    briefing.briefing
+      ? renderBriefingMarkdown(briefing.briefing)
+      : "<p class='briefing-empty'>AI 브리핑 데이터가 아직 없습니다.</p>";
   populateNewsCategories();
   renderNewsFeed();
   populateSecCategories();
