@@ -23,8 +23,139 @@ NAVER_SECTOR_URL = "https://finance.naver.com/sise/sise_group.naver"
 NAVER_SECTOR_DETAIL_URL = "https://finance.naver.com/sise/sise_group_detail.naver"
 NAVER_ITEM_URL = "https://finance.naver.com/item/main.naver"
 NASDAQ_ITEM_URL = "https://www.nasdaq.com/market-activity/stocks"
-CODE_PATTERN = re.compile(r"(?:\?|&)code=(\d{6})(?:&|$)")
+CODE_PATTERN = re.compile(r"(?:\?|&)code=([0-9A-Z]{6})(?:&|$)", re.IGNORECASE)
 REQUEST_TIMEOUT = 30
+KOREA_BROAD_SECTOR_RULES = (
+    (
+        "정보기술",
+        (
+            "반도체",
+            "전자",
+            "디스플레이",
+            "컴퓨터",
+            "소프트웨어",
+            "IT서비스",
+            "통신장비",
+            "핸드셋",
+        ),
+    ),
+    (
+        "헬스케어",
+        (
+            "제약",
+            "바이오",
+            "생물공학",
+            "생명과학",
+            "건강관리",
+            "의료",
+        ),
+    ),
+    (
+        "금융",
+        (
+            "은행",
+            "증권",
+            "보험",
+            "카드",
+            "캐피탈",
+            "금융",
+            "창업투자",
+        ),
+    ),
+    (
+        "산업재",
+        (
+            "조선",
+            "기계",
+            "건설",
+            "우주항공",
+            "운송",
+            "철도",
+            "무역",
+            "상업서비스",
+            "전기장비",
+            "전기제품",
+            "복합기업",
+            "항공사",
+            "해운사",
+            "건축제품",
+        ),
+    ),
+    (
+        "경기소비재",
+        (
+            "자동차",
+            "화장품",
+            "호텔",
+            "레저",
+            "백화점",
+            "소매",
+            "가정용",
+            "섬유",
+            "의류",
+            "교육",
+            "미디어",
+            "엔터",
+            "게임",
+            "가구",
+            "판매업체",
+        ),
+    ),
+    (
+        "필수소비재",
+        (
+            "식품",
+            "음료",
+            "담배",
+            "생활용품",
+        ),
+    ),
+    (
+        "커뮤니케이션",
+        (
+            "통신서비스",
+            "방송",
+            "광고",
+            "인터넷",
+            "출판",
+        ),
+    ),
+    (
+        "소재",
+        (
+            "화학",
+            "철강",
+            "비철금속",
+            "건축자재",
+            "종이",
+            "목재",
+            "포장재",
+        ),
+    ),
+    (
+        "에너지",
+        (
+            "에너지",
+            "석유",
+            "가스",
+        ),
+    ),
+    (
+        "유틸리티",
+        (
+            "전기유틸리티",
+            "가스유틸리티",
+            "복합유틸리티",
+        ),
+    ),
+    (
+        "부동산",
+        (
+            "부동산",
+            "리츠",
+        ),
+    ),
+)
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -45,6 +176,16 @@ def number(value: Any) -> float | None:
     if parsed != parsed or parsed in (float("inf"), float("-inf")):
         return None
     return parsed
+
+
+def korea_broad_sector(industry: str) -> str:
+    normalized = str(industry or "").replace(" ", "")
+    if not normalized or normalized == "기타":
+        return "기타"
+    for broad_sector, keywords in KOREA_BROAD_SECTOR_RULES:
+        if any(keyword in normalized for keyword in keywords):
+            return broad_sector
+    return "기타"
 
 
 def fetch_soup(
@@ -192,6 +333,14 @@ def normalize_korea_stocks(
     stocks: list[dict[str, Any]] = []
     for row in payload.get("stocks") or []:
         code = str(row.get("code") or "").strip()
+        industry = sector_map.get(code) or "기타"
+        is_fund_like = (
+            industry == "기타"
+            and number(row.get("par_value")) == 0
+            and number(row.get("sales_krw_100m")) is None
+            and number(row.get("property_total_krw_100m")) is None
+            and number(row.get("roe")) is None
+        )
         price = number(row.get("current_price"))
         market_cap = number(row.get("market_cap_krw_100m"))
         change_pct = number(row.get("diff_rate"))
@@ -203,6 +352,7 @@ def normalize_korea_stocks(
             or market_cap <= 0
             or change_pct is None
             or row.get("is_suspended")
+            or is_fund_like
         ):
             continue
         stocks.append(
@@ -211,7 +361,8 @@ def normalize_korea_stocks(
                 "symbol": code,
                 "name": str(row.get("name") or code).strip(),
                 "group": str(row.get("market") or "KOREA").strip(),
-                "sector": sector_map.get(code) or "기타",
+                "sector": korea_broad_sector(industry),
+                "industry": industry,
                 "price": price,
                 "change_pct": change_pct,
                 "market_cap": market_cap,

@@ -72,11 +72,11 @@ const state = {
   todayNewsCrawledAt: null,
   marketMapData: null,
   marketMapMarket: "US",
-  marketMapGroup: "top100",
+  marketMapGroup: "top500",
   marketMapSector: "all",
   marketMapColor: "change_pct",
   marketMapSize: "market_cap",
-  marketMapLimit: 60,
+  marketMapLimit: 500,
   marketMapSearch: "",
   marketMapSelected: null
 };
@@ -732,6 +732,45 @@ function marketMapAllStocks() {
   return state.marketMapData?.markets?.[state.marketMapMarket]?.stocks || [];
 }
 
+const KOREA_MARKET_MAP_SECTOR_RULES = [
+  ["정보기술", ["반도체", "전자", "디스플레이", "컴퓨터", "소프트웨어", "IT서비스", "통신장비", "핸드셋"]],
+  ["헬스케어", ["제약", "바이오", "생물공학", "생명과학", "건강관리", "의료"]],
+  ["금융", ["은행", "증권", "보험", "카드", "캐피탈", "금융", "창업투자"]],
+  ["산업재", ["조선", "기계", "건설", "우주항공", "운송", "철도", "무역", "상업서비스", "전기장비", "전기제품", "복합기업", "항공사", "해운사", "건축제품"]],
+  ["경기소비재", ["자동차", "화장품", "호텔", "레저", "백화점", "소매", "가정용", "섬유", "의류", "교육", "미디어", "엔터", "게임", "가구", "판매업체"]],
+  ["필수소비재", ["식품", "음료", "담배", "생활용품"]],
+  ["커뮤니케이션", ["통신서비스", "방송", "광고", "인터넷", "출판"]],
+  ["소재", ["화학", "철강", "비철금속", "건축자재", "종이", "목재", "포장재"]],
+  ["에너지", ["에너지", "석유", "가스"]],
+  ["유틸리티", ["전기유틸리티", "가스유틸리티", "복합유틸리티"]],
+  ["부동산", ["부동산", "리츠"]]
+];
+
+function marketMapKoreaBroadSector(industry) {
+  const normalized = String(industry || "").replace(/\s+/g, "");
+  if (!normalized || normalized === "기타") {
+    return "기타";
+  }
+  const match = KOREA_MARKET_MAP_SECTOR_RULES.find(([, keywords]) =>
+    keywords.some((keyword) => normalized.includes(keyword))
+  );
+  return match?.[0] || "기타";
+}
+
+function marketMapHierarchy(stock) {
+  if (stock.market === "KR") {
+    const industry = stock.industry || stock.sector || "기타";
+    return {
+      sector: stock.industry ? (stock.sector || "기타") : marketMapKoreaBroadSector(industry),
+      industry
+    };
+  }
+  return {
+    sector: stock.sector || "Other",
+    industry: stock.industry || "Other"
+  };
+}
+
 function marketMapGroupStocks() {
   const stocks = marketMapAllStocks()
     .filter((stock) => Number.isFinite(Number(stock.market_cap)))
@@ -770,7 +809,7 @@ function renderMarketMapFilterOptions() {
     state.marketMapColor
   );
   const sectors = Array.from(
-    new Set(marketMapGroupStocks().map((stock) => stock.sector || "Other"))
+    new Set(marketMapGroupStocks().map((stock) => marketMapHierarchy(stock).sector))
   ).sort((a, b) => a.localeCompare(b, state.marketMapMarket === "KR" ? "ko" : "en"));
   state.marketMapSector = setSelectOptions(
     document.getElementById("market-map-sector"),
@@ -783,13 +822,15 @@ function filteredMarketMapStocks() {
   const search = state.marketMapSearch.trim().toLocaleLowerCase();
   return marketMapGroupStocks()
     .filter((stock) =>
-      state.marketMapSector === "all" || stock.sector === state.marketMapSector
+      state.marketMapSector === "all"
+      || marketMapHierarchy(stock).sector === state.marketMapSector
     )
     .filter((stock) => {
       if (!search) {
         return true;
       }
-      return [stock.symbol, stock.name, stock.sector, stock.industry]
+      const hierarchy = marketMapHierarchy(stock);
+      return [stock.symbol, stock.name, hierarchy.sector, hierarchy.industry]
         .some((value) => String(value || "").toLocaleLowerCase().includes(search));
     });
 }
@@ -892,7 +933,7 @@ function renderMarketMapKpis(stocks) {
     ) / capTotal
     : 0;
   const rising = stocks.filter((stock) => Number(stock.change_pct) > 0).length;
-  const sectors = new Set(stocks.map((stock) => stock.sector)).size;
+  const sectors = new Set(stocks.map((stock) => marketMapHierarchy(stock).sector)).size;
   const capText = state.marketMapMarket === "KR"
     ? formatMarketCap(capTotal)
     : formatUsdCompact(capTotal);
@@ -916,6 +957,7 @@ function renderMarketMapDetail(stock) {
     return;
   }
   if (!stock) {
+    container.hidden = true;
     container.innerHTML = `
       <div class="market-map-detail-empty">
         <strong>종목을 선택하세요</strong>
@@ -924,7 +966,9 @@ function renderMarketMapDetail(stock) {
     `;
     return;
   }
+  container.hidden = false;
   const isKorea = stock.market === "KR";
+  const hierarchy = marketMapHierarchy(stock);
   const metrics = isKorea
     ? [
       ["시가총액", marketMapCap(stock)],
@@ -957,7 +1001,7 @@ function renderMarketMapDetail(stock) {
   container.innerHTML = `
     <div class="market-map-detail-head">
       <div>
-        <p>${escapeHtml(stock.sector || "Other")}</p>
+        <p>${escapeHtml(`${hierarchy.sector} · ${hierarchy.industry}`)}</p>
         <h3>${escapeHtml(isKorea ? stock.name : stock.symbol)}</h3>
         <span>${escapeHtml(isKorea ? stock.symbol : stock.name)}</span>
       </div>
@@ -983,15 +1027,180 @@ function renderMarketMapDetail(stock) {
   `;
 }
 
+function marketMapWeight(item) {
+  const value = Number(item?.[state.marketMapSize]);
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+
+function marketMapInsetRect(rect, left, top, right = left, bottom = top) {
+  return {
+    x: rect.x + left,
+    y: rect.y + top,
+    w: Math.max(0, rect.w - left - right),
+    h: Math.max(0, rect.h - top - bottom)
+  };
+}
+
+function marketMapSquarify(items, bounds, weightAccessor) {
+  const weighted = items
+    .map((item) => ({ item, weight: Math.max(0, Number(weightAccessor(item)) || 0) }))
+    .filter((entry) => entry.weight > 0)
+    .sort((a, b) => b.weight - a.weight);
+  const totalWeight = weighted.reduce((sum, entry) => sum + entry.weight, 0);
+  const totalArea = Math.max(0, bounds.w * bounds.h);
+  if (!weighted.length || !totalWeight || !totalArea) {
+    return [];
+  }
+
+  weighted.forEach((entry) => {
+    entry.area = entry.weight / totalWeight * totalArea;
+  });
+
+  const output = [];
+  const remaining = { ...bounds };
+  const worstRatio = (row, shortSide) => {
+    if (!row.length || shortSide <= 0) {
+      return Number.POSITIVE_INFINITY;
+    }
+    const sum = row.reduce((total, entry) => total + entry.area, 0);
+    const largest = Math.max(...row.map((entry) => entry.area));
+    const smallest = Math.min(...row.map((entry) => entry.area));
+    if (!sum || !smallest) {
+      return Number.POSITIVE_INFINITY;
+    }
+    const sideSquared = shortSide * shortSide;
+    return Math.max(
+      sideSquared * largest / (sum * sum),
+      (sum * sum) / (sideSquared * smallest)
+    );
+  };
+  const placeRow = (row) => {
+    const rowArea = row.reduce((total, entry) => total + entry.area, 0);
+    if (remaining.w >= remaining.h) {
+      const stripWidth = remaining.h ? rowArea / remaining.h : 0;
+      let cursor = remaining.y;
+      row.forEach((entry, index) => {
+        const height = stripWidth
+          ? (index === row.length - 1 ? remaining.y + remaining.h - cursor : entry.area / stripWidth)
+          : 0;
+        output.push({
+          item: entry.item,
+          rect: { x: remaining.x, y: cursor, w: stripWidth, h: height }
+        });
+        cursor += height;
+      });
+      remaining.x += stripWidth;
+      remaining.w = Math.max(0, remaining.w - stripWidth);
+    } else {
+      const stripHeight = remaining.w ? rowArea / remaining.w : 0;
+      let cursor = remaining.x;
+      row.forEach((entry, index) => {
+        const width = stripHeight
+          ? (index === row.length - 1 ? remaining.x + remaining.w - cursor : entry.area / stripHeight)
+          : 0;
+        output.push({
+          item: entry.item,
+          rect: { x: cursor, y: remaining.y, w: width, h: stripHeight }
+        });
+        cursor += width;
+      });
+      remaining.y += stripHeight;
+      remaining.h = Math.max(0, remaining.h - stripHeight);
+    }
+  };
+
+  let row = [];
+  weighted.forEach((entry) => {
+    const shortSide = Math.min(remaining.w, remaining.h);
+    const nextRow = [...row, entry];
+    if (!row.length || worstRatio(nextRow, shortSide) <= worstRatio(row, shortSide)) {
+      row = nextRow;
+      return;
+    }
+    placeRow(row);
+    row = [entry];
+  });
+  if (row.length) {
+    placeRow(row);
+  }
+  return output;
+}
+
+function marketMapRectStyle(rect) {
+  return [
+    `left:${rect.x.toFixed(2)}px`,
+    `top:${rect.y.toFixed(2)}px`,
+    `width:${Math.max(0, rect.w).toFixed(2)}px`,
+    `height:${Math.max(0, rect.h).toFixed(2)}px`
+  ].join(";");
+}
+
+function marketMapTileMarkup(stock, rect) {
+  const key = `${stock.market}:${stock.symbol}`;
+  const primary = stock.market === "KR" ? stock.name : stock.symbol;
+  const secondary = stock.market === "KR" ? stock.symbol : stock.name;
+  const area = rect.w * rect.h;
+  const showPrimary = rect.w >= 38 && rect.h >= 22;
+  const showMetric = rect.w >= 54 && rect.h >= 39;
+  const showSecondary = area >= 13500 && rect.w >= 96 && rect.h >= 68;
+  const sizeClass = area >= 32000
+    ? "is-xl"
+    : area >= 10500
+      ? "is-lg"
+      : area >= 2800
+        ? "is-md"
+        : "is-sm";
+  return `
+    <button
+      type="button"
+      class="market-heatmap-tile ${sizeClass} ${key === state.marketMapSelected ? "is-selected" : ""}"
+      style="${marketMapRectStyle(marketMapInsetRect(rect, 1, 1))};${marketMapTileStyle(stock)}"
+      data-market-map-key="${escapeHtml(key)}"
+      aria-label="${escapeHtml(`${primary}, ${marketMapMetricConfig().label} ${marketMapMetricText(stock)}`)}"
+      aria-pressed="${key === state.marketMapSelected ? "true" : "false"}"
+      title="${escapeHtml(`${primary} · ${secondary} · ${marketMapMetricConfig().label} ${marketMapMetricText(stock)}`)}"
+    >
+      ${showPrimary ? `<strong>${escapeHtml(primary)}</strong>` : ""}
+      ${showSecondary ? `<span class="market-heatmap-tile-name">${escapeHtml(secondary)}</span>` : ""}
+      ${showMetric ? `<span class="market-heatmap-tile-value">${escapeHtml(marketMapMetricText(stock))}</span>` : ""}
+    </button>
+  `;
+}
+
+function marketMapIndustryMarkup(group, rect, showIndustryFrame) {
+  const showTitle = showIndustryFrame && rect.w >= 78 && rect.h >= 48;
+  const headerHeight = showTitle ? 17 : 0;
+  const stockBounds = marketMapInsetRect(
+    { x: 0, y: 0, w: rect.w, h: rect.h },
+    2,
+    headerHeight + 2,
+    2,
+    2
+  );
+  const stockRects = marketMapSquarify(group.stocks, stockBounds, marketMapWeight);
+  return `
+    <div
+      class="market-heatmap-industry ${showIndustryFrame ? "" : "is-flat"}"
+      style="${marketMapRectStyle(rect)}"
+      title="${escapeHtml(`${group.industry} · ${group.stocks.length}개 종목`)}"
+    >
+      ${showTitle ? `<span class="market-heatmap-industry-title">${escapeHtml(group.industry)}</span>` : ""}
+      ${stockRects.map(({ item, rect: stockRect }) =>
+        marketMapTileMarkup(item, stockRect)
+      ).join("")}
+    </div>
+  `;
+}
+
 function renderMarketHeatmap(stocks) {
   const container = document.getElementById("market-heatmap");
   if (!container) {
     return;
   }
-  const sorted = [...stocks].sort(
-    (a, b) => Number(b[state.marketMapSize] || 0) - Number(a[state.marketMapSize] || 0)
-  );
-  const visible = sorted.slice(0, state.marketMapLimit);
+  const sorted = [...stocks].sort((a, b) => marketMapWeight(b) - marketMapWeight(a));
+  const visible = state.marketMapLimit > 0
+    ? sorted.slice(0, state.marketMapLimit)
+    : sorted;
   if (!visible.length) {
     container.innerHTML = `
       <div class="market-map-loading">현재 조건에 맞는 종목이 없습니다.</div>
@@ -999,76 +1208,101 @@ function renderMarketHeatmap(stocks) {
     renderMarketMapDetail(null);
     return;
   }
+
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  if (width < 20 || height < 20) {
+    window.requestAnimationFrame(() => renderMarketHeatmap(stocks));
+    return;
+  }
+
   const visibleKeys = new Set(visible.map((stock) => `${stock.market}:${stock.symbol}`));
   if (state.marketMapSelected && !visibleKeys.has(state.marketMapSelected)) {
     state.marketMapSelected = null;
   }
-  const grouped = new Map();
-  visible.forEach((stock, index) => {
-    const sector = stock.sector || "Other";
-    if (!grouped.has(sector)) {
-      grouped.set(sector, []);
+
+  const sectors = new Map();
+  visible.forEach((stock) => {
+    const hierarchy = marketMapHierarchy(stock);
+    if (!sectors.has(hierarchy.sector)) {
+      sectors.set(hierarchy.sector, {
+        sector: hierarchy.sector,
+        stocks: [],
+        industries: new Map()
+      });
     }
-    grouped.get(sector).push({ stock, index });
+    const sector = sectors.get(hierarchy.sector);
+    sector.stocks.push(stock);
+    if (!sector.industries.has(hierarchy.industry)) {
+      sector.industries.set(hierarchy.industry, []);
+    }
+    sector.industries.get(hierarchy.industry).push(stock);
   });
-  const sectorGroups = Array.from(grouped.entries())
-    .map(([sector, rows]) => ({
-      sector,
-      rows,
-      size: rows.reduce(
-        (sum, row) => sum + (Number(row.stock[state.marketMapSize]) || 0),
-        0
-      ),
-      cap: rows.reduce((sum, row) => sum + (Number(row.stock.market_cap) || 0), 0)
-    }))
-    .sort((a, b) => b.size - a.size);
-  const totalSize = sectorGroups.reduce((sum, group) => sum + group.size, 0);
-  container.innerHTML = sectorGroups.map((group) => {
+
+  const sectorGroups = Array.from(sectors.values()).map((group) => ({
+    ...group,
+    weight: group.stocks.reduce((sum, stock) => sum + marketMapWeight(stock), 0),
+    cap: group.stocks.reduce((sum, stock) => sum + (Number(stock.market_cap) || 0), 0)
+  }));
+  const sectorRects = marketMapSquarify(
+    sectorGroups,
+    { x: 0, y: 0, w: width, h: height },
+    (group) => group.weight
+  );
+
+  container.innerHTML = sectorRects.map(({ item: group, rect }) => {
     const weightedChange = group.cap
-      ? group.rows.reduce(
-        (sum, row) => sum
-          + (Number(row.stock.change_pct) || 0) * (Number(row.stock.market_cap) || 0),
+      ? group.stocks.reduce(
+        (sum, stock) => sum
+          + (Number(stock.change_pct) || 0) * (Number(stock.market_cap) || 0),
         0
       ) / group.cap
       : 0;
-    const share = totalSize ? group.size / totalSize : 0;
-    const span = state.marketMapSector !== "all"
-      ? 3
-      : share >= 0.28
-        ? 3
-        : share >= 0.1
-          ? 2
-          : 1;
+    const showSectorTitle = rect.w >= 76 && rect.h >= 42;
+    const sectorHeaderHeight = showSectorTitle ? 24 : 0;
+    const industryBounds = marketMapInsetRect(
+      { x: 0, y: 0, w: rect.w, h: rect.h },
+      3,
+      sectorHeaderHeight + 3,
+      3,
+      3
+    );
+    const industries = Array.from(group.industries.entries()).map(
+      ([industry, industryStocks]) => ({
+        industry,
+        stocks: industryStocks,
+        weight: industryStocks.reduce((sum, stock) => sum + marketMapWeight(stock), 0)
+      })
+    );
+    const industryRects = marketMapSquarify(
+      industries,
+      industryBounds,
+      (industry) => industry.weight
+    );
+    const showIndustryFrames = industries.length > 1 && rect.w >= 150 && rect.h >= 100;
     return `
-      <section class="market-heatmap-sector" style="--sector-span:${span}">
-        <div class="market-heatmap-sector-head">
-          <strong>${escapeHtml(group.sector)}</strong>
-          <span class="${marketTone(weightedChange)}">${escapeHtml(formatSignedPercent(weightedChange, 2))}</span>
-        </div>
-        <div class="market-heatmap-tiles">
-          ${group.rows.map(({ stock, index }) => {
-            const key = `${stock.market}:${stock.symbol}`;
-            const primary = stock.market === "KR" ? stock.name : stock.symbol;
-            const secondary = stock.market === "KR" ? stock.symbol : stock.name;
-            return `
-              <button
-                type="button"
-                class="market-heatmap-tile ${marketMapTileClass(index)} ${key === state.marketMapSelected ? "is-selected" : ""}"
-                style="${marketMapTileStyle(stock)}"
-                data-market-map-key="${escapeHtml(key)}"
-                aria-pressed="${key === state.marketMapSelected ? "true" : "false"}"
-                title="${escapeHtml(`${primary} · ${marketMapMetricConfig().label} ${marketMapMetricText(stock)}`)}"
-              >
-                <strong>${escapeHtml(primary)}</strong>
-                <span class="market-heatmap-tile-name">${escapeHtml(secondary)}</span>
-                <span class="market-heatmap-tile-value">${escapeHtml(marketMapMetricText(stock))}</span>
-              </button>
-            `;
-          }).join("")}
-        </div>
+      <section
+        class="market-heatmap-sector"
+        style="${marketMapRectStyle(marketMapInsetRect(rect, 1, 1))}"
+      >
+        ${showSectorTitle ? `
+          <button
+            type="button"
+            class="market-heatmap-sector-head"
+            data-market-map-sector-filter="${escapeHtml(group.sector)}"
+            title="${escapeHtml(`${group.sector}만 보기`)}"
+          >
+            <strong>${escapeHtml(group.sector)}</strong>
+            <span class="${marketTone(weightedChange)}">${escapeHtml(formatSignedPercent(weightedChange, 2))}</span>
+          </button>
+        ` : ""}
+        ${industryRects.map(({ item: industry, rect: industryRect }) =>
+          marketMapIndustryMarkup(industry, industryRect, showIndustryFrames)
+        ).join("")}
       </section>
     `;
   }).join("");
+
   const selected = visible.find(
     (stock) => `${stock.market}:${stock.symbol}` === state.marketMapSelected
   );
@@ -1086,11 +1320,11 @@ function renderMarketMap() {
 
 function resetMarketMap() {
   state.marketMapMarket = "US";
-  state.marketMapGroup = "top100";
+  state.marketMapGroup = "top500";
   state.marketMapSector = "all";
   state.marketMapColor = "change_pct";
   state.marketMapSize = "market_cap";
-  state.marketMapLimit = 60;
+  state.marketMapLimit = 500;
   state.marketMapSearch = "";
   state.marketMapSelected = null;
   document.getElementById("market-map-market").value = state.marketMapMarket;
@@ -1105,7 +1339,7 @@ function bindMarketMap() {
   const bindings = [
     ["market-map-market", "change", (event) => {
       state.marketMapMarket = event.target.value;
-      state.marketMapGroup = state.marketMapMarket === "KR" ? "KOSPI" : "top100";
+      state.marketMapGroup = state.marketMapMarket === "KR" ? "KOSPI" : "top500";
       state.marketMapSector = "all";
       state.marketMapColor = "change_pct";
       state.marketMapSelected = null;
@@ -1133,7 +1367,8 @@ function bindMarketMap() {
       renderMarketMap();
     }],
     ["market-map-limit", "change", (event) => {
-      state.marketMapLimit = Number(event.target.value) || 60;
+      const value = Number(event.target.value);
+      state.marketMapLimit = Number.isFinite(value) ? value : 500;
       renderMarketMap();
     }],
     ["market-map-search", "input", (event) => {
@@ -1148,11 +1383,24 @@ function bindMarketMap() {
   document.getElementById("market-map-reset")?.addEventListener("click", resetMarketMap);
   document.getElementById("market-heatmap")?.addEventListener("click", (event) => {
     const tile = event.target.closest("[data-market-map-key]");
-    if (!tile) {
+    if (tile) {
+      state.marketMapSelected = tile.dataset.marketMapKey;
+      renderMarketMap();
+      if (window.matchMedia("(max-width: 860px)").matches) {
+        window.setTimeout(() => {
+          document.getElementById("market-map-detail")
+            ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 60);
+      }
       return;
     }
-    state.marketMapSelected = tile.dataset.marketMapKey;
-    renderMarketMap();
+    const sector = event.target.closest("[data-market-map-sector-filter]");
+    if (sector) {
+      state.marketMapSector = sector.dataset.marketMapSectorFilter;
+      state.marketMapSelected = null;
+      document.getElementById("market-map-sector").value = state.marketMapSector;
+      renderMarketMap();
+    }
   });
   document.getElementById("market-map-detail")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-market-map-jump]");
@@ -1179,6 +1427,15 @@ function bindMarketMap() {
           ?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 900);
     }
+  });
+  let resizeTimer = null;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      if (state.marketMapData) {
+        renderMarketMap();
+      }
+    }, 140);
   });
 }
 
