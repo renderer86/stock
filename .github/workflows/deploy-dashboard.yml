@@ -11,6 +11,7 @@ on:
       - "assets/**"
       - "data/naver_news.json"
       - "data/market_indices.json"
+      # AI briefing updates can be deployed without rerunning the full collectors.
       - "data/ai_market_briefing.json"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_run:
