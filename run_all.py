@@ -12,6 +12,19 @@ from env_loader import load_env_file
 
 ROOT_DIR = Path(__file__).resolve().parent
 HEARTBEAT_SECONDS = 30
+STEP_RESULTS: list[dict[str, object]] = []
+
+
+def record_skipped_step(name: str, reason: str) -> None:
+    STEP_RESULTS.append(
+        {
+            "name": name,
+            "status": "skipped",
+            "reason": reason,
+            "elapsed": 0.0,
+        }
+    )
+    print(f"[SKIP] {name}: {reason}", flush=True)
 
 
 def run_step(
@@ -31,7 +44,25 @@ def run_step(
         f"[COMMAND] {Path(command[1]).name} {' '.join(arguments)}".rstrip(),
         flush=True,
     )
-    process = subprocess.Popen(command, cwd=ROOT_DIR)
+    try:
+        process = subprocess.Popen(command, cwd=ROOT_DIR)
+    except OSError as exc:
+        elapsed = time.monotonic() - started_at
+        STEP_RESULTS.append(
+            {
+                "name": name,
+                "status": "failed",
+                "reason": f"launch error: {exc}",
+                "elapsed": elapsed,
+            }
+        )
+        print(
+            f"[FAILED] {name} could not start: {exc}\n"
+            "[CONTINUE] The remaining collectors will still run.",
+            flush=True,
+        )
+        return False
+
     while True:
         try:
             return_code = process.wait(timeout=HEARTBEAT_SECONDS)
@@ -46,18 +77,69 @@ def run_step(
     elapsed = time.monotonic() - started_at
 
     if return_code != 0:
-        if optional:
-            print(
-                f"[WARN] {name} failed and was skipped "
-                f"(exit code: {return_code}, {elapsed:.1f}s)",
-                flush=True,
-            )
-            return False
-        raise SystemExit(
-            f"\n[FAIL] {name} (exit code: {return_code}, {elapsed:.1f}s)"
+        STEP_RESULTS.append(
+            {
+                "name": name,
+                "status": "failed",
+                "reason": f"exit code {return_code}",
+                "elapsed": elapsed,
+                "optional": optional,
+            }
         )
+        print(
+            f"[FAILED] {name} (exit code: {return_code}, {elapsed:.1f}s)\n"
+            "[CONTINUE] The remaining collectors will still run. "
+            "The previous JSON for this dataset is preserved.",
+            flush=True,
+        )
+        return False
+
+    STEP_RESULTS.append(
+        {
+            "name": name,
+            "status": "success",
+            "reason": "",
+            "elapsed": elapsed,
+            "optional": optional,
+        }
+    )
     print(f"[DONE] {name} ({elapsed:.1f}s)", flush=True)
     return True
+
+
+def print_pipeline_summary(total_elapsed: float) -> bool:
+    succeeded = [row for row in STEP_RESULTS if row["status"] == "success"]
+    failed = [row for row in STEP_RESULTS if row["status"] == "failed"]
+    skipped = [row for row in STEP_RESULTS if row["status"] == "skipped"]
+
+    print(f"\n{'=' * 60}", flush=True)
+    print("[PIPELINE SUMMARY]", flush=True)
+    print(f"{'=' * 60}", flush=True)
+    print(
+        f"Success: {len(succeeded)} | Failed: {len(failed)} | "
+        f"Skipped: {len(skipped)} | Elapsed: {total_elapsed:.1f}s",
+        flush=True,
+    )
+    for row in failed:
+        print(
+            f"  [FAILED] {row['name']} - {row['reason']} "
+            f"({float(row['elapsed']):.1f}s)",
+            flush=True,
+        )
+    for row in skipped:
+        print(
+            f"  [SKIPPED] {row['name']} - {row['reason']}",
+            flush=True,
+        )
+    if failed:
+        print(
+            "[PARTIAL SUCCESS] Successful datasets can be committed. "
+            "Failed datasets keep their previously committed JSON.",
+            flush=True,
+        )
+    else:
+        print("[SUCCESS] All executed collectors completed.", flush=True)
+    return bool(failed)
 
 
 def main() -> None:
@@ -215,13 +297,17 @@ def main() -> None:
     args = parser.parse_args()
 
     if not args.skip_rates and not os.environ.get("ECOS_API_KEY", "").strip():
-        parser.error(
-            "ECOS_API_KEY is not set. Set it before running, or pass --skip-rates."
+        args.skip_rates = True
+        record_skipped_step(
+            "Korea and US treasury yields",
+            "ECOS_API_KEY is not set",
         )
 
     if not args.skip_dart and not os.environ.get("DART_API_KEY", "").strip():
-        parser.error(
-            "DART_API_KEY is not set. Set it before running, or pass --skip-dart."
+        args.skip_dart = True
+        record_skipped_step(
+            "OpenDART collectors",
+            "DART_API_KEY is not set",
         )
 
     total_started_at = time.monotonic()
@@ -286,7 +372,10 @@ def main() -> None:
                 optional=True,
             )
         else:
-            print("[SKIP] FINNHUB_API_KEY is not set.", flush=True)
+            record_skipped_step(
+                "Finnhub U.S. metrics and analyst data",
+                "FINNHUB_API_KEY is not set",
+            )
 
     if not args.skip_krx:
         if os.environ.get("KRX_API_KEY", "").strip():
@@ -297,7 +386,10 @@ def main() -> None:
                 optional=True,
             )
         else:
-            print("[SKIP] KRX_API_KEY is not set.", flush=True)
+            record_skipped_step(
+                "KRX Open API market datasets",
+                "KRX_API_KEY is not set",
+            )
         if (
             os.environ.get("KRX_ID", "").strip()
             and os.environ.get("KRX_PW", "").strip()
@@ -308,7 +400,10 @@ def main() -> None:
                 [],
             )
         else:
-            print("[SKIP] KRX_ID/KRX_PW are not set.", flush=True)
+            record_skipped_step(
+                "KRX investor flow and short selling",
+                "KRX_ID/KRX_PW are not set",
+            )
 
     remaining_after_naver = []
     if not args.skip_market_heatmap:
@@ -405,7 +500,10 @@ def main() -> None:
                 optional=True,
             )
         else:
-            print("[SKIP] NAVER_CLIENT_ID/NAVER_CLIENT_SECRET are not set.", flush=True)
+            record_skipped_step(
+                "NAVER categorized market news",
+                "NAVER_CLIENT_ID/NAVER_CLIENT_SECRET are not set",
+            )
 
     if not args.skip_ai_briefing:
         if os.environ.get("GEMINI_API_KEY", "").strip():
@@ -416,7 +514,10 @@ def main() -> None:
                 optional=True,
             )
         else:
-            print("[SKIP] GEMINI_API_KEY is not set.", flush=True)
+            record_skipped_step(
+                "Gemini market briefing",
+                "GEMINI_API_KEY is not set",
+            )
 
     run_step(
         "Build data manifest",
@@ -425,7 +526,8 @@ def main() -> None:
     )
 
     elapsed = time.monotonic() - total_started_at
-    print(f"\nAll requested crawlers completed successfully ({elapsed:.1f}s).")
+    if print_pipeline_summary(elapsed):
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

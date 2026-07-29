@@ -50,9 +50,10 @@ def main() -> None:
     ]
     if missing:
         names = ", ".join(missing)
-        raise SystemExit(
-            f"필수 환경변수가 없습니다: {names}. "
-            "로컬은 .env, GitHub Actions는 Repository secrets에 등록하세요."
+        print(
+            f"[WARN] 설정되지 않은 환경변수: {names}. "
+            "해당 키가 필요한 수집기만 건너뛰고 나머지는 계속 실행합니다.",
+            flush=True,
         )
 
     script, *arguments = PROFILE_COMMANDS[args.profile]
@@ -66,6 +67,12 @@ def main() -> None:
 
     result = subprocess.run(command, cwd=ROOT_DIR, check=False)
     if result.returncode != 0:
+        print(
+            f"[PARTIAL FAILURE] {Path(command[1]).name} exited with "
+            f"code {result.returncode}. The workflow will continue so any "
+            "successfully refreshed JSON can still be committed.",
+            flush=True,
+        )
         raise SystemExit(result.returncode)
 
 

@@ -103,7 +103,10 @@ OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --skip-dart
 ```
 
-중간 작업이 실패하면 이후 작업은 실행하지 않으며, 실패한 단계와 종료 코드를 출력합니다.
+중간 작업 하나가 실패해도 해당 데이터의 기존 JSON을 보존하고 이후 수집기와 manifest
+생성을 계속 실행합니다. 마지막 `[PIPELINE SUMMARY]`에서 성공·실패·건너뜀 단계를
+한 번에 확인할 수 있습니다. GitHub Actions도 부분 실패가 발생하면 성공적으로 갱신된
+JSON을 먼저 커밋·배포하고 텔레그램에는 실패 알림을 보냅니다.
 각 단계가 30초 이상 실행되면 `[RUNNING]` 생존 로그가 표시됩니다. 특히 네이버 국내
 시세 수집은 코스피·코스닥, 필드 묶음, 페이지 진행률과 누적 경과 시간을 5페이지마다
 출력하므로 GitHub Actions에서 진행 여부를 바로 확인할 수 있습니다. 네이버 시세 다음에도

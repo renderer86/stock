@@ -11,6 +11,8 @@ from typing import Any
 import requests
 from bs4 import BeautifulSoup
 
+from collector_common import atomic_write_json
+
 
 FN_GUIDE_URL = (
     "https://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp"
@@ -444,8 +446,7 @@ def _average(values: list[float]) -> float | None:
 
 
 def write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    atomic_write_json(path, payload)
 
 
 def write_debug_files(code: str, html: str, lines: list[str]) -> None:

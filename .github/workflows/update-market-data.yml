@@ -81,9 +81,12 @@ jobs:
           echo "Selected profile: ${profile}"
 
       - name: Crawl market data
+        id: crawl
+        continue-on-error: true
         run: python scheduled_update.py "${{ steps.profile.outputs.value }}"
 
       - name: Commit refreshed JSON
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
@@ -118,14 +121,14 @@ jobs:
           exit 1
 
       - name: Notify Telegram on failure
-        if: failure()
+        if: failure() || steps.crawl.outcome == 'failure'
         run: >-
           python telegram_notify.py
           --status failure
           --profile "${{ steps.profile.outputs.value }}"
 
       - name: Notify Telegram on success
-        if: success()
+        if: success() && steps.crawl.outcome == 'success'
         run: >-
           python telegram_notify.py
           --status success

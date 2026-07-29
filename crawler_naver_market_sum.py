@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import time
 from datetime import datetime, timezone
@@ -11,6 +10,8 @@ from urllib.parse import parse_qs, urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
+
+from collector_common import atomic_write_json
 
 
 BASE_URL = "https://finance.naver.com/sise/sise_market_sum.naver"
@@ -341,8 +342,7 @@ def crawl_field_group(
 
 
 def write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    atomic_write_json(path, payload)
 
 
 def crawl_market(
