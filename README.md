@@ -283,6 +283,9 @@ GitHub Actions에서 다음 일정으로 실행됩니다.
 코스닥 뉴스를 갱신합니다. 뉴스 JSON이 바뀌면 `Deploy dashboard page`가 자동으로
 기존 시장 데이터와 함께 페이지를 다시 배포합니다.
 
+Gemini 브리핑은 신규 키에서 지원되는 `gemini-3.5-flash-lite`를 기본 모델로 사용하며,
+429·일시적인 5xx 응답은 최대 4회까지 지수적으로 재시도합니다.
+
 자동 실행 전에 GitHub 저장소의 `Settings` → `Secrets and variables` →
 `Actions` → `New repository secret`에서 다음 이름을 등록합니다.
 

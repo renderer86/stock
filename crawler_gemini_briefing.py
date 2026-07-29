@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any
 
@@ -14,7 +15,8 @@ from env_loader import load_env_file
 
 ROOT_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = Path("data/ai_market_briefing.json")
-DEFAULT_MODEL = "gemini-2.5-flash"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
+RETRYABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -137,11 +139,80 @@ def extract_text(payload: dict[str, Any]) -> str:
     return text
 
 
+def response_error_detail(response: requests.Response) -> str:
+    try:
+        payload = response.json()
+        error = payload.get("error") or {}
+        return str(error.get("message") or payload)
+    except (ValueError, AttributeError):
+        return (response.text or response.reason or "Unknown error").strip()
+
+
+def generate_briefing(
+    api_key: str,
+    model: str,
+    prompt: str,
+    attempts: int = 4,
+) -> str:
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{model}:generateContent"
+    )
+    request_body = {
+        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 4096},
+    }
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            response = requests.post(
+                url,
+                headers={
+                    "User-Agent": USER_AGENT,
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": api_key,
+                },
+                json=request_body,
+                timeout=120,
+            )
+        except requests.RequestException as exc:
+            if attempt >= attempts:
+                raise RuntimeError(
+                    f"Gemini request failed after {attempt} attempts: {exc}"
+                ) from exc
+            delay = min(30, 2 ** attempt)
+            print(
+                f"[Gemini] request error ({exc}); retrying in {delay}s "
+                f"({attempt}/{attempts})",
+                flush=True,
+            )
+            time.sleep(delay)
+            continue
+
+        if response.ok:
+            return extract_text(response.json())
+
+        detail = response_error_detail(response)
+        if response.status_code not in RETRYABLE_STATUS_CODES or attempt >= attempts:
+            raise RuntimeError(
+                f"Gemini HTTP {response.status_code}: {detail[:1000]}"
+            )
+        delay = min(30, 2 ** attempt)
+        print(
+            f"[Gemini] HTTP {response.status_code}: {detail[:300]} "
+            f"Retrying in {delay}s ({attempt}/{attempts})",
+            flush=True,
+        )
+        time.sleep(delay)
+
+    raise RuntimeError("Gemini request failed without a response.")
+
+
 def main() -> None:
     load_env_file(ROOT_DIR / ".env")
     parser = argparse.ArgumentParser(description="Generate a Korean market briefing from collected JSON.")
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--attempts", type=int, default=4)
     args = parser.parse_args()
 
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
@@ -158,25 +229,12 @@ def main() -> None:
         "4. 금리와 매크로\n5. 주요 뉴스와 공시\n6. 오늘 확인할 위험요인\n\n"
         f"수집 데이터(JSON):\n{json.dumps(context, ensure_ascii=False, separators=(',', ':'))}"
     )
-    url = (
-        "https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{args.model}:generateContent"
+    text = generate_briefing(
+        api_key,
+        args.model,
+        prompt,
+        attempts=max(1, args.attempts),
     )
-    response = requests.post(
-        url,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Content-Type": "application/json",
-            "x-goog-api-key": api_key,
-        },
-        json={
-            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.2, "maxOutputTokens": 4096},
-        },
-        timeout=120,
-    )
-    response.raise_for_status()
-    text = extract_text(response.json())
     payload = {
         "source": "Gemini API + locally collected market JSON",
         "model": args.model,
