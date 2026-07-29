@@ -42,6 +42,22 @@ body {
   margin-bottom: 18px;
 }
 
+@media (min-width: 861px) {
+  .topbar > div:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .topbar .intro {
+    width: 100%;
+    max-width: none;
+  }
+
+  .topbar-meta {
+    flex: 0 0 auto;
+  }
+}
+
 .eyebrow,
 .section-kicker,
 .meta-label,
