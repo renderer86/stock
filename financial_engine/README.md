@@ -1,0 +1,42 @@
+# Financial persistence engine
+
+이 디렉터리는 가치평가의 핵심 입력인 `N`과 투자 스크리닝을 데이터 수집기 및
+브라우저 코드에서 분리한다.
+
+## 경계
+
+- `config.py`: 방법론 기본값과 엔진 버전
+- `taxonomy.py`: 한국 업종을 실증 분석용 대분류로 변환
+- `statistics.py`: 회귀·스펠·Kaplan–Meier·MRL 순수 함수
+- `n_estimator.py`: 섹터 기본 N, 생존 근거, 기업 수정자를 조합
+- `screens.py`: 버핏식 및 퀄리티식 판정·순위·결측 상태
+- `config/financial_n_engine.json`: 코드 수정 없이 조절하는 운영 파라미터
+
+크롤러는 사실 데이터만 저장하고, 이 패키지는 외부 API를 호출하지 않는다.
+
+## N 계산 계층
+
+1. 업종 사전확률 `prior_r`
+2. 4년 ROE 자기상관을 경험적 베이즈 방식으로 축소한 `shrunk_r`
+3. `N = -4 / ln(r)`로 변환한 업종 기본 N
+4. 종료 사건이 충분할 때만 Kaplan–Meier 제한 평균잔여수명 결합
+5. ROE 변동성·고ROE 스트릭·재투자율·GP/A·극단 ROE 수정자 적용
+6. 표본량에 따라 보수/기준/낙관 범위와 신뢰도 부여
+
+결과에는 항상 `engine_version`, `methodology_version`, `config_signature`,
+`sources`, `modifiers`, `warnings`가 포함된다. 숫자만 저장하지 않기 때문에
+방법론 변경 전후를 추적할 수 있다.
+
+## 확장 규칙
+
+새 방법을 추가할 때 기존 결과 필드를 덮어쓰지 않는다.
+
+1. 독립 계산을 순수 함수나 별도 모듈로 구현한다.
+2. `sources`에 새 계층 이름과 원시 추정치·표본 수·가중치를 기록한다.
+3. 가중치와 최소 표본은 `NEngineConfig` 및 JSON 설정으로 이동한다.
+4. 기존 테스트와 새 방법 전용 합성 패널 테스트를 함께 둔다.
+5. 의미가 바뀌면 `METHODOLOGY_VERSION`, 출력 구조가 바뀌면
+   `schema_version`을 올린다.
+
+시장내재 N은 기대를 읽는 비교값이며 실증 N과 합치지 않는다. 두 값의 차이는
+대시보드에서 별도 정보로 유지한다.

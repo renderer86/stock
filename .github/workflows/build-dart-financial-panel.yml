@@ -140,6 +140,20 @@ jobs:
 
           python -u crawler_dart_financial_details.py "${args[@]}"
 
+      - name: Build empirical N and investment screens
+        id: analytics
+        if: always()
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f data/dart_financial_panel.json ]]; then
+            echo "DART panel does not exist yet; analytics are skipped."
+            exit 0
+          fi
+          python -u estimate_financial_n.py --config config/financial_n_engine.json
+          python -u build_investment_screens.py
+
       - name: Commit panel or partial checkpoint
         if: always()
         shell: bash
@@ -152,7 +166,10 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/dart_financial_panel.json
+          files=(data/dart_financial_panel.json)
+          [[ -f data/financial_n_estimates.json ]] && files+=(data/financial_n_estimates.json)
+          [[ -f data/investment_screens.json ]] && files+=(data/investment_screens.json)
+          git add "${files[@]}"
           if git diff --cached --quiet; then
             echo "No DART panel changes to commit."
             exit 0
@@ -183,14 +200,18 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dart-financial-panel-${{ github.run_id }}
-          path: data/dart_financial_panel.json
+          path: |
+            data/dart_financial_panel.json
+            data/financial_n_estimates.json
+            data/investment_screens.json
           if-no-files-found: ignore
           retention-days: 14
 
       - name: Report crawler failure
         if: |
           (steps.core.outcome == 'failure') ||
-          (steps.details.outcome == 'failure')
+          (steps.details.outcome == 'failure') ||
+          (steps.analytics.outcome == 'failure')
         shell: bash
         run: |
           echo "::error::A crawler failed. A partial checkpoint was committed when available; inspect the failed step and rerun with mode=resume."

@@ -1,5 +1,7 @@
 const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
 const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
+const FINANCIAL_N_URL = "./data/financial_n_estimates.json";
+const INVESTMENT_SCREENS_URL = "./data/investment_screens.json";
 const DART_MAJOR_URL = "./data/dart_major_holders.json";
 const TREASURY_YIELDS_URL = "./data/treasury_yields.json";
 const ETF_BRANDS_URL = "./data/naver_etf_brands.json";
@@ -23,6 +25,8 @@ const MARKET_IMPLIED_DISCOUNT = 0.1;
 const state = {
   rawStocks: [],
   roeHistoryByCode: new Map(),
+  financialNByCode: new Map(),
+  investmentScreenByCode: new Map(),
   dartMajorByCode: new Map(),
   selectedCode: null,
   threshold: 10,
@@ -680,6 +684,12 @@ async function loadMarketOverview() {
     document.getElementById("market-overview-updated").textContent = "Unavailable";
     console.error(error);
   }
+}
+
+function screenStatusLabel(status) {
+  if (status === "pass") return "통과";
+  if (status === "fail") return "탈락";
+  return "판정 대기";
 }
 
 function marketMapGroupOptions(market) {
@@ -1961,6 +1971,61 @@ function estimateFinancialN(stock, historyValues) {
   };
 }
 
+function adaptEmpiricalNModel(estimate, fallbackModel) {
+  if (!estimate?.estimate || typeof estimate.estimate.base_years !== "number") {
+    return fallbackModel;
+  }
+
+  const confidence = estimate.confidence || {};
+  const roe = estimate.roe || {};
+  const streak = roe.trailing_high_roe_streak || {};
+
+  return {
+    score: typeof confidence.score_0_to_100 === "number"
+      ? confidence.score_0_to_100
+      : fallbackModel.score,
+    estimatedN: estimate.estimate.base_years,
+    avgRoe: typeof roe.mean_pct === "number" ? roe.mean_pct : fallbackModel.avgRoe,
+    roeStd: typeof roe.volatility_pct_points === "number"
+      ? roe.volatility_pct_points
+      : fallbackModel.roeStd,
+    highRoeYears: typeof streak.years === "number"
+      ? streak.years
+      : fallbackModel.highRoeYears,
+    debtRatio: fallbackModel.debtRatio,
+    engine: "empirical_persistence",
+    status: estimate.status || "provisional",
+    confidence,
+    sources: estimate.sources || [],
+    modifiers: estimate.modifiers || [],
+    warnings: estimate.warnings || []
+  };
+}
+
+function empiricalDurationRange(estimate) {
+  if (!estimate?.estimate || typeof estimate.estimate.base_years !== "number") {
+    return null;
+  }
+
+  return {
+    conservative: clamp(
+      estimate.estimate.conservative_years + state.durationOffset,
+      1,
+      30
+    ),
+    base: clamp(
+      estimate.estimate.base_years + state.durationOffset,
+      1,
+      30
+    ),
+    optimistic: clamp(
+      estimate.estimate.optimistic_years + state.durationOffset,
+      1,
+      30
+    )
+  };
+}
+
 function inferDurationRange(estimatedN) {
   const base = clamp(estimatedN + state.durationOffset, 1, 30);
 
@@ -1992,8 +2057,12 @@ function enrichStock(stock) {
   const reporterNames = extractReporterNames(majorHolder);
   const marketImpliedN = estimateMarketImpliedDuration(stock);
   const roeRange = inferRoeRange(stock, history);
-  const nModel = estimateFinancialN(stock, roeRange.values);
-  const durationRange = inferDurationRange(nModel.estimatedN);
+  const heuristicNModel = estimateFinancialN(stock, roeRange.values);
+  const financialNEstimate = state.financialNByCode.get(stock.code) || null;
+  const investmentScreen = state.investmentScreenByCode.get(stock.code) || null;
+  const nModel = adaptEmpiricalNModel(financialNEstimate, heuristicNModel);
+  const durationRange = empiricalDurationRange(financialNEstimate)
+    || inferDurationRange(nModel.estimatedN);
 
   const conservativeRoe = roeRange.conservative === null ? null : clamp(roeRange.conservative + state.roeAdjustment, 1, 100);
   const baseRoe = roeRange.base === null ? null : clamp(roeRange.base + state.roeAdjustment, 1, 100);
@@ -2043,6 +2112,8 @@ function enrichStock(stock) {
     topHolderRatio: typeof majorHolder?.top_holder_ratio === "number" ? majorHolder.top_holder_ratio : null,
     latestReportDate: majorHolder?.latest_report_date || null,
     nModel,
+    financialNEstimate,
+    investmentScreen,
     scenarios,
     fairPriceConservative: scenarios.conservative.fairPrice,
     fairPriceBase: scenarios.base.fairPrice,
@@ -2367,6 +2438,20 @@ function renderSelectedSummary(stock) {
         <span class="label">시장 내재 N</span>
         <span class="value">${formatYears(stock.marketImpliedN)}</span>
       </div>
+      <div class="summary-card">
+        <span class="label">버핏식 품질 / 가격</span>
+        <span class="value">
+          ${screenStatusLabel(stock.investmentScreen?.buffett?.business_quality_status)} /
+          ${screenStatusLabel(stock.investmentScreen?.buffett?.valuation_status)}
+        </span>
+      </div>
+      <div class="summary-card">
+        <span class="label">퀄리티 팩터</span>
+        <span class="value">
+          ${screenStatusLabel(stock.investmentScreen?.quality?.status)}
+          ${stock.investmentScreen?.quality?.selected_for_basket ? " · 바스켓" : ""}
+        </span>
+      </div>
     </div>
   `;
 }
@@ -2390,8 +2475,12 @@ function renderDurationPanel(stock) {
         <div class="value">${formatYears(stock.marketImpliedN)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">N 추정 점수</div>
-        <div class="value">${formatNumber(stock.estimatedNScore, 1)}점</div>
+        <div class="label">${stock.nModel.engine === "empirical_persistence" ? "N 엔진 신뢰도" : "N 추정 점수"}</div>
+        <div class="value">
+          ${stock.nModel.engine === "empirical_persistence"
+            ? `${escapeHtml(stock.nModel.confidence?.label || "low")} · ${formatNumber(stock.estimatedNScore, 1)}/100`
+            : `${formatNumber(stock.estimatedNScore, 1)}점`}
+        </div>
       </div>
       <div class="calc-item">
         <div class="label">추정 N 보정치</div>
@@ -2408,9 +2497,15 @@ function renderDurationPanel(stock) {
         <div class="label">고ROE 유지연수</div>
         <div class="value">${stock.nModel.highRoeYears}년</div>
       </div>
+      <div class="calc-item">
+        <div class="label">N 추정 방식</div>
+        <div class="value">${stock.nModel.engine === "empirical_persistence" ? "실증 지속성 엔진" : "임시 점수표"}</div>
+      </div>
     </div>
     <div class="calc-note">
-      N은 높은 ROE의 지속성, 마진 안정성, 성장 안정성, 재무 체력을 점수화해 2년, 4년, 6년, 8년, 10년 구간으로 자동 추정합니다.
+      ${stock.nModel.engine === "empirical_persistence"
+        ? `섹터 4년 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합했습니다. 현재 상태는 ${escapeHtml(stock.nModel.status || "provisional")}입니다.`
+        : "아직 실증 N 데이터가 없는 종목이므로 기존 임시 점수표를 사용합니다."}
       시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산한 비교값입니다.
     </div>
   `;
@@ -2663,6 +2758,32 @@ function buildDartMajorMap(payload) {
   return map;
 }
 
+function buildFinancialNMap(payload) {
+  const map = new Map();
+  const estimates = payload?.estimates || {};
+
+  Object.entries(estimates).forEach(([code, estimate]) => {
+    if (code && estimate) {
+      map.set(code, estimate);
+    }
+  });
+
+  return map;
+}
+
+function buildInvestmentScreenMap(payload) {
+  const map = new Map();
+  const results = payload?.results || {};
+
+  Object.entries(results).forEach(([code, result]) => {
+    if (code && result) {
+      map.set(code, result);
+    }
+  });
+
+  return map;
+}
+
 async function loadStocks() {
   try {
     const marketPromise = fetch(MARKET_DATA_URL).then((response) => {
@@ -2690,11 +2811,47 @@ async function loadStocks() {
       })
       .catch(() => ({ stocks: [] }));
 
-    const [marketPayload, roePayload, dartPayload] = await Promise.all([marketPromise, roePromise, dartPromise]);
+    const financialNPromise = fetch(`${FINANCIAL_N_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} for financial N`);
+        }
+        return response.json();
+      })
+      .catch(() => ({ estimates: {} }));
+
+    const investmentScreensPromise = fetch(`${INVESTMENT_SCREENS_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} for investment screens`);
+        }
+        return response.json();
+      })
+      .catch(() => ({ results: {} }));
+
+    const [
+      marketPayload,
+      roePayload,
+      dartPayload,
+      financialNPayload,
+      investmentScreensPayload
+    ] = await Promise.all([
+      marketPromise,
+      roePromise,
+      dartPromise,
+      financialNPromise,
+      investmentScreensPromise
+    ]);
 
     state.rawStocks = marketPayload.stocks || [];
     state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
     state.dartMajorByCode = buildDartMajorMap(dartPayload);
+    state.financialNByCode = buildFinancialNMap(financialNPayload);
+    state.investmentScreenByCode = buildInvestmentScreenMap(investmentScreensPayload);
     updateLastUpdated(marketPayload.crawled_at_utc);
     bindControls();
     bindPrioritySortHeaders();
@@ -3599,7 +3756,9 @@ function friendlyDataName(path) {
     "data/market_sum.json": "국내 종목 시세",
     "data/market_sum_by_roe.json": "국내 가치평가 원본",
     "data/fnguide_roe_history.json": "FnGuide ROE 이력",
-    "data/dart_major_holders.json": "DART 주요주주"
+    "data/dart_major_holders.json": "DART 주요주주",
+    "data/financial_n_estimates.json": "실증 N 추정 엔진",
+    "data/investment_screens.json": "버핏·퀄리티 스크리닝"
   };
   return names[path] || path.replace("data/", "").replace(".json", "");
 }
@@ -3620,6 +3779,8 @@ function renderDataWorkspace() {
     "data/market_sum_by_roe.json",
     "data/fnguide_roe_history.json",
     "data/dart_major_holders.json",
+    "data/financial_n_estimates.json",
+    "data/investment_screens.json",
     "data/treasury_yields.json",
     "data/market_indices.json",
     "data/market_heatmap.json",
