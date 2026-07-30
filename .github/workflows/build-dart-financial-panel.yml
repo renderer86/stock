@@ -3,6 +3,15 @@ name: Build DART 10-year financial panel
 on:
   workflow_dispatch:
     inputs:
+      scope:
+        description: Collection scope
+        required: true
+        default: core-and-details
+        type: choice
+        options:
+          - core-and-details
+          - core-only
+          - details-only
       mode:
         description: Existing panel handling
         required: true
@@ -26,6 +35,15 @@ on:
         required: true
         default: "0"
         type: string
+      detail_request_budget:
+        description: Detail/share/dividend API requests in this run (resume later)
+        required: true
+        default: "5000"
+        type: choice
+        options:
+          - "1000"
+          - "5000"
+          - "10000"
 
 permissions:
   contents: write
@@ -64,8 +82,9 @@ jobs:
             exit 1
           fi
 
-      - name: Build annual financial panel
-        id: crawl
+      - name: Build annual core panel
+        id: core
+        if: inputs.scope != 'details-only'
         continue-on-error: true
         shell: bash
         run: |
@@ -91,6 +110,35 @@ jobs:
           esac
 
           python -u crawler_dart_financial_panel.py "${args[@]}"
+
+      - name: Enrich full-statement details
+        id: details
+        if: inputs.scope != 'core-only'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --limit "${{ inputs.universe_limit }}"
+            --max-requests "${{ inputs.detail_request_budget }}"
+          )
+
+          case "${{ inputs.mode }}" in
+            rebuild)
+              args+=(--reset-details)
+              ;;
+            refresh-latest)
+              args+=(--refresh-latest)
+              ;;
+            resume)
+              ;;
+            *)
+              echo "::error::Unknown mode: ${{ inputs.mode }}"
+              exit 1
+              ;;
+          esac
+
+          python -u crawler_dart_financial_details.py "${args[@]}"
 
       - name: Commit panel or partial checkpoint
         if: always()
@@ -139,9 +187,11 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Report incomplete crawl
-        if: steps.crawl.outcome != 'success'
+      - name: Report crawler failure
+        if: |
+          (steps.core.outcome == 'failure') ||
+          (steps.details.outcome == 'failure')
         shell: bash
         run: |
-          echo "::error::The crawl was incomplete. A partial checkpoint was committed when available; rerun with mode=resume."
+          echo "::error::A crawler failed. A partial checkpoint was committed when available; inspect the failed step and rerun with mode=resume."
           exit 1
