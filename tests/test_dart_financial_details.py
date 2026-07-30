@@ -1,5 +1,6 @@
 import unittest
 
+from collector_common import redact_sensitive_url_text
 from crawler_dart_financial_details import (
     company_screening_features,
     derive_row_metrics,
@@ -10,6 +11,17 @@ from crawler_dart_financial_details import (
 
 
 class DartFinancialDetailsTest(unittest.TestCase):
+    def test_redacts_api_credentials_from_request_errors(self) -> None:
+        text = redact_sensitive_url_text(
+            "https://example.test/?crtfc_key=secret-value&api_key=other"
+        )
+        self.assertNotIn("secret-value", text)
+        self.assertNotIn("other", text)
+        self.assertEqual(
+            text,
+            "https://example.test/?crtfc_key=<redacted>&api_key=<redacted>",
+        )
+
     def test_standardizes_accounts_and_calculates_roic_fcf(self) -> None:
         raw = [
             {
@@ -90,6 +102,24 @@ class DartFinancialDetailsTest(unittest.TestCase):
                 "account_nm": "무형자산의 취득",
                 "thstrm_amount": "-10",
             },
+            {
+                "sj_div": "CF",
+                "account_id": "ifrs-full_AdjustmentsForDepreciationExpense",
+                "account_nm": "감가상각비",
+                "thstrm_amount": "25",
+            },
+            {
+                "sj_div": "CF",
+                "account_id": "ifrs-full_AdjustmentsForAmortisationExpense",
+                "account_nm": "무형자산상각비",
+                "thstrm_amount": "5",
+            },
+            {
+                "sj_div": "CF",
+                "account_id": "ifrs-full_InterestPaidClassifiedAsOperatingActivities",
+                "account_nm": "이자의 지급",
+                "thstrm_amount": "10",
+            },
         ]
         values, matches = standardize_accounts(raw)
         self.assertEqual(values["gross_profit"], 400)
@@ -103,6 +133,12 @@ class DartFinancialDetailsTest(unittest.TestCase):
         self.assertAlmostEqual(metrics["roic_pct"], 29.0909, places=4)
         self.assertEqual(metrics["free_cash_flow"], 120)
         self.assertEqual(metrics["gross_profit_to_assets_pct"], 40)
+        self.assertEqual(metrics["ebitda_proxy"], 230)
+        self.assertEqual(metrics["interest_coverage"], 20)
+        self.assertEqual(
+            metrics["interest_coverage_source"],
+            "cash_interest_paid_proxy",
+        )
 
     def test_share_dividend_parsing_and_complete_screen(self) -> None:
         shares = parse_stock_total(

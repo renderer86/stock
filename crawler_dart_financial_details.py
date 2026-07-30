@@ -350,9 +350,16 @@ ACCOUNT_SPECS: dict[str, dict[str, Any]] = {
         "ids": {
             "ifrs-full_InterestExpense",
             "dart_InterestExpense",
-            "ifrs-full_FinanceCosts",
         },
-        "aliases": {"이자비용", "금융비용"},
+        "aliases": {"이자비용"},
+    },
+    "interest_paid": {
+        "statements": {"CF"},
+        "ids": {
+            "ifrs-full_InterestPaidClassifiedAsOperatingActivities",
+            "ifrs-full_InterestPaidClassifiedAsFinancingActivities",
+        },
+        "aliases": {"이자의지급", "이자지급"},
     },
     "basic_eps": {
         "statements": {"IS", "CIS"},
@@ -409,7 +416,28 @@ ACCOUNT_SPECS: dict[str, dict[str, Any]] = {
         "aliases": {
             "감가상각비및무형자산상각비",
             "감가상각비와무형자산상각비",
-            "감가상각비",
+        },
+    },
+    "depreciation_expense": {
+        "statements": {"CF"},
+        "ids": {
+            "ifrs-full_AdjustmentsForDepreciationExpense",
+            "ifrs-full_DepreciationExpense",
+            "dart_Depreciation",
+        },
+        "aliases": {"감가상각비", "유형자산감가상각비"},
+    },
+    "amortization_expense": {
+        "statements": {"CF"},
+        "ids": {
+            "ifrs-full_AdjustmentsForAmortisationExpense",
+            "ifrs-full_AmortisationExpense",
+            "dart_Amortization",
+        },
+        "aliases": {
+            "무형자산상각비",
+            "무형자산감가상각비",
+            "상각비",
         },
     },
 }
@@ -715,12 +743,22 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
     ocf = values.get("operating_cash_flow")
     free_cash_flow = ocf - capex if ocf is not None and capex is not None else None
     depreciation = values.get("depreciation_amortization")
+    if depreciation is None:
+        depreciation = sum_known(
+            values.get("depreciation_expense"),
+            values.get("amortization_expense"),
+        )
     ebitda = (
         operating_income + abs(depreciation)
         if operating_income is not None and depreciation is not None
         else None
     )
     net_debt = debt - cash if debt is not None and cash is not None else None
+    interest_denominator = values.get("interest_expense")
+    interest_source = "reported_interest_expense"
+    if interest_denominator is None and values.get("interest_paid") is not None:
+        interest_denominator = values.get("interest_paid")
+        interest_source = "cash_interest_paid_proxy"
 
     row["detail_metrics"] = {
         "effective_tax_rate_pct": round(tax_rate * 100, 4),
@@ -746,9 +784,12 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
         "debt_to_equity_pct": pct(values.get("liabilities"), equity),
         "interest_coverage": safe_ratio(
             operating_income,
-            abs(values["interest_expense"])
-            if values.get("interest_expense") is not None
+            abs(interest_denominator)
+            if interest_denominator is not None
             else None,
+        ),
+        "interest_coverage_source": (
+            interest_source if interest_denominator is not None else None
         ),
         "asset_turnover": safe_ratio(values.get("revenue"), values.get("assets")),
         "long_term_debt_to_assets": safe_ratio(

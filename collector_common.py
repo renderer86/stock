@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import tempfile
 import time
 from datetime import datetime, timezone
@@ -12,6 +13,10 @@ import requests
 
 
 USER_AGENT = "renderer86-stock-data/1.0 (+https://github.com/renderer86/stock)"
+SENSITIVE_QUERY_PARAMETER = re.compile(
+    r"(?i)((?:crtfc_key|api_?key|apikey|service_?key|client_?secret|"
+    r"access_?token|auth_?token|token|password|passwd|pw)=)[^&\s]+"
+)
 
 
 def utc_now_iso() -> str:
@@ -23,6 +28,10 @@ def require_env(name: str) -> str:
     if not value:
         raise SystemExit(f"{name} is not set.")
     return value
+
+
+def redact_sensitive_url_text(value: Any) -> str:
+    return SENSITIVE_QUERY_PARAMETER.sub(r"\1<redacted>", str(value))
 
 
 def request_json(
@@ -44,7 +53,9 @@ def request_json(
             last_error = exc
             if attempt + 1 < attempts:
                 time.sleep(1.5 * (attempt + 1))
-    raise RuntimeError(f"Request failed: {url}: {last_error}") from last_error
+    safe_url = redact_sensitive_url_text(url)
+    safe_error = redact_sensitive_url_text(last_error)
+    raise RuntimeError(f"Request failed: {safe_url}: {safe_error}") from None
 
 
 def atomic_write_json(path: Path, payload: Any, *, compact: bool = False) -> None:

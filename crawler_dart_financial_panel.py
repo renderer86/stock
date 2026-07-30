@@ -257,12 +257,17 @@ def fetch_corp_code_map(
     session: requests.Session,
     api_key: str,
 ) -> dict[str, dict[str, str]]:
-    response = session.get(
-        CORP_CODE_URL,
-        params={"crtfc_key": api_key},
-        timeout=60,
-    )
-    response.raise_for_status()
+    try:
+        response = session.get(
+            CORP_CODE_URL,
+            params={"crtfc_key": api_key},
+            timeout=60,
+        )
+        response.raise_for_status()
+    except requests.RequestException:
+        raise RuntimeError(
+            "OpenDART corporation-code download failed; credentials hidden."
+        ) from None
     try:
         with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
             xml_name = next(
