@@ -56,6 +56,15 @@ def parse_args() -> argparse.Namespace:
         help="Maximum OpenDART full-statement API requests in this run.",
     )
     parser.add_argument("--delay", type=float, default=0.15)
+    parser.add_argument(
+        "--max-runtime-minutes",
+        type=float,
+        default=150,
+        help=(
+            "Stop cleanly and save a checkpoint before the GitHub Actions job "
+            "timeout. Set 0 to disable."
+        ),
+    )
     parser.add_argument("--checkpoint-every", type=int, default=25)
     parser.add_argument("--max-consecutive-errors", type=int, default=5)
     parser.add_argument(
@@ -1270,8 +1279,18 @@ def main() -> None:
 
     def reserve_request() -> None:
         nonlocal request_count
+        if (
+            args.max_runtime_minutes > 0
+            and time.monotonic() - started_at
+            >= args.max_runtime_minutes * 60
+        ):
+            raise RequestBudgetReached(
+                "runtime safety limit reached; saving a resumable checkpoint."
+            )
         if request_count >= args.max_requests:
-            raise RequestBudgetReached
+            raise RequestBudgetReached(
+                "request budget reached; saving a resumable checkpoint."
+            )
         request_count += 1
 
     try:
@@ -1420,10 +1439,10 @@ def main() -> None:
                 checkpoint()
             if args.delay > 0:
                 time.sleep(args.delay)
-    except RequestBudgetReached:
+    except RequestBudgetReached as exc:
         budget_reached = True
         print(
-            "[DART DETAILS] request budget reached; saving a resumable checkpoint.",
+            f"[DART DETAILS] {exc}",
             flush=True,
         )
     except DartRateLimitError as exc:
