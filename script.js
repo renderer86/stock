@@ -27,6 +27,7 @@ const state = {
   roeHistoryByCode: new Map(),
   financialNByCode: new Map(),
   investmentScreenByCode: new Map(),
+  investmentScreensPayload: null,
   dartMajorByCode: new Map(),
   selectedCode: null,
   threshold: 10,
@@ -38,8 +39,8 @@ const state = {
   growthRate: 3,
   sortKey: "roe",
   sortDirection: "desc",
-  prioritySortKey: "gapRateBase",
-  prioritySortDirection: "desc",
+  prioritySortKey: "buffettRank",
+  prioritySortDirection: "asc",
   activeWorkspace: "priority",
   loadedWorkspaces: new Set(),
   loadingWorkspaces: new Set(),
@@ -690,6 +691,12 @@ function screenStatusLabel(status) {
   if (status === "pass") return "통과";
   if (status === "fail") return "탈락";
   return "판정 대기";
+}
+
+function confidenceLabel(value) {
+  if (value === "high") return "높음";
+  if (value === "medium") return "중간";
+  return "낮음";
 }
 
 function marketMapGroupOptions(market) {
@@ -2196,20 +2203,75 @@ function getFilteredStocks() {
 }
 
 function getPriorityCandidates(stocks) {
-  const candidates = stocks
-    .filter((stock) =>
-      typeof stock.recommendedRoeBase === "number" &&
-      stock.recommendedRoeBase >= 15 &&
-      typeof stock.pbr === "number" &&
-      stock.pbr <= 2 &&
-      typeof stock.estimatedNBase === "number" &&
-      typeof stock.marketImpliedN === "number" &&
-      stock.estimatedNBase > stock.marketImpliedN
-    )
-    .sort((a, b) => compareValues(a.gapRateBase, b.gapRateBase, "desc"))
-    .map((stock, index) => ({ ...stock, priorityRank: index + 1 }));
+  const stockByCode = new Map(stocks.map((stock) => [stock.code, stock]));
+  const rankings = state.investmentScreensPayload?.rankings?.buffett_candidates || [];
+  const candidates = rankings.map((ranking, index) => {
+    const code = ranking.ticker;
+    const screen = state.investmentScreenByCode.get(code) || {};
+    const buffett = screen.buffett || {};
+    const nEstimate = screen.n || {};
+    const stock = stockByCode.get(code) || {};
 
-  return candidates.sort((a, b) => compareStocks(a, b, state.prioritySortKey, state.prioritySortDirection));
+    return {
+      ...stock,
+      code,
+      name: stock.name || ranking.company || screen.company || code,
+      market: stock.market || screen.market,
+      market_label: stock.market_label || screen.market,
+      sector: screen.sector || stock.sector || "-",
+      buffettRank: index + 1,
+      persistencePassYears: buffett.persistence_pass_years,
+      grossMarginSigma: buffett.gross_margin_sigma_pct_points,
+      fcfConversion: buffett.fcf_conversion_10y,
+      netDebtToEbitda: buffett.latest_net_debt_to_ebitda,
+      incrementalRoic: buffett.incremental_roic_5y_pct,
+      payoutRatio: buffett.payout_ratio_pct,
+      fcfYield: buffett.valuation?.fcf_yield_pct,
+      estimatedNBase: nEstimate.base_years,
+      nConfidence: nEstimate.confidence?.label,
+      nConfidenceScore: nEstimate.confidence?.score_0_to_100,
+      canOpenValuation: stockByCode.has(code)
+    };
+  });
+
+  return candidates.sort((a, b) =>
+    compareStocks(a, b, state.prioritySortKey, state.prioritySortDirection)
+  );
+}
+
+function getQualityCandidates(stocks) {
+  const stockByCode = new Map(stocks.map((stock) => [stock.code, stock]));
+  const rankings = state.investmentScreensPayload?.rankings?.quality_equal_weight_basket || [];
+
+  return rankings.map((ranking, index) => {
+    const code = ranking.ticker;
+    const screen = state.investmentScreenByCode.get(code) || {};
+    const quality = screen.quality || {};
+    const nEstimate = screen.n || {};
+    const stock = stockByCode.get(code) || {};
+    const piotroski = quality.piotroski || {};
+
+    return {
+      ...stock,
+      code,
+      name: stock.name || ranking.company || screen.company || code,
+      market: stock.market || screen.market,
+      market_label: stock.market_label || screen.market,
+      sector: screen.sector || stock.sector || "-",
+      qualityRank: ranking.rank || index + 1,
+      gpa: quality.gpa_pct,
+      piotroskiScore: piotroski.score_partial,
+      piotroskiKnown: piotroski.known_criteria_count,
+      epsCv: quality.eps_cv_5y,
+      debtPass: quality.conditions?.debt_to_equity_le_100pct,
+      shareholderReturnPass: quality.conditions?.dividend_or_buyback_recent_3y,
+      estimatedNBase: nEstimate.base_years,
+      nConfidence: nEstimate.confidence?.label,
+      nConfidenceScore: nEstimate.confidence?.score_0_to_100,
+      equalWeight: ranking.weight_pct,
+      canOpenValuation: stockByCode.has(code)
+    };
+  });
 }
 
 function metricClass(value) {
@@ -2253,14 +2315,25 @@ function updatePrioritySortHeaders() {
 function renderPriorityCandidates(stocks) {
   const tbody = document.getElementById("priority-candidates-body");
   const countBadge = document.getElementById("priority-count-badge");
+  const pendingBadge = document.getElementById("buffett-pending-badge");
   const candidates = getPriorityCandidates(stocks);
+  const pendingCount = Number(
+    state.investmentScreensPayload?.summary?.buffett_status_counts?.pending || 0
+  );
 
-  countBadge.textContent = `${candidates.length} Ideas`;
+  countBadge.textContent = `${candidates.length}개 통과`;
+  pendingBadge.textContent = pendingCount
+    ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
+    : "판정 대기 없음";
 
   if (!candidates.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="14" class="empty-state">조건에 맞는 우선 검토 후보가 없습니다.</td>
+        <td colspan="12" class="empty-state">
+          ${pendingCount
+            ? `아직 버핏식 전 조건을 확정할 데이터가 부족합니다. ${pendingCount.toLocaleString("ko-KR")}개 종목을 판정 중입니다.`
+            : "버핏식 사업품질과 FCF 수익률 조건을 모두 통과한 종목이 없습니다."}
+        </td>
       </tr>
     `;
     return;
@@ -2269,34 +2342,100 @@ function renderPriorityCandidates(stocks) {
   updatePrioritySortHeaders();
 
   tbody.innerHTML = candidates.map((stock) => `
-    <tr data-code="${stock.code}">
-      <td><span class="rank-chip">${stock.priorityRank}</span></td>
+    <tr data-code="${stock.code}" class="${stock.canOpenValuation ? "" : "is-static-row"}">
+      <td><span class="rank-chip">${stock.buffettRank}</span></td>
       <td>
         <span class="name-cell">
-          <span>${stock.name}</span>
+          <span>${escapeHtml(stock.name)}</span>
           <span class="${getMarketBadgeClass(stock)}">${getMarketLabel(stock)}</span>
         </span>
       </td>
-      <td>${formatPercent(stock.recommendedRoeBase, 1)}</td>
-      <td>${formatNumber(stock.pbr, 2)}</td>
+      <td>${escapeHtml(stock.sector || "-")}</td>
+      <td>${stock.persistencePassYears === null || stock.persistencePassYears === undefined ? "N/A" : `${stock.persistencePassYears}/10`}</td>
+      <td>${formatPercent(stock.grossMarginSigma, 1)}</td>
+      <td>${stock.fcfConversion === null || stock.fcfConversion === undefined ? "N/A" : formatPercent(stock.fcfConversion * 100, 1)}</td>
+      <td>${formatNumber(stock.netDebtToEbitda, 2)}</td>
+      <td>${formatPercent(stock.incrementalRoic, 1)}</td>
+      <td>${formatPercent(stock.payoutRatio, 1)}</td>
+      <td class="${metricClass(stock.fcfYield)}">${formatPercent(stock.fcfYield, 1)}</td>
       <td>${formatYears(stock.estimatedNBase)}</td>
-      <td>${formatYears(stock.marketImpliedN)}</td>
-      <td>${stock.hasMajorHolders ? '<span class="status-badge">5% 공시</span>' : '<span class="table-subtext">없음</span>'}</td>
-      <td>${stock.reporterCount ? `${stock.reporterCount}명` : '<span class="table-subtext">0명</span>'}</td>
-      <td>${stock.reporterNames.length
-        ? `<div class="table-subtext">${stock.reporterNames.map((name) => escapeHtml(name)).join("<br>")}</div>`
-        : '<span class="table-subtext">공시 없음</span>'}</td>
-      <td>${stock.topHolderRatio === null ? '<span class="table-subtext">N/A</span>' : formatPercent(stock.topHolderRatio, 2)}</td>
-      <td>${stock.latestReportDate ? formatCompactDate(stock.latestReportDate) : '<span class="table-subtext">N/A</span>'}</td>
-      <td>${formatPrice(stock.current_price)}</td>
-      <td>${formatPrice(stock.fairPriceBase)}</td>
-      <td class="${metricClass(stock.gapRateBase)}">${formatPercent(stock.gapRateBase, 1)}</td>
-      <td class="${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</td>
+      <td>${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
     </tr>
   `).join("");
 
   Array.from(tbody.querySelectorAll("tr[data-code]")).forEach((row) => {
     row.addEventListener("click", () => {
+      const stock = candidates.find((candidate) => candidate.code === row.dataset.code);
+      if (!stock?.canOpenValuation) {
+        return;
+      }
+      state.selectedCode = row.dataset.code;
+      renderDashboard();
+      switchWorkspace("valuation");
+      setTimeout(() => {
+        document.getElementById("selected-stock-workbench")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 180);
+    });
+  });
+}
+
+function renderQualityCandidates(stocks) {
+  const tbody = document.getElementById("quality-candidates-body");
+  const countBadge = document.getElementById("quality-count-badge");
+  const pendingBadge = document.getElementById("quality-pending-badge");
+  const candidates = getQualityCandidates(stocks);
+  const pendingCount = Number(
+    state.investmentScreensPayload?.summary?.quality_status_counts?.pending || 0
+  );
+
+  countBadge.textContent = `${candidates.length}개 바스켓`;
+  pendingBadge.textContent = pendingCount
+    ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
+    : "판정 대기 없음";
+
+  if (!candidates.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="11" class="empty-state">
+          ${pendingCount
+            ? `퀄리티 조건 계산이 진행 중입니다. ${pendingCount.toLocaleString("ko-KR")}개 종목이 아직 판정 대기 상태입니다.`
+            : "퀄리티 전 조건을 통과한 종목이 없습니다."}
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = candidates.map((stock) => `
+    <tr data-code="${stock.code}" class="${stock.canOpenValuation ? "" : "is-static-row"}">
+      <td><span class="rank-chip">${stock.qualityRank}</span></td>
+      <td>
+        <span class="name-cell">
+          <span>${escapeHtml(stock.name)}</span>
+          <span class="${getMarketBadgeClass(stock)}">${getMarketLabel(stock)}</span>
+        </span>
+      </td>
+      <td>${escapeHtml(stock.sector || "-")}</td>
+      <td>${formatPercent(stock.gpa, 1)}</td>
+      <td>${stock.piotroskiScore === null || stock.piotroskiScore === undefined
+        ? "N/A"
+        : `${stock.piotroskiScore}/${stock.piotroskiKnown || 9}`}</td>
+      <td>${formatNumber(stock.epsCv, 3)}</td>
+      <td>${stock.debtPass === true ? '<span class="status-badge">통과</span>' : '<span class="table-subtext">확인 필요</span>'}</td>
+      <td>${stock.shareholderReturnPass === true ? '<span class="status-badge">확인</span>' : '<span class="table-subtext">확인 필요</span>'}</td>
+      <td>${formatYears(stock.estimatedNBase)}</td>
+      <td>${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
+      <td>${formatPercent(stock.equalWeight, 2)}</td>
+    </tr>
+  `).join("");
+
+  Array.from(tbody.querySelectorAll("tr[data-code]")).forEach((row) => {
+    row.addEventListener("click", () => {
+      const stock = candidates.find((candidate) => candidate.code === row.dataset.code);
+      if (!stock?.canOpenValuation) {
+        return;
+      }
       state.selectedCode = row.dataset.code;
       renderDashboard();
       switchWorkspace("valuation");
@@ -2316,7 +2455,9 @@ function bindPrioritySortHeaders() {
         state.prioritySortDirection = state.prioritySortDirection === "desc" ? "asc" : "desc";
       } else {
         state.prioritySortKey = prioritySortKey;
-        state.prioritySortDirection = prioritySortKey === "name" ? "asc" : "desc";
+        state.prioritySortDirection = ["name", "buffettRank"].includes(prioritySortKey)
+          ? "asc"
+          : "desc";
       }
       renderDashboard();
     });
@@ -2640,6 +2781,7 @@ function renderDashboard() {
   const selectedStock = stocks.find((stock) => stock.code === state.selectedCode) ?? null;
 
   renderPriorityCandidates(stocks);
+  renderQualityCandidates(stocks);
   renderTable(stocks);
   renderSelectedSummary(selectedStock);
   renderDurationPanel(selectedStock);
@@ -2724,7 +2866,8 @@ function bindTableSortHeaders() {
 }
 
 function renderError(message) {
-  document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="14" class="empty-state">${message}</td></tr>`;
+  document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="12" class="empty-state">${message}</td></tr>`;
+  document.getElementById("quality-candidates-body").innerHTML = `<tr><td colspan="11" class="empty-state">${message}</td></tr>`;
   document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="16" class="empty-state">${message}</td></tr>`;
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
@@ -2852,6 +2995,7 @@ async function loadStocks() {
     state.dartMajorByCode = buildDartMajorMap(dartPayload);
     state.financialNByCode = buildFinancialNMap(financialNPayload);
     state.investmentScreenByCode = buildInvestmentScreenMap(investmentScreensPayload);
+    state.investmentScreensPayload = investmentScreensPayload;
     updateLastUpdated(marketPayload.crawled_at_utc);
     bindControls();
     bindPrioritySortHeaders();

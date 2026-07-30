@@ -140,13 +140,13 @@
       <section class="panel priority-workspace-panel">
         <div class="section-head">
           <div>
-            <p class="section-kicker">0. Priority Ideas</p>
-            <h2>우선 검토 후보</h2>
-            <p class="section-description">수익성·가격·ROE 지속기간 조건을 동시에 통과한 종목입니다. 종목을 누르면 가치평가 작업공간의 상세 계산으로 이어집니다.</p>
+            <p class="section-kicker">0. Buffett Compounders</p>
+            <h2>우선 검토 후보 · 버핏식</h2>
+            <p class="section-description">10년 지속 ROIC·무적자·마진 안정성·현금전환·재무체력·주식수·자본배분을 모두 통과하고 FCF 수익률 조건까지 충족한 종목입니다.</p>
           </div>
           <div class="section-side">
             <span class="stat-pill" id="priority-count-badge">Loading</span>
-            <span class="stat-pill subtle">평균 ROE 15% 이상 · PBR 2 이하 · 재무제표 추정 N 우위</span>
+            <span class="stat-pill subtle" id="buffett-pending-badge">데이터 판정 중</span>
           </div>
         </div>
 
@@ -154,24 +154,56 @@
           <table>
             <thead>
               <tr>
-                <th data-priority-sort-key="priorityRank">순위</th>
+                <th data-priority-sort-key="buffettRank">순위</th>
                 <th data-priority-sort-key="name">종목명</th>
-                <th data-priority-sort-key="recommendedRoeBase">평균 ROE</th>
-                <th data-priority-sort-key="pbr">PBR</th>
+                <th data-priority-sort-key="sector">업종</th>
+                <th data-priority-sort-key="persistencePassYears">지속성</th>
+                <th data-priority-sort-key="grossMarginSigma">마진 σ</th>
+                <th data-priority-sort-key="fcfConversion">FCF 전환</th>
+                <th data-priority-sort-key="netDebtToEbitda">순부채/EBITDA</th>
+                <th data-priority-sort-key="incrementalRoic">증분 ROIC</th>
+                <th data-priority-sort-key="payoutRatio">주주환원</th>
+                <th data-priority-sort-key="fcfYield">FCF 수익률</th>
                 <th data-priority-sort-key="estimatedNBase">재무제표 추정 N</th>
-                <th data-priority-sort-key="marketImpliedN">시장 추정 N</th>
-                <th data-priority-sort-key="hasMajorHolders">5% 공시</th>
-                <th data-priority-sort-key="reporterCount">공시자 수</th>
-                <th data-priority-sort-key="reporterSummary">5% 공시자</th>
-                <th data-priority-sort-key="topHolderRatio">최대 보유비율</th>
-                <th data-priority-sort-key="latestReportDate">최근 보고일</th>
-                <th data-priority-sort-key="current_price">현재주가</th>
-                <th data-priority-sort-key="fairPriceBase">기준 적정가</th>
-                <th data-priority-sort-key="gapRateBase">괴리율</th>
-                <th data-priority-sort-key="kellyRatioBase">켈리 범위</th>
+                <th data-priority-sort-key="nConfidenceScore">N 신뢰도</th>
               </tr>
             </thead>
             <tbody id="priority-candidates-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel priority-workspace-panel quality-factor-panel">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">1. Statistical Quality Basket</p>
+            <h2>퀄리티 팩터</h2>
+            <p class="section-description">GP/A 상위군에서 피오트로스키 F-Score·EPS 안정성·부채·배당 또는 자사주 조건을 통과한 종목을 GP/A 순으로 정렬한 동일가중 바스켓입니다.</p>
+          </div>
+          <div class="section-side">
+            <span class="stat-pill" id="quality-count-badge">Loading</span>
+            <span class="stat-pill subtle" id="quality-pending-badge">데이터 판정 중</span>
+          </div>
+        </div>
+
+        <div class="table-wrap compact-table">
+          <table>
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>종목명</th>
+                <th>업종</th>
+                <th>GP/A</th>
+                <th>F-Score</th>
+                <th>EPS 변동성</th>
+                <th>부채 조건</th>
+                <th>배당·자사주</th>
+                <th>재무제표 추정 N</th>
+                <th>N 신뢰도</th>
+                <th>동일가중</th>
+              </tr>
+            </thead>
+            <tbody id="quality-candidates-body"></tbody>
           </table>
         </div>
       </section>

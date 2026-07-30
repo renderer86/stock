@@ -1612,6 +1612,21 @@ tbody tr.is-suspended.is-selected {
   background: rgba(184, 92, 56, 0.09);
 }
 
+.quality-factor-panel {
+  border-top-color: #0a7a5f;
+  background:
+    radial-gradient(circle at 100% 0, rgba(10, 122, 95, 0.12), transparent 28%),
+    rgba(255, 250, 242, 0.9);
+}
+
+.quality-factor-panel tbody tr:hover {
+  background: rgba(10, 122, 95, 0.08);
+}
+
+.priority-workspace-panel tbody tr.is-static-row {
+  cursor: default;
+}
+
 .selected-stock-workbench {
   position: relative;
   display: grid;
