@@ -20,6 +20,7 @@ from env_loader import load_env_file
 
 ROOT_DIR = Path(__file__).resolve().parent
 DEFAULT_PANEL = Path("data/dart_financial_panel.json")
+DEFAULT_MARKET_SUM = Path("data/market_sum.json")
 DART_FULL_ACCOUNT_URL = "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json"
 DART_STOCK_TOTAL_URL = "https://opendart.fss.or.kr/api/stockTotqySttus.json"
 DART_DIVIDEND_URL = "https://opendart.fss.or.kr/api/alotMatter.json"
@@ -45,6 +46,7 @@ def parse_args() -> argparse.Namespace:
         )
     )
     parser.add_argument("--panel", default=str(DEFAULT_PANEL))
+    parser.add_argument("--market-sum", default=str(DEFAULT_MARKET_SUM))
     parser.add_argument("--start-year", type=int, default=0)
     parser.add_argument("--end-year", type=int, default=current_year - 1)
     parser.add_argument("--codes", default="")
@@ -88,6 +90,29 @@ def load_json(path: Path) -> dict[str, Any]:
     except (OSError, ValueError):
         return {}
     return payload if isinstance(payload, dict) else {}
+
+
+def load_market_lookup(path: Path) -> tuple[dict[str, dict[str, Any]], str | None]:
+    payload = load_json(path)
+    lookup: dict[str, dict[str, Any]] = {}
+    for stock in payload.get("stocks") or []:
+        ticker = str(stock.get("code") or "").strip().zfill(6)
+        market_cap_100m = stock.get("market_cap_krw_100m")
+        if re.fullmatch(r"\d{6}", ticker):
+            lookup[ticker] = {
+                "current_price": stock.get("current_price"),
+                "market_cap_krw_100m": market_cap_100m,
+                "market_cap_krw": (
+                    market_cap_100m * 100_000_000
+                    if isinstance(market_cap_100m, (int, float))
+                    else None
+                ),
+            }
+    return lookup, (
+        payload.get("crawled_at_utc")
+        or payload.get("crawled_at")
+        or payload.get("updated_at")
+    )
 
 
 def normalize_text(value: Any) -> str:
@@ -819,6 +844,7 @@ def standard_deviation(values: list[float]) -> float | None:
 
 def company_screening_features(
     rows: list[dict[str, Any]],
+    market: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     rows = sorted(rows, key=lambda item: int(item.get("fiscal_year") or 0))
     detail_rows = [
@@ -992,6 +1018,9 @@ def company_screening_features(
             else None
         ),
     }
+    market = market or {}
+    latest_fcf = latest_metrics.get("free_cash_flow")
+    fcf_yield = pct(latest_fcf, market.get("market_cap_krw"))
     return {
         "ticker": rows[-1].get("ticker") if rows else None,
         "company": rows[-1].get("company") if rows else None,
@@ -1020,6 +1049,15 @@ def company_screening_features(
                 for name, value in buffett_conditions.items()
                 if value is None
             ],
+            "valuation": {
+                "latest_annual_fcf": latest_fcf,
+                "current_market_cap_krw": market.get("market_cap_krw"),
+                "fcf_yield_pct": fcf_yield,
+                "fcf_yield_ge_5pct": (
+                    fcf_yield >= 5 if fcf_yield is not None else None
+                ),
+                "note": "Valuation is separate from the business-quality pass.",
+            },
         },
         "quality": {
             "latest_gross_profit_to_assets_pct": latest_metrics.get(
@@ -1083,16 +1121,24 @@ def apply_cross_sectional_quality_ranks(
         )
 
 
-def rebuild_screening_features(panel: dict[str, Any]) -> None:
+def rebuild_screening_features(
+    panel: dict[str, Any],
+    market_lookup: dict[str, dict[str, Any]] | None = None,
+    market_data_as_of: str | None = None,
+) -> None:
     by_ticker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in panel.get("observations") or []:
         by_ticker[str(row.get("ticker") or "")].append(row)
     features = {
-        ticker: company_screening_features(rows)
+        ticker: company_screening_features(
+            rows,
+            (market_lookup or {}).get(ticker),
+        )
         for ticker, rows in by_ticker.items()
     }
     apply_cross_sectional_quality_ranks(features)
     panel["screening_features"] = features
+    panel["screening_features_market_data_as_of"] = market_data_as_of
 
 
 def update_detail_summary(
@@ -1175,6 +1221,7 @@ def main() -> None:
 
     panel_path = Path(args.panel)
     panel = load_json(panel_path)
+    market_lookup, market_data_as_of = load_market_lookup(Path(args.market_sum))
     observations = panel.get("observations")
     if not isinstance(observations, list) or not observations:
         raise SystemExit(
@@ -1267,7 +1314,11 @@ def main() -> None:
     session = create_session()
 
     def checkpoint() -> None:
-        rebuild_screening_features(panel)
+        rebuild_screening_features(
+            panel,
+            market_lookup=market_lookup,
+            market_data_as_of=market_data_as_of,
+        )
         update_detail_summary(
             panel,
             request_count=request_count,

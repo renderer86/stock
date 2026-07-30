@@ -185,8 +185,14 @@ class DartFinancialDetailsTest(unittest.TestCase):
                 }
             )
 
-        features = company_screening_features(rows)
+        features = company_screening_features(
+            rows,
+            {"market_cap_krw": 2_000},
+        )
         self.assertTrue(features["buffett"]["pass"])
+        self.assertTrue(
+            features["buffett"]["valuation"]["fcf_yield_ge_5pct"]
+        )
         self.assertEqual(
             features["quality"]["piotroski"]["score_partial"],
             9,
