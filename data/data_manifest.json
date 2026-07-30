@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-07-30T15:36:25.133762+00:00",
-  "file_count": 20,
+  "generated_at_utc": "2026-07-30T17:49:47.693248+00:00",
+  "file_count": 21,
   "files": [
     {
       "file": "data/ai_market_briefing.json",
@@ -25,6 +25,13 @@
       ],
       "count": null,
       "data_date": "2026-07-30T15:36:05.124035+00:00"
+    },
+    {
+      "file": "data/dart_financial_panel.json",
+      "bytes": 52818071,
+      "source": "OpenDART fnlttMultiAcnt annual major accounts",
+      "count": 20992,
+      "data_date": "2026-07-30T14:49:41.413028+00:00"
     },
     {
       "file": "data/dart_insider_trades.json",
@@ -127,10 +134,10 @@
     },
     {
       "file": "data/naver_news.json",
-      "bytes": 331030,
+      "bytes": 273810,
       "source": "NAVER Search API / news",
-      "count": 434,
-      "data_date": "2026-07-30T15:36:19.456737+00:00"
+      "count": 356,
+      "data_date": "2026-07-30T17:49:46.030947+00:00"
     },
     {
       "file": "data/treasury_yields.json",
