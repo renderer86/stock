@@ -17,7 +17,8 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from collector_common import USER_AGENT, atomic_write_json, request_json, utc_now_iso
+from collector_common import USER_AGENT, request_json, utc_now_iso
+from dart_financial_storage import load_financial_panel, save_financial_panel
 from env_loader import load_env_file
 
 
@@ -696,7 +697,7 @@ def main() -> None:
     if not mapped:
         raise SystemExit("No OpenDART corporation codes matched the universe.")
 
-    existing = {} if args.reset else load_json(output_path)
+    existing = {} if args.reset else load_financial_panel(output_path)
     observations_by_key: dict[tuple[str, int], dict[str, Any]] = {}
     no_data_by_key: dict[tuple[str, int], dict[str, Any]] = {}
     if existing.get("schema_version") == SCHEMA_VERSION:
@@ -743,7 +744,15 @@ def main() -> None:
             request_count=request_count,
             complete=complete,
         )
-        atomic_write_json(output_path, payload, compact=True)
+        for key in (
+            "detail_enrichment",
+            "bulk_financial_enrichment",
+            "screening_features",
+            "screening_features_market_data_as_of",
+        ):
+            if key in existing:
+                payload[key] = existing[key]
+        save_financial_panel(output_path, payload, split_by_year=True)
 
     try:
         for year in range(start_year, end_year + 1):

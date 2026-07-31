@@ -6,12 +6,14 @@ on:
       scope:
         description: Collection scope
         required: true
-        default: core-and-details
+        default: bulk-and-supplements
         type: choice
         options:
-          - core-and-details
+          - bulk-and-supplements
+          - bulk-only
+          - supplements-only
           - core-only
-          - details-only
+          - legacy-api-details
       mode:
         description: Existing panel handling
         required: true
@@ -36,7 +38,7 @@ on:
         default: "0"
         type: string
       detail_request_budget:
-        description: Detail/share/dividend API requests in this run (resume later)
+        description: Gap/share/dividend API requests in this run (resume later)
         required: true
         default: "5000"
         type: choice
@@ -75,6 +77,7 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Validate DART secret
+        if: inputs.scope != 'bulk-only'
         shell: bash
         run: |
           if [[ -z "${DART_API_KEY}" ]]; then
@@ -84,7 +87,7 @@ jobs:
 
       - name: Build annual core panel
         id: core
-        if: inputs.scope != 'details-only'
+        if: inputs.scope == 'bulk-and-supplements' || inputs.scope == 'core-only'
         continue-on-error: true
         shell: bash
         run: |
@@ -111,21 +114,21 @@ jobs:
 
           python -u crawler_dart_financial_panel.py "${args[@]}"
 
-      - name: Enrich full-statement details
-        id: details
-        if: inputs.scope != 'core-only'
+      - name: Import OpenDART annual bulk ZIP files
+        id: bulk
+        if: inputs.scope == 'bulk-and-supplements' || inputs.scope == 'bulk-only'
         continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
           args=(
+            --years "${{ inputs.years }}"
             --limit "${{ inputs.universe_limit }}"
-            --max-requests "${{ inputs.detail_request_budget }}"
           )
 
           case "${{ inputs.mode }}" in
             rebuild)
-              args+=(--reset-details)
+              args+=(--reset-bulk)
               ;;
             refresh-latest)
               args+=(--refresh-latest)
@@ -137,6 +140,29 @@ jobs:
               exit 1
               ;;
           esac
+
+          python -u crawler_dart_financial_bulk.py "${args[@]}"
+
+      - name: Enrich API gaps, share totals and dividend matters
+        id: details
+        if: >-
+          inputs.scope == 'bulk-and-supplements' ||
+          inputs.scope == 'supplements-only' ||
+          inputs.scope == 'legacy-api-details'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --limit "${{ inputs.universe_limit }}"
+            --max-requests "${{ inputs.detail_request_budget }}"
+          )
+
+          if [[ "${{ inputs.scope }}" == "legacy-api-details" ]]; then
+            args+=(--supplement-profile all)
+          else
+            args+=(--supplement-profile screens)
+          fi
 
           python -u crawler_dart_financial_details.py "${args[@]}"
 
@@ -167,6 +193,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           files=(data/dart_financial_panel.json)
+          shopt -s nullglob
+          shard_files=(data/dart_financial_panel/*.json)
+          files+=("${shard_files[@]}")
           [[ -f data/financial_n_estimates.json ]] && files+=(data/financial_n_estimates.json)
           [[ -f data/investment_screens.json ]] && files+=(data/investment_screens.json)
           git add "${files[@]}"
@@ -202,14 +231,16 @@ jobs:
           name: dart-financial-panel-${{ github.run_id }}
           path: |
             data/dart_financial_panel.json
+            data/dart_financial_panel/*.json
             data/financial_n_estimates.json
             data/investment_screens.json
           if-no-files-found: ignore
           retention-days: 14
 
       - name: Report crawler failure
-        if: |
+        if: >-
           (steps.core.outcome == 'failure') ||
+          (steps.bulk.outcome == 'failure') ||
           (steps.details.outcome == 'failure') ||
           (steps.analytics.outcome == 'failure')
         shell: bash

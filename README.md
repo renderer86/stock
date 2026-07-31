@@ -280,6 +280,10 @@ OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니�
 
 ## 자동 수집
 
+DART 10년 재무 패널은 기업별 전체 재무 API 대신 연도별 일괄 ZIP을 우선
+사용합니다. 최초 구축·최신 연도 갱신·API 보완 실행 방법은
+[`docs/dart_bulk_pipeline.md`](docs/dart_bulk_pipeline.md)를 참고하세요.
+
 [`.github/workflows/update-market-data.yml`](.github/workflows/update-market-data.yml)이
 GitHub Actions에서 다음 일정으로 실행됩니다.
 

@@ -14,7 +14,8 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from collector_common import USER_AGENT, atomic_write_json, request_json, utc_now_iso
+from collector_common import USER_AGENT, request_json, utc_now_iso
+from dart_financial_storage import load_financial_panel, save_financial_panel
 from env_loader import load_env_file
 
 
@@ -27,6 +28,7 @@ DART_DIVIDEND_URL = "https://opendart.fss.or.kr/api/alotMatter.json"
 ANNUAL_REPORT_CODE = "11011"
 KST = ZoneInfo("Asia/Seoul")
 DETAIL_SCHEMA_VERSION = 1
+TERMINAL_STATUSES = {"complete", "no_data", "not_required"}
 
 
 class DartRateLimitError(RuntimeError):
@@ -79,6 +81,20 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Refetch details for the requested end year only.",
     )
+    parser.add_argument(
+        "--supplements-only",
+        action="store_true",
+        help="Skip full-statement API calls and collect only share/dividend supplements.",
+    )
+    parser.add_argument(
+        "--supplement-profile",
+        choices=("all", "screens", "none"),
+        default="all",
+        help=(
+            "all=share/dividend for every year; screens=shares for oldest/latest-1/"
+            "latest and dividends for latest 3 years; none=no share/dividend calls."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -117,6 +133,13 @@ def load_market_lookup(path: Path) -> tuple[dict[str, dict[str, Any]], str | Non
 
 def normalize_text(value: Any) -> str:
     return re.sub(r"[\s·ㆍ,()\[\]{}_\-]", "", str(value or "")).lower()
+
+
+def normalize_account_id(value: Any) -> str:
+    account_id = str(value or "").strip().lower()
+    if account_id.startswith("ifrs_"):
+        return "ifrs-full_" + account_id.removeprefix("ifrs_")
+    return account_id
 
 
 def parse_amount(value: Any) -> int | None:
@@ -471,11 +494,11 @@ def select_account(
         for row in rows
         if row["statement"] in spec["statements"] and row["amount"] is not None
     ]
-    ids = {str(value).lower() for value in spec["ids"]}
+    ids = {normalize_account_id(value) for value in spec["ids"]}
     aliases = {normalize_text(value) for value in spec["aliases"]}
 
     for row in statement_rows:
-        if row["account_id"].lower() in ids:
+        if normalize_account_id(row["account_id"]) in ids:
             return row["amount"], {
                 "account_id": row["account_id"],
                 "account_name": row["account_name"],
@@ -1202,13 +1225,14 @@ def update_detail_summary(
         for stage in stages
     }
     completed = sum(
-        all(row.get(stage) in {"complete", "no_data"} for stage in stages)
+        all(row.get(stage) in TERMINAL_STATUSES for stage in stages)
         for row in eligible_rows
     )
     panel["detail_enrichment"] = {
         "schema_version": DETAIL_SCHEMA_VERSION,
         "source": (
-            "OpenDART full financial statements, stock totals and dividend matters"
+            "OpenDART bulk/API full financial statements, stock totals and "
+            "dividend matters"
         ),
         "source_urls": [
             DART_FULL_ACCOUNT_URL,
@@ -1227,9 +1251,9 @@ def update_detail_summary(
         "methodology": {
             "statement_preference": "CFS first, OFS fallback",
             "stored_scope": (
-                "Only standardized accounts and match provenance required for "
-                "ROIC/quality screens; raw full statements and the superseded core "
-                "major-account list are not retained."
+                "Bulk ZIP statements are primary. API full statements are retained "
+                "only as gap fallback; stock totals and dividend matters supplement "
+                "the years required by active screens. Raw statements are not retained."
             ),
             "roic": (
                 "NOPAT / (total equity + interest-bearing debt - cash); "
@@ -1261,7 +1285,7 @@ def main() -> None:
         raise SystemExit("--max-requests must be at least 1.")
 
     panel_path = Path(args.panel)
-    panel = load_json(panel_path)
+    panel = load_financial_panel(panel_path)
     market_lookup, market_data_as_of = load_market_lookup(Path(args.market_sum))
     observations = panel.get("observations")
     if not isinstance(observations, list) or not observations:
@@ -1291,17 +1315,42 @@ def main() -> None:
         allowed = sorted({row.get("ticker") for row in eligible})[: args.limit]
         eligible = [row for row in eligible if row.get("ticker") in allowed]
 
+    years_by_ticker: dict[str, list[int]] = defaultdict(list)
+    for row in eligible:
+        ticker = str(row.get("ticker") or "")
+        year = int(row.get("fiscal_year") or 0)
+        if year:
+            years_by_ticker[ticker].append(year)
+    share_required: set[tuple[str, int]] = set()
+    dividend_required: set[tuple[str, int]] = set()
+    for ticker, ticker_years in years_by_ticker.items():
+        ordered = sorted(set(ticker_years))
+        if args.supplement_profile == "all":
+            share_years = ordered
+            dividend_years = ordered
+        elif args.supplement_profile == "screens":
+            share_years = sorted(set(ordered[:1] + ordered[-2:]))
+            dividend_years = ordered[-3:]
+        else:
+            share_years = []
+            dividend_years = []
+        share_required.update((ticker, year) for year in share_years)
+        dividend_required.update((ticker, year) for year in dividend_years)
+
     if args.reset_details:
         for row in eligible:
             for key in (
                 "detail_status",
                 "detail_basis",
+                "detail_source",
                 "detail_accounts",
                 "detail_account_matches",
                 "detail_match_summary",
                 "detail_alias_matches",
                 "detail_metrics",
                 "detail_updated_at_utc",
+                "detail_bulk_files",
+                "detail_crosscheck",
                 "share_status",
                 "share_data",
                 "share_updated_at_utc",
@@ -1316,12 +1365,15 @@ def main() -> None:
                 for key in (
                     "detail_status",
                     "detail_basis",
+                    "detail_source",
                     "detail_accounts",
                     "detail_account_matches",
                     "detail_match_summary",
                     "detail_alias_matches",
                     "detail_metrics",
                     "detail_updated_at_utc",
+                    "detail_bulk_files",
+                    "detail_crosscheck",
                     "share_status",
                     "share_data",
                     "share_updated_at_utc",
@@ -1331,15 +1383,39 @@ def main() -> None:
                 ):
                     row.pop(key, None)
 
-    pending = [
-        row
-        for row in eligible
-        if any(
-            row.get(stage) not in {"complete", "no_data"}
-            for stage in ("detail_status", "share_status", "dividend_status")
+    for row in eligible:
+        key = (str(row.get("ticker") or ""), int(row.get("fiscal_year") or 0))
+        if key not in share_required and row.get("share_status") not in {
+            "complete",
+            "no_data",
+        }:
+            row["share_status"] = "not_required"
+            row.pop("share_data", None)
+        if key not in dividend_required and row.get("dividend_status") not in {
+            "complete",
+            "no_data",
+        }:
+            row["dividend_status"] = "not_required"
+            row.pop("dividend_data", None)
+
+    pending = []
+    for row in eligible:
+        key = (str(row.get("ticker") or ""), int(row.get("fiscal_year") or 0))
+        needs_detail = (
+            not args.supplements_only
+            and row.get("detail_status") not in TERMINAL_STATUSES
         )
-    ]
-    pending.sort(key=lambda row: (row.get("fiscal_year"), row.get("ticker")))
+        needs_share = (
+            key in share_required
+            and row.get("share_status") not in TERMINAL_STATUSES
+        )
+        needs_dividend = (
+            key in dividend_required
+            and row.get("dividend_status") not in TERMINAL_STATUSES
+        )
+        if needs_detail or needs_share or needs_dividend:
+            pending.append(row)
+    pending.sort(key=lambda row: (row.get("ticker"), row.get("fiscal_year")))
     print(
         f"[DART DETAILS] eligible {len(eligible):,} | pending {len(pending):,} | "
         f"years {start_year}-{end_year} | request budget {args.max_requests:,}",
@@ -1367,7 +1443,7 @@ def main() -> None:
             eligible_rows=eligible,
             budget_reached=budget_reached,
         )
-        atomic_write_json(panel_path, panel, compact=True)
+        save_financial_panel(panel_path, panel, split_by_year=True)
 
     def reserve_request() -> None:
         nonlocal request_count
@@ -1390,8 +1466,12 @@ def main() -> None:
             try:
                 corp_code = str(row.get("corp_code") or "")
                 fiscal_year = int(row.get("fiscal_year") or 0)
+                row_key = (str(row.get("ticker") or ""), fiscal_year)
 
-                if row.get("detail_status") not in {"complete", "no_data"}:
+                if (
+                    not args.supplements_only
+                    and row.get("detail_status") not in TERMINAL_STATUSES
+                ):
                     selected_basis = ""
                     selected_rows: list[dict[str, Any]] = []
                     for basis in ("CFS", "OFS"):
@@ -1414,6 +1494,13 @@ def main() -> None:
                         values, matches = standardize_accounts(selected_rows)
                         row["detail_status"] = "complete"
                         row["detail_basis"] = selected_basis
+                        row["detail_source"] = (
+                            "api_gap_fallback"
+                            if str(row.get("detail_source") or "").startswith(
+                                "bulk_zip"
+                            )
+                            else "api"
+                        )
                         row["detail_accounts"] = values
                         # Full-detail values supersede the core crawler's raw account
                         # list. Keep `standardized`: core resume uses it for ROE.
@@ -1445,9 +1532,13 @@ def main() -> None:
                     else:
                         row["detail_status"] = "no_data"
                         row["detail_basis"] = None
+                        row["detail_source"] = "api_no_data"
                         row["detail_updated_at_utc"] = utc_now_iso()
 
-                if row.get("share_status") not in {"complete", "no_data"}:
+                if (
+                    row_key in share_required
+                    and row.get("share_status") not in TERMINAL_STATUSES
+                ):
                     reserve_request()
                     share_status, share_rows = fetch_annual_report_api(
                         session,
@@ -1464,7 +1555,10 @@ def main() -> None:
                         row.pop("share_data", None)
                     row["share_updated_at_utc"] = utc_now_iso()
 
-                if row.get("dividend_status") not in {"complete", "no_data"}:
+                if (
+                    row_key in dividend_required
+                    and row.get("dividend_status") not in TERMINAL_STATUSES
+                ):
                     reserve_request()
                     dividend_status, dividend_rows = fetch_annual_report_api(
                         session,

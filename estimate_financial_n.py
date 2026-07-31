@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from collector_common import atomic_write_json
+from dart_financial_storage import load_financial_panel
 from financial_engine import FinancialNEstimator, NEngineConfig
 
 
@@ -65,7 +66,7 @@ def main() -> None:
     args = parse_args()
     panel_path = Path(args.panel)
     output_path = Path(args.output)
-    panel = load_json(panel_path)
+    panel = load_financial_panel(panel_path)
     print(
         f"[N ENGINE] panel={panel_path} | "
         f"observations={len(panel.get('observations') or []):,}",

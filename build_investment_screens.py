@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from collector_common import atomic_write_json
+from dart_financial_storage import load_financial_panel
 from financial_engine import InvestmentScreenBuilder
 
 
@@ -46,7 +47,7 @@ def load_json(path: Path, *, required: bool = True) -> dict[str, Any]:
 
 def main() -> None:
     args = parse_args()
-    panel = load_json(Path(args.panel))
+    panel = load_financial_panel(Path(args.panel))
     n_estimates = load_json(Path(args.n_estimates))
     market_sum = load_json(Path(args.market_sum), required=False)
     output_path = Path(args.output)
