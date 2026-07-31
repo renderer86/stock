@@ -11,6 +11,11 @@ from crawler_dart_financial_bulk import (
 )
 from crawler_dart_financial_details import standardize_accounts
 from dart_financial_storage import load_financial_panel, save_financial_panel
+from dart_financial_raw_storage import (
+    ApiRawAccumulator,
+    read_gzip_json,
+    write_bulk_raw_shards,
+)
 
 
 def make_bulk_zip(*, consolidated: bool, rows: list[list[str]]) -> bytes:
@@ -78,7 +83,7 @@ class DartFinancialBulkTest(unittest.TestCase):
                 )
             ],
         )
-        grouped, summary = parse_bulk_archive(archive, "BS")
+        grouped, raw_groups, summary = parse_bulk_archive(archive, "BS")
         self.assertEqual(summary["row_count"], 1)
         self.assertEqual(
             grouped[("005930", "CFS")][0]["thstrm_amount"],
@@ -86,8 +91,9 @@ class DartFinancialBulkTest(unittest.TestCase):
         )
         standardized, _ = standardize_accounts(grouped[("005930", "CFS")])
         self.assertEqual(standardized["assets"], 1000)
+        self.assertEqual(raw_groups[("CFS", "0")]["rows"][0][12], "1,000")
 
-    def test_bulk_merge_prefers_consolidated_and_keeps_api_fallback(self) -> None:
+    def test_bulk_merge_keeps_sources_separate_without_field_fallback(self) -> None:
         observations = [
             {
                 "ticker": "005930",
@@ -125,14 +131,70 @@ class DartFinancialBulkTest(unittest.TestCase):
             2025,
             grouped,
             ["2025_BS.zip"],
+            raw_references={
+                "005930": {
+                    "CFS": {"BS": "dart_financial_raw/2025/bulk/BS_CFS_0.json.gz"}
+                }
+            },
         )
         row = observations[0]
-        self.assertEqual(result["complete"], 1)
+        self.assertEqual(result["bulk_partial"], 1)
         self.assertEqual(row["detail_basis"], "CFS")
-        self.assertEqual(row["detail_source"], "bulk_zip+fallback")
+        self.assertEqual(row["detail_source"], "bulk_zip")
         self.assertEqual(row["detail_accounts"]["assets"], 1000)
-        self.assertEqual(row["detail_accounts"]["cash"], 100)
-        self.assertEqual(row["detail_crosscheck"]["overlap_count"], 0)
+        self.assertNotIn("cash", row["detail_accounts"])
+        self.assertEqual(row["detail_validation"]["overlap_count"], 0)
+        self.assertEqual(
+            row["raw_financial_statements"]["CFS"]["BS"],
+            "dart_financial_raw/2025/bulk/BS_CFS_0.json.gz",
+        )
+
+    def test_raw_bulk_and_api_shards_preserve_source_rows(self) -> None:
+        archive = make_bulk_zip(
+            consolidated=True,
+            rows=[
+                bulk_row(
+                    "재무상태표, 유동/비유동법-연결재무제표",
+                    "ifrs_Assets",
+                    "자산총계",
+                    "1,000",
+                )
+            ],
+        )
+        _, raw_groups, _ = parse_bulk_archive(archive, "BS")
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            raw_root = Path(temporary_directory) / "dart_financial_raw"
+            entries, references = write_bulk_raw_shards(
+                raw_root,
+                year=2025,
+                statement="BS",
+                source_file="2025_BS.zip",
+                raw_groups=raw_groups,
+            )
+            self.assertEqual(len(entries), 1)
+            bulk_path = raw_root.parent / references["005930"]["CFS"]["BS"]
+            bulk_payload = read_gzip_json(bulk_path)
+            self.assertEqual(bulk_payload["rows"][0][12], "1,000")
+
+            accumulator = ApiRawAccumulator(raw_root)
+            api_reference = accumulator.add(
+                year=2025,
+                dataset="stock_total",
+                ticker="005930",
+                corp_code="00126380",
+                endpoint="https://example.test/stock.json",
+                request_parameters={"corp_code": "00126380"},
+                response_status="000",
+                rows=[{"istc_totqy": "100"}],
+            )
+            accumulator.flush()
+            api_payload = read_gzip_json(raw_root.parent / api_reference)
+            self.assertEqual(
+                api_payload["records_by_ticker"]["005930"]["rows"][0][
+                    "istc_totqy"
+                ],
+                "100",
+            )
 
     def test_year_sharded_panel_round_trip(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

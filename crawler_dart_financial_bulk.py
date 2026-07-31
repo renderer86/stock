@@ -23,6 +23,7 @@ from crawler_dart_financial_details import (
     update_detail_summary,
 )
 from dart_financial_storage import load_financial_panel, save_financial_panel
+from dart_financial_raw_storage import DEFAULT_RAW_ROOT, write_bulk_raw_shards
 
 
 ROOT_DIR = Path(__file__).resolve().parent
@@ -36,7 +37,7 @@ BROWSER_USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138 Safari/537.36"
 )
 KST = ZoneInfo("Asia/Seoul")
-STATEMENT_CODES = ("BS", "PL", "CF")
+STATEMENT_CODES = ("BS", "PL", "CF", "CE")
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,6 +50,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--panel", default=str(DEFAULT_PANEL))
     parser.add_argument("--market-sum", default=str(DEFAULT_MARKET_SUM))
+    parser.add_argument("--raw-root", default=str(DEFAULT_RAW_ROOT))
     parser.add_argument("--years", type=int, default=10)
     parser.add_argument("--start-year", type=int, default=0)
     parser.add_argument("--end-year", type=int, default=current_year - 1)
@@ -61,11 +63,6 @@ def parse_args() -> argparse.Namespace:
         "--reset-bulk",
         action="store_true",
         help="Discard prior full-statement detail fields before importing ZIP data.",
-    )
-    parser.add_argument(
-        "--include-equity-changes",
-        action="store_true",
-        help="Also download CE files for provenance; current screens do not require them.",
     )
     return parser.parse_args()
 
@@ -146,13 +143,17 @@ def download_bulk_zip(
     raise RuntimeError(f"Failed to download {filename}: {last_error}") from last_error
 
 
-def decode_bulk_text(raw: bytes) -> str:
+def decode_bulk_text_with_encoding(raw: bytes) -> tuple[str, str]:
     for encoding in ("cp949", "utf-8-sig", "euc-kr"):
         try:
-            return raw.decode(encoding)
+            return raw.decode(encoding), encoding
         except UnicodeDecodeError:
             continue
-    return raw.decode("cp949", errors="replace")
+    return raw.decode("cp949", errors="replace"), "cp949-replace"
+
+
+def decode_bulk_text(raw: bytes) -> str:
+    return decode_bulk_text_with_encoding(raw)[0]
 
 
 def normalize_ticker(value: Any) -> str:
@@ -171,35 +172,71 @@ def _current_amount_index(header: list[str]) -> int:
 def parse_bulk_archive(
     content: bytes,
     statement: str,
-) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], dict[str, Any]]:
-    """Return full-statement API-shaped rows keyed by (ticker, CFS/OFS)."""
+) -> tuple[
+    dict[tuple[str, str], list[dict[str, Any]]],
+    dict[tuple[str, str], dict[str, Any]],
+    dict[str, Any],
+]:
+    """Return calculation rows, lossless raw tables and parse metadata."""
 
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    raw_groups: dict[tuple[str, str], dict[str, Any]] = {}
     entry_counts: dict[str, int] = {}
     api_statement = "IS" if statement == "PL" else statement
     with zipfile.ZipFile(io.BytesIO(content)) as archive:
         for entry in archive.infolist():
             if entry.is_dir() or not entry.filename.lower().endswith(".txt"):
                 continue
-            text = decode_bulk_text(archive.read(entry))
+            text, encoding = decode_bulk_text_with_encoding(archive.read(entry))
             reader = csv.reader(io.StringIO(text), delimiter="\t")
             try:
-                header = [value.strip().lstrip("\ufeff") for value in next(reader)]
+                raw_header = next(reader)
             except StopIteration:
                 continue
+            header = [value.strip().lstrip("\ufeff") for value in raw_header]
             amount_index = _current_amount_index(header)
             count = 0
             for values in reader:
-                if len(values) <= max(11, amount_index):
+                if len(values) <= 1:
                     continue
                 ticker = normalize_ticker(values[1])
-                account_id = values[10].strip()
-                account_name = values[11].strip()
-                amount = values[amount_index].strip()
+                if not ticker:
+                    continue
+                # Preserve the decoded source fields exactly in the raw layer.
+                # A padded copy is used only by the calculation parser below.
+                raw_values = list(values)
+                normalized_values = list(values[: len(header)])
+                if len(normalized_values) < len(header):
+                    normalized_values.extend(
+                        [""] * (len(header) - len(normalized_values))
+                    )
+                statement_name = normalized_values[0].strip()
+                basis = "CFS" if "연결" in statement_name else "OFS"
+                bucket = ticker[0]
+                raw_table = raw_groups.setdefault(
+                    (basis, bucket),
+                    {
+                        "source_entry": entry.filename,
+                        "source_encoding": encoding,
+                        "header": list(raw_header),
+                        "rows": [],
+                        "tickers": set(),
+                    },
+                )
+                if raw_table["header"] != raw_header:
+                    raise RuntimeError(
+                        f"Bulk TXT headers changed within {entry.filename}."
+                    )
+                raw_table["rows"].append(raw_values)
+                raw_table["tickers"].add(ticker)
+
+                if len(normalized_values) <= max(11, amount_index):
+                    continue
+                account_id = normalized_values[10].strip()
+                account_name = normalized_values[11].strip()
+                amount = normalized_values[amount_index].strip()
                 if not ticker or not account_id or not amount:
                     continue
-                statement_name = values[0].strip()
-                basis = "CFS" if "연결" in statement_name else "OFS"
                 grouped[(ticker, basis)].append(
                     {
                         "sj_div": api_statement,
@@ -210,7 +247,13 @@ def parse_bulk_archive(
                 )
                 count += 1
             entry_counts[entry.filename] = count
-    return grouped, {"entries": entry_counts, "row_count": sum(entry_counts.values())}
+    for table in raw_groups.values():
+        table["tickers"] = sorted(table["tickers"])
+    return (
+        grouped,
+        raw_groups,
+        {"entries": entry_counts, "row_count": sum(entry_counts.values())},
+    )
 
 
 def _clear_bulk_detail(row: dict[str, Any]) -> None:
@@ -226,6 +269,9 @@ def _clear_bulk_detail(row: dict[str, Any]) -> None:
         "detail_updated_at_utc",
         "detail_bulk_files",
         "detail_crosscheck",
+        "detail_validation",
+        "detail_basis_selection",
+        "raw_financial_statements",
     ):
         row.pop(key, None)
 
@@ -236,6 +282,7 @@ def merge_bulk_year(
     grouped: dict[tuple[str, str], list[dict[str, Any]]],
     filenames: list[str],
     *,
+    raw_references: dict[str, dict[str, dict[str, str]]] | None = None,
     allowed_codes: set[str] | None = None,
     reset_bulk: bool = False,
 ) -> dict[str, int]:
@@ -249,9 +296,22 @@ def merge_bulk_year(
         if reset_bulk:
             _clear_bulk_detail(row)
 
+        if raw_references and ticker in raw_references:
+            row["raw_financial_statements"] = raw_references[ticker]
+
         candidates = [
             basis for basis in ("CFS", "OFS") if grouped.get((ticker, basis))
         ]
+        available_statements = {
+            basis: sorted(
+                {
+                    item.get("sj_div")
+                    for item in grouped.get((ticker, basis), [])
+                    if item.get("sj_div")
+                }
+            )
+            for basis in candidates
+        }
         selected_basis = (
             max(
                 candidates,
@@ -291,28 +351,38 @@ def merge_bulk_year(
                 for key in overlapping_keys
                 if existing_values.get(key) != bulk_values.get(key)
             ]
-            row["detail_crosscheck"] = {
+            mismatch_values = {
+                key: {
+                    "bulk_value": bulk_values.get(key),
+                    "api_value": existing_values.get(key),
+                }
+                for key in mismatch_keys
+            }
+            row["detail_validation"] = {
                 "source": existing_source or "legacy_api",
                 "overlap_count": len(overlapping_keys),
                 "exact_match_count": len(overlapping_keys) - len(mismatch_keys),
                 "mismatch_count": len(mismatch_keys),
-                "mismatch_accounts": mismatch_keys,
+                "mismatches": mismatch_values,
+                "selection": "bulk_value_used_for_calculation",
             }
             counts["crosschecked_fields"] += len(overlapping_keys)
             counts["crosscheck_mismatches"] += len(mismatch_keys)
-        api_fallbacks = {
-            key: value
-            for key, value in existing_values.items()
-            if key not in bulk_values and value is not None
-        }
-        merged_values = {**api_fallbacks, **bulk_values}
-        row["detail_status"] = "complete"
-        row["detail_basis"] = selected_basis
-        row["detail_source"] = (
-            "bulk_zip+fallback" if api_fallbacks else "bulk_zip"
+        selected_statement_count = len(available_statements.get(selected_basis, []))
+        row["detail_status"] = (
+            "complete" if selected_statement_count >= 3 else "bulk_partial"
         )
-        row["detail_accounts"] = merged_values
-        row.pop("accounts", None)
+        row["detail_basis"] = selected_basis
+        row["detail_source"] = "bulk_zip"
+        row["detail_accounts"] = bulk_values
+        row["detail_basis_selection"] = {
+            "selected": selected_basis,
+            "available_statements": available_statements,
+            "rule": (
+                "complete_CFS_preferred_else_complete_OFS_else_max_coverage"
+            ),
+            "cross_basis_field_mixing": False,
+        }
         row.pop("detail_account_matches", None)
         row["detail_match_summary"] = dict(
             sorted(
@@ -337,9 +407,7 @@ def merge_bulk_year(
         row["detail_bulk_files"] = filenames
         row["detail_updated_at_utc"] = utc_now_iso()
         derive_row_metrics(row)
-        counts["complete"] += 1
-        if api_fallbacks:
-            counts["api_fallback_fields"] += len(api_fallbacks)
+        counts[row["detail_status"]] += 1
     return dict(counts)
 
 
@@ -372,8 +440,7 @@ def main() -> None:
     session = create_session()
     listing = fetch_bulk_listing(session, args.timeout)
     statement_codes = list(STATEMENT_CODES)
-    if args.include_equity_changes:
-        statement_codes.append("CE")
+    raw_root = Path(args.raw_root)
     missing_files = [
         f"{year}/{statement}"
         for year in years
@@ -407,7 +474,8 @@ def main() -> None:
             ]
             detail_present = bool(year_rows) and all(
                 row.get("detail_status")
-                in {"complete", "no_data", "bulk_no_data"}
+                in {"complete", "no_data", "bulk_no_data", "bulk_partial"}
+                and bool(row.get("raw_financial_statements"))
                 for row in year_rows
             )
             if unchanged and detail_present:
@@ -438,6 +506,9 @@ def main() -> None:
     year_results: dict[str, Any] = {}
     for year_index, year in enumerate(years, start=1):
         combined: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+        year_raw_references: dict[str, dict[str, dict[str, str]]] = defaultdict(
+            lambda: defaultdict(dict)
+        )
         filenames: list[str] = []
         source_summaries: dict[str, Any] = {}
         for statement_index, statement in enumerate(statement_codes, start=1):
@@ -454,15 +525,29 @@ def main() -> None:
                 timeout=args.timeout,
             )
             filenames.append(filename)
+            parsed, raw_groups, parse_summary = parse_bulk_archive(
+                content,
+                statement,
+            )
+            _, statement_references = write_bulk_raw_shards(
+                raw_root,
+                year=year,
+                statement=statement,
+                source_file=filename,
+                raw_groups=raw_groups,
+            )
+            for ticker, bases in statement_references.items():
+                for basis, statements in bases.items():
+                    year_raw_references[ticker][basis].update(statements)
             if statement != "CE":
-                parsed, parse_summary = parse_bulk_archive(content, statement)
                 for key, rows in parsed.items():
                     combined[key].extend(rows)
-                source_summaries[statement] = {
-                    "filename": filename,
-                    "compressed_bytes": len(content),
-                    **parse_summary,
-                }
+            source_summaries[statement] = {
+                "filename": filename,
+                "compressed_bytes": len(content),
+                "raw_shard_count": len(raw_groups),
+                **parse_summary,
+            }
             if args.delay > 0:
                 time.sleep(args.delay)
 
@@ -471,6 +556,13 @@ def main() -> None:
             year,
             combined,
             filenames,
+            raw_references={
+                ticker: {
+                    basis: dict(statements)
+                    for basis, statements in bases.items()
+                }
+                for ticker, bases in year_raw_references.items()
+            },
             allowed_codes=requested_codes or None,
             reset_bulk=args.reset_bulk,
         )
@@ -505,7 +597,14 @@ def main() -> None:
         "statement_codes": statement_codes,
         "download_count_this_run": len(years) * len(statement_codes),
         "temporary_zip_retention": False,
-        "statement_preference": "CFS first, OFS fallback",
+        "raw_account_retention": (
+            "All original TXT rows from CFS and OFS are retained in gzip JSON "
+            "shards; ZIP containers are reproducible from recorded filenames."
+        ),
+        "statement_preference": (
+            "Calculation layer uses complete CFS first, then complete OFS, without "
+            "cross-basis field mixing. Raw layer retains both."
+        ),
         "year_results": all_year_results,
     }
     save_financial_panel(panel_path, panel, split_by_year=True)

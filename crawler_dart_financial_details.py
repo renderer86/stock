@@ -16,6 +16,7 @@ import requests
 
 from collector_common import USER_AGENT, request_json, utc_now_iso
 from dart_financial_storage import load_financial_panel, save_financial_panel
+from dart_financial_raw_storage import ApiRawAccumulator, DEFAULT_RAW_ROOT
 from env_loader import load_env_file
 
 
@@ -49,6 +50,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--panel", default=str(DEFAULT_PANEL))
     parser.add_argument("--market-sum", default=str(DEFAULT_MARKET_SUM))
+    parser.add_argument("--raw-root", default=str(DEFAULT_RAW_ROOT))
     parser.add_argument("--start-year", type=int, default=0)
     parser.add_argument("--end-year", type=int, default=current_year - 1)
     parser.add_argument("--codes", default="")
@@ -1251,9 +1253,14 @@ def update_detail_summary(
         "methodology": {
             "statement_preference": "CFS first, OFS fallback",
             "stored_scope": (
-                "Bulk ZIP statements are primary. API full statements are retained "
-                "only as gap fallback; stock totals and dividend matters supplement "
-                "the years required by active screens. Raw statements are not retained."
+                "Every bulk TXT row and every API response row is retained in "
+                "source-specific gzip JSON shards. Standardized accounts and screen "
+                "metrics are a separate calculation layer with raw references."
+            ),
+            "source_precedence": (
+                "Complete CFS bulk statement, then complete OFS bulk statement; "
+                "OpenDART API is used only for a missing/partial bulk company-year. "
+                "CFS and OFS fields are never mixed within one calculation basis."
             ),
             "roic": (
                 "NOPAT / (total equity + interest-bearing debt - cash); "
@@ -1351,6 +1358,8 @@ def main() -> None:
                 "detail_updated_at_utc",
                 "detail_bulk_files",
                 "detail_crosscheck",
+                "detail_validation",
+                "detail_basis_selection",
                 "share_status",
                 "share_data",
                 "share_updated_at_utc",
@@ -1374,6 +1383,8 @@ def main() -> None:
                     "detail_updated_at_utc",
                     "detail_bulk_files",
                     "detail_crosscheck",
+                    "detail_validation",
+                    "detail_basis_selection",
                     "share_status",
                     "share_data",
                     "share_updated_at_utc",
@@ -1407,11 +1418,17 @@ def main() -> None:
         )
         needs_share = (
             key in share_required
-            and row.get("share_status") not in TERMINAL_STATUSES
+            and (
+                row.get("share_status") not in TERMINAL_STATUSES
+                or not row.get("share_raw_ref")
+            )
         )
         needs_dividend = (
             key in dividend_required
-            and row.get("dividend_status") not in TERMINAL_STATUSES
+            and (
+                row.get("dividend_status") not in TERMINAL_STATUSES
+                or not row.get("dividend_raw_ref")
+            )
         )
         if needs_detail or needs_share or needs_dividend:
             pending.append(row)
@@ -1429,8 +1446,10 @@ def main() -> None:
     budget_reached = False
     started_at = time.monotonic()
     session = create_session()
+    raw_accumulator = ApiRawAccumulator(Path(args.raw_root))
 
     def checkpoint() -> None:
+        raw_accumulator.flush()
         rebuild_screening_features(
             panel,
             market_lookup=market_lookup,
@@ -1483,6 +1502,25 @@ def main() -> None:
                             fiscal_year,
                             basis,
                         )
+                        raw_reference = raw_accumulator.add(
+                            year=fiscal_year,
+                            dataset="financial_statement",
+                            ticker=row_key[0],
+                            corp_code=corp_code,
+                            basis=basis,
+                            endpoint=DART_FULL_ACCOUNT_URL,
+                            request_parameters={
+                                "corp_code": corp_code,
+                                "bsns_year": str(fiscal_year),
+                                "reprt_code": ANNUAL_REPORT_CODE,
+                                "fs_div": basis,
+                            },
+                            response_status=status,
+                            rows=payload_rows,
+                        )
+                        row.setdefault("detail_api_raw_refs", {})[basis] = (
+                            raw_reference
+                        )
                         if status == "000" and payload_rows:
                             selected_basis = basis
                             selected_rows = payload_rows
@@ -1491,6 +1529,8 @@ def main() -> None:
                             time.sleep(args.delay)
 
                     if selected_rows:
+                        previous_values = dict(row.get("detail_accounts") or {})
+                        previous_source = str(row.get("detail_source") or "")
                         values, matches = standardize_accounts(selected_rows)
                         row["detail_status"] = "complete"
                         row["detail_basis"] = selected_basis
@@ -1502,9 +1542,28 @@ def main() -> None:
                             else "api"
                         )
                         row["detail_accounts"] = values
-                        # Full-detail values supersede the core crawler's raw account
-                        # list. Keep `standardized`: core resume uses it for ROE.
-                        row.pop("accounts", None)
+                        if previous_values:
+                            overlap = sorted(set(previous_values) & set(values))
+                            mismatches = {
+                                key: {
+                                    "previous_value": previous_values.get(key),
+                                    "api_value": values.get(key),
+                                }
+                                for key in overlap
+                                if previous_values.get(key) != values.get(key)
+                            }
+                            row["detail_validation"] = {
+                                "previous_source": previous_source,
+                                "overlap_count": len(overlap),
+                                "mismatch_count": len(mismatches),
+                                "mismatches": mismatches,
+                                "selection": "api_value_used_for_bulk_gap",
+                            }
+                        row["detail_basis_selection"] = {
+                            "selected": selected_basis,
+                            "rule": "API CFS first, OFS only when CFS has no rows",
+                            "cross_basis_field_mixing": False,
+                        }
                         row.pop("detail_account_matches", None)
                         row["detail_match_summary"] = dict(
                             sorted(
@@ -1537,7 +1596,10 @@ def main() -> None:
 
                 if (
                     row_key in share_required
-                    and row.get("share_status") not in TERMINAL_STATUSES
+                    and (
+                        row.get("share_status") not in TERMINAL_STATUSES
+                        or not row.get("share_raw_ref")
+                    )
                 ):
                     reserve_request()
                     share_status, share_rows = fetch_annual_report_api(
@@ -1546,6 +1608,20 @@ def main() -> None:
                         DART_STOCK_TOTAL_URL,
                         corp_code,
                         fiscal_year,
+                    )
+                    row["share_raw_ref"] = raw_accumulator.add(
+                        year=fiscal_year,
+                        dataset="stock_total",
+                        ticker=row_key[0],
+                        corp_code=corp_code,
+                        endpoint=DART_STOCK_TOTAL_URL,
+                        request_parameters={
+                            "corp_code": corp_code,
+                            "bsns_year": str(fiscal_year),
+                            "reprt_code": ANNUAL_REPORT_CODE,
+                        },
+                        response_status=share_status,
+                        rows=share_rows,
                     )
                     if share_status == "000" and share_rows:
                         row["share_status"] = "complete"
@@ -1557,7 +1633,10 @@ def main() -> None:
 
                 if (
                     row_key in dividend_required
-                    and row.get("dividend_status") not in TERMINAL_STATUSES
+                    and (
+                        row.get("dividend_status") not in TERMINAL_STATUSES
+                        or not row.get("dividend_raw_ref")
+                    )
                 ):
                     reserve_request()
                     dividend_status, dividend_rows = fetch_annual_report_api(
@@ -1566,6 +1645,20 @@ def main() -> None:
                         DART_DIVIDEND_URL,
                         corp_code,
                         fiscal_year,
+                    )
+                    row["dividend_raw_ref"] = raw_accumulator.add(
+                        year=fiscal_year,
+                        dataset="dividend_matter",
+                        ticker=row_key[0],
+                        corp_code=corp_code,
+                        endpoint=DART_DIVIDEND_URL,
+                        request_parameters={
+                            "corp_code": corp_code,
+                            "bsns_year": str(fiscal_year),
+                            "reprt_code": ANNUAL_REPORT_CODE,
+                        },
+                        response_status=dividend_status,
+                        rows=dividend_rows,
                     )
                     if dividend_status == "000" and dividend_rows:
                         row["dividend_status"] = "complete"

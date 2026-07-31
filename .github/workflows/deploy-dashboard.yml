@@ -48,10 +48,23 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare dashboard-only artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          rsync -a \
+            --exclude '.git/' \
+            --exclude '_site/' \
+            --exclude 'data/dart_financial_panel.json' \
+            --exclude 'data/dart_financial_panel/' \
+            --exclude 'data/dart_financial_raw/' \
+            ./ _site/
+
       - name: Upload dashboard artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: _site
 
       - name: Deploy GitHub Pages
         id: deployment

@@ -196,6 +196,7 @@ jobs:
           shopt -s nullglob
           shard_files=(data/dart_financial_panel/*.json)
           files+=("${shard_files[@]}")
+          [[ -d data/dart_financial_raw ]] && files+=(data/dart_financial_raw)
           [[ -f data/financial_n_estimates.json ]] && files+=(data/financial_n_estimates.json)
           [[ -f data/investment_screens.json ]] && files+=(data/investment_screens.json)
           git add "${files[@]}"
@@ -232,6 +233,8 @@ jobs:
           path: |
             data/dart_financial_panel.json
             data/dart_financial_panel/*.json
+            data/dart_financial_raw/index.json
+            data/dart_financial_raw/**/*.json.gz
             data/financial_n_estimates.json
             data/investment_screens.json
           if-no-files-found: ignore
