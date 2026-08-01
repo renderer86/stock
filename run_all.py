@@ -54,6 +54,7 @@ def run_step(
                 "status": "failed",
                 "reason": f"launch error: {exc}",
                 "elapsed": elapsed,
+                "optional": optional,
             }
         )
         print(
@@ -109,7 +110,16 @@ def run_step(
 
 def print_pipeline_summary(total_elapsed: float) -> bool:
     succeeded = [row for row in STEP_RESULTS if row["status"] == "success"]
-    failed = [row for row in STEP_RESULTS if row["status"] == "failed"]
+    failed = [
+        row
+        for row in STEP_RESULTS
+        if row["status"] == "failed" and not bool(row.get("optional"))
+    ]
+    warnings = [
+        row
+        for row in STEP_RESULTS
+        if row["status"] == "failed" and bool(row.get("optional"))
+    ]
     skipped = [row for row in STEP_RESULTS if row["status"] == "skipped"]
 
     print(f"\n{'=' * 60}", flush=True)
@@ -117,12 +127,19 @@ def print_pipeline_summary(total_elapsed: float) -> bool:
     print(f"{'=' * 60}", flush=True)
     print(
         f"Success: {len(succeeded)} | Failed: {len(failed)} | "
+        f"Warnings: {len(warnings)} | "
         f"Skipped: {len(skipped)} | Elapsed: {total_elapsed:.1f}s",
         flush=True,
     )
     for row in failed:
         print(
             f"  [FAILED] {row['name']} - {row['reason']} "
+            f"({float(row['elapsed']):.1f}s)",
+            flush=True,
+        )
+    for row in warnings:
+        print(
+            f"  [WARNING] {row['name']} - {row['reason']} "
             f"({float(row['elapsed']):.1f}s)",
             flush=True,
         )
@@ -135,6 +152,12 @@ def print_pipeline_summary(total_elapsed: float) -> bool:
         print(
             "[PARTIAL SUCCESS] Successful datasets can be committed. "
             "Failed datasets keep their previously committed JSON.",
+            flush=True,
+        )
+    elif warnings:
+        print(
+            "[SUCCESS WITH WARNINGS] Required collectors completed. "
+            "Optional failures keep their previously committed JSON.",
             flush=True,
         )
     else:
