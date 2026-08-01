@@ -105,6 +105,21 @@ h1 {
 }
 
 .topbar-meta strong {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  line-height: 1.15;
+}
+
+.last-updated-time {
+  color: var(--muted);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.topbar-meta strong {
   font-size: 1rem;
 }
 

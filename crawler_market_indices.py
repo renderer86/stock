@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import argparse
+import ast
+import re
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -13,7 +17,9 @@ from collector_common import atomic_write_json, request_json, utc_now_iso
 
 
 YAHOO_CHART = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+NAVER_INDEX_CHART = "https://api.finance.naver.com/siseJson.naver"
 DEFAULT_OUTPUT = Path("data/market_indices.json")
+KST = ZoneInfo("Asia/Seoul")
 BROWSER_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -100,6 +106,96 @@ def history_return(closes: list[float], sessions: int) -> float | None:
     return pct_change(closes[-1], closes[-sessions - 1])
 
 
+def parse_naver_index_history(text: str) -> list[dict[str, Any]]:
+    """Parse Naver's JavaScript-style daily index array without eval()."""
+
+    try:
+        payload = ast.literal_eval(text.strip())
+    except (SyntaxError, ValueError) as exc:
+        raise RuntimeError("Naver index chart returned an invalid array.") from exc
+    if not isinstance(payload, list) or len(payload) < 2:
+        raise RuntimeError("Naver index chart returned no daily rows.")
+
+    history: list[dict[str, Any]] = []
+    for values in payload[1:]:
+        if not isinstance(values, list) or len(values) < 6:
+            continue
+        date_digits = re.sub(r"\D", "", str(values[0] or ""))
+        if not re.fullmatch(r"\d{8}", date_digits):
+            continue
+        try:
+            session_date = datetime.strptime(date_digits, "%Y%m%d").replace(
+                tzinfo=KST
+            )
+            open_value = float(values[1])
+            high_value = float(values[2])
+            low_value = float(values[3])
+            close_value = float(values[4])
+            volume_value = int(float(values[5]))
+        except (TypeError, ValueError):
+            continue
+        history.append(
+            {
+                "date": session_date.date().isoformat(),
+                "timestamp": int(session_date.timestamp()),
+                "open": open_value,
+                "high": high_value,
+                "low": low_value,
+                "close": round(close_value, 6),
+                "volume": volume_value,
+            }
+        )
+    if len(history) < 2:
+        raise RuntimeError("Naver index chart returned insufficient daily history.")
+    return sorted(history, key=lambda row: row["date"])
+
+
+def fetch_naver_index_history(
+    session: requests.Session,
+    symbol: str,
+    start_date: str,
+    end_date: str,
+) -> list[dict[str, Any]]:
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            response = session.get(
+                NAVER_INDEX_CHART,
+                params={
+                    "symbol": symbol,
+                    "requestType": "1",
+                    "startTime": start_date.replace("-", ""),
+                    "endTime": end_date.replace("-", ""),
+                    "timeframe": "day",
+                },
+                timeout=30,
+            )
+            response.raise_for_status()
+            return parse_naver_index_history(response.text)
+        except (requests.RequestException, RuntimeError) as exc:
+            last_error = exc
+            if attempt < 3:
+                time.sleep(attempt)
+    raise RuntimeError(
+        f"Naver index history failed for {symbol}: {type(last_error).__name__}"
+    ) from last_error
+
+
+def merge_history(
+    base_history: list[dict[str, Any]],
+    preferred_history: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    by_date = {
+        str(row.get("date")): row
+        for row in base_history
+        if row.get("date") and row.get("close") is not None
+    }
+    for row in preferred_history:
+        if row.get("date") and row.get("close") is not None:
+            by_date[str(row["date"])] = row
+    return [by_date[key] for key in sorted(by_date)]
+
+
 def fetch_asset(asset: dict[str, Any], range_value: str) -> dict[str, Any]:
     session = requests.Session()
     session.headers.update(
@@ -156,6 +252,20 @@ def fetch_asset(asset: dict[str, Any], range_value: str) -> dict[str, Any]:
     if len(history) < 2:
         raise RuntimeError(f"Yahoo chart returned insufficient history for {symbol}")
 
+    history_source = "Yahoo Finance Chart"
+    naver_symbol = {"kospi": "KOSPI", "kosdaq": "KOSDAQ"}.get(
+        str(asset.get("id"))
+    )
+    if naver_symbol:
+        naver_history = fetch_naver_index_history(
+            session,
+            naver_symbol,
+            history[0]["date"],
+            datetime.now(KST).date().isoformat(),
+        )
+        history = merge_history(history, naver_history)
+        history_source = "Naver Finance index daily + Yahoo Finance history"
+
     closes = [float(row["close"]) for row in history]
     # Yahoo의 chartPreviousClose는 요청 range 시작 직전 값일 수 있으므로
     # 일간 등락에는 마지막 두 유효 일봉 종가를 사용한다.
@@ -169,6 +279,7 @@ def fetch_asset(asset: dict[str, Any], range_value: str) -> dict[str, Any]:
         "exchange": meta.get("exchangeName"),
         "timezone": meta.get("exchangeTimezoneName"),
         "market_state": meta.get("marketState"),
+        "history_source": history_source,
         "current": round(float(current), 6),
         "previous_close": round(float(previous_close), 6),
         "change": round(change, 6),
@@ -238,8 +349,12 @@ def main() -> None:
 
     payload = {
         "schema_version": 1,
-        "source": "Yahoo Finance Chart",
+        "source": "Yahoo Finance Chart + Naver Finance index daily",
         "source_url": "https://finance.yahoo.com/",
+        "source_urls": [
+            "https://finance.yahoo.com/",
+            "https://finance.naver.com/sise/",
+        ],
         "crawled_at_utc": utc_now_iso(),
         "range": args.range_value,
         "count": len(assets),

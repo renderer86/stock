@@ -215,11 +215,26 @@ function updateLastUpdated(value) {
     return;
   }
 
-  node.textContent = date.toLocaleDateString("ko-KR", {
+  const dateText = date.toLocaleDateString("ko-KR", {
     year: "numeric",
     month: "2-digit",
-    day: "2-digit"
+    day: "2-digit",
+    timeZone: "Asia/Seoul"
   });
+  const timeText = date.toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Seoul"
+  });
+  node.replaceChildren();
+  const dateNode = document.createElement("span");
+  dateNode.className = "last-updated-date";
+  dateNode.textContent = dateText;
+  const timeNode = document.createElement("small");
+  timeNode.className = "last-updated-time";
+  timeNode.textContent = `${timeText} KST`;
+  node.append(dateNode, timeNode);
 }
 
 function formatTickerDate(value) {
