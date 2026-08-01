@@ -182,6 +182,22 @@ function formatCompactDate(value) {
   });
 }
 
+function formatCompactDateTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return formatCompactDate(value);
+  }
+
+  return date.toLocaleString("ko-KR", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Seoul"
+  });
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -2331,6 +2347,7 @@ function renderPriorityCandidates(stocks) {
   const tbody = document.getElementById("priority-candidates-body");
   const countBadge = document.getElementById("priority-count-badge");
   const pendingBadge = document.getElementById("buffett-pending-badge");
+  const updatedBadge = document.getElementById("buffett-updated-badge");
   const candidates = getPriorityCandidates(stocks);
   const pendingCount = Number(
     state.investmentScreensPayload?.summary?.buffett_status_counts?.pending || 0
@@ -2340,6 +2357,11 @@ function renderPriorityCandidates(stocks) {
   pendingBadge.textContent = pendingCount
     ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
     : "판정 대기 없음";
+  if (updatedBadge) {
+    updatedBadge.textContent = state.investmentScreensPayload?.generated_at_utc
+      ? `산출 ${formatCompactDateTime(state.investmentScreensPayload.generated_at_utc)}`
+      : "산출 시각 없음";
+  }
 
   if (!candidates.length) {
     tbody.innerHTML = `
@@ -2399,15 +2421,24 @@ function renderQualityCandidates(stocks) {
   const tbody = document.getElementById("quality-candidates-body");
   const countBadge = document.getElementById("quality-count-badge");
   const pendingBadge = document.getElementById("quality-pending-badge");
+  const updatedBadge = document.getElementById("quality-updated-badge");
   const candidates = getQualityCandidates(stocks);
+  const eligibleCount = Number(
+    state.investmentScreensPayload?.summary?.quality_eligible_count || 0
+  );
   const pendingCount = Number(
     state.investmentScreensPayload?.summary?.quality_status_counts?.pending || 0
   );
 
-  countBadge.textContent = `${candidates.length}개 바스켓`;
+  countBadge.textContent = `${candidates.length}개 바스켓 · 전체 통과 ${eligibleCount.toLocaleString("ko-KR")}개`;
   pendingBadge.textContent = pendingCount
     ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
     : "판정 대기 없음";
+  if (updatedBadge) {
+    updatedBadge.textContent = state.investmentScreensPayload?.generated_at_utc
+      ? `산출 ${formatCompactDateTime(state.investmentScreensPayload.generated_at_utc)}`
+      : "산출 시각 없음";
+  }
 
   if (!candidates.length) {
     tbody.innerHTML = `

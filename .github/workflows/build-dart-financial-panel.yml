@@ -182,6 +182,7 @@ jobs:
           fi
           python -u estimate_financial_n.py --config config/financial_n_engine.json
           python -u build_investment_screens.py
+          python -u build_data_manifest.py
 
       - name: Commit panel or partial checkpoint
         if: always()
@@ -202,6 +203,7 @@ jobs:
           [[ -d data/dart_financial_raw ]] && files+=(data/dart_financial_raw)
           [[ -f data/financial_n_estimates.json ]] && files+=(data/financial_n_estimates.json)
           [[ -f data/investment_screens.json ]] && files+=(data/investment_screens.json)
+          [[ -f data/data_manifest.json ]] && files+=(data/data_manifest.json)
           git add "${files[@]}"
           if git diff --cached --quiet; then
             echo "No DART panel changes to commit."
