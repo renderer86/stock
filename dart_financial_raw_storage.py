@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import json
 import os
+import re
 import tempfile
 from collections import defaultdict
 from pathlib import Path
@@ -31,7 +32,9 @@ def _gzip_json_bytes(payload: Any) -> bytes:
         ensure_ascii=False,
         separators=(",", ":"),
     ).encode("utf-8")
-    return gzip.compress(serialized, compresslevel=9, mtime=0)
+    # Level 6 is much faster than level 9 for multi-million-row DART archives,
+    # while the resulting shards remain far below GitHub's 100 MB file limit.
+    return gzip.compress(serialized, compresslevel=6, mtime=0)
 
 
 def _atomic_write_bytes(path: Path, content: bytes) -> None:
@@ -80,6 +83,102 @@ def _load_index(raw_root: Path) -> dict[str, Any]:
     except (FileNotFoundError, OSError, ValueError):
         return {}
     return payload if isinstance(payload, dict) else {}
+
+
+def _raw_ticker(value: Any) -> str:
+    digits = re.sub(r"\D", "", str(value or ""))
+    return digits[-6:].zfill(6) if digits else ""
+
+
+def bulk_group_tables(group: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return new multi-table or legacy single-table raw payloads uniformly."""
+
+    tables = group.get("tables")
+    if isinstance(tables, list):
+        return [table for table in tables if isinstance(table, dict)]
+    if "rows" not in group and "header" not in group:
+        return []
+    return [
+        {
+            "source_entry": group.get("source_entry"),
+            "source_encoding": group.get("source_encoding"),
+            "header": group.get("header") or [],
+            "row_count": len(group.get("rows") or []),
+            "rows": group.get("rows") or [],
+        }
+    ]
+
+
+def load_bulk_raw_statement(
+    raw_root: Path,
+    *,
+    year: int,
+    statement: str,
+    source_file: str,
+) -> tuple[
+    dict[tuple[str, str], dict[str, Any]],
+    dict[str, dict[str, dict[str, str]]],
+    list[dict[str, Any]],
+] | None:
+    """Load an already committed statement so resume avoids a redownload."""
+
+    index = _load_index(raw_root)
+    entries = [
+        entry
+        for entry in index.get("shards") or []
+        if int(entry.get("year") or 0) == year
+        and entry.get("dataset") == "financial_statement"
+        and entry.get("source_type") == "bulk_zip"
+        and entry.get("statement") == statement
+        and entry.get("source_file") == source_file
+    ]
+    if not entries:
+        return None
+
+    groups: dict[tuple[str, str], dict[str, Any]] = {}
+    references: dict[str, dict[str, dict[str, str]]] = defaultdict(
+        lambda: defaultdict(dict)
+    )
+    for entry in entries:
+        reference = str(entry.get("path") or "")
+        if not reference:
+            return None
+        payload = read_gzip_json(raw_root.parent / reference)
+        if (
+            not payload
+            or payload.get("source_file") != source_file
+            or payload.get("statement") != statement
+        ):
+            return None
+        basis = str(payload.get("basis") or entry.get("basis") or "")
+        bucket = str(payload.get("ticker_bucket") or entry.get("bucket") or "")
+        if not basis or not bucket:
+            return None
+        tables = bulk_group_tables(payload)
+        tickers: set[str] = set()
+        for table in tables:
+            for row in table.get("rows") or []:
+                if isinstance(row, list) and len(row) > 1:
+                    ticker = _raw_ticker(row[1])
+                    if ticker:
+                        tickers.add(ticker)
+        groups[(basis, bucket)] = {
+            "tables": tables,
+            "tickers": sorted(tickers),
+        }
+        for ticker in tickers:
+            references[ticker][basis][statement] = reference
+
+    return (
+        groups,
+        {
+            ticker: {
+                basis: dict(statements) for basis, statements in bases.items()
+            }
+            for ticker, bases in references.items()
+        },
+        entries,
+    )
 
 
 def update_raw_index(
@@ -141,8 +240,9 @@ def write_bulk_raw_shards(
     references: dict[str, dict[str, dict[str, str]]] = defaultdict(
         lambda: defaultdict(dict)
     )
-    for (basis, bucket), table in sorted(raw_groups.items()):
-        rows = table.get("rows") or []
+    for (basis, bucket), group in sorted(raw_groups.items()):
+        tables = bulk_group_tables(group)
+        row_count = sum(len(table.get("rows") or []) for table in tables)
         shard_path = (
             raw_root
             / str(year)
@@ -158,15 +258,13 @@ def write_bulk_raw_shards(
                 "https://opendart.fss.or.kr/disclosureinfo/fnltt/dwld/main.do"
             ),
             "source_file": source_file,
-            "source_entry": table.get("source_entry"),
-            "source_encoding": table.get("source_encoding"),
             "fiscal_year": year,
             "statement": statement,
             "basis": basis,
             "ticker_bucket": bucket,
-            "header": table.get("header") or [],
-            "row_count": len(rows),
-            "rows": rows,
+            "table_count": len(tables),
+            "row_count": row_count,
+            "tables": tables,
         }
         metadata = _write_raw_shard(shard_path, payload)
         reference = _relative_reference(raw_root, shard_path)
@@ -183,7 +281,7 @@ def write_bulk_raw_shards(
                 "bucket": bucket,
             }
         )
-        for ticker in table.get("tickers") or []:
+        for ticker in group.get("tickers") or []:
             references[str(ticker)][basis][statement] = reference
     statement_directory = raw_root / str(year) / "bulk"
     for stale_path in statement_directory.glob(f"{statement}_*.json.gz"):

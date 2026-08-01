@@ -13,6 +13,7 @@ from crawler_dart_financial_details import standardize_accounts
 from dart_financial_storage import load_financial_panel, save_financial_panel
 from dart_financial_raw_storage import (
     ApiRawAccumulator,
+    load_bulk_raw_statement,
     read_gzip_json,
     write_bulk_raw_shards,
 )
@@ -91,7 +92,69 @@ class DartFinancialBulkTest(unittest.TestCase):
         )
         standardized, _ = standardize_accounts(grouped[("005930", "CFS")])
         self.assertEqual(standardized["assets"], 1000)
-        self.assertEqual(raw_groups[("CFS", "0")]["rows"][0][12], "1,000")
+        self.assertEqual(
+            raw_groups[("CFS", "0")]["tables"][0]["rows"][0][12],
+            "1,000",
+        )
+
+    def test_archive_keeps_multiple_headers_in_the_same_basis_bucket(self) -> None:
+        first = make_bulk_zip(
+            consolidated=True,
+            rows=[
+                bulk_row(
+                    "재무상태표, 유동/비유동법-연결재무제표",
+                    "ifrs_Assets",
+                    "자산총계",
+                    "1,000",
+                )
+            ],
+        )
+        second_rows = [
+            bulk_row(
+                "재무상태표, 유동/비유동법-연결재무제표",
+                "ifrs_Equity",
+                "자본총계",
+                "500",
+            )
+            + ["추가열"]
+        ]
+        second_header = [
+            "재무제표종류",
+            "종목코드",
+            "회사명",
+            "시장구분",
+            "업종",
+            "업종명",
+            "결산월",
+            "결산기준일",
+            "보고서종류",
+            "통화",
+            "항목코드",
+            "항목명",
+            "당기",
+            "전기",
+            "전전기",
+            "추가열",
+        ]
+        combined = io.BytesIO()
+        with zipfile.ZipFile(io.BytesIO(first)) as first_archive, zipfile.ZipFile(
+            combined, "w", zipfile.ZIP_DEFLATED
+        ) as archive:
+            archive.writestr(
+                "첫번째.txt",
+                first_archive.read(first_archive.namelist()[0]),
+            )
+            archive.writestr(
+                "두번째.txt",
+                "\n".join(
+                    "\t".join(row) for row in [second_header, *second_rows]
+                ).encode("cp949"),
+            )
+
+        grouped, raw_groups, summary = parse_bulk_archive(combined.getvalue(), "BS")
+        self.assertEqual(summary["row_count"], 2)
+        self.assertEqual(len(grouped[("005930", "CFS")]), 2)
+        self.assertEqual(len(raw_groups[("CFS", "0")]["tables"]), 2)
 
     def test_bulk_merge_keeps_sources_separate_without_field_fallback(self) -> None:
         observations = [
@@ -174,7 +237,23 @@ class DartFinancialBulkTest(unittest.TestCase):
             self.assertEqual(len(entries), 1)
             bulk_path = raw_root.parent / references["005930"]["CFS"]["BS"]
             bulk_payload = read_gzip_json(bulk_path)
-            self.assertEqual(bulk_payload["rows"][0][12], "1,000")
+            self.assertEqual(
+                bulk_payload["tables"][0]["rows"][0][12],
+                "1,000",
+            )
+            cached = load_bulk_raw_statement(
+                raw_root,
+                year=2025,
+                statement="BS",
+                source_file="2025_BS.zip",
+            )
+            self.assertIsNotNone(cached)
+            cached_groups, cached_references, _ = cached
+            self.assertEqual(
+                cached_groups[("CFS", "0")]["tables"][0]["rows"][0][12],
+                "1,000",
+            )
+            self.assertEqual(cached_references, references)
 
             accumulator = ApiRawAccumulator(raw_root)
             api_reference = accumulator.add(

@@ -23,7 +23,12 @@ from crawler_dart_financial_details import (
     update_detail_summary,
 )
 from dart_financial_storage import load_financial_panel, save_financial_panel
-from dart_financial_raw_storage import DEFAULT_RAW_ROOT, write_bulk_raw_shards
+from dart_financial_raw_storage import (
+    DEFAULT_RAW_ROOT,
+    bulk_group_tables,
+    load_bulk_raw_statement,
+    write_bulk_raw_shards,
+)
 
 
 ROOT_DIR = Path(__file__).resolve().parent
@@ -169,72 +174,35 @@ def _current_amount_index(header: list[str]) -> int:
     return 12
 
 
-def parse_bulk_archive(
-    content: bytes,
+def calculation_rows_from_raw_groups(
+    raw_groups: dict[tuple[str, str], dict[str, Any]],
     statement: str,
-) -> tuple[
-    dict[tuple[str, str], list[dict[str, Any]]],
-    dict[tuple[str, str], dict[str, Any]],
-    dict[str, Any],
-]:
-    """Return calculation rows, lossless raw tables and parse metadata."""
+) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], dict[str, int]]:
+    """Build the calculation view without altering source-preserving rows."""
 
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
-    raw_groups: dict[tuple[str, str], dict[str, Any]] = {}
-    entry_counts: dict[str, int] = {}
+    entry_counts: Counter[str] = Counter()
     api_statement = "IS" if statement == "PL" else statement
-    with zipfile.ZipFile(io.BytesIO(content)) as archive:
-        for entry in archive.infolist():
-            if entry.is_dir() or not entry.filename.lower().endswith(".txt"):
-                continue
-            text, encoding = decode_bulk_text_with_encoding(archive.read(entry))
-            reader = csv.reader(io.StringIO(text), delimiter="\t")
-            try:
-                raw_header = next(reader)
-            except StopIteration:
-                continue
-            header = [value.strip().lstrip("\ufeff") for value in raw_header]
+    for (basis, _bucket), group in raw_groups.items():
+        for table in bulk_group_tables(group):
+            raw_header = table.get("header") or []
+            header = [str(value).strip().lstrip("\ufeff") for value in raw_header]
             amount_index = _current_amount_index(header)
-            count = 0
-            for values in reader:
-                if len(values) <= 1:
+            source_entry = str(table.get("source_entry") or "unknown.txt")
+            for values in table.get("rows") or []:
+                if not isinstance(values, list) or len(values) <= 1:
                     continue
                 ticker = normalize_ticker(values[1])
-                if not ticker:
-                    continue
-                # Preserve the decoded source fields exactly in the raw layer.
-                # A padded copy is used only by the calculation parser below.
-                raw_values = list(values)
                 normalized_values = list(values[: len(header)])
                 if len(normalized_values) < len(header):
                     normalized_values.extend(
                         [""] * (len(header) - len(normalized_values))
                     )
-                statement_name = normalized_values[0].strip()
-                basis = "CFS" if "연결" in statement_name else "OFS"
-                bucket = ticker[0]
-                raw_table = raw_groups.setdefault(
-                    (basis, bucket),
-                    {
-                        "source_entry": entry.filename,
-                        "source_encoding": encoding,
-                        "header": list(raw_header),
-                        "rows": [],
-                        "tickers": set(),
-                    },
-                )
-                if raw_table["header"] != raw_header:
-                    raise RuntimeError(
-                        f"Bulk TXT headers changed within {entry.filename}."
-                    )
-                raw_table["rows"].append(raw_values)
-                raw_table["tickers"].add(ticker)
-
                 if len(normalized_values) <= max(11, amount_index):
                     continue
-                account_id = normalized_values[10].strip()
-                account_name = normalized_values[11].strip()
-                amount = normalized_values[amount_index].strip()
+                account_id = str(normalized_values[10]).strip()
+                account_name = str(normalized_values[11]).strip()
+                amount = str(normalized_values[amount_index]).strip()
                 if not ticker or not account_id or not amount:
                     continue
                 grouped[(ticker, basis)].append(
@@ -245,10 +213,72 @@ def parse_bulk_archive(
                         "thstrm_amount": amount,
                     }
                 )
-                count += 1
-            entry_counts[entry.filename] = count
-    for table in raw_groups.values():
-        table["tickers"] = sorted(table["tickers"])
+                entry_counts[source_entry] += 1
+    return grouped, dict(entry_counts)
+
+
+def parse_bulk_archive(
+    content: bytes,
+    statement: str,
+) -> tuple[
+    dict[tuple[str, str], list[dict[str, Any]]],
+    dict[tuple[str, str], dict[str, Any]],
+    dict[str, Any],
+]:
+    """Return calculation rows, lossless raw tables and parse metadata."""
+
+    raw_groups: dict[tuple[str, str], dict[str, Any]] = {}
+    with zipfile.ZipFile(io.BytesIO(content)) as archive:
+        for entry in archive.infolist():
+            if entry.is_dir() or not entry.filename.lower().endswith(".txt"):
+                continue
+            text, encoding = decode_bulk_text_with_encoding(archive.read(entry))
+            reader = csv.reader(io.StringIO(text), delimiter="\t")
+            try:
+                raw_header = next(reader)
+            except StopIteration:
+                continue
+            for values in reader:
+                if len(values) <= 1:
+                    continue
+                ticker = normalize_ticker(values[1])
+                if not ticker:
+                    continue
+                raw_values = list(values)
+                statement_name = str(raw_values[0]).strip()
+                basis = "CFS" if "연결" in statement_name else "OFS"
+                bucket = ticker[0]
+                raw_group = raw_groups.setdefault(
+                    (basis, bucket),
+                    {
+                        "tables": [],
+                        "tickers": set(),
+                    },
+                )
+                raw_table = next(
+                    (
+                        table
+                        for table in raw_group["tables"]
+                        if table.get("source_entry") == entry.filename
+                        and table.get("header") == raw_header
+                    ),
+                    None,
+                )
+                if raw_table is None:
+                    raw_table = {
+                        "source_entry": entry.filename,
+                        "source_encoding": encoding,
+                        "header": list(raw_header),
+                        "rows": [],
+                    }
+                    raw_group["tables"].append(raw_table)
+                raw_table["rows"].append(raw_values)
+                raw_group["tickers"].add(ticker)
+    for group in raw_groups.values():
+        group["tickers"] = sorted(group["tickers"])
+        for table in group["tables"]:
+            table["row_count"] = len(table["rows"])
+    grouped, entry_counts = calculation_rows_from_raw_groups(raw_groups, statement)
     return (
         grouped,
         raw_groups,
@@ -475,7 +505,13 @@ def main() -> None:
             detail_present = bool(year_rows) and all(
                 row.get("detail_status")
                 in {"complete", "no_data", "bulk_no_data", "bulk_partial"}
-                and bool(row.get("raw_financial_statements"))
+                and (
+                    row.get("detail_status") in {"no_data", "bulk_no_data"}
+                    or not str(row.get("detail_source") or "").startswith(
+                        "bulk_zip"
+                    )
+                    or bool(row.get("raw_financial_statements"))
+                )
                 for row in year_rows
             )
             if unchanged and detail_present:
@@ -504,6 +540,52 @@ def main() -> None:
     )
     started_at = time.monotonic()
     year_results: dict[str, Any] = {}
+    download_count = 0
+    reused_count = 0
+    market_lookup, market_as_of = load_market_lookup(Path(args.market_sum))
+
+    def checkpoint_bulk() -> None:
+        all_year_results = dict(prior_year_results)
+        all_year_results.update(year_results)
+        recorded_years = sorted(int(value) for value in all_year_results)
+        panel["bulk_financial_enrichment"] = {
+            "schema_version": 1,
+            "source": "OpenDART financial information bulk download",
+            "source_url": BULK_MAIN_URL,
+            "updated_at_utc": utc_now_iso(),
+            "period": {
+                "start_year": (
+                    recorded_years[0] if recorded_years else years[0]
+                ),
+                "end_year": (
+                    recorded_years[-1] if recorded_years else years[-1]
+                ),
+            },
+            "statement_codes": statement_codes,
+            "download_count_this_run": download_count,
+            "reused_raw_statement_count_this_run": reused_count,
+            "temporary_zip_retention": False,
+            "raw_account_retention": (
+                "All original TXT rows from CFS and OFS are retained in gzip "
+                "JSON shards; ZIP containers are reproducible from recorded "
+                "filenames."
+            ),
+            "statement_preference": (
+                "Calculation layer uses complete CFS first, then complete OFS, "
+                "without cross-basis field mixing. Raw layer retains both."
+            ),
+            "year_results": all_year_results,
+        }
+        rebuild_screening_features(panel, market_lookup, market_as_of)
+        update_detail_summary(
+            panel,
+            request_count=0,
+            errors=[],
+            eligible_rows=observations,
+            budget_reached=False,
+        )
+        save_financial_panel(panel_path, panel, split_by_year=True)
+
     for year_index, year in enumerate(years, start=1):
         combined: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
         year_raw_references: dict[str, dict[str, dict[str, str]]] = defaultdict(
@@ -513,29 +595,61 @@ def main() -> None:
         source_summaries: dict[str, Any] = {}
         for statement_index, statement in enumerate(statement_codes, start=1):
             filename = listing[(year, statement)]
-            print(
-                f"[DART BULK] {year} ({year_index}/{len(years)}) "
-                f"{statement} ({statement_index}/{len(statement_codes)}) "
-                f"downloading {filename}",
-                flush=True,
-            )
-            content = download_bulk_zip(
-                session,
-                filename,
-                timeout=args.timeout,
-            )
             filenames.append(filename)
-            parsed, raw_groups, parse_summary = parse_bulk_archive(
-                content,
-                statement,
-            )
-            _, statement_references = write_bulk_raw_shards(
-                raw_root,
-                year=year,
-                statement=statement,
-                source_file=filename,
-                raw_groups=raw_groups,
-            )
+            cached = None
+            if not args.reset_bulk and not args.refresh_latest:
+                cached = load_bulk_raw_statement(
+                    raw_root,
+                    year=year,
+                    statement=statement,
+                    source_file=filename,
+                )
+            if cached:
+                raw_groups, statement_references, cached_entries = cached
+                parsed, entry_counts = calculation_rows_from_raw_groups(
+                    raw_groups,
+                    statement,
+                )
+                parse_summary = {
+                    "entries": entry_counts,
+                    "row_count": sum(entry_counts.values()),
+                }
+                reused_count += 1
+                source_bytes = sum(
+                    int(entry.get("compressed_bytes") or 0)
+                    for entry in cached_entries
+                )
+                print(
+                    f"[DART BULK] {year} ({year_index}/{len(years)}) "
+                    f"{statement} ({statement_index}/{len(statement_codes)}) "
+                    f"reusing {len(cached_entries)} raw shards for {filename}",
+                    flush=True,
+                )
+            else:
+                print(
+                    f"[DART BULK] {year} ({year_index}/{len(years)}) "
+                    f"{statement} ({statement_index}/{len(statement_codes)}) "
+                    f"downloading {filename}",
+                    flush=True,
+                )
+                content = download_bulk_zip(
+                    session,
+                    filename,
+                    timeout=args.timeout,
+                )
+                download_count += 1
+                parsed, raw_groups, parse_summary = parse_bulk_archive(
+                    content,
+                    statement,
+                )
+                _, statement_references = write_bulk_raw_shards(
+                    raw_root,
+                    year=year,
+                    statement=statement,
+                    source_file=filename,
+                    raw_groups=raw_groups,
+                )
+                source_bytes = len(content)
             for ticker, bases in statement_references.items():
                 for basis, statements in bases.items():
                     year_raw_references[ticker][basis].update(statements)
@@ -544,11 +658,12 @@ def main() -> None:
                     combined[key].extend(rows)
             source_summaries[statement] = {
                 "filename": filename,
-                "compressed_bytes": len(content),
+                "source_or_cached_bytes": source_bytes,
+                "raw_cache_reused": bool(cached),
                 "raw_shard_count": len(raw_groups),
                 **parse_summary,
             }
-            if args.delay > 0:
+            if not cached and args.delay > 0:
                 time.sleep(args.delay)
 
         result = merge_bulk_year(
@@ -567,47 +682,14 @@ def main() -> None:
             reset_bulk=args.reset_bulk,
         )
         year_results[str(year)] = {"merge": result, "sources": source_summaries}
+        checkpoint_bulk()
         print(
-            f"[DART BULK] {year} merged | {result} | "
+            f"[DART BULK] {year} merged and checkpointed | {result} | "
             f"elapsed {time.monotonic() - started_at:.1f}s",
             flush=True,
         )
 
-    market_lookup, market_as_of = load_market_lookup(Path(args.market_sum))
-    rebuild_screening_features(panel, market_lookup, market_as_of)
-    update_detail_summary(
-        panel,
-        request_count=0,
-        errors=[],
-        eligible_rows=observations,
-        budget_reached=False,
-    )
-    all_year_results = dict(prior_year_results)
-    all_year_results.update(year_results)
-    recorded_years = sorted(int(year) for year in all_year_results)
-    panel["bulk_financial_enrichment"] = {
-        "schema_version": 1,
-        "source": "OpenDART financial information bulk download",
-        "source_url": BULK_MAIN_URL,
-        "updated_at_utc": utc_now_iso(),
-        "period": {
-            "start_year": recorded_years[0] if recorded_years else years[0],
-            "end_year": recorded_years[-1] if recorded_years else years[-1],
-        },
-        "statement_codes": statement_codes,
-        "download_count_this_run": len(years) * len(statement_codes),
-        "temporary_zip_retention": False,
-        "raw_account_retention": (
-            "All original TXT rows from CFS and OFS are retained in gzip JSON "
-            "shards; ZIP containers are reproducible from recorded filenames."
-        ),
-        "statement_preference": (
-            "Calculation layer uses complete CFS first, then complete OFS, without "
-            "cross-basis field mixing. Raw layer retains both."
-        ),
-        "year_results": all_year_results,
-    }
-    save_financial_panel(panel_path, panel, split_by_year=True)
+    checkpoint_bulk()
     complete = sum(
         row.get("detail_status") == "complete"
         for row in observations

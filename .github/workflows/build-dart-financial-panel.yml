@@ -57,7 +57,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 330
     env:
       DART_API_KEY: ${{ secrets.DART_API_KEY }}
 
@@ -146,7 +146,7 @@ jobs:
       - name: Enrich API gaps, share totals and dividend matters
         id: details
         if: >-
-          inputs.scope == 'bulk-and-supplements' ||
+          (inputs.scope == 'bulk-and-supplements' && steps.bulk.outcome != 'failure') ||
           inputs.scope == 'supplements-only' ||
           inputs.scope == 'legacy-api-details'
         continue-on-error: true
