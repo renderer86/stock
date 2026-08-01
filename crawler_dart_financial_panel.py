@@ -258,36 +258,80 @@ def fetch_corp_code_map(
     session: requests.Session,
     api_key: str,
 ) -> dict[str, dict[str, str]]:
-    try:
-        response = session.get(
-            CORP_CODE_URL,
-            params={"crtfc_key": api_key},
-            timeout=60,
-        )
-        response.raise_for_status()
-    except requests.RequestException:
-        raise RuntimeError(
-            "OpenDART corporation-code download failed; credentials hidden."
-        ) from None
-    try:
-        with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
-            xml_name = next(
-                name for name in archive.namelist() if not name.endswith("/")
+    attempts = 5
+    last_reason = "unknown response"
+    for attempt in range(1, attempts + 1):
+        try:
+            response = session.get(
+                CORP_CODE_URL,
+                params={"crtfc_key": api_key},
+                timeout=90,
             )
-            root = ElementTree.fromstring(archive.read(xml_name))
-    except (zipfile.BadZipFile, StopIteration, ElementTree.ParseError) as exc:
-        raise RuntimeError("OpenDART corpCode.xml returned an invalid ZIP/XML file.") from exc
+            response.raise_for_status()
+            with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
+                xml_name = next(
+                    name for name in archive.namelist() if not name.endswith("/")
+                )
+                root = ElementTree.fromstring(archive.read(xml_name))
+
+            mapping: dict[str, dict[str, str]] = {}
+            for item in root.findall("list"):
+                ticker = normalize_ticker(item.findtext("stock_code"))
+                corp_code = str(item.findtext("corp_code") or "").strip()
+                if re.fullmatch(r"\d{6}", ticker) and re.fullmatch(
+                    r"\d{8}", corp_code
+                ):
+                    mapping[ticker] = {
+                        "corp_code": corp_code,
+                        "corp_name": str(
+                            item.findtext("corp_name") or ""
+                        ).strip(),
+                        "modify_date": str(
+                            item.findtext("modify_date") or ""
+                        ).strip(),
+                    }
+            if not mapping:
+                raise ValueError("corporation-code mapping was empty")
+            return mapping
+        except requests.RequestException as exc:
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            last_reason = f"HTTP {status}" if status else type(exc).__name__
+        except (zipfile.BadZipFile, StopIteration, ElementTree.ParseError, ValueError):
+            last_reason = "invalid ZIP/XML response"
+
+        if attempt < attempts:
+            wait_seconds = min(2**attempt, 16)
+            print(
+                f"[DART PANEL] corporation-code retry {attempt}/{attempts} "
+                f"after {last_reason}; waiting {wait_seconds}s",
+                flush=True,
+            )
+            time.sleep(wait_seconds)
+
+    raise RuntimeError(
+        "OpenDART corporation-code download failed after "
+        f"{attempts} attempts ({last_reason}); credentials hidden."
+    )
+
+
+def corp_code_map_from_existing_panel(
+    panel: dict[str, Any],
+) -> dict[str, dict[str, str]]:
+    """Recover the stable ticker/corporation mapping for a resume run."""
 
     mapping: dict[str, dict[str, str]] = {}
-    for item in root.findall("list"):
-        ticker = normalize_ticker(item.findtext("stock_code"))
-        corp_code = str(item.findtext("corp_code") or "").strip()
-        if re.fullmatch(r"\d{6}", ticker) and re.fullmatch(r"\d{8}", corp_code):
-            mapping[ticker] = {
-                "corp_code": corp_code,
-                "corp_name": str(item.findtext("corp_name") or "").strip(),
-                "modify_date": str(item.findtext("modify_date") or "").strip(),
-            }
+    for row in panel.get("observations") or []:
+        ticker = normalize_ticker(row.get("ticker"))
+        corp_code = str(row.get("corp_code") or "").strip()
+        if not re.fullmatch(r"\d{6}", ticker) or not re.fullmatch(
+            r"\d{8}", corp_code
+        ):
+            continue
+        mapping[ticker] = {
+            "corp_code": corp_code,
+            "corp_name": str(row.get("company") or "").strip(),
+            "modify_date": "",
+        }
     return mapping
 
 
@@ -658,6 +702,8 @@ def main() -> None:
     if not universe:
         raise SystemExit("No stocks found in the requested universe.")
 
+    existing = {} if args.reset else load_financial_panel(output_path)
+
     print(
         f"[DART PANEL] universe {len(universe):,} | "
         f"fiscal years {start_year}-{end_year} | annual reports",
@@ -665,7 +711,19 @@ def main() -> None:
     )
     session = create_session()
     print("[DART PANEL] downloading corporation-code mapping", flush=True)
-    corp_map = fetch_corp_code_map(session, api_key)
+    try:
+        corp_map = fetch_corp_code_map(session, api_key)
+        corp_mapping_source = "OpenDART corpCode.xml"
+    except RuntimeError:
+        corp_map = corp_code_map_from_existing_panel(existing)
+        if not corp_map:
+            raise
+        corp_mapping_source = "existing panel fallback"
+        print(
+            "[DART PANEL] WARNING corporation-code download failed; "
+            f"continuing with {len(corp_map):,} mappings from the existing panel",
+            flush=True,
+        )
 
     mapped: list[dict[str, Any]] = []
     unmapped: list[dict[str, Any]] = []
@@ -691,13 +749,13 @@ def main() -> None:
 
     print(
         f"[DART PANEL] mapped companies {len(mapped):,} | "
-        f"non-company instruments/unmapped {len(unmapped):,}",
+        f"non-company instruments/unmapped {len(unmapped):,} | "
+        f"mapping source {corp_mapping_source}",
         flush=True,
     )
     if not mapped:
         raise SystemExit("No OpenDART corporation codes matched the universe.")
 
-    existing = {} if args.reset else load_financial_panel(output_path)
     observations_by_key: dict[tuple[str, int], dict[str, Any]] = {}
     no_data_by_key: dict[tuple[str, int], dict[str, Any]] = {}
     if existing.get("schema_version") == SCHEMA_VERSION:
