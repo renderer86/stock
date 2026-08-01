@@ -20,6 +20,7 @@ on:
   workflow_run:
     workflows:
       - "Update dashboard news"
+      - "Build DART 10-year financial panel"
     types:
       - completed
   workflow_dispatch:
