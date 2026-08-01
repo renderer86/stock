@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260802-investment-screens">
+  <link rel="stylesheet" href="style.css?v=20260802-pending-details">
 </head>
 <body>
   <div class="page-shell">
@@ -141,12 +141,18 @@
         <div class="section-head">
           <div>
             <p class="section-kicker">0. Buffett Compounders</p>
-            <h2>우선 검토 후보 · 버핏식</h2>
+            <h2>버핏 스타일</h2>
             <p class="section-description">10년 지속 ROIC·무적자·마진 안정성·현금전환·재무체력·주식수·자본배분을 모두 통과하고 FCF 수익률 조건까지 충족한 종목입니다.</p>
           </div>
           <div class="section-side">
             <span class="stat-pill" id="priority-count-badge">Loading</span>
-            <span class="stat-pill subtle" id="buffett-pending-badge">데이터 판정 중</span>
+            <button
+              class="stat-pill subtle pending-detail-trigger"
+              id="buffett-pending-badge"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="screen-pending-modal"
+            >데이터 판정 중</button>
             <span class="stat-pill subtle" id="buffett-updated-badge">산출 시각 확인 중</span>
           </div>
         </div>
@@ -183,7 +189,13 @@
           </div>
           <div class="section-side">
             <span class="stat-pill" id="quality-count-badge">Loading</span>
-            <span class="stat-pill subtle" id="quality-pending-badge">데이터 판정 중</span>
+            <button
+              class="stat-pill subtle pending-detail-trigger"
+              id="quality-pending-badge"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="screen-pending-modal"
+            >데이터 판정 중</button>
             <span class="stat-pill subtle" id="quality-updated-badge">산출 시각 확인 중</span>
           </div>
         </div>
@@ -783,6 +795,27 @@
     <aside id="market-map-detail" class="market-map-detail" aria-live="polite"></aside>
   </div>
 
-  <script src="script.js?v=20260802-investment-screens"></script>
+  <div
+    id="screen-pending-modal"
+    class="market-map-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="screen-pending-modal-title"
+    hidden
+  >
+    <button
+      class="market-map-modal-backdrop"
+      type="button"
+      data-screen-pending-close
+      aria-label="판정 대기 종목 목록 닫기"
+    ></button>
+    <aside
+      id="screen-pending-detail"
+      class="market-map-detail pending-detail-panel"
+      aria-live="polite"
+    ></aside>
+  </div>
+
+  <script src="script.js?v=20260802-pending-details"></script>
 </body>
 </html>

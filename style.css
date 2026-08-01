@@ -1439,6 +1439,28 @@ a.rate-ticker-item:hover {
   color: #5f2f1c;
 }
 
+.pending-detail-trigger {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.pending-detail-trigger:hover,
+.pending-detail-trigger:focus-visible {
+  background: #f5c9b7;
+  box-shadow: 0 7px 18px rgba(95, 47, 28, 0.14);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.pending-detail-trigger:disabled {
+  box-shadow: none;
+  cursor: default;
+  opacity: 0.65;
+  transform: none;
+}
+
 .table-wrap {
   max-height: 68vh;
   overflow: auto;
@@ -2741,6 +2763,155 @@ body.market-map-modal-open {
   background: rgba(240, 139, 100, 0.13);
 }
 
+.pending-detail-panel {
+  width: min(880px, 100%);
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.pending-detail-head p {
+  white-space: normal;
+}
+
+.pending-detail-reason-summary {
+  display: flex;
+  gap: 6px;
+  padding-bottom: 2px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.pending-detail-reason-summary > span {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 248, 241, 0.7);
+  font-size: 0.67rem;
+}
+
+.pending-detail-reason-summary strong {
+  margin-left: 3px;
+  color: #fff8f1;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.pending-detail-search {
+  display: grid;
+  gap: 6px;
+}
+
+.pending-detail-search > span,
+.pending-detail-list-meta {
+  color: rgba(255, 248, 241, 0.56);
+  font-size: 0.68rem;
+}
+
+.pending-detail-search input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 13px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 11px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.065);
+  color: #fff8f1;
+  font: inherit;
+}
+
+.pending-detail-search input::placeholder {
+  color: rgba(255, 248, 241, 0.36);
+}
+
+.pending-detail-search input:focus {
+  border-color: rgba(240, 139, 100, 0.68);
+  box-shadow: 0 0 0 3px rgba(240, 139, 100, 0.12);
+}
+
+.pending-detail-list-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pending-detail-list {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-height: 120px;
+  padding-right: 4px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.pending-detail-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(260px, 1.6fr);
+  gap: 14px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #fff8f1;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pending-detail-row:hover,
+.pending-detail-row:focus-visible {
+  border-color: rgba(240, 139, 100, 0.52);
+  background: rgba(240, 139, 100, 0.1);
+  outline: none;
+}
+
+.pending-detail-row:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.pending-detail-company {
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.pending-detail-company strong,
+.pending-detail-company small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pending-detail-company strong {
+  font-size: 0.82rem;
+}
+
+.pending-detail-company small {
+  color: rgba(255, 248, 241, 0.46);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.66rem;
+}
+
+.pending-detail-reasons {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.pending-detail-reasons > span {
+  padding: 5px 7px;
+  border-radius: 7px;
+  background: rgba(255, 210, 158, 0.1);
+  color: #ffd6bd;
+  font-size: 0.65rem;
+  line-height: 1.25;
+}
+
 .market-map-loading {
   display: grid;
   min-height: 180px;
@@ -2840,6 +3011,15 @@ body.market-map-modal-open {
     width: min(460px, 100%);
     max-height: calc(100dvh - 32px);
     min-height: 0;
+  }
+
+  .pending-detail-panel {
+    width: min(760px, 100%);
+  }
+
+  .pending-detail-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .market-overview {

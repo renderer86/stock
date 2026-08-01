@@ -83,7 +83,9 @@ const state = {
   marketMapSize: "market_cap",
   marketMapLimit: 500,
   marketMapSearch: "",
-  marketMapSelected: null
+  marketMapSelected: null,
+  pendingDetailMode: null,
+  pendingDetailSearch: ""
 };
 
 function formatNumber(value, digits = 2) {
@@ -2343,6 +2345,220 @@ function updatePrioritySortHeaders() {
   });
 }
 
+const SCREEN_PENDING_REASON_LABELS = {
+  buffett: {
+    persistence_9_of_10: "10년 ROIC·ROE 이력 부족",
+    positive_net_income_all_10y: "10년 순이익 이력 부족",
+    gross_margin_sigma_le_5pp: "10년 매출총이익률 이력 부족",
+    fcf_conversion_ge_0_8: "FCF 전환율 계산 데이터 부족",
+    net_debt_to_ebitda_le_2_or_net_cash: "순부채·EBITDA 데이터 부족",
+    shares_not_increased_10y: "10년 발행주식수 이력 부족",
+    incremental_roic_ge_15_or_payout_ge_50: "증분 ROIC·주주환원 데이터 부족"
+  },
+  quality: {
+    gpa_market_top_30pct: "GP/A 시장 순위 데이터 부족",
+    piotroski_f_score_ge_7: "F-Score 계산 데이터 부족",
+    eps_cv_market_lowest: "EPS 변동성 데이터 부족",
+    debt_to_equity_le_100pct: "부채비율 데이터 부족",
+    dividend_or_buyback_recent_3y: "최근 3년 배당·자사주 데이터 부족"
+  }
+};
+
+function screenPendingRows(mode) {
+  const results = state.investmentScreensPayload?.results || {};
+  const labels = SCREEN_PENDING_REASON_LABELS[mode] || {};
+  return Object.values(results)
+    .filter((row) => mode === "buffett"
+      ? row?.buffett?.business_quality_status === "pending"
+      : row?.quality?.status === "pending")
+    .map((row) => {
+      const missing = mode === "buffett"
+        ? row?.buffett?.coverage?.missing || []
+        : row?.quality?.coverage?.missing || [];
+      return {
+        code: row.ticker,
+        company: row.company || row.ticker,
+        market: row.market || "-",
+        reasons: missing.map((key) => labels[key] || key)
+      };
+    })
+    .sort((a, b) => (
+      String(a.company).localeCompare(String(b.company), "ko")
+      || String(a.code).localeCompare(String(b.code))
+    ));
+}
+
+function renderScreenPendingModal() {
+  const modal = document.getElementById("screen-pending-modal");
+  const container = document.getElementById("screen-pending-detail");
+  const mode = state.pendingDetailMode;
+  if (!modal || !container || !mode) {
+    return;
+  }
+
+  const allRows = screenPendingRows(mode);
+  const query = state.pendingDetailSearch.trim().toLowerCase();
+  const visibleRows = query
+    ? allRows.filter((row) => (
+      `${row.code} ${row.company} ${row.market} ${row.reasons.join(" ")}`
+        .toLowerCase()
+        .includes(query)
+    ))
+    : allRows;
+  const reasonCounts = new Map();
+  allRows.forEach((row) => {
+    row.reasons.forEach((reason) => {
+      reasonCounts.set(reason, (reasonCounts.get(reason) || 0) + 1);
+    });
+  });
+  const valuationCodes = new Set(
+    state.rawStocks
+      .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
+      .filter(passesRoaFilter)
+      .map((row) => row.code)
+  );
+  const title = mode === "buffett"
+    ? "버핏 스타일 · 데이터 부족 종목"
+    : "퀄리티 팩터 · 데이터 부족 종목";
+
+  container.innerHTML = `
+    <button
+      type="button"
+      class="market-map-modal-close"
+      data-screen-pending-close
+      aria-label="판정 대기 종목 목록 닫기"
+    >×</button>
+    <div class="market-map-detail-head pending-detail-head">
+      <div>
+        <p>수집 실패가 아니라 조건 계산에 필요한 이력이 부족한 종목입니다.</p>
+        <h3 id="screen-pending-modal-title">${escapeHtml(title)}</h3>
+        <span>현재 ROE·ROA 필터를 통과한 종목은 누르면 가치평가 화면으로 이동합니다.</span>
+      </div>
+      <span class="market-map-detail-change">${allRows.length.toLocaleString("ko-KR")}개</span>
+    </div>
+    <div class="pending-detail-reason-summary">
+      ${Array.from(reasonCounts.entries()).map(([reason, count]) => `
+        <span>${escapeHtml(reason)} <strong>${count.toLocaleString("ko-KR")}</strong></span>
+      `).join("")}
+    </div>
+    <label class="pending-detail-search">
+      <span>종목·누락 사유 검색</span>
+      <input
+        id="screen-pending-search"
+        type="search"
+        value="${escapeHtml(state.pendingDetailSearch)}"
+        placeholder="종목명, 코드 또는 누락 항목"
+        autocomplete="off"
+      >
+    </label>
+    <div class="pending-detail-list-meta">
+      <span>${visibleRows.length.toLocaleString("ko-KR")}개 표시</span>
+      <span>누락 사유는 한 종목에 여러 개일 수 있습니다.</span>
+    </div>
+    <div class="pending-detail-list">
+      ${visibleRows.length ? visibleRows.map((row) => {
+        const canOpen = valuationCodes.has(row.code);
+        return `
+          <button
+            type="button"
+            class="pending-detail-row"
+            data-screen-pending-code="${escapeHtml(row.code)}"
+            title="${canOpen ? "가치평가 화면에서 보기" : "현재 ROE·ROA 필터에서는 가치평가 이동 불가"}"
+            ${canOpen ? "" : "disabled"}
+          >
+            <span class="pending-detail-company">
+              <strong>${escapeHtml(row.company)}</strong>
+              <small>${escapeHtml(`${row.code} · ${row.market}`)}</small>
+            </span>
+            <span class="pending-detail-reasons">
+              ${(row.reasons.length ? row.reasons : ["분석 조건 데이터 부족"]).map((reason) => `
+                <span>${escapeHtml(reason)}</span>
+              `).join("")}
+            </span>
+          </button>
+        `;
+      }).join("") : `
+        <div class="market-map-detail-empty">
+          <strong>검색 결과가 없습니다.</strong>
+          <span>다른 종목명이나 누락 항목으로 검색해보세요.</span>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+function openScreenPendingModal(mode) {
+  state.pendingDetailMode = mode;
+  state.pendingDetailSearch = "";
+  const modal = document.getElementById("screen-pending-modal");
+  if (!modal) {
+    return;
+  }
+  modal.hidden = false;
+  document.body.classList.add("market-map-modal-open");
+  renderScreenPendingModal();
+  window.setTimeout(() => document.getElementById("screen-pending-search")?.focus(), 0);
+}
+
+function closeScreenPendingModal({ returnFocus = true } = {}) {
+  const mode = state.pendingDetailMode;
+  state.pendingDetailMode = null;
+  state.pendingDetailSearch = "";
+  document.getElementById("screen-pending-modal")?.setAttribute("hidden", "");
+  document.body.classList.remove("market-map-modal-open");
+  if (returnFocus) {
+    const triggerId = mode === "quality"
+      ? "quality-pending-badge"
+      : "buffett-pending-badge";
+    document.getElementById(triggerId)?.focus();
+  }
+}
+
+function bindScreenPendingModal() {
+  document.getElementById("buffett-pending-badge")?.addEventListener("click", () => {
+    openScreenPendingModal("buffett");
+  });
+  document.getElementById("quality-pending-badge")?.addEventListener("click", () => {
+    openScreenPendingModal("quality");
+  });
+  document.getElementById("screen-pending-modal")?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-screen-pending-close]")) {
+      closeScreenPendingModal();
+      return;
+    }
+    const row = event.target.closest("[data-screen-pending-code]");
+    if (!row || row.disabled) {
+      return;
+    }
+    const code = row.dataset.screenPendingCode;
+    closeScreenPendingModal({ returnFocus: false });
+    state.selectedCode = code;
+    switchWorkspace("valuation");
+    renderDashboard();
+    window.setTimeout(() => {
+      document.getElementById("selected-stock-workbench")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  });
+  document.getElementById("screen-pending-modal")?.addEventListener("input", (event) => {
+    if (event.target.id !== "screen-pending-search") {
+      return;
+    }
+    state.pendingDetailSearch = event.target.value;
+    renderScreenPendingModal();
+    const search = document.getElementById("screen-pending-search");
+    window.setTimeout(() => {
+      search?.focus();
+      search?.setSelectionRange(search.value.length, search.value.length);
+    }, 0);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !document.getElementById("screen-pending-modal")?.hidden) {
+      closeScreenPendingModal();
+    }
+  });
+}
+
 function renderPriorityCandidates(stocks) {
   const tbody = document.getElementById("priority-candidates-body");
   const countBadge = document.getElementById("priority-count-badge");
@@ -2357,6 +2573,10 @@ function renderPriorityCandidates(stocks) {
   pendingBadge.textContent = pendingCount
     ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
     : "판정 대기 없음";
+  pendingBadge.disabled = pendingCount === 0;
+  pendingBadge.title = pendingCount
+    ? "클릭하여 종목별 누락 사유 보기"
+    : "판정 대기 종목이 없습니다.";
   if (updatedBadge) {
     updatedBadge.textContent = state.investmentScreensPayload?.generated_at_utc
       ? `산출 ${formatCompactDateTime(state.investmentScreensPayload.generated_at_utc)}`
@@ -2434,6 +2654,10 @@ function renderQualityCandidates(stocks) {
   pendingBadge.textContent = pendingCount
     ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
     : "판정 대기 없음";
+  pendingBadge.disabled = pendingCount === 0;
+  pendingBadge.title = pendingCount
+    ? "클릭하여 종목별 누락 사유 보기"
+    : "판정 대기 종목이 없습니다.";
   if (updatedBadge) {
     updatedBadge.textContent = state.investmentScreensPayload?.generated_at_utc
       ? `산출 ${formatCompactDateTime(state.investmentScreensPayload.generated_at_utc)}`
@@ -4122,6 +4346,7 @@ bindFeatureControls();
 bindMarketOverview();
 bindTodayNews();
 bindMarketMap();
+bindScreenPendingModal();
 initResponsiveTables();
 const initialWorkspace = location.hash.replace("#", "");
 if (["priority", "valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
