@@ -2616,8 +2616,8 @@ function renderPriorityCandidates(stocks) {
 
   tbody.innerHTML = candidates.map((stock) => `
     <tr data-code="${stock.code}" class="${stock.canOpenValuation ? "" : "is-static-row"}">
-      <td><span class="rank-chip">${stock.buffettRank}</span></td>
-      <td>
+      <td class="buffett-rank-cell"><span class="rank-chip">${stock.buffettRank}</span></td>
+      <td class="buffett-identity-cell">
         <span class="buffett-name-cell">
           <span class="name-cell">
             <span>${escapeHtml(stock.name)}</span>
@@ -2629,16 +2629,16 @@ function renderPriorityCandidates(stocks) {
           </span>
         </span>
       </td>
-      <td>${escapeHtml(stock.sector || "-")}</td>
-      <td title="${escapeHtml(stock.recentReturnValues.map((value) => formatPercent(value, 1)).join(" · "))}">${escapeHtml(stock.recentReturnMetric || "ROIC")} ${formatPercent(stock.recentReturnAverage, 1)}</td>
-      <td>${formatPercent(stock.grossMarginSigma, 1)}</td>
-      <td>${stock.fcfConversion === null || stock.fcfConversion === undefined ? "N/A" : formatPercent(stock.fcfConversion * 100, 1)}</td>
-      <td>${formatNumber(stock.netDebtToEbitda, 2)}</td>
-      <td>${formatPercent(stock.incrementalRoic, 1)}</td>
-      <td>${formatPercent(stock.payoutRatio, 1)}</td>
-      <td class="${metricClass(stock.fcfYield)}">${formatPercent(stock.fcfYield, 1)}</td>
-      <td>${formatYears(stock.estimatedNBase)}</td>
-      <td>${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
+      <td class="buffett-sector-cell">${escapeHtml(stock.sector || "-")}</td>
+      <td class="buffett-return-cell" title="${escapeHtml(stock.recentReturnValues.map((value) => formatPercent(value, 1)).join(" · "))}">${escapeHtml(stock.recentReturnMetric || "ROIC")} ${formatPercent(stock.recentReturnAverage, 1)}</td>
+      <td class="buffett-metric-cell">${formatPercent(stock.grossMarginSigma, 1)}</td>
+      <td class="buffett-metric-cell">${stock.fcfConversion === null || stock.fcfConversion === undefined ? "N/A" : formatPercent(stock.fcfConversion * 100, 1)}</td>
+      <td class="buffett-metric-cell">${formatNumber(stock.netDebtToEbitda, 2)}</td>
+      <td class="buffett-metric-cell">${formatPercent(stock.incrementalRoic, 1)}</td>
+      <td class="buffett-metric-cell">${formatPercent(stock.payoutRatio, 1)}</td>
+      <td class="buffett-metric-cell buffett-fcf-yield-cell ${metricClass(stock.fcfYield)}">${formatPercent(stock.fcfYield, 1)}</td>
+      <td class="buffett-metric-cell">${formatYears(stock.estimatedNBase)}</td>
+      <td class="buffett-metric-cell">${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
     </tr>
   `).join("");
 

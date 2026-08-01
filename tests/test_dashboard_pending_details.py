@@ -63,6 +63,17 @@ class DashboardPendingDetailTests(unittest.TestCase):
             self.assertGreaterEqual(buffett["supporting_condition_count"], 1)
             self.assertTrue(buffett["strength_tags"])
 
+    def test_buffett_watchlist_has_a_mobile_card_layout(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+        style = (ROOT / "style.css").read_text(encoding="utf-8")
+
+        self.assertIn('class="buffett-watchlist-table"', html)
+        self.assertIn('class="buffett-identity-cell"', script)
+        self.assertIn('class="buffett-return-cell"', script)
+        self.assertIn(".buffett-watchlist-table tbody tr", style)
+        self.assertIn("grid-column: 1 / -1", style)
+
 
 if __name__ == "__main__":
     unittest.main()

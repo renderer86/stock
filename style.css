@@ -4055,6 +4055,117 @@ body.market-map-modal-open {
     min-width: 0;
   }
 
+  .table-wrap table.buffett-watchlist-table.has-mobile-sort thead th[data-priority-sort-key] {
+    display: none;
+  }
+
+  .table-wrap table.buffett-watchlist-table.has-mobile-sort thead th:nth-child(1),
+  .table-wrap table.buffett-watchlist-table.has-mobile-sort thead th:nth-child(2),
+  .table-wrap table.buffett-watchlist-table.has-mobile-sort thead th:nth-child(4),
+  .table-wrap table.buffett-watchlist-table.has-mobile-sort thead th:nth-child(10) {
+    display: block;
+  }
+
+  .buffett-watchlist-table tbody {
+    gap: 12px;
+  }
+
+  .buffett-watchlist-table tbody tr {
+    position: relative;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: 18px;
+  }
+
+  .buffett-watchlist-table tbody .buffett-rank-cell {
+    position: absolute;
+    top: 13px;
+    left: 12px;
+    z-index: 2;
+    display: block;
+    width: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .buffett-watchlist-table tbody .buffett-rank-cell::before,
+  .buffett-watchlist-table tbody .buffett-identity-cell::before {
+    content: none;
+  }
+
+  .buffett-watchlist-table tbody .buffett-identity-cell {
+    grid-column: 1 / -1;
+    min-height: 76px;
+    padding: 13px 12px 12px 53px;
+    border-bottom: 1px solid rgba(71, 55, 40, 0.1);
+    background: linear-gradient(135deg, rgba(245, 238, 227, 0.94), rgba(255, 250, 242, 0.88));
+  }
+
+  .buffett-watchlist-table .buffett-name-cell {
+    gap: 8px;
+  }
+
+  .buffett-watchlist-table .buffett-name-cell > .name-cell > span:first-child {
+    font-size: 0.94rem;
+    line-height: 1.3;
+  }
+
+  .buffett-watchlist-table .buffett-strength-tags {
+    gap: 4px;
+  }
+
+  .buffett-watchlist-table .buffett-strength-tags span,
+  .buffett-watchlist-table .buffett-strict-badge {
+    min-height: 20px;
+    padding: 3px 6px;
+    font-size: 0.62rem;
+  }
+
+  .buffett-watchlist-table tbody .buffett-sector-cell {
+    grid-column: 1 / -1;
+    grid-template-columns: 52px minmax(0, 1fr);
+    align-items: center;
+    min-height: 38px;
+    padding: 7px 12px;
+    background: rgba(245, 238, 227, 0.36);
+  }
+
+  .buffett-watchlist-table tbody .buffett-return-cell {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: 54px;
+    padding: 10px 12px;
+    background: rgba(10, 122, 95, 0.09);
+    color: #087057;
+    font-size: 0.96rem;
+    font-weight: 700;
+  }
+
+  .buffett-watchlist-table tbody .buffett-return-cell::before {
+    color: #52766b;
+    font-size: 0.68rem;
+  }
+
+  .buffett-watchlist-table tbody .buffett-metric-cell {
+    min-height: 58px;
+    padding: 8px 10px;
+    background: rgba(255, 253, 249, 0.78);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .buffett-watchlist-table tbody .buffett-metric-cell:nth-child(odd) {
+    border-right: 1px solid rgba(71, 55, 40, 0.07);
+  }
+
+  .buffett-watchlist-table tbody .buffett-fcf-yield-cell {
+    background: rgba(184, 92, 56, 0.08);
+  }
+
+  .buffett-watchlist-table tbody .buffett-fcf-yield-cell::before {
+    color: #9a624b;
+  }
+
   .table-wrap .table-subtext {
     margin-top: 0;
     overflow-wrap: anywhere;
