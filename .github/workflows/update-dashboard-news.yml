@@ -34,6 +34,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
         with:
+          # A scheduled run may have waited while another writer updated main.
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Set up Python
@@ -66,7 +68,8 @@ jobs:
 
           for attempt in 1 2 3; do
             git fetch origin "${GITHUB_REF_NAME}"
-            if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+            # This run's news snapshot is newer than an overlapping snapshot.
+            if ! git rebase -X theirs "origin/${GITHUB_REF_NAME}"; then
               git rebase --abort || true
               echo "::error::News data conflicted with newer remote data."
               exit 1

@@ -55,6 +55,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
         with:
+          # A run can wait behind an earlier market-data run. Check out the
+          # branch tip at job start instead of the stale event SHA.
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Set up Python
@@ -104,7 +107,9 @@ jobs:
           for attempt in 1 2 3; do
             echo "Sync attempt ${attempt}/3 with origin/${GITHUB_REF_NAME}"
             git fetch origin "${GITHUB_REF_NAME}"
-            if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+            # The rebased commit contains data generated later than any
+            # overlapping automated data commit, so prefer it on conflicts.
+            if ! git rebase -X theirs "origin/${GITHUB_REF_NAME}"; then
               git rebase --abort || true
               echo "::error::Generated data conflicted with newer remote data."
               exit 1

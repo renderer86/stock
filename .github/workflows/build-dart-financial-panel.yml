@@ -65,6 +65,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
         with:
+          # Manual runs can queue behind a long-running panel build. Resume
+          # from the branch tip available when this job actually starts.
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Set up Python
@@ -209,7 +212,9 @@ jobs:
           for attempt in 1 2 3; do
             echo "Sync attempt ${attempt}/3 with origin/${GITHUB_REF_NAME}"
             git fetch origin "${GITHUB_REF_NAME}"
-            if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+            # The checkpoint produced by this run is newer than any
+            # overlapping automated checkpoint, including binary raw shards.
+            if ! git rebase -X theirs "origin/${GITHUB_REF_NAME}"; then
               git rebase --abort || true
               echo "::error::Panel checkpoint conflicted with newer remote data."
               exit 1
