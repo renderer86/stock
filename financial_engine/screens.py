@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import Counter
 from datetime import datetime, timezone
+import math
 from typing import Any
 
 from .config import ENGINE_VERSION, METHODOLOGY_VERSION
@@ -32,6 +33,142 @@ def _condition_coverage(conditions: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _number(value: Any) -> float | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        result = float(value)
+    except (TypeError, ValueError):
+        return None
+    return result if math.isfinite(result) else None
+
+
+def _buffett_watchlist_profile(
+    rows: list[dict[str, Any]],
+    conditions: dict[str, Any],
+    valuation: dict[str, Any],
+) -> dict[str, Any]:
+    """Apply the current-return gate and describe observable strengths."""
+    rows = sorted(rows, key=lambda row: int(row.get("fiscal_year") or 0))
+    latest_year = max(
+        (int(row.get("fiscal_year") or 0) for row in rows),
+        default=0,
+    )
+    is_financial = bool(rows[-1].get("is_financial")) if rows else False
+    metric = "ROE" if is_financial else "ROIC"
+    hurdle = 10 if is_financial else 12
+    by_year = {
+        int(row.get("fiscal_year") or 0): row
+        for row in rows
+        if row.get("fiscal_year")
+    }
+    recent_years = list(range(latest_year - 2, latest_year + 1))
+    recent_values: list[float | None] = []
+    for year in recent_years:
+        row = by_year.get(year) or {}
+        value = (
+            (row.get("metrics") or {}).get("roe_pct")
+            if is_financial
+            else (row.get("detail_metrics") or {}).get("roic_pct")
+        )
+        recent_values.append(_number(value))
+
+    if any(value is not None and value < hurdle for value in recent_values):
+        minimum_status = "fail"
+    elif len(recent_values) == 3 and all(
+        value is not None and value >= hurdle for value in recent_values
+    ):
+        minimum_status = "pass"
+    else:
+        minimum_status = "pending"
+
+    eps_years = list(range(latest_year - 4, latest_year + 1))
+    eps_values = [
+        _number(
+            ((by_year.get(year) or {}).get("detail_metrics") or {}).get(
+                "basic_eps"
+            )
+        )
+        for year in eps_years
+    ]
+    eps_cagr = None
+    if (
+        len(eps_values) == 5
+        and all(value is not None and value > 0 for value in eps_values)
+    ):
+        eps_cagr = (
+            (float(eps_values[-1]) / float(eps_values[0])) ** (1 / 4) - 1
+        ) * 100
+
+    latest_row = by_year.get(latest_year) or {}
+    latest_metrics = latest_row.get("detail_metrics") or {}
+    latest_net_debt = _number(latest_metrics.get("net_debt"))
+    fcf_yield = _number(valuation.get("fcf_yield_pct"))
+    supporting_count = sum(value is True for value in conditions.values())
+    unknown_support = any(value is None for value in conditions.values())
+
+    if minimum_status == "fail":
+        watchlist_status = "fail"
+    elif minimum_status == "pending":
+        watchlist_status = "pending"
+    elif supporting_count:
+        watchlist_status = "pass"
+    elif unknown_support:
+        watchlist_status = "pending"
+    else:
+        watchlist_status = "fail"
+
+    tags: list[str] = []
+    if conditions.get("persistence_9_of_10") is True:
+        tags.append(f"매우 높은 장기 {metric}")
+    if eps_cagr is not None and eps_cagr >= 8:
+        tags.append("강한 주당 이익 성장")
+    if conditions.get("positive_net_income_all_10y") is True:
+        tags.append("10년 연속 흑자")
+    if conditions.get("gross_margin_sigma_le_5pp") is True:
+        tags.append("안정적인 마진")
+    if conditions.get("fcf_conversion_ge_0_8") is True:
+        tags.append("탁월한 FCF 전환")
+    if latest_net_debt is not None and latest_net_debt <= 0 and (
+        fcf_yield is not None and fcf_yield >= 5
+    ):
+        tags.append("순현금·높은 FCF 수익률")
+    elif conditions.get("net_debt_to_ebitda_le_2_or_net_cash") is True:
+        tags.append("튼튼한 재무")
+    if conditions.get("shares_not_increased_10y") is True:
+        tags.append("주식수 희석 없음")
+    if conditions.get("incremental_roic_ge_15_or_payout_ge_50") is True:
+        tags.append("뛰어난 자본배분")
+
+    missing_reasons: list[str] = []
+    if minimum_status == "pending":
+        missing_reasons.append("recent_3y_persistence")
+    if minimum_status == "pass" and not supporting_count and unknown_support:
+        missing_reasons.append("supporting_buffett_condition")
+
+    known_recent = [value for value in recent_values if value is not None]
+    return {
+        "watchlist_status": watchlist_status,
+        "watchlist_eligible": watchlist_status == "pass",
+        "minimum_persistence_status": minimum_status,
+        "minimum_persistence_metric": metric,
+        "minimum_persistence_hurdle_pct": hurdle,
+        "minimum_persistence_years": recent_years,
+        "minimum_persistence_values_pct": recent_values,
+        "minimum_persistence_average_pct": (
+            round(sum(known_recent) / len(known_recent), 4)
+            if len(known_recent) == 3
+            else None
+        ),
+        "supporting_condition_count": supporting_count,
+        "strength_tags": tags,
+        "eps_cagr_5y_pct": round(eps_cagr, 4)
+        if eps_cagr is not None
+        else None,
+        "missing_reasons": missing_reasons,
+    }
+
+
 class InvestmentScreenBuilder:
     """Build presentation-neutral Buffett and quality screen results."""
 
@@ -52,6 +189,14 @@ class InvestmentScreenBuilder:
             if row.get("code")
         }
         company_metadata = self._company_metadata(panel)
+        observations_by_ticker: dict[str, list[dict[str, Any]]] = {}
+        for observation in panel.get("observations") or []:
+            observation_ticker = str(
+                observation.get("ticker") or ""
+            ).strip().zfill(6)
+            observations_by_ticker.setdefault(observation_ticker, []).append(
+                observation
+            )
         tickers = sorted(
             set(company_metadata) | set(panel_features) | set(n_by_ticker)
         )
@@ -84,6 +229,11 @@ class InvestmentScreenBuilder:
                 _tri_state(quality_conditions)
                 if quality_conditions
                 else "pending"
+            )
+            watchlist = _buffett_watchlist_profile(
+                observations_by_ticker.get(ticker) or [],
+                buffett_conditions,
+                valuation,
             )
             metadata = company_metadata.get(ticker) or {}
             results[ticker] = {
@@ -125,6 +275,7 @@ class InvestmentScreenBuilder:
                         business_status == "pass"
                         and valuation_status == "pass"
                     ),
+                    **watchlist,
                     "conditions": buffett_conditions,
                     "coverage": _condition_coverage(buffett_conditions),
                     "persistence_metric": buffett.get(
@@ -203,12 +354,40 @@ class InvestmentScreenBuilder:
                 row["ticker"],
             ),
         )
+        buffett_watchlist = sorted(
+            (
+                row
+                for row in results.values()
+                if row["buffett"]["watchlist_eligible"]
+            ),
+            key=lambda row: (
+                -int(row["buffett"]["supporting_condition_count"]),
+                -float(
+                    row["buffett"].get(
+                        "minimum_persistence_average_pct"
+                    )
+                    or -999
+                ),
+                -float(row["buffett"].get("eps_cagr_5y_pct") or -999),
+                -float(
+                    (row["buffett"].get("valuation") or {}).get(
+                        "fcf_yield_pct"
+                    )
+                    or -999
+                ),
+                row["ticker"],
+            ),
+        )
         buffett_status_counts = Counter(
             row["buffett"]["business_quality_status"]
             for row in results.values()
         )
         quality_status_counts = Counter(
             row["quality"]["status"] for row in results.values()
+        )
+        buffett_watchlist_status_counts = Counter(
+            row["buffett"]["watchlist_status"]
+            for row in results.values()
         )
         return {
             "schema_version": 1,
@@ -233,8 +412,11 @@ class InvestmentScreenBuilder:
                     "as pass."
                 ),
                 "buffett": (
-                    "Business-quality pass and FCF-yield valuation pass are "
-                    "reported separately and must both pass for candidate=true."
+                    "The interest watchlist requires ROIC >=12% for the latest "
+                    "three consecutive fiscal years (ROE >=10% for financials) "
+                    "and at least one true condition from the original seven. "
+                    "The legacy strict candidate still requires all seven plus "
+                    "FCF yield >=5%."
                 ),
                 "quality": (
                     "All quality conditions must pass, then eligible stocks are "
@@ -245,16 +427,38 @@ class InvestmentScreenBuilder:
             "summary": {
                 "company_count": len(results),
                 "buffett_candidate_count": len(buffett_candidates),
+                "buffett_watchlist_count": len(buffett_watchlist),
                 "quality_eligible_count": len(quality_candidates),
                 "quality_basket_count": len(selected_quality),
                 "buffett_status_counts": dict(
                     sorted(buffett_status_counts.items())
+                ),
+                "buffett_watchlist_status_counts": dict(
+                    sorted(buffett_watchlist_status_counts.items())
                 ),
                 "quality_status_counts": dict(
                     sorted(quality_status_counts.items())
                 ),
             },
             "rankings": {
+                "buffett_watchlist": [
+                    {
+                        "rank": rank,
+                        "ticker": row["ticker"],
+                        "company": row["company"],
+                        "supporting_condition_count": row["buffett"][
+                            "supporting_condition_count"
+                        ],
+                        "recent_return_average_pct": row["buffett"].get(
+                            "minimum_persistence_average_pct"
+                        ),
+                        "strength_tags": row["buffett"].get(
+                            "strength_tags"
+                        ),
+                        "strict_candidate": row["buffett"]["candidate"],
+                    }
+                    for rank, row in enumerate(buffett_watchlist, start=1)
+                ],
                 "buffett_candidates": [
                     {
                         "ticker": row["ticker"],

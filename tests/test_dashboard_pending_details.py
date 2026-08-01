@@ -44,6 +44,25 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertIsNotNone(script_version)
         self.assertEqual(style_version.group(1), script_version.group(1))
 
+    def test_buffett_watchlist_explains_gate_and_renders_strength_tags(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+        payload = json.loads(
+            (ROOT / "data/investment_screens.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        self.assertIn("최근 3개 연속 사업연도", html)
+        self.assertIn("buffett_watchlist", script)
+        self.assertIn("buffett-strength-tags", script)
+        self.assertGreater(payload["summary"]["buffett_watchlist_count"], 2)
+        for ranking in payload["rankings"]["buffett_watchlist"]:
+            buffett = payload["results"][ranking["ticker"]]["buffett"]
+            self.assertEqual(buffett["minimum_persistence_status"], "pass")
+            self.assertGreaterEqual(buffett["supporting_condition_count"], 1)
+            self.assertTrue(buffett["strength_tags"])
+
 
 if __name__ == "__main__":
     unittest.main()

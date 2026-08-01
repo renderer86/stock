@@ -229,6 +229,75 @@ class FinancialNEngineTest(unittest.TestCase):
             "pending",
         )
 
+    def test_buffett_watchlist_requires_recent_three_year_return_gate(self) -> None:
+        observations = []
+        for ticker, values, is_financial in (
+            ("000001", (13, 14, 15), False),
+            ("000002", (11, 10, 12), True),
+            ("000003", (13, 11, 15), False),
+        ):
+            for year, value in zip(range(2023, 2026), values):
+                observations.append(
+                    {
+                        "ticker": ticker,
+                        "company": ticker,
+                        "fiscal_year": year,
+                        "is_financial": is_financial,
+                        "metrics": {"roe_pct": value},
+                        "detail_metrics": {
+                            "roic_pct": value,
+                            "basic_eps": 100 + (year - 2023) * 20,
+                            "net_debt": -1,
+                        },
+                    }
+                )
+        panel = {
+            "observations": observations,
+            "screening_features": {
+                ticker: {
+                    "company": ticker,
+                    "buffett": {
+                        "conditions": {
+                            "persistence_9_of_10": False,
+                            "positive_net_income_all_10y": True,
+                        },
+                        "valuation": {
+                            "fcf_yield_pct": 6,
+                            "fcf_yield_ge_5pct": True,
+                        },
+                    },
+                    "quality": {"conditions": {"a": False}},
+                }
+                for ticker in ("000001", "000002", "000003")
+            },
+        }
+
+        result = InvestmentScreenBuilder().build(
+            panel,
+            {"estimates": {}},
+            {"stocks": []},
+        )
+
+        self.assertEqual(result["summary"]["buffett_watchlist_count"], 2)
+        self.assertEqual(
+            result["results"]["000001"]["buffett"]["watchlist_status"],
+            "pass",
+        )
+        self.assertEqual(
+            result["results"]["000002"]["buffett"][
+                "minimum_persistence_metric"
+            ],
+            "ROE",
+        )
+        self.assertEqual(
+            result["results"]["000003"]["buffett"]["watchlist_status"],
+            "fail",
+        )
+        self.assertIn(
+            "10년 연속 흑자",
+            result["results"]["000001"]["buffett"]["strength_tags"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -2237,7 +2237,9 @@ function getFilteredStocks() {
 
 function getPriorityCandidates(stocks) {
   const stockByCode = new Map(stocks.map((stock) => [stock.code, stock]));
-  const rankings = state.investmentScreensPayload?.rankings?.buffett_candidates || [];
+  const rankings = state.investmentScreensPayload?.rankings?.buffett_watchlist
+    || state.investmentScreensPayload?.rankings?.buffett_candidates
+    || [];
   const candidates = rankings.map((ranking, index) => {
     const code = ranking.ticker;
     const screen = state.investmentScreenByCode.get(code) || {};
@@ -2252,7 +2254,14 @@ function getPriorityCandidates(stocks) {
       market: stock.market || screen.market,
       market_label: stock.market_label || screen.market,
       sector: screen.sector || stock.sector || "-",
-      buffettRank: index + 1,
+      buffettRank: ranking.rank || index + 1,
+      recentReturnMetric: buffett.minimum_persistence_metric,
+      recentReturnAverage: buffett.minimum_persistence_average_pct,
+      recentReturnValues: buffett.minimum_persistence_values_pct || [],
+      supportingConditionCount: buffett.supporting_condition_count,
+      strengthTags: buffett.strength_tags || ranking.strength_tags || [],
+      strictCandidate: Boolean(buffett.candidate || ranking.strict_candidate),
+      epsCagr5y: buffett.eps_cagr_5y_pct,
       persistencePassYears: buffett.persistence_pass_years,
       grossMarginSigma: buffett.gross_margin_sigma_pct_points,
       fcfConversion: buffett.fcf_conversion_10y,
@@ -2347,6 +2356,8 @@ function updatePrioritySortHeaders() {
 
 const SCREEN_PENDING_REASON_LABELS = {
   buffett: {
+    recent_3y_persistence: "최근 3개 연속 사업연도 ROIC·ROE 이력 부족",
+    supporting_buffett_condition: "기존 7개 조건의 강점 판정 데이터 부족",
     persistence_9_of_10: "10년 ROIC·ROE 이력 부족",
     positive_net_income_all_10y: "10년 순이익 이력 부족",
     gross_margin_sigma_le_5pp: "10년 매출총이익률 이력 부족",
@@ -2369,11 +2380,11 @@ function screenPendingRows(mode) {
   const labels = SCREEN_PENDING_REASON_LABELS[mode] || {};
   return Object.values(results)
     .filter((row) => mode === "buffett"
-      ? row?.buffett?.business_quality_status === "pending"
+      ? (row?.buffett?.watchlist_status || row?.buffett?.business_quality_status) === "pending"
       : row?.quality?.status === "pending")
     .map((row) => {
       const missing = mode === "buffett"
-        ? row?.buffett?.coverage?.missing || []
+        ? row?.buffett?.missing_reasons || row?.buffett?.coverage?.missing || []
         : row?.quality?.coverage?.missing || [];
       return {
         code: row.ticker,
@@ -2418,7 +2429,7 @@ function renderScreenPendingModal() {
       .map((row) => row.code)
   );
   const title = mode === "buffett"
-    ? "버핏 스타일 · 데이터 부족 종목"
+    ? "버핏 스타일 관심종목 · 판정 대기"
     : "퀄리티 팩터 · 데이터 부족 종목";
 
   container.innerHTML = `
@@ -2430,7 +2441,7 @@ function renderScreenPendingModal() {
     >×</button>
     <div class="market-map-detail-head pending-detail-head">
       <div>
-        <p>수집 실패가 아니라 조건 계산에 필요한 이력이 부족한 종목입니다.</p>
+        <p>수집 실패가 아니라 최근 3년 수익성 또는 강점 조건 계산에 필요한 이력이 부족한 종목입니다.</p>
         <h3 id="screen-pending-modal-title">${escapeHtml(title)}</h3>
         <span>현재 ROE·ROA 필터를 통과한 종목은 누르면 가치평가 화면으로 이동합니다.</span>
       </div>
@@ -2565,11 +2576,16 @@ function renderPriorityCandidates(stocks) {
   const pendingBadge = document.getElementById("buffett-pending-badge");
   const updatedBadge = document.getElementById("buffett-updated-badge");
   const candidates = getPriorityCandidates(stocks);
+  const strictCandidateCount = Number(
+    state.investmentScreensPayload?.summary?.buffett_candidate_count || 0
+  );
   const pendingCount = Number(
-    state.investmentScreensPayload?.summary?.buffett_status_counts?.pending || 0
+    state.investmentScreensPayload?.summary?.buffett_watchlist_status_counts?.pending
+      ?? state.investmentScreensPayload?.summary?.buffett_status_counts?.pending
+      ?? 0
   );
 
-  countBadge.textContent = `${candidates.length}개 통과`;
+  countBadge.textContent = `${candidates.length}개 관심 · 엄격 통과 ${strictCandidateCount}개`;
   pendingBadge.textContent = pendingCount
     ? `${pendingCount.toLocaleString("ko-KR")}개 판정 대기`
     : "판정 대기 없음";
@@ -2588,8 +2604,8 @@ function renderPriorityCandidates(stocks) {
       <tr>
         <td colspan="12" class="empty-state">
           ${pendingCount
-            ? `아직 버핏식 전 조건을 확정할 데이터가 부족합니다. ${pendingCount.toLocaleString("ko-KR")}개 종목을 판정 중입니다.`
-            : "버핏식 사업품질과 FCF 수익률 조건을 모두 통과한 종목이 없습니다."}
+            ? `최근 3년 수익성 또는 강점 조건을 확정할 데이터가 부족합니다. ${pendingCount.toLocaleString("ko-KR")}개 종목을 판정 중입니다.`
+            : "최근 3년 수익성 최소조건과 기존 강점 조건을 함께 통과한 종목이 없습니다."}
         </td>
       </tr>
     `;
@@ -2602,13 +2618,19 @@ function renderPriorityCandidates(stocks) {
     <tr data-code="${stock.code}" class="${stock.canOpenValuation ? "" : "is-static-row"}">
       <td><span class="rank-chip">${stock.buffettRank}</span></td>
       <td>
-        <span class="name-cell">
-          <span>${escapeHtml(stock.name)}</span>
-          <span class="${getMarketBadgeClass(stock)}">${getMarketLabel(stock)}</span>
+        <span class="buffett-name-cell">
+          <span class="name-cell">
+            <span>${escapeHtml(stock.name)}</span>
+            <span class="${getMarketBadgeClass(stock)}">${getMarketLabel(stock)}</span>
+            ${stock.strictCandidate ? '<span class="buffett-strict-badge">7개+가치 통과</span>' : ""}
+          </span>
+          <span class="buffett-strength-tags">
+            ${stock.strengthTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+          </span>
         </span>
       </td>
       <td>${escapeHtml(stock.sector || "-")}</td>
-      <td>${stock.persistencePassYears === null || stock.persistencePassYears === undefined ? "N/A" : `${stock.persistencePassYears}/10`}</td>
+      <td title="${escapeHtml(stock.recentReturnValues.map((value) => formatPercent(value, 1)).join(" · "))}">${escapeHtml(stock.recentReturnMetric || "ROIC")} ${formatPercent(stock.recentReturnAverage, 1)}</td>
       <td>${formatPercent(stock.grossMarginSigma, 1)}</td>
       <td>${stock.fcfConversion === null || stock.fcfConversion === undefined ? "N/A" : formatPercent(stock.fcfConversion * 100, 1)}</td>
       <td>${formatNumber(stock.netDebtToEbitda, 2)}</td>

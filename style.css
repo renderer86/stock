@@ -1576,6 +1576,39 @@ tbody tr.is-suspended.is-selected {
   gap: 8px;
 }
 
+.buffett-name-cell {
+  display: flex;
+  min-width: 270px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.buffett-strength-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.buffett-strength-tags span,
+.buffett-strict-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(10, 122, 95, 0.1);
+  color: #087057;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.buffett-strict-badge {
+  background: rgba(184, 92, 56, 0.13);
+  color: #a24d2e;
+}
+
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -4016,6 +4049,10 @@ body.market-map-modal-open {
   .table-wrap .name-cell {
     min-width: 0;
     flex-wrap: wrap;
+  }
+
+  .table-wrap .buffett-name-cell {
+    min-width: 0;
   }
 
   .table-wrap .table-subtext {
