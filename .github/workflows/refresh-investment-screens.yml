@@ -1,0 +1,106 @@
+name: Refresh Buffett and quality screens
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - "Build DART 10-year financial panel"
+      - "Update market data"
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-buffett-quality-screens
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+
+    steps:
+      - name: Check out latest data
+        uses: actions/checkout@v6
+        with:
+          # A queued run must use the newest panel and market data rather than
+          # the workflow_run event's older head SHA.
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Validate local inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f data/dart_financial_panel.json
+          test -f data/market_sum.json
+          test -f config/financial_n_engine.json
+
+      - name: Build empirical N and investment screens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u estimate_financial_n.py --config config/financial_n_engine.json
+          python -u build_investment_screens.py
+          python -u build_data_manifest.py
+
+      - name: Commit refreshed screens
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            data/financial_n_estimates.json \
+            data/investment_screens.json \
+            data/data_manifest.json
+
+          if git diff --cached --quiet; then
+            echo "No Buffett or quality screen changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore(data): refresh Buffett and quality screens"
+
+          for attempt in 1 2 3; do
+            echo "Sync attempt ${attempt}/3 with origin/${TARGET_BRANCH}"
+            git fetch origin "${TARGET_BRANCH}"
+            if ! git rebase -X theirs "origin/${TARGET_BRANCH}"; then
+              git rebase --abort || true
+              echo "::error::Screen outputs conflicted with newer remote data."
+              exit 1
+            fi
+            if git push origin "HEAD:${TARGET_BRANCH}"; then
+              echo "Buffett and quality screens pushed successfully."
+              exit 0
+            fi
+            echo "Remote changed during push; retrying after 3 seconds."
+            sleep 3
+          done
+
+          echo "::error::Failed to push refreshed screens after 3 attempts."
+          exit 1
+
+      - name: Upload screen artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: investment-screens-${{ github.run_id }}
+          path: |
+            data/financial_n_estimates.json
+            data/investment_screens.json
+            data/data_manifest.json
+          retention-days: 14
