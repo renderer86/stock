@@ -74,6 +74,18 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertIn(".buffett-watchlist-table tbody tr", style)
         self.assertIn("grid-column: 1 / -1", style)
 
+    def test_valuation_uses_duration_labels_and_discloses_fallback_method(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn("고ROE 지속기간 N", html)
+        self.assertIn("시장 내재 N", html)
+        self.assertNotIn("재무제표 추정 N", html)
+        self.assertNotIn("재무제표 추정 N", script)
+        self.assertIn("function nEstimateMethodLabel", script)
+        self.assertIn('return "임시 점수표";', script)
+        self.assertIn("아직 실증 지속기간 데이터가 없는 종목", script)
+
 
 if __name__ == "__main__":
     unittest.main()

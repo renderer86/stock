@@ -2192,6 +2192,21 @@ function compareStocks(a, b, sortKey, direction) {
   return compareValues(a.rank, b.rank, "asc");
 }
 
+function nEstimateMethodLabel(nModel) {
+  const isEmpirical = nModel?.engine === "empirical_persistence"
+    || ["robust", "provisional", "prior_only"].includes(nModel?.status);
+  if (!isEmpirical) {
+    return "임시 점수표";
+  }
+  if (nModel.status === "prior_only") {
+    return "업종 기준값 중심";
+  }
+  if (nModel.status === "provisional") {
+    return "실증 엔진 · 보완 중";
+  }
+  return "실증 엔진";
+}
+
 const FINANCIAL_ROA_EXEMPT_KEYWORDS = [
   "은행",
   "금융",
@@ -2270,6 +2285,7 @@ function getPriorityCandidates(stocks) {
       payoutRatio: buffett.payout_ratio_pct,
       fcfYield: buffett.valuation?.fcf_yield_pct,
       estimatedNBase: nEstimate.base_years,
+      nModel: nEstimate,
       nConfidence: nEstimate.confidence?.label,
       nConfidenceScore: nEstimate.confidence?.score_0_to_100,
       canOpenValuation: stockByCode.has(code)
@@ -2308,6 +2324,7 @@ function getQualityCandidates(stocks) {
       debtPass: quality.conditions?.debt_to_equity_le_100pct,
       shareholderReturnPass: quality.conditions?.dividend_or_buyback_recent_3y,
       estimatedNBase: nEstimate.base_years,
+      nModel: nEstimate,
       nConfidence: nEstimate.confidence?.label,
       nConfidenceScore: nEstimate.confidence?.score_0_to_100,
       equalWeight: ranking.weight_pct,
@@ -2637,7 +2654,7 @@ function renderPriorityCandidates(stocks) {
       <td class="buffett-metric-cell">${formatPercent(stock.incrementalRoic, 1)}</td>
       <td class="buffett-metric-cell">${formatPercent(stock.payoutRatio, 1)}</td>
       <td class="buffett-metric-cell buffett-fcf-yield-cell ${metricClass(stock.fcfYield)}">${formatPercent(stock.fcfYield, 1)}</td>
-      <td class="buffett-metric-cell">${formatYears(stock.estimatedNBase)}</td>
+      <td class="buffett-metric-cell"><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</div></td>
       <td class="buffett-metric-cell">${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
     </tr>
   `).join("");
@@ -2716,7 +2733,7 @@ function renderQualityCandidates(stocks) {
       <td>${formatNumber(stock.epsCv, 3)}</td>
       <td>${stock.debtPass === true ? '<span class="status-badge">통과</span>' : '<span class="table-subtext">확인 필요</span>'}</td>
       <td>${stock.shareholderReturnPass === true ? '<span class="status-badge">확인</span>' : '<span class="table-subtext">확인 필요</span>'}</td>
-      <td>${formatYears(stock.estimatedNBase)}</td>
+      <td><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</div></td>
       <td>${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
       <td>${formatPercent(stock.equalWeight, 2)}</td>
     </tr>
@@ -2793,7 +2810,7 @@ function renderTable(stocks) {
       <td>${formatNumber(stock.pbr, 2)}</td>
       <td>${formatNumber(stock.per, 2)}</td>
       <td>${formatMarketCap(stock.market_cap_krw_100m)}</td>
-      <td>${formatYears(stock.estimatedNBase)}</td>
+      <td><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</div></td>
       <td>${formatYears(stock.marketImpliedN)}</td>
       <td>${formatPrice(stock.current_price)}</td>
       <td>${formatPrice(stock.fairPriceConservative)}</td>
@@ -2842,7 +2859,7 @@ function renderSelectedSummary(stock) {
       <div class="summary-code">${stock.code}</div>
       <div class="summary-name">${stock.name}</div>
       <div class="summary-caption">
-        ROE는 FnGuide 과거 이력으로 추정하고, N은 높은 ROE의 지속성, 마진 안정성, 성장 안정성, 재무 체력을 점수화해 1차 추정합니다.
+        ROE는 과거 이력으로 추정하고, N은 업종별 ROE 자기상관·고ROE 생존기간과 기업별 변동성·재투자율·GP/A를 결합해 향후 높은 ROE가 유지될 기간으로 추정합니다.
       </div>
     </div>
 
@@ -2864,8 +2881,9 @@ function renderSelectedSummary(stock) {
         <span class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</span>
       </div>
       <div class="summary-card">
-        <span class="label">재무제표 추정 N</span>
+        <span class="label">고ROE 지속기간 N</span>
         <span class="value">${formatYears(stock.estimatedNBase)}</span>
+        <span class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</span>
       </div>
       <div class="summary-card">
         <span class="label">시장 내재 N</span>
@@ -2900,7 +2918,7 @@ function renderDurationPanel(stock) {
   container.innerHTML = `
     <div class="calc-grid">
       <div class="calc-item">
-        <div class="label">재무제표 추정 N</div>
+        <div class="label">고ROE 지속기간 N</div>
         <div class="value">${formatYears(stock.estimatedNBase)}</div>
       </div>
       <div class="calc-item">
@@ -2908,7 +2926,7 @@ function renderDurationPanel(stock) {
         <div class="value">${formatYears(stock.marketImpliedN)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">${stock.nModel.engine === "empirical_persistence" ? "N 엔진 신뢰도" : "N 추정 점수"}</div>
+        <div class="label">${stock.nModel.engine === "empirical_persistence" ? "지속기간 N 신뢰도" : "임시 N 점수"}</div>
         <div class="value">
           ${stock.nModel.engine === "empirical_persistence"
             ? `${escapeHtml(stock.nModel.confidence?.label || "low")} · ${formatNumber(stock.estimatedNScore, 1)}/100`
@@ -2916,7 +2934,7 @@ function renderDurationPanel(stock) {
         </div>
       </div>
       <div class="calc-item">
-        <div class="label">추정 N 보정치</div>
+        <div class="label">지속기간 N 보정치</div>
         <div class="value">${formatSignedYears(state.durationOffset)}</div>
       </div>
       <div class="calc-item">
@@ -2931,14 +2949,14 @@ function renderDurationPanel(stock) {
         <div class="value">${stock.nModel.highRoeYears}년</div>
       </div>
       <div class="calc-item">
-        <div class="label">N 추정 방식</div>
-        <div class="value">${stock.nModel.engine === "empirical_persistence" ? "실증 지속성 엔진" : "임시 점수표"}</div>
+        <div class="label">지속기간 산출 방식</div>
+        <div class="value">${nEstimateMethodLabel(stock.nModel)}</div>
       </div>
     </div>
     <div class="calc-note">
       ${stock.nModel.engine === "empirical_persistence"
-        ? `섹터 4년 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합했습니다. 현재 상태는 ${escapeHtml(stock.nModel.status || "provisional")}입니다.`
-        : "아직 실증 N 데이터가 없는 종목이므로 기존 임시 점수표를 사용합니다."}
+        ? `업종별 4년 ROE 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합한 향후 고ROE 지속기간입니다. 산출 상태는 ${nEstimateMethodLabel(stock.nModel)}입니다.`
+        : "아직 실증 지속기간 데이터가 없는 종목이므로 기존 임시 점수표를 사용하며, 적정가에도 이 임시 N이 적용됩니다."}
       시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산한 비교값입니다.
     </div>
   `;
@@ -2982,7 +3000,7 @@ function renderFairValuePanel(stock) {
         <div class="value">${formatSignedPercent(state.roeAdjustment, 1)}</div>
       </div>
       <div class="calc-item">
-        <div class="label">재무제표 추정 N</div>
+        <div class="label">고ROE 지속기간 N</div>
         <div class="value">${formatYears(stock.estimatedNBase)}</div>
       </div>
       <div class="calc-item">
@@ -2999,7 +3017,7 @@ function renderFairValuePanel(stock) {
       </div>
     </div>
     <div class="calc-note">
-      ROE는 과거 ROE 기준으로, N은 재무제표 자동추정치를 기준으로 적정가를 계산합니다. 할인율은 기본 10%이며,
+      ROE는 과거 ROE 기준으로, N은 높은 ROE가 향후 유지될 것으로 추정되는 기간을 기준으로 적정가를 계산합니다. 할인율은 기본 10%이며,
       계산식은 연도별 <strong>BPS × ROE = EPS</strong>를 할인해 합산하는 방식입니다.
     </div>
   `;
@@ -3058,7 +3076,7 @@ function renderKellyPanel(stock) {
     </div>
     <div class="calc-note">
       켈리 공식은 <strong>K = p - (1-p) / b</strong>를 사용합니다.
-      현재 단계에서는 승률과 패배확률을 각각 50%로 두고, 재무제표 추정 N과 과거 ROE 추정치 기반의 적정가 범위로 켈리 범위를 계산합니다.
+      현재 단계에서는 승률과 패배확률을 각각 50%로 두고, 고ROE 지속기간 N과 과거 ROE 추정치 기반의 적정가 범위로 켈리 범위를 계산합니다.
     </div>
   `;
 }
@@ -4193,7 +4211,7 @@ function friendlyDataName(path) {
     "data/market_sum_by_roe.json": "국내 가치평가 원본",
     "data/fnguide_roe_history.json": "FnGuide ROE 이력",
     "data/dart_major_holders.json": "DART 주요주주",
-    "data/financial_n_estimates.json": "실증 N 추정 엔진",
+    "data/financial_n_estimates.json": "고ROE 지속기간 N 엔진",
     "data/investment_screens.json": "버핏·퀄리티 스크리닝"
   };
   return names[path] || path.replace("data/", "").replace(".json", "");

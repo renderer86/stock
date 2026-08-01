@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260802-buffett-mobile-cards">
+  <link rel="stylesheet" href="style.css?v=20260802-n-duration-labels">
 </head>
 <body>
   <div class="page-shell">
@@ -171,8 +171,8 @@
                 <th data-priority-sort-key="incrementalRoic">증분 ROIC</th>
                 <th data-priority-sort-key="payoutRatio">주주환원</th>
                 <th data-priority-sort-key="fcfYield">FCF 수익률</th>
-                <th data-priority-sort-key="estimatedNBase">재무제표 추정 N</th>
-                <th data-priority-sort-key="nConfidenceScore">N 신뢰도</th>
+                <th data-priority-sort-key="estimatedNBase">고ROE 지속기간 N</th>
+                <th data-priority-sort-key="nConfidenceScore">지속기간 N 신뢰도</th>
               </tr>
             </thead>
             <tbody id="priority-candidates-body"></tbody>
@@ -212,8 +212,8 @@
                 <th>EPS 변동성</th>
                 <th>부채 조건</th>
                 <th>배당·자사주</th>
-                <th>재무제표 추정 N</th>
-                <th>N 신뢰도</th>
+                <th>고ROE 지속기간 N</th>
+                <th>지속기간 N 신뢰도</th>
                 <th>동일가중</th>
               </tr>
             </thead>
@@ -247,8 +247,8 @@
                 <th data-sort-key="pbr">PBR</th>
                 <th data-sort-key="per">PER</th>
                 <th data-sort-key="market_cap_krw_100m">시가총액</th>
-                <th data-sort-key="estimatedNBase">재무제표 추정 N</th>
-                <th data-sort-key="marketImpliedN">시장 추정 N</th>
+                <th data-sort-key="estimatedNBase">고ROE 지속기간 N</th>
+                <th data-sort-key="marketImpliedN">시장 내재 N</th>
                 <th data-sort-key="current_price">현재주가</th>
                 <th data-sort-key="fairPriceConservative">보수적 적정가</th>
                 <th data-sort-key="fairPriceBase">기준 적정가</th>
@@ -306,8 +306,8 @@
           <div class="calc-head">
             <span class="calc-tag">A</span>
             <div>
-              <h3>N 추정 비교</h3>
-              <p>현재 PBR과 현재 ROE로 역산한 시장 N과, 재무제표 점수 기반으로 추정한 N을 함께 비교합니다.</p>
+              <h3>고ROE 지속기간 비교</h3>
+              <p>현재 PBR과 ROE로 역산한 시장 내재 N과, 업종·기업의 ROE 지속성을 실증적으로 추정한 N을 비교합니다.</p>
             </div>
           </div>
           <div id="duration-panel" class="calc-body"></div>
@@ -318,7 +318,7 @@
             <span class="calc-tag">B</span>
             <div>
               <h3>적정가 범위 계산기</h3>
-              <p>과거 ROE 이력과 재무제표 기반 N 추정치를 바탕으로 보수적·기준·낙관적 3개 시나리오를 계산합니다.</p>
+              <p>과거 ROE 이력과 고ROE 지속기간 N을 바탕으로 보수적·기준·낙관적 3개 시나리오를 계산합니다.</p>
             </div>
           </div>
           <div class="inline-controls">
@@ -339,7 +339,7 @@
             <span class="calc-tag">C</span>
             <div>
               <h3>켈리 기준 베팅 비율</h3>
-              <p>승률 50%, 패배확률 50%를 두고 과거 ROE 추정치와 재무제표 기반 N 기준의 적정가 범위에서 켈리 범위를 계산합니다.</p>
+              <p>승률 50%, 패배확률 50%를 두고 과거 ROE 추정치와 고ROE 지속기간 N 기준의 적정가 범위에서 켈리 범위를 계산합니다.</p>
             </div>
           </div>
           <div id="kelly-panel" class="calc-body"></div>
@@ -387,7 +387,7 @@
           </label>
 
           <label class="control-card">
-            <span class="control-label">추정 N 보정치</span>
+            <span class="control-label">지속기간 N 보정치</span>
             <input id="duration-range" type="range" min="-3" max="3" step="1" value="0">
             <strong id="duration-value">0년</strong>
           </label>
@@ -816,6 +816,6 @@
     ></aside>
   </div>
 
-  <script src="script.js?v=20260802-buffett-mobile-cards"></script>
+  <script src="script.js?v=20260802-n-duration-labels"></script>
 </body>
 </html>
