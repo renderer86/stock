@@ -7,6 +7,7 @@ const TREASURY_YIELDS_URL = "./data/treasury_yields.json";
 const ETF_BRANDS_URL = "./data/naver_etf_brands.json";
 const MARKET_INDICES_URL = "./data/market_indices.json";
 const MARKET_HEATMAP_URL = "./data/market_heatmap.json";
+const PORTFOLIO_URL = "./data/portfolio.json";
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -84,6 +85,7 @@ const state = {
   marketMapLimit: 500,
   marketMapSearch: "",
   marketMapSelected: null,
+  portfolioData: null,
   pendingDetailMode: null,
   pendingDetailSearch: ""
 };
@@ -969,6 +971,210 @@ function formatMarketMapOptional(value, formatter) {
   return Number.isFinite(number) ? formatter(number) : "N/A";
 }
 
+function portfolioScenarioReturn(stock, scenario, years) {
+  const fairPriceKeys = {
+    conservative: "fairPriceConservative",
+    base: "fairPriceBase",
+    optimistic: "fairPriceOptimistic"
+  };
+  const currentPrice = Number(stock?.current_price);
+  const fairPrice = Number(stock?.[fairPriceKeys[scenario]]);
+  const annualDividend = Math.max(0, Number(stock?.dividend) || 0);
+  if (!(currentPrice > 0) || !(fairPrice > 0) || !(years > 0)) {
+    return null;
+  }
+  const terminalValue = fairPrice + annualDividend * years;
+  return ((terminalValue / currentPrice) ** (1 / years) - 1) * 100;
+}
+
+function portfolioExpectedReturn(holdings, stocks, scenario, years) {
+  let weightedReturn = 0;
+  let coveredWeight = 0;
+  holdings.forEach((holding) => {
+    const stock = stocks.get(holding.code);
+    const expectedReturn = portfolioScenarioReturn(stock, scenario, years);
+    const weight = Number(holding.weight_pct);
+    if (expectedReturn === null || !Number.isFinite(weight) || weight <= 0) {
+      return;
+    }
+    weightedReturn += expectedReturn * weight;
+    coveredWeight += weight;
+  });
+  return coveredWeight > 0 ? weightedReturn / coveredWeight : null;
+}
+
+function portfolioScenarioMarkup(label, value, scenario) {
+  return `
+    <div class="portfolio-return-card is-${scenario}">
+      <span>${escapeHtml(label)}</span>
+      <strong class="${marketTone(value)}">${formatSignedPercent(value, 1)}</strong>
+      <small>연환산</small>
+    </div>
+  `;
+}
+
+function renderPortfolioBoard() {
+  const container = document.getElementById("portfolio-board");
+  const payload = state.portfolioData;
+  if (!container || !payload) {
+    return;
+  }
+  const holdings = Array.isArray(payload.holdings) ? payload.holdings : [];
+  const rawByCode = new Map(state.rawStocks.map((stock) => [stock.code, stock]));
+  const enrichedByCode = new Map();
+  holdings.forEach((holding) => {
+    const rawStock = rawByCode.get(holding.code);
+    if (rawStock) {
+      enrichedByCode.set(holding.code, enrichStock(rawStock));
+    }
+  });
+  const convergenceYears = Number(payload.convergence_years) || 3;
+  const conservative = portfolioExpectedReturn(
+    holdings,
+    enrichedByCode,
+    "conservative",
+    convergenceYears
+  );
+  const base = portfolioExpectedReturn(holdings, enrichedByCode, "base", convergenceYears);
+  const optimistic = portfolioExpectedReturn(
+    holdings,
+    enrichedByCode,
+    "optimistic",
+    convergenceYears
+  );
+  const covered = holdings.filter((holding) => enrichedByCode.has(holding.code)).length;
+  const changes = Array.isArray(payload.changes) ? payload.changes : [];
+
+  container.innerHTML = `
+    <div class="portfolio-head">
+      <div>
+        <p class="section-kicker">Portfolio Tactics</p>
+        <h2 id="portfolio-board-title">${escapeHtml(payload.title || "나의 포트폴리오")}</h2>
+        <p>보유 종목을 공격·중원·수비 역할로 배치한 전략 전술판입니다. 종목을 누르면 기존 국내 종목 상세 화면이 열립니다.</p>
+      </div>
+      <div class="portfolio-head-meta">
+        <span>${escapeHtml(payload.formation || "자유 배치")} 포메이션</span>
+        <strong>${holdings.length}명 선발</strong>
+        <small>${escapeHtml(payload.weighting_note || "비중 기준")}</small>
+      </div>
+    </div>
+
+    <div class="portfolio-kpis">
+      <div><span>보유 종목</span><strong>${holdings.length}개</strong><small>공개 포트폴리오</small></div>
+      <div><span>현재 배분</span><strong>각 16.7%</strong><small>실제 비중 입력 전</small></div>
+      <div><span>수익률 산출</span><strong>${covered}/${holdings.length}</strong><small>가치평가 연결 종목</small></div>
+      <div><span>수렴 기간</span><strong>${convergenceYears}년</strong><small>적정가 도달 가정</small></div>
+    </div>
+
+    <div class="portfolio-layout">
+      <div class="portfolio-pitch" aria-label="포트폴리오 축구 전술판">
+        <span class="portfolio-pitch-halfway" aria-hidden="true"></span>
+        <span class="portfolio-pitch-circle" aria-hidden="true"></span>
+        <span class="portfolio-pitch-box is-top" aria-hidden="true"></span>
+        <span class="portfolio-pitch-box is-bottom" aria-hidden="true"></span>
+        ${holdings.map((holding) => `
+          <button
+            type="button"
+            class="portfolio-player"
+            style="--player-x:${Number(holding.x_pct) || 50}%;--player-y:${Number(holding.y_pct) || 50}%"
+            data-portfolio-code="${escapeHtml(holding.code)}"
+            aria-label="${escapeHtml(`${holding.name} 상세 보기`)}"
+          >
+            <span class="portfolio-crest is-${escapeHtml(holding.crest_theme || "default")}">
+              ${escapeHtml(holding.mark || holding.name)}
+            </span>
+            <span class="portfolio-player-card">
+              <strong>${escapeHtml(holding.name)}</strong>
+              <small>${escapeHtml(holding.role || holding.position || "선발")}</small>
+              <em>${formatPercent(Number(holding.weight_pct), 1)}</em>
+            </span>
+          </button>
+        `).join("")}
+      </div>
+
+      <aside class="portfolio-tactics">
+        <div class="portfolio-tactics-card">
+          <p>전술 포인트</p>
+          <h3>성장 엔진과 현금창출의 조합</h3>
+          <ul>
+            <li><span>공격</span><strong>한미반도체 · SK하이닉스 · 파마리서치</strong></li>
+            <li><span>중원</span><strong>F&F · 메리츠금융지주</strong></li>
+            <li><span>후방</span><strong>삼성전자</strong></li>
+          </ul>
+        </div>
+        <div class="portfolio-tactics-card is-change">
+          <p>구성 및 변동 사항</p>
+          ${changes.length ? changes.map((change) => `
+            <div class="portfolio-change-row">
+              <span>${escapeHtml(change.type || "변동")}</span>
+              <strong>${escapeHtml(change.reason || "-")}</strong>
+              <small>${escapeHtml(change.date || "")}</small>
+            </div>
+          `).join("") : '<div class="portfolio-change-row"><strong>기록된 변동이 없습니다.</strong></div>'}
+        </div>
+      </aside>
+    </div>
+
+    <div class="portfolio-return-section">
+      <div class="portfolio-return-copy">
+        <p>Annualized Expectation</p>
+        <h3>연간 기대수익률</h3>
+        <span>${convergenceYears}년 안에 현재 적정가 시나리오로 수렴하고 현재 배당이 유지된다는 가정입니다.</span>
+      </div>
+      <div class="portfolio-return-grid">
+        ${portfolioScenarioMarkup("약세", conservative, "bear")}
+        ${portfolioScenarioMarkup("기준", base, "base")}
+        ${portfolioScenarioMarkup("강세", optimistic, "bull")}
+      </div>
+    </div>
+    <p class="portfolio-disclaimer">기대수익률은 실제 수익을 보장하지 않으며, 현재는 실제 매입 비중이 없어 동일비중으로 계산합니다. 평균단가와 실제 비중은 포함하지 않았습니다.</p>
+  `;
+}
+
+function openPortfolioStock(code) {
+  const stock = state.marketMapData?.markets?.KR?.stocks?.find(
+    (row) => row.symbol === code
+  );
+  if (stock) {
+    state.marketMapSelected = `KR:${code}`;
+    renderMarketMapDetail(stock);
+    return;
+  }
+  if (state.rawStocks.some((row) => row.code === code)) {
+    state.selectedCode = code;
+    switchWorkspace("valuation");
+    renderDashboard();
+    document.getElementById("selected-stock-workbench")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function bindPortfolioBoard() {
+  document.getElementById("portfolio-board")?.addEventListener("click", (event) => {
+    const player = event.target.closest("[data-portfolio-code]");
+    if (player) {
+      openPortfolioStock(player.dataset.portfolioCode);
+    }
+  });
+}
+
+async function loadPortfolio() {
+  const container = document.getElementById("portfolio-board");
+  try {
+    const response = await fetch(`${PORTFOLIO_URL}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} for portfolio`);
+    }
+    state.portfolioData = await response.json();
+    renderPortfolioBoard();
+  } catch (error) {
+    if (container) {
+      container.innerHTML = '<div class="portfolio-loading">포트폴리오 데이터를 불러오지 못했습니다.</div>';
+    }
+    console.error(error);
+  }
+}
+
 function renderMarketMapKpis(stocks) {
   const container = document.getElementById("market-map-kpis");
   if (!container) {
@@ -1524,6 +1730,7 @@ async function loadMarketMap() {
     }
     const payload = await response.json();
     state.marketMapData = payload;
+    renderPortfolioBoard();
     document.getElementById("market-map-market").value = state.marketMapMarket;
     const updated = new Date(payload.crawled_at_utc);
     document.getElementById("market-map-updated").textContent =
@@ -3311,6 +3518,7 @@ async function loadStocks() {
     bindPrioritySortHeaders();
     bindTableSortHeaders();
     renderDashboard();
+    renderPortfolioBoard();
   } catch (error) {
     renderError("데이터를 불러오지 못했습니다. 최신 JSON을 다시 생성한 뒤 서버에서 페이지를 열어주세요.");
     console.error(error);
@@ -4206,6 +4414,7 @@ function friendlyDataName(path) {
     "data/treasury_yields.json": "한·미 국채 금리",
     "data/market_indices.json": "주요 지수·가상자산 차트",
     "data/market_heatmap.json": "한·미 시장 히트맵",
+    "data/portfolio.json": "공개 포트폴리오 전술판",
     "data/naver_etf_brands.json": "KoAct·TIME ETF",
     "data/market_sum.json": "국내 종목 시세",
     "data/market_sum_by_roe.json": "국내 가치평가 원본",
@@ -4238,6 +4447,7 @@ function renderDataWorkspace() {
     "data/treasury_yields.json",
     "data/market_indices.json",
     "data/market_heatmap.json",
+    "data/portfolio.json",
     "data/naver_etf_brands.json",
     "data/korea_investor_flow.json",
     "data/korea_short_selling.json",
@@ -4386,6 +4596,7 @@ bindFeatureControls();
 bindMarketOverview();
 bindTodayNews();
 bindMarketMap();
+bindPortfolioBoard();
 bindScreenPendingModal();
 initResponsiveTables();
 const initialWorkspace = location.hash.replace("#", "");
@@ -4397,4 +4608,5 @@ loadEtfBrandTickers();
 loadMarketOverview();
 loadTodayNews();
 loadMarketMap();
+loadPortfolio();
 loadStocks();

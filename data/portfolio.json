@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "source": "User-configured public portfolio",
+  "count": 6,
+  "generated_at_utc": "2026-08-02T14:30:00+00:00",
+  "title": "나의 포트폴리오",
+  "formation": "2-2-1",
+  "weighting_note": "실제 비중 입력 전 동일비중",
+  "convergence_years": 3,
+  "as_of": "2026-08-02",
+  "holdings": [
+    {
+      "code": "042700",
+      "name": "한미반도체",
+      "weight_pct": 16.67,
+      "position": "공격수",
+      "role": "고성장 장비",
+      "x_pct": 50,
+      "y_pct": 14,
+      "mark": "HANMI",
+      "crest_theme": "hanmi"
+    },
+    {
+      "code": "000660",
+      "name": "SK하이닉스",
+      "weight_pct": 16.67,
+      "position": "공격형 미드필더",
+      "role": "AI 메모리",
+      "x_pct": 30,
+      "y_pct": 37,
+      "mark": "SK hynix",
+      "crest_theme": "hynix"
+    },
+    {
+      "code": "214450",
+      "name": "파마리서치",
+      "weight_pct": 16.67,
+      "position": "공격형 미드필더",
+      "role": "의료 성장",
+      "x_pct": 70,
+      "y_pct": 37,
+      "mark": "PR",
+      "crest_theme": "pharma"
+    },
+    {
+      "code": "383220",
+      "name": "F&F",
+      "weight_pct": 16.67,
+      "position": "중앙 미드필더",
+      "role": "브랜드 현금창출",
+      "x_pct": 30,
+      "y_pct": 64,
+      "mark": "F&F",
+      "crest_theme": "fnf"
+    },
+    {
+      "code": "138040",
+      "name": "메리츠금융지주",
+      "weight_pct": 16.66,
+      "position": "수비형 미드필더",
+      "role": "자본배분",
+      "x_pct": 70,
+      "y_pct": 64,
+      "mark": "meritz",
+      "crest_theme": "meritz"
+    },
+    {
+      "code": "005930",
+      "name": "삼성전자",
+      "weight_pct": 16.66,
+      "position": "골키퍼",
+      "role": "대형주 기반",
+      "x_pct": 50,
+      "y_pct": 87,
+      "mark": "SAMSUNG",
+      "crest_theme": "samsung"
+    }
+  ],
+  "changes": [
+    {
+      "type": "초기 구성",
+      "date": "2026-08-02",
+      "reason": "보유 종목 6개를 첫 전술판에 등록"
+    }
+  ]
+}
