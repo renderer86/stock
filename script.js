@@ -8,6 +8,7 @@ const ETF_BRANDS_URL = "./data/naver_etf_brands.json";
 const MARKET_INDICES_URL = "./data/market_indices.json";
 const MARKET_HEATMAP_URL = "./data/market_heatmap.json";
 const PORTFOLIO_URL = "./data/portfolio.json";
+const PORTFOLIO_STORAGE_KEY = "value-dashboard-portfolio-v2";
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -86,6 +87,10 @@ const state = {
   marketMapSearch: "",
   marketMapSelected: null,
   portfolioData: null,
+  portfolioDefaultData: null,
+  portfolioUsingLocal: false,
+  portfolioSelectedCode: null,
+  portfolioModalMode: "detail",
   pendingDetailMode: null,
   pendingDetailSearch: ""
 };
@@ -971,6 +976,100 @@ function formatMarketMapOptional(value, formatter) {
   return Number.isFinite(number) ? formatter(number) : "N/A";
 }
 
+const PORTFOLIO_POSITIONS = {
+  ST: { x: 50, y: 12, label: "ST · 최전방 공격수", group: "attack" },
+  CF: { x: 50, y: 18, label: "CF · 중앙 공격수", group: "attack" },
+  SS: { x: 50, y: 23, label: "SS · 세컨드 스트라이커", group: "attack" },
+  LF: { x: 32, y: 24, label: "LF · 왼쪽 포워드", group: "attack" },
+  RF: { x: 68, y: 24, label: "RF · 오른쪽 포워드", group: "attack" },
+  LWF: { x: 18, y: 27, label: "LWF · 왼쪽 윙포워드", group: "attack" },
+  WF: { x: 50, y: 29, label: "WF · 윙포워드", group: "attack" },
+  RWF: { x: 82, y: 27, label: "RWF · 오른쪽 윙포워드", group: "attack" },
+  LW: { x: 18, y: 29, label: "LW · 왼쪽 공격수", group: "attack" },
+  RW: { x: 82, y: 29, label: "RW · 오른쪽 공격수", group: "attack" },
+  AM: { x: 50, y: 38, label: "AM · 공격형 미드필더", group: "midfield" },
+  LAM: { x: 34, y: 40, label: "LAM · 왼쪽 공격형 미드필더", group: "midfield" },
+  RAM: { x: 66, y: 40, label: "RAM · 오른쪽 공격형 미드필더", group: "midfield" },
+  LM: { x: 18, y: 49, label: "LM · 왼쪽 미드필더", group: "midfield" },
+  LCM: { x: 36, y: 52, label: "LCM · 왼쪽 중앙 미드필더", group: "midfield" },
+  CM: { x: 50, y: 52, label: "CM · 중앙 미드필더", group: "midfield" },
+  RCM: { x: 64, y: 52, label: "RCM · 오른쪽 중앙 미드필더", group: "midfield" },
+  RM: { x: 82, y: 49, label: "RM · 오른쪽 미드필더", group: "midfield" },
+  DM: { x: 50, y: 63, label: "DM · 수비형 미드필더", group: "midfield" },
+  LDM: { x: 36, y: 63, label: "LDM · 왼쪽 수비형 미드필더", group: "midfield" },
+  RDM: { x: 64, y: 63, label: "RDM · 오른쪽 수비형 미드필더", group: "midfield" },
+  WB: { x: 50, y: 69, label: "WB · 윙백", group: "defense" },
+  LWB: { x: 14, y: 67, label: "LWB · 왼쪽 윙백", group: "defense" },
+  RWB: { x: 86, y: 67, label: "RWB · 오른쪽 윙백", group: "defense" },
+  LB: { x: 14, y: 75, label: "LB · 왼쪽 수비수", group: "defense" },
+  LCB: { x: 36, y: 76, label: "LCB · 왼쪽 센터백", group: "defense" },
+  CB: { x: 50, y: 75, label: "CB · 중앙 수비수", group: "defense" },
+  RCB: { x: 64, y: 76, label: "RCB · 오른쪽 센터백", group: "defense" },
+  RB: { x: 86, y: 75, label: "RB · 오른쪽 수비수", group: "defense" },
+  SW: { x: 50, y: 84, label: "SW · 스위퍼", group: "defense" },
+  GK: { x: 50, y: 92, label: "GK · 골키퍼", group: "goalkeeper" }
+};
+
+const PORTFOLIO_POSITION_ALIASES = {
+  CAM: "AM",
+  CDM: "DM",
+  RL: "RM",
+  FW: "CF",
+  FWD: "CF",
+  WG: "WF",
+  MF: "CM",
+  DF: "CB",
+  FB: "CB",
+  G: "GK",
+  GOALKEEPER: "GK",
+  공격수: "ST",
+  미드필더: "CM",
+  수비수: "CB",
+  골키퍼: "GK"
+};
+
+function clonePortfolioData(payload) {
+  return JSON.parse(JSON.stringify(payload));
+}
+
+function normalizePortfolioPosition(value) {
+  const raw = String(value || "CM").trim().toUpperCase();
+  const normalized = PORTFOLIO_POSITION_ALIASES[raw] || raw;
+  return PORTFOLIO_POSITIONS[normalized] ? normalized : "CM";
+}
+
+function portfolioPositionCoordinates(holding, occurrence, total) {
+  const position = normalizePortfolioPosition(holding.position);
+  const base = PORTFOLIO_POSITIONS[position];
+  const spacing = position === "GK" ? 8 : 13;
+  const xOffset = (occurrence - ((total - 1) / 2)) * spacing;
+  return {
+    position,
+    x: clamp(base.x + xOffset, 9, 91),
+    y: base.y,
+    label: base.label,
+    group: base.group
+  };
+}
+
+function portfolioLayoutHoldings(holdings) {
+  const totals = new Map();
+  holdings.forEach((holding) => {
+    const position = normalizePortfolioPosition(holding.position);
+    totals.set(position, (totals.get(position) || 0) + 1);
+  });
+  const occurrences = new Map();
+  return holdings.map((holding) => {
+    const position = normalizePortfolioPosition(holding.position);
+    const occurrence = occurrences.get(position) || 0;
+    occurrences.set(position, occurrence + 1);
+    return {
+      ...holding,
+      layout: portfolioPositionCoordinates(holding, occurrence, totals.get(position) || 1)
+    };
+  });
+}
+
 function portfolioScenarioReturn(stock, scenario, years) {
   const fairPriceKeys = {
     conservative: "fairPriceConservative",
@@ -991,9 +1090,10 @@ function portfolioExpectedReturn(holdings, stocks, scenario, years) {
   let weightedReturn = 0;
   let coveredWeight = 0;
   holdings.forEach((holding) => {
-    const stock = stocks.get(holding.code);
-    const expectedReturn = portfolioScenarioReturn(stock, scenario, years);
     const weight = Number(holding.weight_pct);
+    const expectedReturn = holding.type === "cash"
+      ? 0
+      : portfolioScenarioReturn(stocks.get(holding.code), scenario, years);
     if (expectedReturn === null || !Number.isFinite(weight) || weight <= 0) {
       return;
     }
@@ -1013,56 +1113,89 @@ function portfolioScenarioMarkup(label, value, scenario) {
   `;
 }
 
+function portfolioNamesByGroup(holdings, group) {
+  const names = holdings
+    .filter((holding) => holding.layout.group === group)
+    .map((holding) => holding.name);
+  return names.length ? names.join(" · ") : "비어 있음";
+}
+
+function portfolioTextMarkup(value) {
+  if (!value) {
+    return '<span class="portfolio-note-empty">아직 입력하지 않았습니다.</span>';
+  }
+  return escapeHtml(value).replace(/\n/g, "<br>");
+}
+
+function portfolioCrestTheme(code, name, type) {
+  if (type === "cash" || code === "CASH") return "cash";
+  const known = {
+    "042700": "hanmi",
+    "000660": "hynix",
+    "214450": "pharma",
+    "383220": "fnf",
+    "138040": "meritz",
+    "005930": "samsung"
+  };
+  return known[code] || (String(name || "").length <= 4 ? "compact" : "default");
+}
+
+function portfolioMark(code, name, type) {
+  if (type === "cash" || code === "CASH") return "CASH";
+  return String(name || code || "?").replace(/\s+/g, "").slice(0, 5);
+}
+
 function renderPortfolioBoard() {
   const container = document.getElementById("portfolio-board");
   const payload = state.portfolioData;
   if (!container || !payload) {
     return;
   }
-  const holdings = Array.isArray(payload.holdings) ? payload.holdings : [];
+  const holdings = portfolioLayoutHoldings(Array.isArray(payload.holdings) ? payload.holdings : []);
+  const stockHoldings = holdings.filter((holding) => holding.type !== "cash");
+  const cashHolding = holdings.find((holding) => holding.type === "cash");
   const rawByCode = new Map(state.rawStocks.map((stock) => [stock.code, stock]));
   const enrichedByCode = new Map();
-  holdings.forEach((holding) => {
+  stockHoldings.forEach((holding) => {
     const rawStock = rawByCode.get(holding.code);
     if (rawStock) {
       enrichedByCode.set(holding.code, enrichStock(rawStock));
     }
   });
   const convergenceYears = Number(payload.convergence_years) || 3;
-  const conservative = portfolioExpectedReturn(
-    holdings,
-    enrichedByCode,
-    "conservative",
-    convergenceYears
-  );
+  const conservative = portfolioExpectedReturn(holdings, enrichedByCode, "conservative", convergenceYears);
   const base = portfolioExpectedReturn(holdings, enrichedByCode, "base", convergenceYears);
-  const optimistic = portfolioExpectedReturn(
-    holdings,
-    enrichedByCode,
-    "optimistic",
-    convergenceYears
-  );
-  const covered = holdings.filter((holding) => enrichedByCode.has(holding.code)).length;
-  const changes = Array.isArray(payload.changes) ? payload.changes : [];
+  const optimistic = portfolioExpectedReturn(holdings, enrichedByCode, "optimistic", convergenceYears);
+  const covered = stockHoldings.filter((holding) => enrichedByCode.has(holding.code)).length;
+  const changes = Array.isArray(payload.changes) ? payload.changes.slice(0, 3) : [];
+  const stockWeight = stockHoldings.reduce((sum, holding) => sum + (Number(holding.weight_pct) || 0), 0);
+  const cashWeight = Number(cashHolding?.weight_pct) || 0;
 
   container.innerHTML = `
     <div class="portfolio-head">
       <div>
         <p class="section-kicker">Portfolio Tactics</p>
         <h2 id="portfolio-board-title">${escapeHtml(payload.title || "나의 포트폴리오")}</h2>
-        <p>보유 종목을 공격·중원·수비 역할로 배치한 전략 전술판입니다. 종목을 누르면 기존 국내 종목 상세 화면이 열립니다.</p>
+        <p>ST·CF·SS·WF·AM·CM·LM·RM·DM·WB·CB·SW·GK 등 포지션을 입력하면 전술판의 표준 위치에 자동 배치합니다. 같은 포지션은 서로 겹치지 않게 펼쳐집니다.</p>
       </div>
-      <div class="portfolio-head-meta">
-        <span>${escapeHtml(payload.formation || "자유 배치")} 포메이션</span>
-        <strong>${holdings.length}명 선발</strong>
-        <small>${escapeHtml(payload.weighting_note || "비중 기준")}</small>
+      <div class="portfolio-head-side">
+        <div class="portfolio-head-meta">
+          <span>${escapeHtml(payload.formation || "자유 전술")}</span>
+          <strong>${stockHoldings.length}종목 + ${cashHolding ? "GK" : "현금 없음"}</strong>
+          <small>${state.portfolioUsingLocal ? "이 브라우저의 편집값 적용 중" : "공개 JSON 기본값"}</small>
+        </div>
+        <div class="portfolio-head-actions">
+          <button type="button" data-portfolio-add>+ 종목 추가</button>
+          <button type="button" data-portfolio-export>JSON 내보내기</button>
+          ${state.portfolioUsingLocal ? '<button type="button" data-portfolio-reset>공개 기본값 복원</button>' : ""}
+        </div>
       </div>
     </div>
 
     <div class="portfolio-kpis">
-      <div><span>보유 종목</span><strong>${holdings.length}개</strong><small>공개 포트폴리오</small></div>
-      <div><span>현재 배분</span><strong>각 16.7%</strong><small>실제 비중 입력 전</small></div>
-      <div><span>수익률 산출</span><strong>${covered}/${holdings.length}</strong><small>가치평가 연결 종목</small></div>
+      <div><span>보유 종목</span><strong>${stockHoldings.length}개</strong><small>현금은 별도 GK</small></div>
+      <div><span>현재 배분</span><strong>주식 ${formatNumber(stockWeight, 1)}%</strong><small>현금 ${formatNumber(cashWeight, 1)}%</small></div>
+      <div><span>수익률 산출</span><strong>${covered}/${stockHoldings.length}</strong><small>가치평가 연결 종목</small></div>
       <div><span>수렴 기간</span><strong>${convergenceYears}년</strong><small>적정가 도달 가정</small></div>
     </div>
 
@@ -1076,16 +1209,17 @@ function renderPortfolioBoard() {
           <button
             type="button"
             class="portfolio-player"
-            style="--player-x:${Number(holding.x_pct) || 50}%;--player-y:${Number(holding.y_pct) || 50}%"
+            style="--player-x:${holding.layout.x}%;--player-y:${holding.layout.y}%"
             data-portfolio-code="${escapeHtml(holding.code)}"
-            aria-label="${escapeHtml(`${holding.name} 상세 보기`)}"
+            aria-label="${escapeHtml(`${holding.name} 투자 노트 보기`)}"
           >
+            <span class="portfolio-position-chip">${escapeHtml(holding.layout.position)}</span>
             <span class="portfolio-crest is-${escapeHtml(holding.crest_theme || "default")}">
               ${escapeHtml(holding.mark || holding.name)}
             </span>
             <span class="portfolio-player-card">
               <strong>${escapeHtml(holding.name)}</strong>
-              <small>${escapeHtml(holding.role || holding.position || "선발")}</small>
+              <small>${escapeHtml(holding.role || holding.layout.label)}</small>
               <em>${formatPercent(Number(holding.weight_pct), 1)}</em>
             </span>
           </button>
@@ -1095,11 +1229,12 @@ function renderPortfolioBoard() {
       <aside class="portfolio-tactics">
         <div class="portfolio-tactics-card">
           <p>전술 포인트</p>
-          <h3>성장 엔진과 현금창출의 조합</h3>
+          <h3>사용자가 정한 역할로 읽는 포트폴리오</h3>
           <ul>
-            <li><span>공격</span><strong>한미반도체 · SK하이닉스 · 파마리서치</strong></li>
-            <li><span>중원</span><strong>F&F · 메리츠금융지주</strong></li>
-            <li><span>후방</span><strong>삼성전자</strong></li>
+            <li><span>공격</span><strong>${escapeHtml(portfolioNamesByGroup(holdings, "attack"))}</strong></li>
+            <li><span>미드필드</span><strong>${escapeHtml(portfolioNamesByGroup(holdings, "midfield"))}</strong></li>
+            <li><span>수비</span><strong>${escapeHtml(portfolioNamesByGroup(holdings, "defense"))}</strong></li>
+            <li><span>골키퍼</span><strong>${escapeHtml(portfolioNamesByGroup(holdings, "goalkeeper"))}</strong></li>
           </ul>
         </div>
         <div class="portfolio-tactics-card is-change">
@@ -1127,14 +1262,130 @@ function renderPortfolioBoard() {
         ${portfolioScenarioMarkup("강세", optimistic, "bull")}
       </div>
     </div>
-    <p class="portfolio-disclaimer">기대수익률은 실제 수익을 보장하지 않으며, 현재는 실제 매입 비중이 없어 동일비중으로 계산합니다. 평균단가와 실제 비중은 포함하지 않았습니다.</p>
+    <p class="portfolio-disclaimer">브라우저에서 수정한 내용은 이 기기에만 저장됩니다. JSON 내보내기 파일을 공개 저장소의 data/portfolio.json에 반영하면 모든 기기에 공개할 수 있습니다.</p>
   `;
 }
 
+function portfolioHoldingByCode(code) {
+  return state.portfolioData?.holdings?.find((holding) => holding.code === code) || null;
+}
+
+function closePortfolioModal() {
+  const modal = document.getElementById("portfolio-modal");
+  if (modal) modal.hidden = true;
+  state.portfolioSelectedCode = null;
+  state.portfolioModalMode = "detail";
+  document.body.classList.remove("market-map-modal-open");
+}
+
+function renderPortfolioNoteCard(title, value, key) {
+  return `
+    <section class="portfolio-note-card is-${key}">
+      <h4>${escapeHtml(title)}</h4>
+      <p>${portfolioTextMarkup(value)}</p>
+    </section>
+  `;
+}
+
+function renderPortfolioDetail(holding) {
+  const notes = holding.notes || {};
+  const position = normalizePortfolioPosition(holding.position);
+  const sourceUrls = Array.isArray(notes.source_urls) ? notes.source_urls : [];
+  return `
+    <button type="button" class="market-map-modal-close" data-portfolio-close aria-label="닫기">×</button>
+    <div class="portfolio-detail-head">
+      <span class="portfolio-crest is-${escapeHtml(holding.crest_theme || "default")}">${escapeHtml(holding.mark || holding.name)}</span>
+      <div>
+        <p>${escapeHtml(PORTFOLIO_POSITIONS[position].label)}</p>
+        <h3 id="portfolio-modal-title">${escapeHtml(holding.name)}</h3>
+        <span>${escapeHtml(holding.code)} · 비중 ${formatPercent(Number(holding.weight_pct), 1)}</span>
+      </div>
+    </div>
+    <div class="portfolio-note-grid">
+      ${renderPortfolioNoteCard("투자 아이디어", notes.investment_idea, "idea")}
+      ${renderPortfolioNoteCard("주가 추이 및 개인적 해석", notes.price_view, "price")}
+      ${renderPortfolioNoteCard("주요 변수", notes.key_variables, "variables")}
+      ${renderPortfolioNoteCard("시나리오", notes.scenario, "scenario")}
+      ${renderPortfolioNoteCard("주가 전망 및 촉매", notes.catalysts, "catalysts")}
+    </div>
+    ${sourceUrls.length ? `
+      <div class="portfolio-note-sources">
+        <span>참고 자료</span>
+        ${sourceUrls.map((url, index) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">자료 ${index + 1}</a>`).join("")}
+      </div>
+    ` : ""}
+    <div class="portfolio-detail-actions">
+      <button type="button" data-portfolio-edit="${escapeHtml(holding.code)}">내용·포지션 편집</button>
+      ${holding.type !== "cash" ? `<button type="button" data-portfolio-open-market="${escapeHtml(holding.code)}">국내 종목 상세 보기</button>` : ""}
+    </div>
+  `;
+}
+
+function renderPortfolioEditor(holding = null) {
+  const isNew = !holding;
+  const notes = holding?.notes || {};
+  const position = normalizePortfolioPosition(holding?.position || "CM");
+  return `
+    <button type="button" class="market-map-modal-close" data-portfolio-close aria-label="닫기">×</button>
+    <div class="portfolio-editor-head">
+      <p>Portfolio Editor</p>
+      <h3 id="portfolio-modal-title">${isNew ? "종목 추가" : `${escapeHtml(holding.name)} 편집`}</h3>
+      <span>입력값은 이 브라우저에 저장되며 JSON으로 내보낼 수 있습니다.</span>
+    </div>
+    <form id="portfolio-editor-form" class="portfolio-editor-form">
+      <input type="hidden" name="original_code" value="${escapeHtml(holding?.code || "")}">
+      <div class="portfolio-editor-grid">
+        <label><span>종목코드 또는 종목명</span><input name="code" value="${escapeHtml(holding?.code || "")}" placeholder="예: 214450 또는 파마리서치" required></label>
+        <label><span>표시 이름</span><input name="name" value="${escapeHtml(holding?.name || "")}" placeholder="비워두면 종목 데이터에서 검색"></label>
+        <label><span>포지션 코드</span><input name="position" list="portfolio-position-options" value="${escapeHtml(position)}" placeholder="ST, CF, WF, AM, LM, RM, CB, GK" required></label>
+        <label><span>비중 (%)</span><input name="weight_pct" type="number" min="0" max="100" step="0.01" value="${Number(holding?.weight_pct ?? 0)}"></label>
+        <label class="is-wide"><span>전술 역할 한 줄</span><input name="role" value="${escapeHtml(holding?.role || "")}" placeholder="예: 리쥬란 글로벌 성장"></label>
+      </div>
+      <datalist id="portfolio-position-options">
+        ${Object.entries(PORTFOLIO_POSITIONS).map(([code, item]) => `<option value="${code}">${escapeHtml(item.label)}</option>`).join("")}
+      </datalist>
+      <label><span>투자 아이디어</span><textarea name="investment_idea" rows="5">${escapeHtml(notes.investment_idea || "")}</textarea></label>
+      <label><span>주가 추이 및 개인적 해석</span><textarea name="price_view" rows="4">${escapeHtml(notes.price_view || "")}</textarea></label>
+      <label><span>주요 변수</span><textarea name="key_variables" rows="6">${escapeHtml(notes.key_variables || "")}</textarea></label>
+      <label><span>시나리오</span><textarea name="scenario" rows="7">${escapeHtml(notes.scenario || "")}</textarea></label>
+      <label><span>주가 전망 및 촉매</span><textarea name="catalysts" rows="5">${escapeHtml(notes.catalysts || "")}</textarea></label>
+      <div class="portfolio-editor-actions">
+        <button type="submit">저장</button>
+        <button type="button" data-portfolio-cancel>취소</button>
+        ${!isNew ? '<button type="button" class="is-danger" data-portfolio-delete>종목 삭제</button>' : ""}
+      </div>
+    </form>
+  `;
+}
+
+function renderPortfolioModal() {
+  const modal = document.getElementById("portfolio-modal");
+  const container = document.getElementById("portfolio-detail");
+  if (!modal || !container) return;
+  const holding = portfolioHoldingByCode(state.portfolioSelectedCode);
+  if (state.portfolioModalMode === "add") {
+    container.innerHTML = renderPortfolioEditor(null);
+  } else if (state.portfolioModalMode === "edit" && holding) {
+    container.innerHTML = renderPortfolioEditor(holding);
+  } else if (holding) {
+    container.innerHTML = renderPortfolioDetail(holding);
+  } else {
+    closePortfolioModal();
+    return;
+  }
+  modal.hidden = false;
+  document.body.classList.add("market-map-modal-open");
+}
+
 function openPortfolioStock(code) {
-  const stock = state.marketMapData?.markets?.KR?.stocks?.find(
-    (row) => row.symbol === code
-  );
+  state.portfolioSelectedCode = code;
+  state.portfolioModalMode = "detail";
+  renderPortfolioModal();
+}
+
+function openPortfolioMarketDetail(code) {
+  const stock = state.marketMapData?.markets?.KR?.stocks?.find((row) => row.symbol === code);
+  closePortfolioModal();
   if (stock) {
     state.marketMapSelected = `KR:${code}`;
     renderMarketMapDetail(stock);
@@ -1144,16 +1395,154 @@ function openPortfolioStock(code) {
     state.selectedCode = code;
     switchWorkspace("valuation");
     renderDashboard();
-    document.getElementById("selected-stock-workbench")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("selected-stock-workbench")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+}
+
+function persistPortfolioData(payload) {
+  payload.count = payload.holdings.length;
+  payload.stock_count = payload.holdings.filter((holding) => holding.type !== "cash").length;
+  payload.as_of = new Date().toISOString().slice(0, 10);
+  state.portfolioData = payload;
+  state.portfolioUsingLocal = true;
+  localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(payload));
+  renderPortfolioBoard();
+}
+
+function resolvePortfolioStock(query, name) {
+  const normalized = String(query || "").trim();
+  return state.rawStocks.find((stock) =>
+    stock.code === normalized || stock.name === normalized || stock.name === String(name || "").trim()
+  ) || null;
+}
+
+function savePortfolioEditor(form) {
+  const formData = new FormData(form);
+  const originalCode = String(formData.get("original_code") || "").trim();
+  const query = String(formData.get("code") || "").trim();
+  const inputName = String(formData.get("name") || "").trim();
+  const rawStock = resolvePortfolioStock(query, inputName);
+  const isCash = query.toUpperCase() === "CASH" || query === "현금" || inputName === "현금";
+  const code = isCash ? "CASH" : (rawStock?.code || query.toUpperCase());
+  const name = isCash ? "현금" : (inputName || rawStock?.name || query);
+  if (!code || !name) {
+    window.alert("종목코드 또는 종목명을 입력해주세요.");
+    return;
+  }
+  const payload = clonePortfolioData(state.portfolioData);
+  const existing = portfolioHoldingByCode(originalCode);
+  const duplicate = payload.holdings.find((holding) => holding.code === code && holding.code !== originalCode);
+  if (duplicate) {
+    window.alert("이미 포트폴리오에 있는 종목입니다.");
+    return;
+  }
+  const type = isCash ? "cash" : "stock";
+  const holding = {
+    code,
+    name,
+    type,
+    weight_pct: Number(formData.get("weight_pct")) || 0,
+    position: normalizePortfolioPosition(formData.get("position")),
+    role: String(formData.get("role") || "").trim(),
+    mark: existing?.mark || portfolioMark(code, name, type),
+    crest_theme: existing?.crest_theme || portfolioCrestTheme(code, name, type),
+    notes: {
+      ...(existing?.notes || {}),
+      investment_idea: String(formData.get("investment_idea") || "").trim(),
+      price_view: String(formData.get("price_view") || "").trim(),
+      key_variables: String(formData.get("key_variables") || "").trim(),
+      scenario: String(formData.get("scenario") || "").trim(),
+      catalysts: String(formData.get("catalysts") || "").trim()
+    }
+  };
+  const index = payload.holdings.findIndex((item) => item.code === originalCode);
+  if (index >= 0) payload.holdings[index] = holding;
+  else payload.holdings.push(holding);
+  payload.changes = [
+    {
+      type: index >= 0 ? "내용 수정" : "신규 편입",
+      date: new Date().toISOString().slice(0, 10),
+      reason: `${name} · ${holding.position} 포지션 ${index >= 0 ? "수정" : "추가"}`
+    },
+    ...(payload.changes || [])
+  ].slice(0, 20);
+  persistPortfolioData(payload);
+  state.portfolioSelectedCode = code;
+  state.portfolioModalMode = "detail";
+  renderPortfolioModal();
+}
+
+function deletePortfolioHolding() {
+  const holding = portfolioHoldingByCode(state.portfolioSelectedCode);
+  if (!holding || !window.confirm(`${holding.name}을(를) 포트폴리오에서 삭제할까요?`)) return;
+  const payload = clonePortfolioData(state.portfolioData);
+  payload.holdings = payload.holdings.filter((item) => item.code !== holding.code);
+  payload.changes = [
+    { type: "제외", date: new Date().toISOString().slice(0, 10), reason: `${holding.name} 포트폴리오 제외` },
+    ...(payload.changes || [])
+  ].slice(0, 20);
+  persistPortfolioData(payload);
+  closePortfolioModal();
+}
+
+function exportPortfolioJson() {
+  const blob = new Blob([`${JSON.stringify(state.portfolioData, null, 2)}\n`], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = `portfolio-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+function resetPortfolioData() {
+  if (!window.confirm("이 브라우저에서 수정한 내용을 지우고 공개 JSON 기본값으로 되돌릴까요?")) return;
+  localStorage.removeItem(PORTFOLIO_STORAGE_KEY);
+  state.portfolioData = clonePortfolioData(state.portfolioDefaultData);
+  state.portfolioUsingLocal = false;
+  renderPortfolioBoard();
 }
 
 function bindPortfolioBoard() {
   document.getElementById("portfolio-board")?.addEventListener("click", (event) => {
     const player = event.target.closest("[data-portfolio-code]");
-    if (player) {
-      openPortfolioStock(player.dataset.portfolioCode);
+    if (player) openPortfolioStock(player.dataset.portfolioCode);
+    else if (event.target.closest("[data-portfolio-add]")) {
+      state.portfolioSelectedCode = null;
+      state.portfolioModalMode = "add";
+      renderPortfolioModal();
+    } else if (event.target.closest("[data-portfolio-export]")) exportPortfolioJson();
+    else if (event.target.closest("[data-portfolio-reset]")) resetPortfolioData();
+  });
+  document.getElementById("portfolio-modal")?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-portfolio-close]")) closePortfolioModal();
+  });
+  document.getElementById("portfolio-detail")?.addEventListener("click", (event) => {
+    const edit = event.target.closest("[data-portfolio-edit]");
+    const market = event.target.closest("[data-portfolio-open-market]");
+    if (edit) {
+      state.portfolioSelectedCode = edit.dataset.portfolioEdit;
+      state.portfolioModalMode = "edit";
+      renderPortfolioModal();
+    } else if (market) openPortfolioMarketDetail(market.dataset.portfolioOpenMarket);
+    else if (event.target.closest("[data-portfolio-cancel]")) {
+      if (state.portfolioSelectedCode) {
+        state.portfolioModalMode = "detail";
+        renderPortfolioModal();
+      } else closePortfolioModal();
+    } else if (event.target.closest("[data-portfolio-delete]")) deletePortfolioHolding();
+  });
+  document.getElementById("portfolio-detail")?.addEventListener("submit", (event) => {
+    if (event.target.matches("#portfolio-editor-form")) {
+      event.preventDefault();
+      savePortfolioEditor(event.target);
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !document.getElementById("portfolio-modal")?.hidden) {
+      closePortfolioModal();
     }
   });
 }
@@ -1162,15 +1551,27 @@ async function loadPortfolio() {
   const container = document.getElementById("portfolio-board");
   try {
     const response = await fetch(`${PORTFOLIO_URL}?v=${Date.now()}`, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} for portfolio`);
+    if (!response.ok) throw new Error(`HTTP ${response.status} for portfolio`);
+    const publicPayload = await response.json();
+    state.portfolioDefaultData = publicPayload;
+    const localPayload = localStorage.getItem(PORTFOLIO_STORAGE_KEY);
+    if (localPayload) {
+      try {
+        state.portfolioData = JSON.parse(localPayload);
+        state.portfolioUsingLocal = true;
+      } catch (storageError) {
+        localStorage.removeItem(PORTFOLIO_STORAGE_KEY);
+        state.portfolioData = clonePortfolioData(publicPayload);
+        state.portfolioUsingLocal = false;
+        console.warn("손상된 로컬 포트폴리오를 공개 기본값으로 복원했습니다.", storageError);
+      }
+    } else {
+      state.portfolioData = clonePortfolioData(publicPayload);
+      state.portfolioUsingLocal = false;
     }
-    state.portfolioData = await response.json();
     renderPortfolioBoard();
   } catch (error) {
-    if (container) {
-      container.innerHTML = '<div class="portfolio-loading">포트폴리오 데이터를 불러오지 못했습니다.</div>';
-    }
+    if (container) container.innerHTML = '<div class="portfolio-loading">포트폴리오 데이터를 불러오지 못했습니다.</div>';
     console.error(error);
   }
 }

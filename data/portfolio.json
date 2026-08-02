@@ -1,86 +1,151 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source": "User-configured public portfolio",
-  "count": 6,
-  "generated_at_utc": "2026-08-02T14:30:00+00:00",
+  "count": 7,
+  "stock_count": 6,
+  "generated_at_utc": "2026-08-02T15:00:00+00:00",
   "title": "나의 포트폴리오",
-  "formation": "2-2-1",
-  "weighting_note": "실제 비중 입력 전 동일비중",
+  "formation": "자유 전술",
+  "weighting_note": "실제 비중 입력 전 주식 6종 동일비중",
   "convergence_years": 3,
-  "as_of": "2026-08-02",
+  "as_of": "2026-08-03",
   "holdings": [
     {
       "code": "042700",
       "name": "한미반도체",
+      "type": "stock",
       "weight_pct": 16.67,
-      "position": "공격수",
-      "role": "고성장 장비",
-      "x_pct": 50,
-      "y_pct": 14,
+      "position": "ST",
+      "role": "HBM 장비 성장",
       "mark": "HANMI",
-      "crest_theme": "hanmi"
+      "crest_theme": "hanmi",
+      "notes": {
+        "investment_idea": "HBM 적층 고도화와 생산능력 확대 과정에서 TC 본더 수요가 증가할 때 매출과 이익 레버리지가 크게 나타날 수 있는 장비 기업이다. 핵심은 단순한 AI 테마가 아니라 고객사의 실제 장비 발주가 장기간 이어지는지다.",
+        "price_view": "수주와 HBM 증설 기대가 주가에 빠르게 반영되는 고변동 구간으로 본다. 주가 상승을 실적 추정치 상향이 따라오지 못하면 밸류에이션 조정이 커질 수 있으므로 신규 수주와 이익 증가를 함께 확인한다.",
+        "key_variables": "1. 주요 고객사의 HBM 설비투자와 TC 본더 발주 속도\n2. 고객 집중도와 신규 고객 확보\n3. 차세대 HBM 패키징 방식 변화와 경쟁 장비 점유율\n4. 장비 매출총이익률과 납기 대응 능력",
+        "scenario": "기준: 주요 고객의 HBM 투자가 이어지고 수주잔고가 실적으로 순차 전환된다.\n강세: 신규 고객과 차세대 장비 매출이 동시에 확대되어 높은 이익 성장이 지속된다.\n약세: 고객 투자 지연 또는 패키징 방식 변화로 발주가 둔화되고 높은 밸류에이션이 조정된다.",
+        "catalysts": "대형 TC 본더 수주 공시, 신규 고객 인증, HBM 세대 전환에 맞춘 장비 출시, 분기 수주잔고와 영업이익률 개선"
+      }
     },
     {
       "code": "000660",
       "name": "SK하이닉스",
+      "type": "stock",
       "weight_pct": 16.67,
-      "position": "공격형 미드필더",
-      "role": "AI 메모리",
-      "x_pct": 30,
-      "y_pct": 37,
+      "position": "ST",
+      "role": "AI 메모리 선도",
       "mark": "SK hynix",
-      "crest_theme": "hynix"
-    },
-    {
-      "code": "214450",
-      "name": "파마리서치",
-      "weight_pct": 16.67,
-      "position": "공격형 미드필더",
-      "role": "의료 성장",
-      "x_pct": 70,
-      "y_pct": 37,
-      "mark": "PR",
-      "crest_theme": "pharma"
-    },
-    {
-      "code": "383220",
-      "name": "F&F",
-      "weight_pct": 16.67,
-      "position": "중앙 미드필더",
-      "role": "브랜드 현금창출",
-      "x_pct": 30,
-      "y_pct": 64,
-      "mark": "F&F",
-      "crest_theme": "fnf"
-    },
-    {
-      "code": "138040",
-      "name": "메리츠금융지주",
-      "weight_pct": 16.66,
-      "position": "수비형 미드필더",
-      "role": "자본배분",
-      "x_pct": 70,
-      "y_pct": 64,
-      "mark": "meritz",
-      "crest_theme": "meritz"
+      "crest_theme": "hynix",
+      "notes": {
+        "investment_idea": "HBM 중심의 AI 메모리 수요 확대와 기술 리더십을 핵심 투자 논리로 본다. HBM의 높은 수익성이 일반 DRAM·NAND 사이클의 변동성을 얼마나 상쇄하는지가 장기 가치의 핵심이다.",
+        "price_view": "AI 인프라 투자와 HBM 공급계약 기대를 상당 부분 반영한 주가로 해석한다. 상승 추세가 유지되려면 단순 출하 증가보다 HBM 세대 전환, 가격, 수익성의 동반 개선이 계속 확인돼야 한다.",
+        "key_variables": "1. HBM4·HBM4E 고객 인증과 출하 일정\n2. HBM 시장 점유율과 평균판매가격\n3. 범용 DRAM·NAND 가격 및 재고 사이클\n4. 설비투자 증가가 공급과잉으로 이어지는 시점\n5. 핵심 AI 고객의 투자 지속성",
+        "scenario": "기준: HBM 리더십을 유지하고 범용 메모리 가격도 안정되어 높은 현금창출이 이어진다.\n강세: HBM4E와 차세대 AI 메모리에서 기술 격차가 유지되며 이익 추정치가 추가 상향된다.\n약세: 경쟁사의 공급 확대와 AI 투자 둔화가 겹쳐 HBM 프리미엄과 범용 메모리 가격이 동시에 하락한다.",
+        "catalysts": "HBM4E 샘플·양산 일정, 주요 AI 고객과의 장기 협력, 분기 HBM 매출 비중 상승, DRAM 가격 및 영업이익 전망 상향",
+        "source_urls": [
+          "https://news.skhynix.com/press-center/press-release/"
+        ]
+      }
     },
     {
       "code": "005930",
       "name": "삼성전자",
+      "type": "stock",
       "weight_pct": 16.66,
-      "position": "골키퍼",
-      "role": "대형주 기반",
-      "x_pct": 50,
-      "y_pct": 87,
+      "position": "ST",
+      "role": "HBM·파운드리 회복",
       "mark": "SAMSUNG",
-      "crest_theme": "samsung"
+      "crest_theme": "samsung",
+      "notes": {
+        "investment_idea": "메모리 업황 회복에 HBM4, 첨단 패키징, 파운드리 수율 개선이 더해질 경우 이익 체력이 재평가될 수 있다는 논리다. 반도체 외 사업과 순현금은 하방을 보완하지만, 핵심 상승 동력은 결국 DS 부문의 수익성 회복이다.",
+        "price_view": "HBM 경쟁력 회복 기대와 대형 고객 협력이 주가에 선반영되는 단계로 본다. 실제 출하와 파운드리 적자 축소가 기대를 따라오면 추세가 이어질 수 있지만 일정 지연 시 변동성이 커질 수 있다.",
+        "key_variables": "1. HBM4·HBM4E 양산 수율과 고객 출하\n2. 파운드리 2나노 수율, 수주와 적자 축소\n3. DRAM·NAND 평균판매가격과 재고\n4. 반도체 설비투자와 감가상각 부담\n5. 모바일·디스플레이 등 비반도체 사업의 방어력",
+        "scenario": "기준: 메모리 가격이 안정되고 HBM4 공급 확대와 파운드리 손실 축소가 진행된다.\n강세: HBM과 파운드리 대형 고객 수주가 동시에 늘면서 DS 이익 체력이 구조적으로 개선된다.\n약세: HBM 고객 일정 또는 파운드리 수율 개선이 지연되고 범용 메모리 가격도 약해진다.",
+        "catalysts": "HBM4·HBM4E 고객 공급 확대, 글로벌 AI 반도체 기업과의 협력, 2나노 파운드리 수주, 분기 DS 영업이익 개선",
+        "source_urls": [
+          "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing",
+          "https://news.samsung.com/global/samsung-electronics-and-broadcom-expand-strategic-collaboration-across-memory-and-foundry-technologies"
+        ]
+      }
+    },
+    {
+      "code": "214450",
+      "name": "파마리서치",
+      "type": "stock",
+      "weight_pct": 16.67,
+      "position": "AM",
+      "role": "리쥬란 글로벌 성장",
+      "mark": "PR",
+      "crest_theme": "pharma",
+      "notes": {
+        "investment_idea": "PDRN·PN 기술을 기반으로 한 REJURAN 의료기기와 화장품 브랜드의 장기 성장을 핵심 논리로 본다. 국내 시술 수요와 해외 의료기기 확장에 더해 북미 화장품 유통 확대가 새로운 성장축이 될 수 있으며, 현재 조정이 브랜드 가치 훼손이 아닌 일시적 밸류에이션 조정인지 확인하는 접근이다.",
+        "price_view": "고성장 기대가 반영된 뒤 밸류에이션 조정을 거치는 구간으로 해석한다. 화장품 수출과 북미 유통 모멘텀이 의료기기 성장의 공백을 보완하고, 실적 추정치가 다시 상향되는지가 주가 추세 전환의 핵심이다.",
+        "key_variables": "1. PDRN·PN 및 REJURAN 브랜드 가치의 장기 성장\n2. 국내 시술 수요와 해외 의료기기 매출 성장률\n3. 세포라·아마존 등 북미 화장품 판매 속도\n4. 해외 매출 비중 상승에도 수익성이 유지되는지\n5. 글로벌 확장 과정의 마케팅비와 인건비 통제",
+        "scenario": "기준: 의료기기와 화장품 합산 매출이 높은 성장세를 유지하고 해외 확장 비용을 통제한다.\n강세: 북미 화장품 판매와 신규 국가 의료기기 진출이 동시에 성공해 25~30% 수준의 성장 기대가 장기간 유지된다.\n약세: 마케팅비가 예상보다 빠르게 증가하거나 의료기기·화장품 성장률이 함께 둔화되어 밸류에이션이 추가 조정된다.",
+        "catalysts": "북미 세포라 판매 호조와 매장 확대, 유럽·브라질 등 신규 국가 공급, 화장품 수출 데이터 개선, 분기 해외 매출과 영업이익률 동반 상승",
+        "source_urls": [
+          "https://pharmaresearch.com/en/press/view.html?curpage=1&idx=402",
+          "https://pharmaresearch.com/en/press/list.html"
+        ]
+      }
+    },
+    {
+      "code": "383220",
+      "name": "F&F",
+      "type": "stock",
+      "weight_pct": 16.67,
+      "position": "CM",
+      "role": "브랜드 현금창출",
+      "mark": "F&F",
+      "crest_theme": "fnf",
+      "notes": {
+        "investment_idea": "MLB와 Discovery의 브랜드력, 중국 유통망, 높은 현금창출력을 기반으로 한 저평가 정상화가 핵심 논리다. 단순 저PER보다 중국과 국내에서 브랜드 성장률이 다시 높아지는지를 우선 확인한다.",
+        "price_view": "중국 소비 둔화와 국내 패션 부진을 상당 부분 반영한 낮은 밸류에이션 구간으로 해석한다. 다만 저평가 해소에는 일회성 실적 반등보다 동일점 성장과 재고 건전성의 지속적인 개선이 필요하다.",
+        "key_variables": "1. 중국 MLB 매장 수와 동일점 매출 성장률\n2. 국내 MLB·Discovery 매출 회복\n3. 재고 증가율과 할인 판매 비중\n4. 중국 소비경기와 환율\n5. 신규 브랜드·지역 확장의 투자 효율",
+        "scenario": "기준: 중국이 안정적으로 성장하고 국내 매출이 회복되며 낮은 밸류에이션이 일부 정상화된다.\n강세: 중국과 국내가 동시에 두 자릿수 성장하고 재고 효율까지 개선된다.\n약세: 중국 소비 둔화와 브랜드 노후화가 이어져 낮은 밸류에이션이 장기간 고착된다.",
+        "catalysts": "중국·국내 분기 매출 성장 가속, 재고 감소, 주주환원 확대, 신규 지역 또는 브랜드 성과 가시화"
+      }
+    },
+    {
+      "code": "138040",
+      "name": "메리츠금융지주",
+      "type": "stock",
+      "weight_pct": 16.66,
+      "position": "CB",
+      "role": "자본배분·주주환원",
+      "mark": "meritz",
+      "crest_theme": "meritz",
+      "notes": {
+        "investment_idea": "보험·증권의 이익 창출력과 자사주 매입·소각 중심의 자본배분을 결합한 복리 성장 논리다. 주당가치 상승 속도가 금융업 고유의 손익 변동성과 자본 규제 부담을 넘어서는지가 핵심이다.",
+        "price_view": "주가가 오를수록 자사주 매입 수익률은 낮아지므로 과거의 낮은 밸류에이션만 반복 적용하기 어렵다. 현재 가격에서는 순이익 성장과 주식 수 감소가 함께 이어지는지로 판단한다.",
+        "key_variables": "1. 연결 순이익과 자기자본이익률의 지속성\n2. 자사주 매입·소각 규모와 매입 수익률\n3. 보험 손해율·투자손익과 증권 IB·트레이딩 실적\n4. 부동산·기업금융 신용비용\n5. 자본적정성과 규제 변화",
+        "scenario": "기준: 안정적인 이익과 자사주 소각이 이어져 주당가치가 꾸준히 증가한다.\n강세: 보험과 증권 이익이 동시에 성장하고 높은 주주환원율이 장기간 유지된다.\n약세: 신용비용 또는 투자손실이 커지고 자본 규제로 주주환원 여력이 낮아진다.",
+        "catalysts": "분기 순이익 개선, 추가 자사주 매입·소각 발표, 기업가치 제고 계획 이행, 자본비율과 신용비용 안정"
+      }
+    },
+    {
+      "code": "CASH",
+      "name": "현금",
+      "type": "cash",
+      "weight_pct": 0,
+      "position": "GK",
+      "role": "기회 대기 자금",
+      "mark": "CASH",
+      "crest_theme": "cash",
+      "notes": {
+        "investment_idea": "현금은 수익률을 포기한 자산이 아니라 변동성이 커질 때 좋은 기업을 매수할 수 있는 선택권이다. 목표 현금 비중은 시장 전망보다 각 종목의 기대수익률과 확신도에 따라 조절한다.",
+        "price_view": "현재 현금 비중은 입력되지 않았다. 실제 비중을 입력하면 주식 비중과 포트폴리오 기대수익률 계산에 함께 반영한다.",
+        "key_variables": "1. 기존 보유 종목의 기대수익률\n2. 시장 급락 시 매수 후보와 목표 가격\n3. 단기금리와 현금성 상품 수익률\n4. 향후 12개월 필요한 유동성",
+        "scenario": "기준: 목표 현금 비중을 유지하며 가격 매력이 커진 종목에 분할 투입한다.\n강세장: 현금 비중이 상대수익률을 낮출 수 있다.\n약세장: 손실을 완충하고 높은 기대수익률의 매수 기회를 제공한다.",
+        "catalysts": "관심 종목의 목표 가격 도달, 시장 급락, 실적과 주가의 괴리 확대, 기존 종목의 투자 논리 강화"
+      }
     }
   ],
   "changes": [
     {
-      "type": "초기 구성",
-      "date": "2026-08-02",
-      "reason": "보유 종목 6개를 첫 전술판에 등록"
+      "type": "포지션 개편",
+      "date": "2026-08-03",
+      "reason": "삼성전자·SK하이닉스·한미반도체를 ST로 배치하고 현금을 GK로 추가"
     }
   ]
 }

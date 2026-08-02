@@ -15,18 +15,42 @@ class PortfolioBoardTests(unittest.TestCase):
             (ROOT / "data/portfolio.json").read_text(encoding="utf-8")
         )
         holdings = payload["holdings"]
+        stocks = [holding for holding in holdings if holding["type"] == "stock"]
+        cash = next(holding for holding in holdings if holding["type"] == "cash")
 
         self.assertEqual(
-            {holding["code"] for holding in holdings},
+            {holding["code"] for holding in stocks},
             {"042700", "138040", "214450", "383220", "005930", "000660"},
         )
         self.assertAlmostEqual(
-            sum(float(holding["weight_pct"]) for holding in holdings),
+            sum(float(holding["weight_pct"]) for holding in stocks),
             100.0,
             places=2,
         )
-        self.assertTrue(all(0 < holding["x_pct"] < 100 for holding in holdings))
-        self.assertTrue(all(0 < holding["y_pct"] < 100 for holding in holdings))
+        self.assertEqual(cash["code"], "CASH")
+        self.assertEqual(cash["position"], "GK")
+        self.assertEqual(float(cash["weight_pct"]), 0)
+
+        by_code = {holding["code"]: holding for holding in stocks}
+        self.assertTrue(
+            all(by_code[code]["position"] == "ST" for code in ("005930", "000660", "042700"))
+        )
+
+    def test_public_portfolio_has_complete_editable_note_drafts(self) -> None:
+        payload = json.loads(
+            (ROOT / "data/portfolio.json").read_text(encoding="utf-8")
+        )
+        required = {
+            "investment_idea",
+            "price_view",
+            "key_variables",
+            "scenario",
+            "catalysts",
+        }
+        for holding in payload["holdings"]:
+            notes = holding["notes"]
+            self.assertTrue(required.issubset(notes))
+            self.assertTrue(all(str(notes[key]).strip() for key in required))
 
     def test_portfolio_board_is_above_market_heatmap_and_is_interactive(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -37,9 +61,18 @@ class PortfolioBoardTests(unittest.TestCase):
         self.assertIn("function renderPortfolioBoard", script)
         self.assertIn("function portfolioScenarioReturn", script)
         self.assertIn("data-portfolio-code", script)
-        self.assertIn("renderMarketMapDetail(stock)", script)
+        self.assertIn("const PORTFOLIO_POSITIONS", script)
+        self.assertIn('WF: { x:', script)
+        self.assertIn('SW: { x:', script)
+        self.assertIn('RL: "RM"', script)
+        self.assertIn("localStorage.setItem(PORTFOLIO_STORAGE_KEY", script)
+        self.assertIn("data-portfolio-add", script)
+        self.assertIn("function renderPortfolioEditor", script)
+        self.assertIn('id="portfolio-modal"', html)
         self.assertIn(".portfolio-pitch", style)
         self.assertIn(".portfolio-player", style)
+        self.assertIn(".portfolio-detail-panel", style)
+        self.assertIn(".portfolio-editor-form", style)
 
     def test_portfolio_assets_share_the_same_cache_version(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
