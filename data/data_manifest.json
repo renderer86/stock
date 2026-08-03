@@ -1,24 +1,24 @@
 {
-  "generated_at_utc": "2026-08-03T14:56:10.314026+00:00",
+  "generated_at_utc": "2026-08-03T15:17:21.251112+00:00",
   "file_count": 26,
   "files": [
     {
       "file": "data/ai_market_briefing.json",
-      "bytes": 4103,
+      "bytes": 4097,
       "source": "Gemini API + locally collected market JSON",
       "count": null,
       "data_date": "2026-08-03T14:39:32.294294+00:00"
     },
     {
       "file": "data/dart_disclosures.json",
-      "bytes": 1023745,
+      "bytes": 1023744,
       "source": "OpenDART disclosure list API",
       "count": 3005,
       "data_date": "2026-08-03T14:33:17.775820+00:00"
     },
     {
       "file": "data/dart_event_details.json",
-      "bytes": 58427,
+      "bytes": 58426,
       "source": [
         "OpenDART document.xml",
         "OpenDART DS005 major event APIs"
@@ -28,14 +28,14 @@
     },
     {
       "file": "data/dart_financial_panel.json",
-      "bytes": 18364594,
+      "bytes": 18364593,
       "source": "OpenDART fnlttMultiAcnt annual major accounts",
       "count": 20992,
       "data_date": "2026-08-01T00:29:49.271368+00:00"
     },
     {
       "file": "data/dart_insider_trades.json",
-      "bytes": 869449,
+      "bytes": 869448,
       "source": [
         "OpenDART elestock.json",
         "OpenDART document.xml"
@@ -45,21 +45,21 @@
     },
     {
       "file": "data/dart_major_holders.json",
-      "bytes": 630780,
+      "bytes": 611077,
       "source": "OpenDART majorstock.json",
       "count": 377,
       "data_date": "2026-08-03T14:32:57.863475+00:00"
     },
     {
       "file": "data/financial_n_estimates.json",
-      "bytes": 2831508,
+      "bytes": 2831507,
       "source": null,
       "count": null,
       "data_date": "2026-08-03T14:41:10.997220+00:00"
     },
     {
       "file": "data/fnguide_roe_history.json",
-      "bytes": 387346,
+      "bytes": 369623,
       "source": "FnGuide CompanyInfo/getRtoAccumulate",
       "count": 377,
       "data_date": "2026-08-03T14:29:38.995277+00:00"
@@ -77,21 +77,21 @@
     },
     {
       "file": "data/korea_investor_flow.json",
-      "bytes": 2773959,
+      "bytes": 2683956,
       "source": "KRX authenticated data via pykrx",
       "count": null,
       "data_date": "2026-08-03"
     },
     {
       "file": "data/korea_short_selling.json",
-      "bytes": 957089,
+      "bytes": 926563,
       "source": "KRX authenticated data via pykrx",
       "count": null,
       "data_date": "2026-08-03T14:22:41.259503+00:00"
     },
     {
       "file": "data/krx_openapi.json",
-      "bytes": 38281,
+      "bytes": 38280,
       "source": "KRX Data Marketplace Open API",
       "count": null,
       "data_date": "2026-08-03T14:22:21.038769+00:00",
@@ -108,7 +108,7 @@
     },
     {
       "file": "data/market_heatmap.json",
-      "bytes": 1403844,
+      "bytes": 1403843,
       "source": [
         "Naver Finance market cap and sectors",
         "Nasdaq screener and Yahoo Finance snapshot"
@@ -118,14 +118,14 @@
     },
     {
       "file": "data/market_indices.json",
-      "bytes": 643471,
+      "bytes": 643470,
       "source": "Yahoo Finance Chart + Naver Finance index daily",
       "count": 8,
       "data_date": "2026-08-03T14:00:10.020163+00:00"
     },
     {
       "file": "data/market_sum.json",
-      "bytes": 6763253,
+      "bytes": 6533926,
       "source": [
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0",
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1"
@@ -135,7 +135,7 @@
     },
     {
       "file": "data/market_sum_by_roe.json",
-      "bytes": 6763276,
+      "bytes": 6533948,
       "source": [
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0",
         "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1"
@@ -145,63 +145,63 @@
     },
     {
       "file": "data/naver_etf_brands.json",
-      "bytes": 24509,
+      "bytes": 23829,
       "source": "Naver Finance ETF",
       "count": null,
       "data_date": "2026-08-03T14:00:08Z"
     },
     {
       "file": "data/naver_news.json",
-      "bytes": 337570,
+      "bytes": 266454,
       "source": "NAVER Search API / news",
-      "count": 436,
-      "data_date": "2026-08-03T14:39:25.749216+00:00"
+      "count": 348,
+      "data_date": "2026-08-03T15:17:19.704898+00:00"
     },
     {
       "file": "data/naver_year_end_prices.json",
-      "bytes": 1698736,
+      "bytes": 1698735,
       "source": "Naver Finance monthly chart",
       "count": 4290,
       "data_date": "2026-08-03T14:46:35.624818+00:00"
     },
     {
       "file": "data/portfolio.json",
-      "bytes": 12785,
+      "bytes": 12634,
       "source": "User-configured public portfolio",
       "count": 7,
       "data_date": "2026-08-02T15:00:00+00:00"
     },
     {
       "file": "data/treasury_yields.json",
-      "bytes": 7742,
+      "bytes": 7468,
       "source": null,
       "count": null,
       "data_date": "2026-08-03T01:08:11Z"
     },
     {
       "file": "data/us_finnhub.json",
-      "bytes": 18173465,
+      "bytes": 18173464,
       "source": "Finnhub API",
       "count": 100,
       "data_date": "2026-08-03T14:22:15.628846+00:00"
     },
     {
       "file": "data/us_finra_short_interest.json",
-      "bytes": 10550531,
+      "bytes": 10550530,
       "source": "FINRA Consolidated Short Interest API",
       "count": 22375,
       "data_date": "2026-07-15"
     },
     {
       "file": "data/us_finra_short_volume.json",
-      "bytes": 4542556,
+      "bytes": 4321673,
       "source": "FINRA Reg SHO Daily Short Sale Volume",
       "count": 15010,
       "data_date": "2026-07-31"
     },
     {
       "file": "data/us_market_snapshot.json",
-      "bytes": 8769901,
+      "bytes": 8769900,
       "source": [
         "Nasdaq stock screener",
         "Yahoo Finance Chart"
@@ -211,7 +211,7 @@
     },
     {
       "file": "data/us_sec_filings.json",
-      "bytes": 703610,
+      "bytes": 703609,
       "source": "SEC EDGAR Full-Text Search and company ticker mapping",
       "count": 200,
       "data_date": "2026-08-03T14:03:02.156551+00:00"
