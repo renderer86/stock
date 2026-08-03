@@ -3475,55 +3475,67 @@ function renderSelectedSummary(stock) {
     market.textContent = `${getMarketLabel(stock)} · 현재가 ${formatPrice(stock.current_price)}`;
   }
 
+  const financials = stock.investmentScreen?.long_term_financials || {};
+  const period = financials.period || {};
+  const latest = financials.latest || {};
+  const averages = financials.averages || {};
+  const cagr = financials.cagr || {};
+  const valuation = financials.market_valuation || {};
+  const buffettValuation = stock.investmentScreen?.buffett?.valuation || {};
+  const periodLabel = period.start_year && period.end_year
+    ? `${period.start_year}–${period.end_year}`
+    : "장기 재무 기간 미확정";
+  const observationLabel = period.observation_count
+    ? `${period.observation_count}개 사업연도${period.consecutive ? " 연속" : " · 일부 결측"}`
+    : "DART 장기 이력 부족";
+  const fcfBasisLabel = buffettValuation.normalized_fcf_basis === "10y_average"
+    ? "10년 평균 FCF"
+    : buffettValuation.normalized_fcf_basis === "3y_average_fallback"
+    ? "최근 3년 평균 FCF"
+    : "정상 FCF 산출 불가";
+  const epsGrowthLabel = cagr.eps_source === "net_income_cagr_split_fallback"
+    ? `${periodLabel} · 주식분할 구간은 순이익 CAGR로 보정`
+    : cagr.eps_source === "net_income_cagr_share_data_fallback"
+    ? `${periodLabel} · 주식수 결측으로 순이익 CAGR 대체`
+    : periodLabel;
+  const summaryCard = (label, value, subtext = "") => `
+    <div class="summary-card">
+      <span class="label">${escapeHtml(label)}</span>
+      <span class="value">${value}</span>
+      ${subtext ? `<span class="summary-subtext">${subtext}</span>` : ""}
+    </div>
+  `;
+
   container.innerHTML = `
     <div class="summary-hero">
-      <div class="summary-code">${stock.code}</div>
-      <div class="summary-name">${stock.name}</div>
-      <div class="summary-caption">
-        ROE는 과거 이력으로 추정하고, N은 업종별 ROE 자기상관·고ROE 생존기간과 기업별 변동성·재투자율·GP/A를 결합해 향후 높은 ROE가 유지될 기간으로 추정합니다.
+      <div class="summary-code">${escapeHtml(stock.code)}</div>
+      <div class="summary-name">${escapeHtml(stock.name)}</div>
+      <div class="summary-period">${escapeHtml(periodLabel)} · ${escapeHtml(observationLabel)}</div>
+      <div class="summary-market-strip">
+        <div><span>현재가</span><strong>${formatPrice(stock.current_price)}</strong></div>
+        <div><span>시가총액</span><strong>${formatMarketCap(stock.market_cap_krw_100m)}</strong></div>
+        <div><span>고ROE N</span><strong>${formatYears(stock.estimatedNBase)}</strong></div>
       </div>
     </div>
 
     <div class="summary-grid">
-      <div class="summary-card">
-        <span class="label">현재주가</span>
-        <span class="value">${formatPrice(stock.current_price)}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">시가총액</span>
-        <span class="value">${formatMarketCap(stock.market_cap_krw_100m)}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">추정 BPS</span>
-        <span class="value">${formatPrice(stock.bps)}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">추정 ROE 범위</span>
-        <span class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">고ROE 지속기간 N</span>
-        <span class="value">${formatYears(stock.estimatedNBase)}</span>
-        <span class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">시장 내재 N</span>
-        <span class="value">${formatYears(stock.marketImpliedN)}</span>
-      </div>
-      <div class="summary-card">
-        <span class="label">버핏식 품질 / 가격</span>
-        <span class="value">
-          ${screenStatusLabel(stock.investmentScreen?.buffett?.business_quality_status)} /
-          ${screenStatusLabel(stock.investmentScreen?.buffett?.valuation_status)}
-        </span>
-      </div>
-      <div class="summary-card">
-        <span class="label">퀄리티 팩터</span>
-        <span class="value">
-          ${screenStatusLabel(stock.investmentScreen?.quality?.status)}
-          ${stock.investmentScreen?.quality?.selected_for_basket ? " · 바스켓" : ""}
-        </span>
-      </div>
+      ${summaryCard("ROE", formatPercent(latest.roe_pct, 1), `장기 평균 ${formatPercent(averages.roe_pct, 1)}`)}
+      ${summaryCard("ROIC", formatPercent(latest.roic_pct, 1), `장기 평균 ${formatPercent(averages.roic_pct, 1)}`)}
+      ${summaryCard("ROCE", formatPercent(latest.roce_pct, 1), `장기 평균 ${formatPercent(averages.roce_pct, 1)}`)}
+      ${summaryCard("영업이익률", formatPercent(latest.operating_margin_pct, 1), `장기 평균 ${formatPercent(averages.operating_margin_pct, 1)}`)}
+      ${summaryCard("매출 CAGR", formatPercent(cagr.revenue_pct, 1), periodLabel)}
+      ${summaryCard("영업이익 CAGR", formatPercent(cagr.operating_income_pct, 1), periodLabel)}
+      ${summaryCard("순이익 CAGR", formatPercent(cagr.net_income_pct, 1), periodLabel)}
+      ${summaryCard("EPS CAGR", formatPercent(cagr.eps_pct, 1), epsGrowthLabel)}
+      ${summaryCard("현재 PER / PBR", `${formatNumber(valuation.per, 2)}× / ${formatNumber(valuation.pbr, 2)}×`, "현재 시장가격 기준")}
+      ${summaryCard("장기 EPS PEG", formatNumber(valuation.peg_eps_cagr_long_term, 2), `현재 PER ÷ 보정 EPS CAGR`)}
+      ${summaryCard("피터 린치식 PEG", formatNumber(valuation.lynch_peg_eps_cagr_long_term_plus_dividend, 2), `EPS 성장 + 배당 ${formatPercent(valuation.dividend_yield_pct, 1)}`)}
+      ${summaryCard("이익 / 정상 FCF 수익률", `${formatPercent(valuation.earnings_yield_pct, 1)} / ${formatPercent(buffettValuation.fcf_yield_pct, 1)}`, fcfBasisLabel)}
+      ${summaryCard("부채 / 자본", formatPercent(latest.debt_to_equity_pct, 1), "DART 최신 사업연도")}
+      ${summaryCard("버핏 스타일 / 퀄리티", `${screenStatusLabel(stock.investmentScreen?.buffett?.watchlist_status)} / ${screenStatusLabel(stock.investmentScreen?.quality?.status)}`, stock.investmentScreen?.quality?.selected_for_basket ? "퀄리티 바스켓 포함" : "현재 판정")}
+    </div>
+    <div class="summary-method-note">
+      ROCE = 영업이익 ÷ (총자산 − 유동부채) · CAGR은 양수인 시작·종료값만 산출 · 주식분할 구간의 EPS 성장률은 지배주주 순이익 CAGR로 보정 · PBR·PER·PEG는 현재 시장가격 기준
     </div>
   `;
 }
@@ -3638,8 +3650,7 @@ function renderFairValuePanel(stock) {
       </div>
     </div>
     <div class="calc-note">
-      ROE는 과거 ROE 기준으로, N은 높은 ROE가 향후 유지될 것으로 추정되는 기간을 기준으로 적정가를 계산합니다. 할인율은 기본 10%이며,
-      계산식은 연도별 <strong>BPS × ROE = EPS</strong>를 할인해 합산하는 방식입니다.
+      기준 시나리오 입력값 · BPS <strong>${formatPrice(stock.bps)}</strong> · ROE <strong>${formatPercent(stock.scenarios.base.params.assumedRoe, 1)}</strong> · N <strong>${formatYears(stock.scenarios.base.params.durationYears)}</strong> · 할인율 <strong>${formatPercent(stock.scenarios.base.params.discountRate, 1)}</strong>
     </div>
   `;
 }

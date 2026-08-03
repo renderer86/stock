@@ -916,6 +916,48 @@ def standard_deviation(values: list[float]) -> float | None:
     return round(statistics.pstdev(values), 4) if len(values) >= 2 else None
 
 
+def average_metric(values: list[float]) -> float | None:
+    return round(statistics.mean(values), 4) if values else None
+
+
+def annualized_growth_pct(
+    start_value: int | float | None,
+    end_value: int | float | None,
+    years: int,
+) -> float | None:
+    if (
+        start_value is None
+        or end_value is None
+        or start_value <= 0
+        or end_value <= 0
+        or years <= 0
+    ):
+        return None
+    growth = ((float(end_value) / float(start_value)) ** (1 / years) - 1) * 100
+    return round(growth, 4) if math.isfinite(growth) else None
+
+
+def per_share_earnings_proxy(row: dict[str, Any]) -> float | None:
+    accounts = row.get("detail_accounts") or {}
+    metrics = row.get("detail_metrics") or {}
+    share_data = row.get("share_data") or {}
+    income = accounts.get("owners_net_income")
+    if income is None:
+        income = metrics.get("net_income")
+    shares = share_data.get("distributed_shares")
+    if shares is None or shares <= 0:
+        shares = share_data.get("issued_shares")
+    return safe_ratio(income, shares) if shares is not None and shares > 0 else None
+
+
+def share_count_proxy(row: dict[str, Any]) -> float | None:
+    share_data = row.get("share_data") or {}
+    shares = share_data.get("distributed_shares")
+    if shares is None or shares <= 0:
+        shares = share_data.get("issued_shares")
+    return float(shares) if shares is not None and shares > 0 else None
+
+
 def company_screening_features(
     rows: list[dict[str, Any]],
     market: dict[str, Any] | None = None,
@@ -988,6 +1030,159 @@ def company_screening_features(
         for item in metrics[-5:]
         if item.get("basic_eps") is not None
     ]
+    detail_accounts = [
+        row.get("detail_accounts") or {} for row in detail_rows
+    ]
+    roce_values = []
+    for accounts in detail_accounts:
+        capital_employed = (
+            accounts["assets"] - accounts["current_liabilities"]
+            if accounts.get("assets") is not None
+            and accounts.get("current_liabilities") is not None
+            else None
+        )
+        roce = pct(accounts.get("operating_income"), capital_employed)
+        if roce is not None:
+            roce_values.append(roce)
+
+    period_start_year = detail_years[0] if detail_years else None
+    period_end_year = detail_years[-1] if detail_years else None
+    period_span_years = (
+        period_end_year - period_start_year
+        if period_start_year is not None and period_end_year is not None
+        else 0
+    )
+    first_accounts = detail_accounts[0] if detail_accounts else {}
+    last_accounts = detail_accounts[-1] if detail_accounts else {}
+    first_metrics = metrics[0] if metrics else {}
+    last_metrics_for_growth = metrics[-1] if metrics else {}
+    first_eps_proxy = (
+        per_share_earnings_proxy(detail_rows[0]) if detail_rows else None
+    )
+    last_eps_proxy = (
+        per_share_earnings_proxy(detail_rows[-1]) if detail_rows else None
+    )
+    first_share_count = (
+        share_count_proxy(detail_rows[0]) if detail_rows else None
+    )
+    last_share_count = (
+        share_count_proxy(detail_rows[-1]) if detail_rows else None
+    )
+    share_count_ratio = safe_ratio(last_share_count, first_share_count)
+    first_owner_income = first_accounts.get("owners_net_income")
+    if first_owner_income is None:
+        first_owner_income = first_metrics.get("net_income")
+    last_owner_income = last_accounts.get("owners_net_income")
+    if last_owner_income is None:
+        last_owner_income = last_metrics_for_growth.get("net_income")
+    net_income_growth = annualized_growth_pct(
+        first_owner_income,
+        last_owner_income,
+        period_span_years,
+    )
+    raw_eps_growth = annualized_growth_pct(
+        first_eps_proxy,
+        last_eps_proxy,
+        period_span_years,
+    )
+    split_or_consolidation_detected = (
+        share_count_ratio is not None
+        and (share_count_ratio > 2 or share_count_ratio < 0.5)
+    )
+    if split_or_consolidation_detected:
+        eps_growth = net_income_growth
+        eps_growth_source = "net_income_cagr_split_fallback"
+    elif raw_eps_growth is not None:
+        eps_growth = raw_eps_growth
+        eps_growth_source = "owners_net_income_per_share"
+    else:
+        eps_growth = net_income_growth
+        eps_growth_source = "net_income_cagr_share_data_fallback"
+    latest_capital_employed = (
+        last_accounts["assets"] - last_accounts["current_liabilities"]
+        if last_accounts.get("assets") is not None
+        and last_accounts.get("current_liabilities") is not None
+        else None
+    )
+    latest_roce = pct(
+        last_accounts.get("operating_income"), latest_capital_employed
+    )
+    long_term_financials = {
+        "period": {
+            "start_year": period_start_year,
+            "end_year": period_end_year,
+            "span_years": period_span_years,
+            "observation_count": len(detail_rows),
+            "consecutive": bool(detail_years)
+            and detail_years
+            == list(range(detail_years[0], detail_years[0] + len(detail_years))),
+        },
+        "latest": {
+            "roe_pct": ((latest or {}).get("metrics") or {}).get("roe_pct"),
+            "roic_pct": last_metrics_for_growth.get("roic_pct"),
+            "roce_pct": latest_roce,
+            "operating_margin_pct": (
+                (latest or {}).get("metrics") or {}
+            ).get("operating_margin_pct"),
+            "debt_to_equity_pct": last_metrics_for_growth.get(
+                "debt_to_equity_pct"
+            ),
+        },
+        "averages": {
+            "roe_pct": average_metric(roe_values),
+            "roic_pct": average_metric(roic_values),
+            "roce_pct": average_metric(roce_values),
+            "operating_margin_pct": average_metric(
+                [
+                    value
+                    for value in (
+                        (row.get("metrics") or {}).get("operating_margin_pct")
+                        for row in detail_rows
+                    )
+                    if value is not None
+                ]
+            ),
+        },
+        "cagr": {
+            "revenue_pct": annualized_growth_pct(
+                first_accounts.get("revenue"),
+                last_accounts.get("revenue"),
+                period_span_years,
+            ),
+            "operating_income_pct": annualized_growth_pct(
+                first_accounts.get("operating_income"),
+                last_accounts.get("operating_income"),
+                period_span_years,
+            ),
+            "net_income_pct": annualized_growth_pct(
+                first_owner_income,
+                last_owner_income,
+                period_span_years,
+            ),
+            "eps_pct": eps_growth,
+            "eps_source": eps_growth_source,
+            "endpoint_share_count_ratio": (
+                round(share_count_ratio, 4)
+                if share_count_ratio is not None
+                else None
+            ),
+        },
+        "coverage": {
+            "roe_years": len(roe_values),
+            "roic_years": len(roic_values),
+            "roce_years": len(roce_values),
+        },
+        "methodology": {
+            "roce": "operating income / (total assets - current liabilities)",
+            "cagr": "positive start and end values over fiscal-year span",
+            "eps_cagr": (
+                "owners' net income per distributed share at period endpoints; "
+                "issued shares are the fallback denominator; when endpoint "
+                "share counts differ by more than 2x, owners' net income CAGR "
+                "is used to avoid stock-split distortion"
+            ),
+        },
+    }
 
     incremental_roic = None
     incremental_roic_basis = {
@@ -1164,6 +1359,7 @@ def company_screening_features(
         "is_financial": is_financial,
         "detail_year_count": len(detail_rows),
         "detail_years": [row.get("fiscal_year") for row in detail_rows],
+        "long_term_financials": long_term_financials,
         "buffett": {
             "persistence_metric": "ROE" if is_financial else "ROIC",
             "persistence_hurdle_pct": persistence_hurdle,

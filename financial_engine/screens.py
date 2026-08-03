@@ -227,6 +227,9 @@ class InvestmentScreenBuilder:
             feature = panel_features.get(ticker) or {}
             buffett = feature.get("buffett") or {}
             quality = feature.get("quality") or {}
+            long_term_financials = dict(
+                feature.get("long_term_financials") or {}
+            )
             buffett_conditions = dict(buffett.get("conditions") or {})
             quality_conditions = dict(quality.get("conditions") or {})
             valuation = dict(buffett.get("valuation") or {})
@@ -279,6 +282,65 @@ class InvestmentScreenBuilder:
                         ),
                     }
                 )
+            current_price = _number(market.get("current_price"))
+            annual_dividend = _number(market.get("dividend"))
+            current_per = _number(market.get("per"))
+            current_pbr = _number(market.get("pbr"))
+            eps_cagr_long_term = _number(
+                (long_term_financials.get("cagr") or {}).get("eps_pct")
+            )
+            eps_cagr_source = (long_term_financials.get("cagr") or {}).get(
+                "eps_source"
+            )
+            dividend_yield = (
+                annual_dividend / current_price * 100
+                if annual_dividend is not None
+                and annual_dividend >= 0
+                and current_price is not None
+                and current_price > 0
+                else None
+            )
+            peg_long_term = (
+                current_per / eps_cagr_long_term
+                if current_per is not None
+                and current_per > 0
+                and eps_cagr_long_term is not None
+                and eps_cagr_long_term > 0
+                else None
+            )
+            lynch_growth = (
+                eps_cagr_long_term + dividend_yield
+                if eps_cagr_long_term is not None
+                and eps_cagr_long_term > 0
+                and dividend_yield is not None
+                else None
+            )
+            lynch_peg = (
+                current_per / lynch_growth
+                if current_per is not None
+                and current_per > 0
+                and lynch_growth is not None
+                and lynch_growth > 0
+                else None
+            )
+            long_term_financials["market_valuation"] = {
+                "per": current_per,
+                "pbr": current_pbr,
+                "earnings_yield_pct": round(100 / current_per, 4)
+                if current_per is not None and current_per > 0
+                else None,
+                "dividend_yield_pct": round(dividend_yield, 4)
+                if dividend_yield is not None
+                else None,
+                "peg_eps_cagr_long_term": round(peg_long_term, 4)
+                if peg_long_term is not None
+                else None,
+                "lynch_peg_eps_cagr_long_term_plus_dividend": round(lynch_peg, 4)
+                if lynch_peg is not None
+                else None,
+                "peg_growth_basis": "long_term_adjusted_eps_cagr_pct",
+                "peg_growth_source": eps_cagr_source,
+            }
             cash_gate = valuation.get(
                 "cash_to_market_cap_le_50pct_or_financial"
             )
@@ -324,6 +386,7 @@ class InvestmentScreenBuilder:
                 "sector": metadata.get("sector"),
                 "industry": metadata.get("industry"),
                 "as_of_fiscal_year": metadata.get("latest_year"),
+                "long_term_financials": long_term_financials,
                 "n": (
                     {
                         "status": n_row.get("status"),

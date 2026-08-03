@@ -318,6 +318,13 @@ class FinancialNEngineTest(unittest.TestCase):
             "screening_features": {
                 "000001": {
                     "company": "현금과다",
+                    "long_term_financials": {
+                        "cagr": {
+                            "eps_pct": 10,
+                            "eps_source": "owners_net_income_per_share",
+                        },
+                        "latest": {"roe_pct": 11, "roic_pct": 15},
+                    },
                     "buffett": {
                         "conditions": {"positive_net_income_all_10y": True},
                         "valuation": {
@@ -340,7 +347,14 @@ class FinancialNEngineTest(unittest.TestCase):
             {"estimates": {}},
             {
                 "stocks": [
-                    {"code": "000001", "market_cap_krw_100m": 1000}
+                    {
+                        "code": "000001",
+                        "market_cap_krw_100m": 1000,
+                        "current_price": 100,
+                        "dividend": 2,
+                        "per": 20,
+                        "pbr": 2,
+                    }
                 ]
             },
         )
@@ -352,6 +366,18 @@ class FinancialNEngineTest(unittest.TestCase):
         self.assertEqual(buffett["valuation"]["fcf_yield_pct"], 9.4)
         self.assertEqual(
             buffett["valuation"]["cash_to_market_cap_pct"], 77
+        )
+        valuation = result["results"]["000001"]["long_term_financials"][
+            "market_valuation"
+        ]
+        self.assertEqual(valuation["peg_eps_cagr_long_term"], 2)
+        self.assertEqual(
+            valuation["peg_growth_source"],
+            "owners_net_income_per_share",
+        )
+        self.assertEqual(
+            valuation["lynch_peg_eps_cagr_long_term_plus_dividend"],
+            1.6667,
         )
 
 

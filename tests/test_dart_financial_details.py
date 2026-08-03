@@ -11,6 +11,36 @@ from crawler_dart_financial_details import (
 
 
 class DartFinancialDetailsTest(unittest.TestCase):
+    def test_eps_cagr_uses_net_income_when_stock_split_distorts_shares(
+        self,
+    ) -> None:
+        rows = []
+        for index, year in enumerate(range(2016, 2026)):
+            income = 100 + (100 * index / 9)
+            shares = 100 if index == 0 else 5000
+            rows.append(
+                {
+                    "ticker": "000002",
+                    "company": "분할테스트",
+                    "fiscal_year": year,
+                    "detail_status": "complete",
+                    "metrics": {"roe_pct": 10},
+                    "detail_metrics": {"net_income": income},
+                    "detail_accounts": {"owners_net_income": income},
+                    "share_data": {"distributed_shares": shares},
+                }
+            )
+
+        cagr = company_screening_features(rows)["long_term_financials"][
+            "cagr"
+        ]
+        self.assertAlmostEqual(cagr["net_income_pct"], 8.00597, places=4)
+        self.assertEqual(cagr["eps_pct"], cagr["net_income_pct"])
+        self.assertEqual(
+            cagr["eps_source"], "net_income_cagr_split_fallback"
+        )
+        self.assertEqual(cagr["endpoint_share_count_ratio"], 50)
+
     def test_redacts_api_credentials_from_request_errors(self) -> None:
         text = redact_sensitive_url_text(
             "https://example.test/?crtfc_key=secret-value&api_key=other"
@@ -216,7 +246,13 @@ class DartFinancialDetailsTest(unittest.TestCase):
                         "current_ratio": 1 + index * 0.1,
                         "asset_turnover": 1 + index * 0.1,
                     },
-                    "detail_accounts": {"cash": 1200},
+                    "detail_accounts": {
+                        "cash": 1200,
+                        "assets": 1000 + index * 100,
+                        "current_liabilities": 200,
+                        "revenue": 1000 + index * 100,
+                        "operating_income": 100 + index * 10,
+                    },
                     "share_data": {"issued_shares": 1000 - index},
                     "dividend_data": {"has_cash_dividend": True},
                 }
@@ -255,6 +291,17 @@ class DartFinancialDetailsTest(unittest.TestCase):
         )
         self.assertEqual(features["buffett"]["latest_roic_pct"], 15)
         self.assertEqual(features["buffett"]["latest_roe_pct"], 15)
+        long_term = features["long_term_financials"]
+        self.assertEqual(long_term["period"]["start_year"], 2016)
+        self.assertEqual(long_term["period"]["end_year"], 2025)
+        self.assertTrue(long_term["period"]["consecutive"])
+        self.assertAlmostEqual(long_term["latest"]["roce_pct"], 11.1765)
+        self.assertAlmostEqual(long_term["cagr"]["revenue_pct"], 7.3922)
+        self.assertAlmostEqual(long_term["cagr"]["eps_pct"], 0.1005)
+        self.assertEqual(
+            long_term["cagr"]["eps_source"],
+            "owners_net_income_per_share",
+        )
         self.assertEqual(
             features["quality"]["piotroski"]["score_partial"],
             9,
