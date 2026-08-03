@@ -26,6 +26,7 @@ const MARKET_IMPLIED_DISCOUNT = 0.1;
 
 const state = {
   rawStocks: [],
+  rawStockByCode: new Map(),
   roeHistoryByCode: new Map(),
   financialNByCode: new Map(),
   investmentScreenByCode: new Map(),
@@ -2868,7 +2869,9 @@ function getPriorityCandidates(stocks) {
     const screen = state.investmentScreenByCode.get(code) || {};
     const buffett = screen.buffett || {};
     const nEstimate = screen.n || {};
-    const stock = stockByCode.get(code) || {};
+    const rawStock = state.rawStockByCode.get(code);
+    const stock = stockByCode.get(code)
+      || (rawStock ? enrichStock(rawStock) : {});
 
     return {
       ...stock,
@@ -2901,7 +2904,7 @@ function getPriorityCandidates(stocks) {
       nModel: nEstimate,
       nConfidence: nEstimate.confidence?.label,
       nConfidenceScore: nEstimate.confidence?.score_0_to_100,
-      canOpenValuation: stockByCode.has(code)
+      canOpenValuation: Boolean(rawStock)
     };
   });
 
@@ -2919,7 +2922,9 @@ function getQualityCandidates(stocks) {
     const screen = state.investmentScreenByCode.get(code) || {};
     const quality = screen.quality || {};
     const nEstimate = screen.n || {};
-    const stock = stockByCode.get(code) || {};
+    const rawStock = state.rawStockByCode.get(code);
+    const stock = stockByCode.get(code)
+      || (rawStock ? enrichStock(rawStock) : {});
     const piotroski = quality.piotroski || {};
 
     return {
@@ -2941,7 +2946,7 @@ function getQualityCandidates(stocks) {
       nConfidence: nEstimate.confidence?.label,
       nConfidenceScore: nEstimate.confidence?.score_0_to_100,
       equalWeight: ranking.weight_pct,
-      canOpenValuation: stockByCode.has(code)
+      canOpenValuation: Boolean(rawStock)
     };
   });
 }
@@ -3053,12 +3058,7 @@ function renderScreenPendingModal() {
       reasonCounts.set(reason, (reasonCounts.get(reason) || 0) + 1);
     });
   });
-  const valuationCodes = new Set(
-    state.rawStocks
-      .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
-      .filter(passesRoaFilter)
-      .map((row) => row.code)
-  );
+  const valuationCodes = new Set(state.rawStockByCode.keys());
   const title = mode === "buffett"
     ? "버핏 스타일 관심종목 · 판정 대기"
     : "퀄리티 팩터 · 데이터 부족 종목";
@@ -3758,12 +3758,15 @@ function renderKellyPanel(stock) {
 
 function renderDashboard() {
   const stocks = getFilteredStocks();
+  let selectedRawStock = state.rawStockByCode.get(state.selectedCode) || null;
 
-  if (!state.selectedCode || !stocks.some((stock) => stock.code === state.selectedCode)) {
+  if (!state.selectedCode || !selectedRawStock) {
     state.selectedCode = stocks[0]?.code ?? null;
+    selectedRawStock = state.rawStockByCode.get(state.selectedCode) || null;
   }
 
-  const selectedStock = stocks.find((stock) => stock.code === state.selectedCode) ?? null;
+  const selectedStock = stocks.find((stock) => stock.code === state.selectedCode)
+    || (selectedRawStock ? enrichStock(selectedRawStock) : null);
 
   renderPriorityCandidates(stocks);
   renderQualityCandidates(stocks);
@@ -3976,6 +3979,9 @@ async function loadStocks() {
     ]);
 
     state.rawStocks = marketPayload.stocks || [];
+    state.rawStockByCode = new Map(
+      state.rawStocks.map((stock) => [stock.code, stock])
+    );
     state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
     state.dartMajorByCode = buildDartMajorMap(dartPayload);
     state.financialNByCode = buildFinancialNMap(financialNPayload);

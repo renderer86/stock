@@ -121,6 +121,32 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertTrue(all(row["pbr"] for row in samsung["annual"]))
         self.assertGreater(samsung["annual"][0]["pbr"], 0.5)
 
+    def test_buffett_candidate_can_open_outside_default_valuation_filters(
+        self,
+    ) -> None:
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+        market = json.loads(
+            (ROOT / "data/market_sum.json").read_text(encoding="utf-8")
+        )
+        screens = json.loads(
+            (ROOT / "data/investment_screens.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        first = screens["rankings"]["buffett_watchlist"][0]
+        stock = next(
+            row for row in market["stocks"] if row["code"] == first["ticker"]
+        )
+
+        self.assertEqual(first["ticker"], "030000")
+        self.assertLess(stock["roa"], 7)
+        self.assertIn("rawStockByCode: new Map()", script)
+        self.assertIn("const rawStock = state.rawStockByCode.get(code);", script)
+        self.assertIn(
+            "selectedRawStock ? enrichStock(selectedRawStock) : null",
+            script,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
