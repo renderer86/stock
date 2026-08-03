@@ -104,12 +104,22 @@ def _buffett_watchlist_profile(
     latest_metrics = latest_row.get("detail_metrics") or {}
     latest_net_debt = _number(latest_metrics.get("net_debt"))
     fcf_yield = _number(valuation.get("fcf_yield_pct"))
+    cash_to_market_cap = _number(
+        valuation.get("cash_to_market_cap_pct")
+    )
+    cash_gate = valuation.get(
+        "cash_to_market_cap_le_50pct_or_financial"
+    )
     supporting_count = sum(value is True for value in conditions.values())
     unknown_support = any(value is None for value in conditions.values())
 
     if minimum_status == "fail":
         watchlist_status = "fail"
     elif minimum_status == "pending":
+        watchlist_status = "pending"
+    elif cash_gate is False:
+        watchlist_status = "fail"
+    elif cash_gate is None:
         watchlist_status = "pending"
     elif supporting_count:
         watchlist_status = "pass"
@@ -140,9 +150,19 @@ def _buffett_watchlist_profile(
     if conditions.get("incremental_roic_ge_15_or_payout_ge_50") is True:
         tags.append("뛰어난 자본배분")
 
+    risk_tags: list[str] = []
+    if cash_gate is False:
+        risk_tags.append(
+            f"현금 과다 · 시총 대비 {cash_to_market_cap:.1f}%"
+            if cash_to_market_cap is not None
+            else "현금 과다"
+        )
+
     missing_reasons: list[str] = []
     if minimum_status == "pending":
         missing_reasons.append("recent_3y_persistence")
+    if minimum_status == "pass" and cash_gate is None:
+        missing_reasons.append("cash_to_market_cap")
     if minimum_status == "pass" and not supporting_count and unknown_support:
         missing_reasons.append("supporting_buffett_condition")
 
@@ -162,6 +182,7 @@ def _buffett_watchlist_profile(
         ),
         "supporting_condition_count": supporting_count,
         "strength_tags": tags,
+        "risk_tags": risk_tags,
         "eps_cagr_5y_pct": round(eps_cagr, 4)
         if eps_cagr is not None
         else None,
@@ -210,6 +231,57 @@ class InvestmentScreenBuilder:
             quality_conditions = dict(quality.get("conditions") or {})
             valuation = dict(buffett.get("valuation") or {})
             market = market_by_ticker.get(ticker) or {}
+            current_market_cap_100m = _number(
+                market.get("market_cap_krw_100m")
+            )
+            current_market_cap = (
+                current_market_cap_100m * 100_000_000
+                if current_market_cap_100m is not None
+                and current_market_cap_100m > 0
+                else None
+            )
+            if current_market_cap is not None:
+                normalized_fcf = _number(
+                    valuation.get("normalized_annual_fcf")
+                )
+                latest_cash = _number(valuation.get("latest_cash"))
+                fcf_yield = (
+                    normalized_fcf / current_market_cap * 100
+                    if normalized_fcf is not None
+                    else None
+                )
+                cash_ratio = (
+                    latest_cash / current_market_cap * 100
+                    if latest_cash is not None
+                    else None
+                )
+                is_financial = bool(
+                    valuation.get("cash_ratio_financial_exempt")
+                )
+                valuation.update(
+                    {
+                        "current_market_cap_krw": current_market_cap,
+                        "fcf_yield_pct": round(fcf_yield, 4)
+                        if fcf_yield is not None
+                        else None,
+                        "fcf_yield_ge_5pct": fcf_yield >= 5
+                        if fcf_yield is not None
+                        else None,
+                        "cash_to_market_cap_pct": round(cash_ratio, 4)
+                        if cash_ratio is not None
+                        else None,
+                        "cash_to_market_cap_le_50pct_or_financial": (
+                            True
+                            if is_financial
+                            else cash_ratio <= 50
+                            if cash_ratio is not None
+                            else None
+                        ),
+                    }
+                )
+            cash_gate = valuation.get(
+                "cash_to_market_cap_le_50pct_or_financial"
+            )
             n_row = n_by_ticker.get(ticker)
 
             business_status = (
@@ -223,6 +295,13 @@ class InvestmentScreenBuilder:
                 if fcf_yield_pass is True
                 else "fail"
                 if fcf_yield_pass is False
+                else "pending"
+            )
+            excess_cash_status = (
+                "pass"
+                if cash_gate is True
+                else "fail"
+                if cash_gate is False
                 else "pending"
             )
             quality_status = (
@@ -274,7 +353,9 @@ class InvestmentScreenBuilder:
                     "candidate": (
                         business_status == "pass"
                         and valuation_status == "pass"
+                        and excess_cash_status == "pass"
                     ),
+                    "excess_cash_status": excess_cash_status,
                     **watchlist,
                     "conditions": buffett_conditions,
                     "coverage": _condition_coverage(buffett_conditions),
@@ -293,8 +374,13 @@ class InvestmentScreenBuilder:
                     "latest_net_debt_to_ebitda": buffett.get(
                         "latest_net_debt_to_ebitda"
                     ),
+                    "latest_roic_pct": buffett.get("latest_roic_pct"),
+                    "latest_roe_pct": buffett.get("latest_roe_pct"),
                     "incremental_roic_5y_pct": buffett.get(
                         "incremental_roic_5y_pct"
+                    ),
+                    "incremental_roic_5y_basis": buffett.get(
+                        "incremental_roic_5y_basis"
                     ),
                     "payout_ratio_pct": buffett.get(
                         "payout_ratio_observed_years_pct"
@@ -415,8 +501,9 @@ class InvestmentScreenBuilder:
                     "The interest watchlist requires ROIC >=12% for the latest "
                     "three consecutive fiscal years (ROE >=10% for financials) "
                     "and at least one true condition from the original seven. "
-                    "The legacy strict candidate still requires all seven plus "
-                    "FCF yield >=5%."
+                    "Non-financial companies with cash above 50% of market cap "
+                    "are excluded. The legacy strict candidate still requires "
+                    "all seven plus normalized FCF yield >=5%."
                 ),
                 "quality": (
                     "All quality conditions must pass, then eligible stocks are "

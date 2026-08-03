@@ -171,6 +171,7 @@ class FinancialNEngineTest(unittest.TestCase):
                         "valuation": {
                             "fcf_yield_pct": 6,
                             "fcf_yield_ge_5pct": True,
+                            "cash_to_market_cap_le_50pct_or_financial": True,
                         },
                     },
                     "quality": {
@@ -185,6 +186,7 @@ class FinancialNEngineTest(unittest.TestCase):
                         "valuation": {
                             "fcf_yield_pct": None,
                             "fcf_yield_ge_5pct": None,
+                            "cash_to_market_cap_le_50pct_or_financial": None,
                         },
                     },
                     "quality": {
@@ -264,6 +266,7 @@ class FinancialNEngineTest(unittest.TestCase):
                         "valuation": {
                             "fcf_yield_pct": 6,
                             "fcf_yield_ge_5pct": True,
+                            "cash_to_market_cap_le_50pct_or_financial": True,
                         },
                     },
                     "quality": {"conditions": {"a": False}},
@@ -296,6 +299,59 @@ class FinancialNEngineTest(unittest.TestCase):
         self.assertIn(
             "10년 연속 흑자",
             result["results"]["000001"]["buffett"]["strength_tags"],
+        )
+
+    def test_buffett_watchlist_excludes_nonfinancial_excess_cash_box(self) -> None:
+        observations = [
+            {
+                "ticker": "000001",
+                "company": "현금과다",
+                "fiscal_year": year,
+                "is_financial": False,
+                "metrics": {"roe_pct": 11},
+                "detail_metrics": {"roic_pct": 15, "basic_eps": 100},
+            }
+            for year in range(2023, 2026)
+        ]
+        panel = {
+            "observations": observations,
+            "screening_features": {
+                "000001": {
+                    "company": "현금과다",
+                    "buffett": {
+                        "conditions": {"positive_net_income_all_10y": True},
+                        "valuation": {
+                            "normalized_annual_fcf": 9_400_000_000,
+                            "latest_cash": 77_000_000_000,
+                            "cash_ratio_financial_exempt": False,
+                            "fcf_yield_pct": 1,
+                            "fcf_yield_ge_5pct": False,
+                            "cash_to_market_cap_pct": 10,
+                            "cash_to_market_cap_le_50pct_or_financial": True,
+                        },
+                    },
+                    "quality": {"conditions": {"a": False}},
+                }
+            },
+        }
+
+        result = InvestmentScreenBuilder().build(
+            panel,
+            {"estimates": {}},
+            {
+                "stocks": [
+                    {"code": "000001", "market_cap_krw_100m": 1000}
+                ]
+            },
+        )
+        buffett = result["results"]["000001"]["buffett"]
+        self.assertEqual(buffett["watchlist_status"], "fail")
+        self.assertEqual(buffett["excess_cash_status"], "fail")
+        self.assertFalse(buffett["candidate"])
+        self.assertIn("현금 과다 · 시총 대비 77.0%", buffett["risk_tags"])
+        self.assertEqual(buffett["valuation"]["fcf_yield_pct"], 9.4)
+        self.assertEqual(
+            buffett["valuation"]["cash_to_market_cap_pct"], 77
         )
 
 

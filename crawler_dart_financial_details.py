@@ -97,6 +97,14 @@ def parse_args() -> argparse.Namespace:
             "latest and dividends for latest 3 years; none=no share/dividend calls."
         ),
     )
+    parser.add_argument(
+        "--rebuild-screens-only",
+        action="store_true",
+        help=(
+            "Recalculate screening_features from the stored panel and market "
+            "snapshot without making OpenDART requests."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -948,6 +956,33 @@ def company_screening_features(
         for item in metrics
         if item.get("free_cash_flow") is not None
     ]
+    normalized_fcf = None
+    normalized_fcf_basis = None
+    normalized_fcf_years = 0
+    detail_years = [
+        int(row.get("fiscal_year") or 0) for row in detail_rows
+    ]
+    ten_years_consecutive = (
+        len(detail_years) == 10
+        and detail_years == list(range(detail_years[0], detail_years[0] + 10))
+    )
+    if ten_years_consecutive and len(fcfs) == 10:
+        normalized_fcf = statistics.mean(fcfs)
+        normalized_fcf_basis = "10y_average"
+        normalized_fcf_years = 10
+    elif len(detail_rows) >= 3:
+        recent_years = detail_years[-3:]
+        recent_fcfs = [
+            item.get("free_cash_flow") for item in metrics[-3:]
+        ]
+        if (
+            recent_years
+            == list(range(recent_years[0], recent_years[0] + 3))
+            and all(value is not None for value in recent_fcfs)
+        ):
+            normalized_fcf = statistics.mean(recent_fcfs)
+            normalized_fcf_basis = "3y_average_fallback"
+            normalized_fcf_years = 3
     eps_values = [
         item.get("basic_eps")
         for item in metrics[-5:]
@@ -955,6 +990,12 @@ def company_screening_features(
     ]
 
     incremental_roic = None
+    incremental_roic_basis = {
+        "delta_nopat": None,
+        "delta_invested_capital": None,
+        "minimum_delta_invested_capital": None,
+        "denominator_valid": False,
+    }
     if len(detail_rows) >= 6:
         old = detail_rows[-6].get("detail_metrics") or {}
         new = detail_rows[-1].get("detail_metrics") or {}
@@ -969,7 +1010,25 @@ def company_screening_features(
             and old.get("invested_capital") is not None
             else None
         )
-        incremental_roic = pct(delta_nopat, delta_capital)
+        old_capital = old.get("invested_capital")
+        minimum_delta_capital = (
+            old_capital * 0.20
+            if old_capital is not None and old_capital > 0
+            else None
+        )
+        denominator_valid = bool(
+            delta_capital is not None
+            and minimum_delta_capital is not None
+            and delta_capital > minimum_delta_capital
+        )
+        incremental_roic_basis = {
+            "delta_nopat": delta_nopat,
+            "delta_invested_capital": delta_capital,
+            "minimum_delta_invested_capital": minimum_delta_capital,
+            "denominator_valid": denominator_valid,
+        }
+        if denominator_valid:
+            incremental_roic = pct(delta_nopat, delta_capital)
 
     payout_total = sum(
         (item.get("dividends_paid") or 0)
@@ -1052,6 +1111,8 @@ def company_screening_features(
     ]
 
     latest_metrics = (latest or {}).get("detail_metrics") or {}
+    latest_accounts = (latest or {}).get("detail_accounts") or {}
+    latest_primary_metrics = (latest or {}).get("metrics") or {}
     f_score = piotroski_partial(latest, previous) if latest else None
     quality_conditions = {
         "gpa_market_top_30pct": None,
@@ -1086,7 +1147,17 @@ def company_screening_features(
     }
     market = market or {}
     latest_fcf = latest_metrics.get("free_cash_flow")
-    fcf_yield = pct(latest_fcf, market.get("market_cap_krw"))
+    market_cap = market.get("market_cap_krw")
+    fcf_yield = pct(normalized_fcf, market_cap)
+    latest_cash = latest_accounts.get("cash")
+    cash_to_market_cap = pct(latest_cash, market_cap)
+    cash_gate = (
+        True
+        if is_financial
+        else cash_to_market_cap <= 50
+        if cash_to_market_cap is not None
+        else None
+    )
     return {
         "ticker": rows[-1].get("ticker") if rows else None,
         "company": rows[-1].get("company") if rows else None,
@@ -1102,7 +1173,10 @@ def company_screening_features(
             "latest_net_debt_to_ebitda": latest_metrics.get(
                 "net_debt_to_ebitda"
             ),
+            "latest_roic_pct": latest_metrics.get("roic_pct"),
+            "latest_roe_pct": latest_primary_metrics.get("roe_pct"),
             "incremental_roic_5y_pct": incremental_roic,
+            "incremental_roic_5y_basis": incremental_roic_basis,
             "payout_ratio_observed_years_pct": payout_ratio,
             "conditions": buffett_conditions,
             "pass": (
@@ -1117,12 +1191,23 @@ def company_screening_features(
             ],
             "valuation": {
                 "latest_annual_fcf": latest_fcf,
-                "current_market_cap_krw": market.get("market_cap_krw"),
+                "normalized_annual_fcf": normalized_fcf,
+                "normalized_fcf_basis": normalized_fcf_basis,
+                "normalized_fcf_years": normalized_fcf_years,
+                "current_market_cap_krw": market_cap,
                 "fcf_yield_pct": fcf_yield,
                 "fcf_yield_ge_5pct": (
                     fcf_yield >= 5 if fcf_yield is not None else None
                 ),
-                "note": "Valuation is separate from the business-quality pass.",
+                "latest_cash": latest_cash,
+                "cash_to_market_cap_pct": cash_to_market_cap,
+                "cash_to_market_cap_le_50pct_or_financial": cash_gate,
+                "cash_ratio_financial_exempt": is_financial,
+                "note": (
+                    "FCF yield uses a 10-year average when complete, otherwise "
+                    "a complete recent 3-year average. Non-financial companies "
+                    "with cash above 50% of market cap fail the excess-cash gate."
+                ),
             },
         },
         "quality": {
@@ -1268,6 +1353,18 @@ def update_detail_summary(
             ),
             "capex": "absolute PPE purchases + absolute intangible purchases",
             "free_cash_flow": "operating cash flow - capex",
+            "normalized_fcf_yield": (
+                "10-year average FCF when all ten observations exist; otherwise "
+                "a complete recent 3-year average"
+            ),
+            "incremental_roic_guard": (
+                "5-year incremental ROIC is calculated only when the increase in "
+                "invested capital exceeds 20% of starting invested capital"
+            ),
+            "excess_cash_gate": (
+                "Non-financial companies fail the Buffett interest gate when cash "
+                "exceeds 50% of current market capitalization; financials are exempt"
+            ),
             "shares": (
                 "OpenDART stockTotqySttus `istc_totqy`; total row preferred, "
                 "otherwise security-class rows are summed."
@@ -1285,12 +1382,6 @@ def update_detail_summary(
 def main() -> None:
     load_env_file(ROOT_DIR / ".env")
     args = parse_args()
-    api_key = os.environ.get("DART_API_KEY", "").strip()
-    if not api_key:
-        raise SystemExit("DART_API_KEY is not set.")
-    if args.max_requests < 1:
-        raise SystemExit("--max-requests must be at least 1.")
-
     panel_path = Path(args.panel)
     panel = load_financial_panel(panel_path)
     market_lookup, market_data_as_of = load_market_lookup(Path(args.market_sum))
@@ -1300,6 +1391,25 @@ def main() -> None:
             "The core DART panel is missing or empty. Run "
             "crawler_dart_financial_panel.py first."
         )
+    if args.rebuild_screens_only:
+        rebuild_screening_features(
+            panel,
+            market_lookup=market_lookup,
+            market_data_as_of=market_data_as_of,
+        )
+        save_financial_panel(panel_path, panel, split_by_year=True)
+        print(
+            f"[DART DETAILS] rebuilt screening features for "
+            f"{len(panel['screening_features']):,} companies",
+            flush=True,
+        )
+        return
+
+    api_key = os.environ.get("DART_API_KEY", "").strip()
+    if not api_key:
+        raise SystemExit("DART_API_KEY is not set.")
+    if args.max_requests < 1:
+        raise SystemExit("--max-requests must be at least 1.")
 
     requested_codes = {
         value.strip().zfill(6)

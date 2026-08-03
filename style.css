@@ -1609,6 +1609,11 @@ tbody tr.is-suspended.is-selected {
   color: #a24d2e;
 }
 
+.buffett-strength-tags span.is-warning {
+  background: rgba(191, 61, 61, 0.12);
+  color: #a93232;
+}
+
 .status-badge {
   display: inline-flex;
   align-items: center;

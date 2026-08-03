@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260803-portfolio-editor">
+  <link rel="stylesheet" href="style.css?v=20260803-buffett-normalized">
 </head>
 <body>
   <div class="page-shell">
@@ -142,7 +142,7 @@
           <div>
             <p class="section-kicker">0. Buffett Compounders</p>
             <h2>버핏 스타일</h2>
-            <p class="section-description">최근 3개 연속 사업연도에 비금융 ROIC 12% 이상·금융 ROE 10% 이상을 유지하고, 기존 7개 버핏 조건 중 하나 이상의 강점이 확인된 관심종목입니다. 태그는 실제로 확인된 강점만 표시합니다.</p>
+            <p class="section-description">최근 3개 연속 사업연도에 비금융 ROIC 12% 이상·금융 ROE 10% 이상을 유지하고, 기존 7개 버핏 조건 중 하나 이상의 강점이 확인된 관심종목입니다. 비금융주는 현금/시가총액 50% 이하를 추가로 요구하며, FCF 수익률은 10년 평균(불완전하면 최근 3년 평균)으로 계산합니다.</p>
           </div>
           <div class="section-side">
             <span class="stat-pill" id="priority-count-badge">Loading</span>
@@ -170,7 +170,7 @@
                 <th data-priority-sort-key="netDebtToEbitda">순부채/EBITDA</th>
                 <th data-priority-sort-key="incrementalRoic">증분 ROIC</th>
                 <th data-priority-sort-key="payoutRatio">주주환원</th>
-                <th data-priority-sort-key="fcfYield">FCF 수익률</th>
+                <th data-priority-sort-key="fcfYield">정상 FCF 수익률</th>
                 <th data-priority-sort-key="estimatedNBase">고ROE 지속기간 N</th>
                 <th data-priority-sort-key="nConfidenceScore">지속기간 N 신뢰도</th>
               </tr>
@@ -841,6 +841,6 @@
     ></aside>
   </div>
 
-  <script src="script.js?v=20260803-portfolio-editor"></script>
+  <script src="script.js?v=20260803-buffett-normalized"></script>
 </body>
 </html>

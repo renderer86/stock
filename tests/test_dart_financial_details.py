@@ -200,7 +200,7 @@ class DartFinancialDetailsTest(unittest.TestCase):
                         "roic_pct": 15,
                         "net_income": 100,
                         "gross_margin_pct": 40 + index * 0.1,
-                        "free_cash_flow": 100,
+                        "free_cash_flow": 1000 if index == 9 else 0,
                         "net_debt": -10,
                         "net_debt_to_ebitda": -0.1,
                         "nopat": 100 + index * 4,
@@ -216,6 +216,7 @@ class DartFinancialDetailsTest(unittest.TestCase):
                         "current_ratio": 1 + index * 0.1,
                         "asset_turnover": 1 + index * 0.1,
                     },
+                    "detail_accounts": {"cash": 1200},
                     "share_data": {"issued_shares": 1000 - index},
                     "dividend_data": {"has_cash_dividend": True},
                 }
@@ -229,6 +230,31 @@ class DartFinancialDetailsTest(unittest.TestCase):
         self.assertTrue(
             features["buffett"]["valuation"]["fcf_yield_ge_5pct"]
         )
+        self.assertEqual(
+            features["buffett"]["valuation"]["normalized_fcf_basis"],
+            "10y_average",
+        )
+        self.assertEqual(
+            features["buffett"]["valuation"]["normalized_annual_fcf"],
+            100,
+        )
+        self.assertEqual(
+            features["buffett"]["valuation"]["cash_to_market_cap_pct"],
+            60,
+        )
+        self.assertFalse(
+            features["buffett"]["valuation"][
+                "cash_to_market_cap_le_50pct_or_financial"
+            ]
+        )
+        self.assertIsNone(features["buffett"]["incremental_roic_5y_pct"])
+        self.assertFalse(
+            features["buffett"]["incremental_roic_5y_basis"][
+                "denominator_valid"
+            ]
+        )
+        self.assertEqual(features["buffett"]["latest_roic_pct"], 15)
+        self.assertEqual(features["buffett"]["latest_roe_pct"], 15)
         self.assertEqual(
             features["quality"]["piotroski"]["score_partial"],
             9,

@@ -2883,15 +2883,20 @@ function getPriorityCandidates(stocks) {
       recentReturnValues: buffett.minimum_persistence_values_pct || [],
       supportingConditionCount: buffett.supporting_condition_count,
       strengthTags: buffett.strength_tags || ranking.strength_tags || [],
+      riskTags: buffett.risk_tags || [],
       strictCandidate: Boolean(buffett.candidate || ranking.strict_candidate),
       epsCagr5y: buffett.eps_cagr_5y_pct,
       persistencePassYears: buffett.persistence_pass_years,
       grossMarginSigma: buffett.gross_margin_sigma_pct_points,
       fcfConversion: buffett.fcf_conversion_10y,
       netDebtToEbitda: buffett.latest_net_debt_to_ebitda,
+      latestRoic: buffett.latest_roic_pct,
+      latestRoe: buffett.latest_roe_pct,
       incrementalRoic: buffett.incremental_roic_5y_pct,
       payoutRatio: buffett.payout_ratio_pct,
       fcfYield: buffett.valuation?.fcf_yield_pct,
+      fcfYieldBasis: buffett.valuation?.normalized_fcf_basis,
+      cashToMarketCap: buffett.valuation?.cash_to_market_cap_pct,
       estimatedNBase: nEstimate.base_years,
       nModel: nEstimate,
       nConfidence: nEstimate.confidence?.label,
@@ -2982,6 +2987,7 @@ function updatePrioritySortHeaders() {
 const SCREEN_PENDING_REASON_LABELS = {
   buffett: {
     recent_3y_persistence: "최근 3개 연속 사업연도 ROIC·ROE 이력 부족",
+    cash_to_market_cap: "현금/시가총액 비율 계산 데이터 부족",
     supporting_buffett_condition: "기존 7개 조건의 강점 판정 데이터 부족",
     persistence_9_of_10: "10년 ROIC·ROE 이력 부족",
     positive_net_income_all_10y: "10년 순이익 이력 부족",
@@ -3251,17 +3257,24 @@ function renderPriorityCandidates(stocks) {
           </span>
           <span class="buffett-strength-tags">
             ${stock.strengthTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+            ${stock.riskTags.map((tag) => `<span class="is-warning">${escapeHtml(tag)}</span>`).join("")}
           </span>
         </span>
       </td>
       <td class="buffett-sector-cell">${escapeHtml(stock.sector || "-")}</td>
-      <td class="buffett-return-cell" title="${escapeHtml(stock.recentReturnValues.map((value) => formatPercent(value, 1)).join(" · "))}">${escapeHtml(stock.recentReturnMetric || "ROIC")} ${formatPercent(stock.recentReturnAverage, 1)}</td>
+      <td class="buffett-return-cell" title="${escapeHtml(stock.recentReturnValues.map((value) => formatPercent(value, 1)).join(" · "))}">
+        <div>3년 ${escapeHtml(stock.recentReturnMetric || "ROIC")} ${formatPercent(stock.recentReturnAverage, 1)}</div>
+        <div class="table-subtext">최신 ROIC ${formatPercent(stock.latestRoic, 1)} · ROE ${formatPercent(stock.latestRoe, 1)}</div>
+      </td>
       <td class="buffett-metric-cell">${formatPercent(stock.grossMarginSigma, 1)}</td>
       <td class="buffett-metric-cell">${stock.fcfConversion === null || stock.fcfConversion === undefined ? "N/A" : formatPercent(stock.fcfConversion * 100, 1)}</td>
       <td class="buffett-metric-cell">${formatNumber(stock.netDebtToEbitda, 2)}</td>
       <td class="buffett-metric-cell">${formatPercent(stock.incrementalRoic, 1)}</td>
       <td class="buffett-metric-cell">${formatPercent(stock.payoutRatio, 1)}</td>
-      <td class="buffett-metric-cell buffett-fcf-yield-cell ${metricClass(stock.fcfYield)}">${formatPercent(stock.fcfYield, 1)}</td>
+      <td class="buffett-metric-cell buffett-fcf-yield-cell ${metricClass(stock.fcfYield)}">
+        <div>${formatPercent(stock.fcfYield, 1)}</div>
+        <div class="table-subtext">${stock.fcfYieldBasis === "10y_average" ? "10년 평균" : stock.fcfYieldBasis === "3y_average_fallback" ? "최근 3년 평균" : "산출 불가"} · 현금/시총 ${formatPercent(stock.cashToMarketCap, 1)}</div>
+      </td>
       <td class="buffett-metric-cell"><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</div></td>
       <td class="buffett-metric-cell">${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
     </tr>
