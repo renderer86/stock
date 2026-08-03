@@ -201,6 +201,7 @@ class InvestmentScreenBuilder:
         panel: dict[str, Any],
         n_estimates: dict[str, Any],
         market_sum: dict[str, Any] | None = None,
+        historical_prices: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         panel_features = panel.get("screening_features") or {}
         n_by_ticker = n_estimates.get("estimates") or {}
@@ -209,6 +210,7 @@ class InvestmentScreenBuilder:
             for row in (market_sum or {}).get("stocks") or []
             if row.get("code")
         }
+        historical_by_ticker = (historical_prices or {}).get("stocks") or {}
         company_metadata = self._company_metadata(panel)
         observations_by_ticker: dict[str, list[dict[str, Any]]] = {}
         for observation in panel.get("observations") or []:
@@ -230,6 +232,54 @@ class InvestmentScreenBuilder:
             long_term_financials = dict(
                 feature.get("long_term_financials") or {}
             )
+            annual_financials = [
+                dict(row)
+                for row in long_term_financials.get("annual") or []
+                if isinstance(row, dict)
+            ]
+            year_end_prices = {
+                int(row.get("year") or 0): row
+                for row in (
+                    historical_by_ticker.get(ticker) or {}
+                ).get("prices")
+                or []
+                if isinstance(row, dict) and row.get("year")
+            }
+            for annual_row in annual_financials:
+                year = int(annual_row.get("year") or 0)
+                price_row = year_end_prices.get(year) or {}
+                close = _number(price_row.get("close"))
+                book_value_per_share = _number(
+                    annual_row.get("book_value_per_share")
+                )
+                historical_pbr = (
+                    close / book_value_per_share
+                    if close is not None
+                    and close > 0
+                    and book_value_per_share is not None
+                    and book_value_per_share > 0
+                    else None
+                )
+                annual_row.update(
+                    {
+                        "year_end_close": round(close, 4)
+                        if close is not None
+                        else None,
+                        "year_end_price_date": price_row.get("date"),
+                        "pbr": round(historical_pbr, 4)
+                        if historical_pbr is not None
+                        else None,
+                    }
+                )
+            long_term_financials["annual"] = annual_financials
+            long_term_methodology = dict(
+                long_term_financials.get("methodology") or {}
+            )
+            long_term_methodology["historical_pbr"] = (
+                "Naver Finance year-end monthly close / DART fiscal-year "
+                "owners' book value per distributed share"
+            )
+            long_term_financials["methodology"] = long_term_methodology
             buffett_conditions = dict(buffett.get("conditions") or {})
             quality_conditions = dict(quality.get("conditions") or {})
             valuation = dict(buffett.get("valuation") or {})

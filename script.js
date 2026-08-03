@@ -3480,6 +3480,9 @@ function renderSelectedSummary(stock) {
   const latest = financials.latest || {};
   const averages = financials.averages || {};
   const cagr = financials.cagr || {};
+  const annual = Array.isArray(financials.annual)
+    ? [...financials.annual].sort((a, b) => Number(a.year) - Number(b.year))
+    : [];
   const valuation = financials.market_valuation || {};
   const buffettValuation = stock.investmentScreen?.buffett?.valuation || {};
   const periodLabel = period.start_year && period.end_year
@@ -3505,12 +3508,52 @@ function renderSelectedSummary(stock) {
       ${subtext ? `<span class="summary-subtext">${subtext}</span>` : ""}
     </div>
   `;
+  const annualRows = [
+    ["ROE", "roe_pct", (value) => formatPercent(value, 1)],
+    ["PBR", "pbr", (value) => `${formatNumber(value, 2)}×`],
+    ["ROIC", "roic_pct", (value) => formatPercent(value, 1)],
+    ["ROCE", "roce_pct", (value) => formatPercent(value, 1)],
+    ["영업이익률", "operating_margin_pct", (value) => formatPercent(value, 1)],
+    ["매출 YoY", "revenue_growth_yoy_pct", (value) => formatPercent(value, 1)],
+    ["FCF / 순이익", "fcf_to_net_income_pct", (value) => formatPercent(value, 0)],
+    ["부채 / 자본", "debt_to_equity_pct", (value) => formatPercent(value, 0)]
+  ];
+  const annualMatrix = annual.length ? `
+    <div class="annual-matrix-scroll" tabindex="0" aria-label="${escapeHtml(stock.name)} 연도별 10년 재무지표">
+      <table class="annual-matrix">
+        <thead>
+          <tr>
+            <th scope="col">지표</th>
+            ${annual.map((row) => `<th scope="col">${escapeHtml(String(row.year))}</th>`).join("")}
+          </tr>
+        </thead>
+        <tbody>
+          ${annualRows.map(([label, key, formatter]) => `
+            <tr>
+              <th scope="row">${escapeHtml(label)}</th>
+              ${annual.map((row) => {
+                const value = row[key];
+                const missing = value === null || value === undefined || !Number.isFinite(Number(value));
+                return `<td class="${missing ? "is-missing" : ""}">${missing ? "—" : formatter(Number(value))}</td>`;
+              }).join("")}
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  ` : `<div class="annual-matrix-empty">연도별 DART 재무 이력이 부족합니다.</div>`;
 
   container.innerHTML = `
     <div class="summary-hero">
-      <div class="summary-code">${escapeHtml(stock.code)}</div>
-      <div class="summary-name">${escapeHtml(stock.name)}</div>
+      <div class="summary-identity-row">
+        <div>
+          <div class="summary-code">${escapeHtml(stock.code)}</div>
+          <div class="summary-name">${escapeHtml(stock.name)}</div>
+        </div>
+        <span>10년 연도별 비교</span>
+      </div>
       <div class="summary-period">${escapeHtml(periodLabel)} · ${escapeHtml(observationLabel)}</div>
+      ${annualMatrix}
       <div class="summary-market-strip">
         <div><span>현재가</span><strong>${formatPrice(stock.current_price)}</strong></div>
         <div><span>시가총액</span><strong>${formatMarketCap(stock.market_cap_krw_100m)}</strong></div>
@@ -3535,7 +3578,7 @@ function renderSelectedSummary(stock) {
       ${summaryCard("버핏 스타일 / 퀄리티", `${screenStatusLabel(stock.investmentScreen?.buffett?.watchlist_status)} / ${screenStatusLabel(stock.investmentScreen?.quality?.status)}`, stock.investmentScreen?.quality?.selected_for_basket ? "퀄리티 바스켓 포함" : "현재 판정")}
     </div>
     <div class="summary-method-note">
-      ROCE = 영업이익 ÷ (총자산 − 유동부채) · CAGR은 양수인 시작·종료값만 산출 · 주식분할 구간의 EPS 성장률은 지배주주 순이익 CAGR로 보정 · PBR·PER·PEG는 현재 시장가격 기준
+      연도별 PBR = 네이버 연말 종가 ÷ DART 해당 연도 지배주주 BPS · ROCE = 영업이익 ÷ (총자산 − 유동부채) · CAGR은 양수인 시작·종료값만 산출 · 주식분할 구간의 EPS 성장률은 지배주주 순이익 CAGR로 보정
     </div>
   `;
 }

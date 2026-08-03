@@ -1906,18 +1906,47 @@ tbody tr.is-suspended.is-selected {
 
 .selected-stock-summary {
   display: grid;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
-  grid-template-columns: 1.1fr 1.2fr;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
 }
 
 .summary-hero {
   display: grid;
+  min-width: 0;
   gap: 10px;
   padding: 20px;
+  overflow: hidden;
   border-radius: 20px;
   background: linear-gradient(160deg, #201c18, #3d2d24);
   color: #fff7ee;
+}
+
+.summary-hero > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.summary-identity-row {
+  display: flex;
+  min-width: 0;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.summary-identity-row > span {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 247, 238, 0.72);
+  font-size: 0.66rem;
+  font-weight: 700;
 }
 
 .summary-code {
@@ -1937,6 +1966,108 @@ tbody tr.is-suspended.is-selected {
   line-height: 1.6;
 }
 
+.annual-matrix-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(13, 10, 8, 0.18);
+  scrollbar-color: rgba(232, 173, 98, 0.52) rgba(255, 255, 255, 0.06);
+}
+
+.annual-matrix-scroll:focus-visible {
+  outline: 2px solid rgba(232, 173, 98, 0.82);
+  outline-offset: 2px;
+}
+
+.annual-matrix {
+  width: 100%;
+  min-width: 880px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+  font-family: "Space Grotesk", "IBM Plex Sans KR", sans-serif;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.annual-matrix th,
+.annual-matrix td {
+  min-width: 72px;
+  padding: 9px 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.annual-matrix th {
+  position: static;
+  cursor: default;
+}
+
+.annual-matrix td,
+.annual-matrix tbody tr,
+.annual-matrix tbody tr:hover {
+  background: transparent;
+}
+
+.annual-matrix tr:last-child > * {
+  border-bottom: 0;
+}
+
+.annual-matrix tr > *:last-child {
+  border-right: 0;
+}
+
+.annual-matrix thead th {
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 247, 238, 0.58);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.annual-matrix th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  min-width: 108px;
+  text-align: left;
+}
+
+.annual-matrix thead th:first-child {
+  z-index: 3;
+  background: #292019;
+}
+
+.annual-matrix tbody th {
+  background: #2c211a;
+  color: rgba(255, 247, 238, 0.7);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 0.68rem;
+}
+
+.annual-matrix tbody td {
+  color: #fff7ee;
+  font-weight: 600;
+}
+
+.annual-matrix td.is-missing {
+  color: rgba(255, 247, 238, 0.26);
+  font-weight: 400;
+}
+
+.annual-matrix-empty {
+  padding: 18px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  color: rgba(255, 247, 238, 0.56);
+  font-size: 0.76rem;
+  text-align: center;
+}
+
 .summary-period {
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1945,6 +2076,8 @@ tbody tr.is-suspended.is-selected {
 
 .summary-market-strip {
   display: grid;
+  width: 100%;
+  min-width: 0;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 7px;
   margin-top: auto;
@@ -4581,8 +4714,23 @@ body.market-map-modal-open {
 
   .summary-hero {
     gap: 7px;
+    width: 100%;
+    max-width: 100%;
     padding: 16px;
     border-radius: 16px;
+  }
+
+  .summary-identity-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .summary-market-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summary-market-strip > div:last-child {
+    grid-column: 1 / -1;
   }
 
   .summary-code {

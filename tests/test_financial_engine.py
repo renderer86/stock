@@ -324,6 +324,12 @@ class FinancialNEngineTest(unittest.TestCase):
                             "eps_source": "owners_net_income_per_share",
                         },
                         "latest": {"roe_pct": 11, "roic_pct": 15},
+                        "annual": [
+                            {
+                                "year": 2025,
+                                "book_value_per_share": 100,
+                            }
+                        ],
                     },
                     "buffett": {
                         "conditions": {"positive_net_income_all_10y": True},
@@ -357,6 +363,20 @@ class FinancialNEngineTest(unittest.TestCase):
                     }
                 ]
             },
+            {
+                "stocks": {
+                    "000001": {
+                        "status": "ok",
+                        "prices": [
+                            {
+                                "year": 2025,
+                                "date": "20251230",
+                                "close": 200,
+                            }
+                        ],
+                    }
+                }
+            },
         )
         buffett = result["results"]["000001"]["buffett"]
         self.assertEqual(buffett["watchlist_status"], "fail")
@@ -379,6 +399,12 @@ class FinancialNEngineTest(unittest.TestCase):
             valuation["lynch_peg_eps_cagr_long_term_plus_dividend"],
             1.6667,
         )
+        annual = result["results"]["000001"]["long_term_financials"][
+            "annual"
+        ]
+        self.assertEqual(annual[0]["year_end_close"], 200)
+        self.assertEqual(annual[0]["year_end_price_date"], "20251230")
+        self.assertEqual(annual[0]["pbr"], 2)
 
 
 if __name__ == "__main__":

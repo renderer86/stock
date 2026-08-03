@@ -102,6 +102,25 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertIn('return "임시 점수표";', script)
         self.assertIn("아직 실증 지속기간 데이터가 없는 종목", script)
 
+    def test_selected_stock_shows_ten_year_matrix_inside_summary_hero(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+        style = (ROOT / "style.css").read_text(encoding="utf-8")
+        payload = json.loads(
+            (ROOT / "data/investment_screens.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        self.assertIn("10년 연도별 재무·밸류에이션", html)
+        self.assertIn('class="annual-matrix-scroll"', script)
+        self.assertIn('["PBR", "pbr"', script)
+        self.assertIn(".annual-matrix th:first-child", style)
+        samsung = payload["results"]["005930"]["long_term_financials"]
+        self.assertEqual(len(samsung["annual"]), 10)
+        self.assertTrue(all(row["pbr"] for row in samsung["annual"]))
+        self.assertGreater(samsung["annual"][0]["pbr"], 0.5)
+
 
 if __name__ == "__main__":
     unittest.main()

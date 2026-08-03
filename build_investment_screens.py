@@ -13,6 +13,7 @@ from financial_engine import InvestmentScreenBuilder
 DEFAULT_PANEL = Path("data/dart_financial_panel.json")
 DEFAULT_N = Path("data/financial_n_estimates.json")
 DEFAULT_MARKET = Path("data/market_sum.json")
+DEFAULT_HISTORICAL_PRICES = Path("data/naver_year_end_prices.json")
 DEFAULT_OUTPUT = Path("data/investment_screens.json")
 
 
@@ -26,6 +27,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--panel", default=str(DEFAULT_PANEL))
     parser.add_argument("--n-estimates", default=str(DEFAULT_N))
     parser.add_argument("--market-sum", default=str(DEFAULT_MARKET))
+    parser.add_argument(
+        "--historical-prices",
+        default=str(DEFAULT_HISTORICAL_PRICES),
+    )
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
     parser.add_argument("--quality-basket-size", type=int, default=25)
     return parser.parse_args()
@@ -50,10 +55,13 @@ def main() -> None:
     panel = load_financial_panel(Path(args.panel))
     n_estimates = load_json(Path(args.n_estimates))
     market_sum = load_json(Path(args.market_sum), required=False)
+    historical_prices = load_json(
+        Path(args.historical_prices), required=False
+    )
     output_path = Path(args.output)
     payload = InvestmentScreenBuilder(
         quality_basket_size=args.quality_basket_size
-    ).build(panel, n_estimates, market_sum)
+    ).build(panel, n_estimates, market_sum, historical_prices)
     atomic_write_json(output_path, payload, compact=True)
     summary = payload["summary"]
     print(

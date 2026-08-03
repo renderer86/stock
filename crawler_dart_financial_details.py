@@ -940,13 +940,10 @@ def annualized_growth_pct(
 def per_share_earnings_proxy(row: dict[str, Any]) -> float | None:
     accounts = row.get("detail_accounts") or {}
     metrics = row.get("detail_metrics") or {}
-    share_data = row.get("share_data") or {}
     income = accounts.get("owners_net_income")
     if income is None:
         income = metrics.get("net_income")
-    shares = share_data.get("distributed_shares")
-    if shares is None or shares <= 0:
-        shares = share_data.get("issued_shares")
+    shares = share_count_proxy(row)
     return safe_ratio(income, shares) if shares is not None and shares > 0 else None
 
 
@@ -955,7 +952,22 @@ def share_count_proxy(row: dict[str, Any]) -> float | None:
     shares = share_data.get("distributed_shares")
     if shares is None or shares <= 0:
         shares = share_data.get("issued_shares")
-    return float(shares) if shares is not None and shares > 0 else None
+    if shares is not None and shares > 0:
+        return float(shares)
+    accounts = row.get("detail_accounts") or {}
+    metrics = row.get("detail_metrics") or {}
+    income = accounts.get("owners_net_income")
+    if income is None:
+        income = metrics.get("net_income")
+    basic_eps = accounts.get("basic_eps")
+    if basic_eps is None:
+        basic_eps = metrics.get("basic_eps")
+    implied_shares = safe_ratio(income, basic_eps)
+    return (
+        float(implied_shares)
+        if implied_shares is not None and implied_shares > 0
+        else None
+    )
 
 
 def company_screening_features(
@@ -1107,6 +1119,86 @@ def company_screening_features(
     latest_roce = pct(
         last_accounts.get("operating_income"), latest_capital_employed
     )
+    annual_history = []
+    previous_accounts: dict[str, Any] = {}
+    for row in detail_rows:
+        accounts = row.get("detail_accounts") or {}
+        detail_metrics = row.get("detail_metrics") or {}
+        base_metrics = row.get("metrics") or {}
+        capital_employed = (
+            accounts["assets"] - accounts["current_liabilities"]
+            if accounts.get("assets") is not None
+            and accounts.get("current_liabilities") is not None
+            else None
+        )
+        owner_income = accounts.get("owners_net_income")
+        if owner_income is None:
+            owner_income = detail_metrics.get("net_income")
+        shares = share_count_proxy(row)
+        owner_equity = accounts.get("owners_equity")
+        if owner_equity is None:
+            owner_equity = accounts.get("equity")
+        annual_history.append(
+            {
+                "year": int(row.get("fiscal_year") or 0),
+                "roe_pct": base_metrics.get("roe_pct"),
+                "roa_pct": base_metrics.get("roa_pct"),
+                "roic_pct": detail_metrics.get("roic_pct"),
+                "roce_pct": pct(
+                    accounts.get("operating_income"), capital_employed
+                ),
+                "operating_margin_pct": base_metrics.get(
+                    "operating_margin_pct"
+                ),
+                "net_margin_pct": base_metrics.get("net_margin_pct"),
+                "debt_to_equity_pct": detail_metrics.get(
+                    "debt_to_equity_pct"
+                ),
+                "revenue_growth_yoy_pct": annualized_growth_pct(
+                    previous_accounts.get("revenue"),
+                    accounts.get("revenue"),
+                    1,
+                ),
+                "operating_income_growth_yoy_pct": annualized_growth_pct(
+                    previous_accounts.get("operating_income"),
+                    accounts.get("operating_income"),
+                    1,
+                ),
+                "fcf_to_net_income_pct": pct(
+                    detail_metrics.get("free_cash_flow"), owner_income
+                )
+                if owner_income is not None and owner_income > 0
+                else None,
+                "book_value_per_share": safe_ratio(owner_equity, shares),
+                "share_count_proxy": shares,
+                "share_adjustment_factor": 1,
+                "year_end_close": None,
+                "pbr": None,
+            }
+        )
+        previous_accounts = accounts
+    cumulative_share_adjustment = 1.0
+    for index in range(len(annual_history) - 1, -1, -1):
+        annual_row = annual_history[index]
+        raw_bps = annual_row.get("book_value_per_share")
+        annual_row["share_adjustment_factor"] = round(
+            cumulative_share_adjustment, 4
+        )
+        annual_row["book_value_per_share"] = safe_ratio(
+            raw_bps, cumulative_share_adjustment
+        )
+        if index == 0:
+            continue
+        current_shares = annual_row.get("share_count_proxy")
+        previous_shares = annual_history[index - 1].get(
+            "share_count_proxy"
+        )
+        share_ratio = safe_ratio(current_shares, previous_shares)
+        if share_ratio is not None and share_ratio > 2:
+            cumulative_share_adjustment *= max(1, round(share_ratio))
+        elif share_ratio is not None and 0 < share_ratio < 0.5:
+            consolidation_ratio = max(1, round(1 / share_ratio))
+            cumulative_share_adjustment /= consolidation_ratio
     long_term_financials = {
         "period": {
             "start_year": period_start_year,
@@ -1172,6 +1264,7 @@ def company_screening_features(
             "roic_years": len(roic_values),
             "roce_years": len(roce_values),
         },
+        "annual": annual_history,
         "methodology": {
             "roce": "operating income / (total assets - current liabilities)",
             "cagr": "positive start and end values over fiscal-year span",
@@ -1180,6 +1273,11 @@ def company_screening_features(
                 "issued shares are the fallback denominator; when endpoint "
                 "share counts differ by more than 2x, owners' net income CAGR "
                 "is used to avoid stock-split distortion"
+            ),
+            "annual_bps": (
+                "owners' equity per distributed share; basic EPS implied "
+                "shares fill missing share disclosures, and detected share "
+                "splits/consolidations align BPS with adjusted price history"
             ),
         },
     }

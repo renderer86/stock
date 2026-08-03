@@ -21,6 +21,7 @@ class InvestmentScreenWorkflowTests(unittest.TestCase):
     def test_refresh_workflow_builds_and_commits_every_output(self) -> None:
         text = REFRESH_WORKFLOW.read_text(encoding="utf-8")
         commands = (
+            "crawler_naver_year_end_prices.py",
             "estimate_financial_n.py",
             "build_investment_screens.py",
             "build_data_manifest.py",
@@ -29,6 +30,7 @@ class InvestmentScreenWorkflowTests(unittest.TestCase):
         positions = [text.index(command) for command in commands]
         self.assertEqual(positions, sorted(positions))
         self.assertIn("data/financial_n_estimates.json", text)
+        self.assertIn("data/naver_year_end_prices.json", text)
         self.assertIn("data/investment_screens.json", text)
         self.assertIn("data/data_manifest.json", text)
 
