@@ -102,6 +102,30 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertIn('return "임시 점수표";', script)
         self.assertIn("아직 실증 지속기간 데이터가 없는 종목", script)
 
+    def test_market_implied_n_uses_log_formula_and_roe_guard(self) -> None:
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn("const MARKET_IMPLIED_ROE_GUARD_PP = 2;", script)
+        self.assertIn("Math.log(pbr) / Math.log(growthRatio)", script)
+        self.assertIn(
+            "Math.abs(roePercent - discountPercent) < MARKET_IMPLIED_ROE_GUARD_PP",
+            script,
+        )
+        self.assertNotIn("if (targetPbr <= 1)", script)
+        self.assertNotIn("marketImpliedPbr", script)
+
+    def test_fair_price_uses_same_compound_formula_without_growth_slider(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "bps0 * (((1 + roe) / (1 + discount)) ** duration)",
+            script,
+        )
+        self.assertNotIn('id="growth-rate-input"', html)
+        self.assertNotIn("growthRate", script)
+        self.assertNotIn("영구성장률", script)
+
     def test_selected_stock_shows_ten_year_matrix_inside_summary_hero(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         script = (ROOT / "script.js").read_text(encoding="utf-8")

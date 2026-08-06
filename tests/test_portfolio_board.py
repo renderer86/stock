@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PortfolioBoardTests(unittest.TestCase):
-    def test_public_portfolio_contains_the_six_requested_holdings(self) -> None:
+    def test_public_portfolio_contains_requested_holdings_and_cash(self) -> None:
         payload = json.loads(
             (ROOT / "data/portfolio.json").read_text(encoding="utf-8")
         )
@@ -20,21 +20,27 @@ class PortfolioBoardTests(unittest.TestCase):
 
         self.assertEqual(
             {holding["code"] for holding in stocks},
-            {"042700", "138040", "214450", "383220", "005930", "000660"},
+            {"042700", "138040", "214450", "383220"},
         )
         self.assertAlmostEqual(
-            sum(float(holding["weight_pct"]) for holding in stocks),
+            sum(float(holding["weight_pct"]) for holding in holdings),
             100.0,
             places=2,
         )
         self.assertEqual(cash["code"], "CASH")
         self.assertEqual(cash["position"], "GK")
-        self.assertEqual(float(cash["weight_pct"]), 0)
+        self.assertEqual(float(cash["weight_pct"]), 0.06)
 
         by_code = {holding["code"]: holding for holding in stocks}
-        self.assertTrue(
-            all(by_code[code]["position"] == "ST" for code in ("005930", "000660", "042700"))
-        )
+        expected = {
+            "042700": (17.47, "ST"),
+            "214450": (38.92, "AM"),
+            "383220": (19.63, "CM"),
+            "138040": (23.92, "CB"),
+        }
+        for code, (weight, position) in expected.items():
+            self.assertEqual(float(by_code[code]["weight_pct"]), weight)
+            self.assertEqual(by_code[code]["position"], position)
 
     def test_public_portfolio_has_complete_editable_note_drafts(self) -> None:
         payload = json.loads(

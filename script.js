@@ -22,7 +22,8 @@ const AI_BRIEFING_URL = "./data/ai_market_briefing.json";
 const SEC_FILINGS_URL = "./data/us_sec_filings.json";
 const FINNHUB_URL = "./data/us_finnhub.json";
 const DATA_MANIFEST_URL = "./data/data_manifest.json";
-const MARKET_IMPLIED_DISCOUNT = 0.1;
+const MARKET_IMPLIED_DISCOUNT_PCT = 10;
+const MARKET_IMPLIED_ROE_GUARD_PP = 2;
 
 const state = {
   rawStocks: [],
@@ -39,7 +40,6 @@ const state = {
   discountRate: 10,
   durationOffset: 0,
   roeAdjustment: 0,
-  growthRate: 3,
   sortKey: "roe",
   sortDirection: "desc",
   prioritySortKey: "buffettRank",
@@ -2371,93 +2371,60 @@ function getBookValuePerShare(stock) {
 
 function compoundFairPrice(stock, params) {
   const bps0 = getBookValuePerShare(stock);
-  if (!bps0) {
+  if (!bps0 || !Number.isFinite(params.assumedRoe)) {
     return null;
   }
 
-  const roe = (params.assumedRoe ?? 0) / 100;
+  const roe = params.assumedRoe / 100;
   const discount = params.discountRate / 100;
-  const growth = params.growthRate / 100;
   const duration = params.durationYears;
 
-  if (roe <= 0 || discount <= 0 || duration <= 0) {
+  if (
+    !Number.isFinite(roe)
+    || !Number.isFinite(discount)
+    || !Number.isFinite(duration)
+    || roe <= -1
+    || discount <= -1
+    || duration < 0
+  ) {
     return null;
   }
 
-  let bps = bps0;
-  let pv = 0;
-
-  for (let year = 1; year <= duration; year += 1) {
-    const eps = bps * roe;
-    pv += eps / ((1 + discount) ** year);
-    bps += eps;
-  }
-
-  const terminalBps = bps * (1 + growth);
-  pv += terminalBps / ((1 + discount) ** duration);
-
-  return pv;
+  const fairPrice = bps0 * (((1 + roe) / (1 + discount)) ** duration);
+  return Number.isFinite(fairPrice) ? fairPrice : null;
 }
 
-function marketImpliedPbr(roePercent, years, discountRate = MARKET_IMPLIED_DISCOUNT) {
-  const roe = roePercent / 100;
-  if (roe <= 0) {
+function marketImpliedN(
+  roePercent,
+  pbr,
+  discountPercent = MARKET_IMPLIED_DISCOUNT_PCT
+) {
+  if (
+    !Number.isFinite(roePercent)
+    || !Number.isFinite(pbr)
+    || !Number.isFinite(discountPercent)
+    || pbr <= 0
+    || Math.abs(roePercent - discountPercent) < MARKET_IMPLIED_ROE_GUARD_PP
+  ) {
     return null;
   }
 
-  if (years <= 0) {
-    return 1;
+  const roe = roePercent / 100;
+  const discount = discountPercent / 100;
+  const growthRatio = (1 + roe) / (1 + discount);
+  if (!Number.isFinite(growthRatio) || growthRatio <= 0 || growthRatio === 1) {
+    return null;
   }
 
-  let bps = 1;
-  let price = 0;
-
-  for (let year = 1; year <= years; year += 1) {
-    const eps = bps * roe;
-    price += eps / ((1 + discountRate) ** year);
-    bps += eps;
+  const impliedN = Math.log(pbr) / Math.log(growthRatio);
+  if (!Number.isFinite(impliedN)) {
+    return null;
   }
-
-  price += bps / ((1 + discountRate) ** years);
-  return price;
+  return impliedN === 0 ? 0 : impliedN;
 }
 
 function estimateMarketImpliedDuration(stock) {
-  if (!stock.roe || !stock.pbr || stock.roe <= 0 || stock.pbr <= 0) {
-    return null;
-  }
-
-  const targetPbr = stock.pbr;
-  const maxYears = 50;
-
-  if (targetPbr <= 1) {
-    return 0;
-  }
-
-  let previousYears = 0;
-  let previousValue = marketImpliedPbr(stock.roe, previousYears);
-
-  for (let years = 1; years <= maxYears; years += 1) {
-    const currentValue = marketImpliedPbr(stock.roe, years);
-    if (currentValue === null) {
-      return null;
-    }
-
-    if (currentValue >= targetPbr) {
-      const range = currentValue - previousValue;
-      if (range <= 0) {
-        return years;
-      }
-
-      const ratio = (targetPbr - previousValue) / range;
-      return Number((previousYears + ratio).toFixed(1));
-    }
-
-    previousYears = years;
-    previousValue = currentValue;
-  }
-
-  return maxYears;
+  return marketImpliedN(stock.roe, stock.pbr);
 }
 
 function estimateKellyRatio(stock, fairPrice) {
@@ -2721,19 +2688,16 @@ function enrichStock(stock) {
     conservative: buildScenarioResult(stock, {
       assumedRoe: conservativeRoe,
       durationYears: durationRange.conservative,
-      growthRate: clamp(state.growthRate - 1, 0, 10),
       discountRate: state.discountRate
     }),
     base: buildScenarioResult(stock, {
       assumedRoe: baseRoe,
       durationYears: durationRange.base,
-      growthRate: state.growthRate,
       discountRate: state.discountRate
     }),
     optimistic: buildScenarioResult(stock, {
       assumedRoe: optimisticRoe,
       durationYears: durationRange.optimistic,
-      growthRate: clamp(state.growthRate + 1, 0, 10),
       discountRate: state.discountRate
     })
   };
@@ -3633,7 +3597,9 @@ function renderDurationPanel(stock) {
       ${stock.nModel.engine === "empirical_persistence"
         ? `업종별 4년 ROE 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합한 향후 고ROE 지속기간입니다. 산출 상태는 ${nEstimateMethodLabel(stock.nModel)}입니다.`
         : "아직 실증 지속기간 데이터가 없는 종목이므로 기존 임시 점수표를 사용하며, 적정가에도 이 임시 N이 적용됩니다."}
-      시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산한 비교값입니다.
+      시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산한 값입니다.
+      |ROE − 10%|가 2%p 미만이면 값이 발산하므로 N/A로 표시합니다.
+      엔진 N과의 단순 대소 비교는 ROE가 10%보다 높은 구간에서만 유효하며, 그보다 낮으면 N이 클수록 시장이 부진을 더 오래 반영한다는 뜻입니다.
     </div>
   `;
 }
@@ -3660,8 +3626,7 @@ function renderFairValuePanel(stock) {
           <div class="value">${formatPrice(scenario.fairPrice)}</div>
           <div class="table-subtext">
             ROE ${formatPercent(scenario.params.assumedRoe, 1)} ·
-            N ${scenario.params.durationYears}년 ·
-            g ${formatPercent(scenario.params.growthRate, 1)}
+            N ${scenario.params.durationYears}년
           </div>
         </div>
       `).join("")}
@@ -3682,10 +3647,6 @@ function renderFairValuePanel(stock) {
       <div class="calc-item">
         <div class="label">시장 내재 N</div>
         <div class="value">${formatYears(stock.marketImpliedN)}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">영구성장률</div>
-        <div class="value">${formatPercent(state.growthRate, 1)}</div>
       </div>
       <div class="calc-item">
         <div class="label">할인율</div>
@@ -3789,7 +3750,6 @@ function bindControls() {
   const discountRange = document.getElementById("discount-range");
   const durationRange = document.getElementById("duration-range");
   const roeAdjustmentInput = document.getElementById("assumed-roe-input");
-  const growthRateInput = document.getElementById("growth-rate-input");
 
   thresholdSelect.value = String(state.threshold);
   roaThresholdSelect.value = String(state.minRoa);
@@ -3797,7 +3757,6 @@ function bindControls() {
   discountRange.value = String(state.discountRate);
   durationRange.value = String(state.durationOffset);
   roeAdjustmentInput.value = String(state.roeAdjustment);
-  growthRateInput.value = String(state.growthRate);
   syncControlLabels();
 
   thresholdSelect.addEventListener("change", (event) => {
@@ -3829,11 +3788,6 @@ function bindControls() {
 
   roeAdjustmentInput.addEventListener("input", (event) => {
     state.roeAdjustment = Number(event.target.value);
-    renderDashboard();
-  });
-
-  growthRateInput.addEventListener("input", (event) => {
-    state.growthRate = Number(event.target.value);
     renderDashboard();
   });
 }

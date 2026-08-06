@@ -1,20 +1,20 @@
 {
   "schema_version": 2,
   "source": "User-configured public portfolio",
-  "count": 7,
-  "stock_count": 6,
-  "generated_at_utc": "2026-08-02T15:00:00+00:00",
+  "count": 5,
+  "stock_count": 4,
+  "generated_at_utc": "2026-08-06T14:53:55+00:00",
   "title": "나의 포트폴리오",
   "formation": "자유 전술",
-  "weighting_note": "실제 비중 입력 전 주식 6종 동일비중",
+  "weighting_note": "사용자 지정 실제 비중 · 잔여 0.06% 현금",
   "convergence_years": 3,
-  "as_of": "2026-08-03",
+  "as_of": "2026-08-06",
   "holdings": [
     {
       "code": "042700",
       "name": "한미반도체",
       "type": "stock",
-      "weight_pct": 16.67,
+      "weight_pct": 17.47,
       "position": "ST",
       "role": "HBM 장비 성장",
       "mark": "HANMI",
@@ -28,51 +28,10 @@
       }
     },
     {
-      "code": "000660",
-      "name": "SK하이닉스",
-      "type": "stock",
-      "weight_pct": 16.67,
-      "position": "ST",
-      "role": "AI 메모리 선도",
-      "mark": "SK hynix",
-      "crest_theme": "hynix",
-      "notes": {
-        "investment_idea": "HBM 중심의 AI 메모리 수요 확대와 기술 리더십을 핵심 투자 논리로 본다. HBM의 높은 수익성이 일반 DRAM·NAND 사이클의 변동성을 얼마나 상쇄하는지가 장기 가치의 핵심이다.",
-        "price_view": "AI 인프라 투자와 HBM 공급계약 기대를 상당 부분 반영한 주가로 해석한다. 상승 추세가 유지되려면 단순 출하 증가보다 HBM 세대 전환, 가격, 수익성의 동반 개선이 계속 확인돼야 한다.",
-        "key_variables": "1. HBM4·HBM4E 고객 인증과 출하 일정\n2. HBM 시장 점유율과 평균판매가격\n3. 범용 DRAM·NAND 가격 및 재고 사이클\n4. 설비투자 증가가 공급과잉으로 이어지는 시점\n5. 핵심 AI 고객의 투자 지속성",
-        "scenario": "기준: HBM 리더십을 유지하고 범용 메모리 가격도 안정되어 높은 현금창출이 이어진다.\n강세: HBM4E와 차세대 AI 메모리에서 기술 격차가 유지되며 이익 추정치가 추가 상향된다.\n약세: 경쟁사의 공급 확대와 AI 투자 둔화가 겹쳐 HBM 프리미엄과 범용 메모리 가격이 동시에 하락한다.",
-        "catalysts": "HBM4E 샘플·양산 일정, 주요 AI 고객과의 장기 협력, 분기 HBM 매출 비중 상승, DRAM 가격 및 영업이익 전망 상향",
-        "source_urls": [
-          "https://news.skhynix.com/press-center/press-release/"
-        ]
-      }
-    },
-    {
-      "code": "005930",
-      "name": "삼성전자",
-      "type": "stock",
-      "weight_pct": 16.66,
-      "position": "ST",
-      "role": "HBM·파운드리 회복",
-      "mark": "SAMSUNG",
-      "crest_theme": "samsung",
-      "notes": {
-        "investment_idea": "메모리 업황 회복에 HBM4, 첨단 패키징, 파운드리 수율 개선이 더해질 경우 이익 체력이 재평가될 수 있다는 논리다. 반도체 외 사업과 순현금은 하방을 보완하지만, 핵심 상승 동력은 결국 DS 부문의 수익성 회복이다.",
-        "price_view": "HBM 경쟁력 회복 기대와 대형 고객 협력이 주가에 선반영되는 단계로 본다. 실제 출하와 파운드리 적자 축소가 기대를 따라오면 추세가 이어질 수 있지만 일정 지연 시 변동성이 커질 수 있다.",
-        "key_variables": "1. HBM4·HBM4E 양산 수율과 고객 출하\n2. 파운드리 2나노 수율, 수주와 적자 축소\n3. DRAM·NAND 평균판매가격과 재고\n4. 반도체 설비투자와 감가상각 부담\n5. 모바일·디스플레이 등 비반도체 사업의 방어력",
-        "scenario": "기준: 메모리 가격이 안정되고 HBM4 공급 확대와 파운드리 손실 축소가 진행된다.\n강세: HBM과 파운드리 대형 고객 수주가 동시에 늘면서 DS 이익 체력이 구조적으로 개선된다.\n약세: HBM 고객 일정 또는 파운드리 수율 개선이 지연되고 범용 메모리 가격도 약해진다.",
-        "catalysts": "HBM4·HBM4E 고객 공급 확대, 글로벌 AI 반도체 기업과의 협력, 2나노 파운드리 수주, 분기 DS 영업이익 개선",
-        "source_urls": [
-          "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing",
-          "https://news.samsung.com/global/samsung-electronics-and-broadcom-expand-strategic-collaboration-across-memory-and-foundry-technologies"
-        ]
-      }
-    },
-    {
       "code": "214450",
       "name": "파마리서치",
       "type": "stock",
-      "weight_pct": 16.67,
+      "weight_pct": 38.92,
       "position": "AM",
       "role": "리쥬란 글로벌 성장",
       "mark": "PR",
@@ -93,7 +52,7 @@
       "code": "383220",
       "name": "F&F",
       "type": "stock",
-      "weight_pct": 16.67,
+      "weight_pct": 19.63,
       "position": "CM",
       "role": "브랜드 현금창출",
       "mark": "F&F",
@@ -110,7 +69,7 @@
       "code": "138040",
       "name": "메리츠금융지주",
       "type": "stock",
-      "weight_pct": 16.66,
+      "weight_pct": 23.92,
       "position": "CB",
       "role": "자본배분·주주환원",
       "mark": "meritz",
@@ -127,14 +86,14 @@
       "code": "CASH",
       "name": "현금",
       "type": "cash",
-      "weight_pct": 0,
+      "weight_pct": 0.06,
       "position": "GK",
       "role": "기회 대기 자금",
       "mark": "CASH",
       "crest_theme": "cash",
       "notes": {
         "investment_idea": "현금은 수익률을 포기한 자산이 아니라 변동성이 커질 때 좋은 기업을 매수할 수 있는 선택권이다. 목표 현금 비중은 시장 전망보다 각 종목의 기대수익률과 확신도에 따라 조절한다.",
-        "price_view": "현재 현금 비중은 입력되지 않았다. 실제 비중을 입력하면 주식 비중과 포트폴리오 기대수익률 계산에 함께 반영한다.",
+        "price_view": "현재 현금 비중은 사용자 지정 주식 비중을 제외한 잔여 0.06%다. 시장 변동성과 개별 종목의 가격 매력에 따라 재조정한다.",
         "key_variables": "1. 기존 보유 종목의 기대수익률\n2. 시장 급락 시 매수 후보와 목표 가격\n3. 단기금리와 현금성 상품 수익률\n4. 향후 12개월 필요한 유동성",
         "scenario": "기준: 목표 현금 비중을 유지하며 가격 매력이 커진 종목에 분할 투입한다.\n강세장: 현금 비중이 상대수익률을 낮출 수 있다.\n약세장: 손실을 완충하고 높은 기대수익률의 매수 기회를 제공한다.",
         "catalysts": "관심 종목의 목표 가격 도달, 시장 급락, 실적과 주가의 괴리 확대, 기존 종목의 투자 논리 강화"
@@ -146,6 +105,11 @@
       "type": "포지션 개편",
       "date": "2026-08-03",
       "reason": "삼성전자·SK하이닉스·한미반도체를 ST로 배치하고 현금을 GK로 추가"
+    },
+    {
+      "type": "실제 비중 반영",
+      "date": "2026-08-06",
+      "reason": "한미반도체 17.47%, 파마리서치 38.92%, F&F 19.63%, 메리츠금융지주 23.92%로 조정하고 잔여 0.06%를 현금으로 배치"
     }
   ]
 }
