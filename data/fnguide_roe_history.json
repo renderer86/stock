@@ -6,7 +6,7 @@
   "financial_roa_exempt": true,
   "note": "FnGuide's legacy SVO2 pages were retired. Historical ROE is read from the new CompanyInfo annual ratio dataset. full_years contains completed fiscal years only.",
   "count": 376,
-  "crawled_at_utc": "2026-08-14T09:02:39.026097+00:00",
+  "crawled_at_utc": "2026-08-17T08:25:07.143451+00:00",
   "stocks": [
     {
       "code": "005930",
@@ -354,7 +354,7 @@
         12.73,
         13.11,
         10.97,
-        null
+        10.35
       ],
       "full_years": [
         {
@@ -377,11 +377,11 @@
       "latest_periods": [
         {
           "period": "2026/03",
-          "roe": null
+          "roe": 10.35
         }
       ],
       "latest_full_year_roe": 10.97,
-      "five_period_average_roe": 12.11,
+      "five_period_average_roe": 11.76,
       "four_full_year_average_roe": 12.11
     },
     {
@@ -2791,14 +2791,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         16.39,
         15.76,
         19.48,
         17.62,
-        19.33
+        null
       ],
       "full_years": [
         {
@@ -2820,12 +2820,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 19.33
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 17.62,
-      "five_period_average_roe": 17.72,
+      "five_period_average_roe": 17.31,
       "four_full_year_average_roe": 17.31
     },
     {
@@ -2932,7 +2932,7 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         14.36,
@@ -2961,7 +2961,7 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
+          "period": "2026/06",
           "roe": null
         }
       ],
@@ -3919,14 +3919,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         8.94,
         14.58,
         36.48,
         30.6,
-        31.24
+        null
       ],
       "full_years": [
         {
@@ -3948,12 +3948,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 31.24
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 30.6,
-      "five_period_average_roe": 24.37,
+      "five_period_average_roe": 22.65,
       "four_full_year_average_roe": 22.65
     },
     {
@@ -4013,14 +4013,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         5.64,
         3.26,
         1.24,
         23.5,
-        20.59
+        null
       ],
       "full_years": [
         {
@@ -4042,12 +4042,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 20.59
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 23.5,
-      "five_period_average_roe": 10.85,
+      "five_period_average_roe": 8.41,
       "four_full_year_average_roe": 8.41
     },
     {
@@ -4060,14 +4060,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         5.37,
         31.45,
         11.52,
         16.59,
-        19.68
+        23.88
       ],
       "full_years": [
         {
@@ -4089,12 +4089,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 19.68
+          "period": "2026/06",
+          "roe": 23.88
         }
       ],
       "latest_full_year_roe": 16.59,
-      "five_period_average_roe": 16.92,
+      "five_period_average_roe": 17.76,
       "four_full_year_average_roe": 16.23
     },
     {
@@ -4624,14 +4624,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         22.06,
         11.69,
         12.72,
         12.91,
-        14.44
+        21.28
       ],
       "full_years": [
         {
@@ -4653,12 +4653,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 14.44
+          "period": "2026/06",
+          "roe": 21.28
         }
       ],
       "latest_full_year_roe": 12.91,
-      "five_period_average_roe": 14.76,
+      "five_period_average_roe": 16.13,
       "four_full_year_average_roe": 14.84
     },
     {
@@ -5658,14 +5658,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         15.55,
         0.52,
         13.55,
         15.76,
-        17.58
+        null
       ],
       "full_years": [
         {
@@ -5687,12 +5687,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 17.58
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 15.76,
-      "five_period_average_roe": 12.59,
+      "five_period_average_roe": 11.35,
       "four_full_year_average_roe": 11.35
     },
     {
@@ -6457,14 +6457,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         9.57,
         12.58,
         13.07,
         21.24,
-        20.9
+        null
       ],
       "full_years": [
         {
@@ -6486,12 +6486,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 20.9
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 21.24,
-      "five_period_average_roe": 15.47,
+      "five_period_average_roe": 14.12,
       "four_full_year_average_roe": 14.12
     },
     {
@@ -6504,14 +6504,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         null,
         null,
         null,
         52.78,
-        null
+        92.04
       ],
       "full_years": [
         {
@@ -6533,12 +6533,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": null
+          "period": "2026/06",
+          "roe": 92.04
         }
       ],
       "latest_full_year_roe": 52.78,
-      "five_period_average_roe": 52.78,
+      "five_period_average_roe": 72.41,
       "four_full_year_average_roe": 52.78
     },
     {
@@ -6974,14 +6974,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         null,
         null,
         -44.55,
         24.65,
-        29.48
+        33.51
       ],
       "full_years": [
         {
@@ -7003,12 +7003,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 29.48
+          "period": "2026/06",
+          "roe": 33.51
         }
       ],
       "latest_full_year_roe": 24.65,
-      "five_period_average_roe": 3.19,
+      "five_period_average_roe": 4.54,
       "four_full_year_average_roe": -9.95
     },
     {
@@ -7021,14 +7021,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         5.6,
         13.34,
         10.4,
         14.68,
-        15.51
+        null
       ],
       "full_years": [
         {
@@ -7050,12 +7050,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 15.51
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 14.68,
-      "five_period_average_roe": 11.91,
+      "five_period_average_roe": 11.0,
       "four_full_year_average_roe": 11.0
     },
     {
@@ -7444,14 +7444,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         24.43,
         18.18,
         16.19,
         32.62,
-        38.64
+        null
       ],
       "full_years": [
         {
@@ -7473,12 +7473,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 38.64
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 32.62,
-      "five_period_average_roe": 26.01,
+      "five_period_average_roe": 22.86,
       "four_full_year_average_roe": 22.86
     },
     {
@@ -7538,14 +7538,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         8.14,
         14.91,
         15.31,
         15.31,
-        14.21
+        null
       ],
       "full_years": [
         {
@@ -7567,12 +7567,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 14.21
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 15.31,
-      "five_period_average_roe": 13.58,
+      "five_period_average_roe": 13.42,
       "four_full_year_average_roe": 13.42
     },
     {
@@ -7961,14 +7961,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         -7.6,
         9.33,
         20.26,
         22.06,
-        29.71
+        30.11
       ],
       "full_years": [
         {
@@ -7990,12 +7990,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 29.71
+          "period": "2026/06",
+          "roe": 30.11
         }
       ],
       "latest_full_year_roe": 22.06,
-      "five_period_average_roe": 14.75,
+      "five_period_average_roe": 14.83,
       "four_full_year_average_roe": 11.01
     },
     {
@@ -8760,14 +8760,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         null,
         6.46,
         11.32,
         14.69,
-        14.45
+        null
       ],
       "full_years": [
         {
@@ -8789,12 +8789,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 14.45
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 14.69,
-      "five_period_average_roe": 11.73,
+      "five_period_average_roe": 10.82,
       "four_full_year_average_roe": 10.82
     },
     {
@@ -9224,14 +9224,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         null,
         null,
         38.14,
         21.6,
-        19.58
+        null
       ],
       "full_years": [
         {
@@ -9253,12 +9253,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 19.58
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 21.6,
-      "five_period_average_roe": 26.44,
+      "five_period_average_roe": 29.87,
       "four_full_year_average_roe": 29.87
     },
     {
@@ -9459,7 +9459,7 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         14.1,
@@ -9488,7 +9488,7 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
+          "period": "2026/06",
           "roe": null
         }
       ],
@@ -9506,7 +9506,7 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         32.13,
@@ -9535,7 +9535,7 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
+          "period": "2026/06",
           "roe": null
         }
       ],
@@ -11668,7 +11668,7 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         null,
@@ -11697,7 +11697,7 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
+          "period": "2026/06",
           "roe": null
         }
       ],
@@ -11715,14 +11715,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         35.55,
         19.82,
         13.39,
         15.1,
-        16.39
+        null
       ],
       "full_years": [
         {
@@ -11744,12 +11744,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 16.39
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 15.1,
-      "five_period_average_roe": 20.05,
+      "five_period_average_roe": 20.96,
       "four_full_year_average_roe": 20.96
     },
     {
@@ -12138,14 +12138,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         19.76,
         12.56,
         5.94,
         14.8,
-        12.2
+        null
       ],
       "full_years": [
         {
@@ -12167,12 +12167,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 12.2
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 14.8,
-      "five_period_average_roe": 13.05,
+      "five_period_average_roe": 13.27,
       "four_full_year_average_roe": 13.27
     },
     {
@@ -13125,14 +13125,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         6.54,
         11.12,
         1.89,
         39.12,
-        40.3
+        25.97
       ],
       "full_years": [
         {
@@ -13154,12 +13154,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 40.3
+          "period": "2026/06",
+          "roe": 25.97
         }
       ],
       "latest_full_year_roe": 39.12,
-      "five_period_average_roe": 19.79,
+      "five_period_average_roe": 16.93,
       "four_full_year_average_roe": 14.67
     },
     {
@@ -14723,14 +14723,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         11.22,
         9.76,
         9.18,
         15.64,
-        11.57
+        null
       ],
       "full_years": [
         {
@@ -14752,12 +14752,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 11.57
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 15.64,
-      "five_period_average_roe": 11.47,
+      "five_period_average_roe": 11.45,
       "four_full_year_average_roe": 11.45
     },
     {
@@ -14911,14 +14911,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         23.63,
         9.0,
         16.68,
         26.23,
-        35.14
+        null
       ],
       "full_years": [
         {
@@ -14940,12 +14940,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 35.14
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 26.23,
-      "five_period_average_roe": 22.14,
+      "five_period_average_roe": 18.88,
       "four_full_year_average_roe": 18.88
     },
     {
@@ -15240,14 +15240,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         16.23,
         15.6,
         15.23,
         11.61,
-        10.88
+        null
       ],
       "full_years": [
         {
@@ -15269,12 +15269,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 10.88
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 11.61,
-      "five_period_average_roe": 13.91,
+      "five_period_average_roe": 14.67,
       "four_full_year_average_roe": 14.67
     },
     {
@@ -15757,14 +15757,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         17.23,
         14.84,
         28.46,
         15.93,
-        15.74
+        null
       ],
       "full_years": [
         {
@@ -15786,12 +15786,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 15.74
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 15.93,
-      "five_period_average_roe": 18.44,
+      "five_period_average_roe": 19.12,
       "four_full_year_average_roe": 19.12
     },
     {
@@ -15851,14 +15851,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         15.08,
         18.58,
         24.76,
         26.65,
-        29.46
+        null
       ],
       "full_years": [
         {
@@ -15880,12 +15880,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 29.46
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 26.65,
-      "five_period_average_roe": 22.91,
+      "five_period_average_roe": 21.27,
       "four_full_year_average_roe": 21.27
     },
     {
@@ -16697,14 +16697,14 @@
         "2023/12",
         "2024/12",
         "2025/12",
-        "2026/03"
+        "2026/06"
       ],
       "roe_values": [
         -49.38,
         -66.79,
         31.96,
         14.03,
-        14.84
+        null
       ],
       "full_years": [
         {
@@ -16726,12 +16726,12 @@
       ],
       "latest_periods": [
         {
-          "period": "2026/03",
-          "roe": 14.84
+          "period": "2026/06",
+          "roe": null
         }
       ],
       "latest_full_year_roe": 14.03,
-      "five_period_average_roe": -11.07,
+      "five_period_average_roe": -17.55,
       "four_full_year_average_roe": -17.55
     },
     {
