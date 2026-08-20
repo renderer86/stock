@@ -126,6 +126,16 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertNotIn("growthRate", script)
         self.assertNotIn("영구성장률", script)
 
+    def test_valuation_title_shows_below_base_fair_price_ratio(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn('id="valuation-price-summary"', html)
+        self.assertIn("stock.roe >= 10", script)
+        self.assertIn("stock.fairPriceBase < stock.current_price", script)
+        self.assertIn("belowBaseFairPriceCount / roeTenStocks.length", script)
+        self.assertIn("ROE 10% 이상 종목 중 기준 적정가가 현재주가보다 낮은 종목", script)
+
     def test_selected_stock_shows_ten_year_matrix_inside_summary_hero(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         script = (ROOT / "script.js").read_text(encoding="utf-8")

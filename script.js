@@ -2815,11 +2815,12 @@ function passesRoaFilter(stock) {
   return typeof stock.roa === "number" && stock.roa >= state.minRoa;
 }
 
-function getFilteredStocks() {
-  return state.rawStocks
+function getFilteredStocks(enrichedStocks = null) {
+  const stocks = enrichedStocks || state.rawStocks.map(enrichStock);
+
+  return stocks
     .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
     .filter(passesRoaFilter)
-    .map(enrichStock)
     .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
 }
 
@@ -3358,13 +3359,24 @@ function bindPrioritySortHeaders() {
   });
 }
 
-function renderTable(stocks) {
+function renderTable(stocks, roeTenStocks) {
   const tbody = document.getElementById("roe-table-body");
   const countBadge = document.getElementById("roe-count-badge");
   const summaryBadge = document.getElementById("table-summary-badge");
+  const priceSummary = document.getElementById("valuation-price-summary");
+
+  const belowBaseFairPriceCount = roeTenStocks.filter((stock) => (
+    Number.isFinite(stock.fairPriceBase)
+    && Number.isFinite(stock.current_price)
+    && stock.fairPriceBase < stock.current_price
+  )).length;
+  const belowBaseFairPriceRatio = roeTenStocks.length
+    ? (belowBaseFairPriceCount / roeTenStocks.length) * 100
+    : null;
 
   countBadge.textContent = `${stocks.length} Stocks`;
   summaryBadge.textContent = `ROE ${state.threshold}% 이상 · ROA ${state.minRoa}% 이상${state.exemptFinancialRoa ? " (금융업 예외)" : ""}`;
+  priceSummary.textContent = `ROE 10% 이상 종목 중 기준 적정가가 현재주가보다 낮은 종목: ${belowBaseFairPriceCount.toLocaleString("ko-KR")}개 / ${roeTenStocks.length.toLocaleString("ko-KR")}개 (${formatPercent(belowBaseFairPriceRatio, 1)})`;
 
   if (!stocks.length) {
     tbody.innerHTML = `
@@ -3718,7 +3730,12 @@ function renderKellyPanel(stock) {
 }
 
 function renderDashboard() {
-  const stocks = getFilteredStocks();
+  const minimumRoe = Math.min(10, state.threshold);
+  const enrichedRoeStocks = state.rawStocks
+    .filter((stock) => typeof stock.roe === "number" && stock.roe >= minimumRoe)
+    .map(enrichStock);
+  const roeTenStocks = enrichedRoeStocks.filter((stock) => stock.roe >= 10);
+  const stocks = getFilteredStocks(enrichedRoeStocks);
   let selectedRawStock = state.rawStockByCode.get(state.selectedCode) || null;
 
   if (!state.selectedCode || !selectedRawStock) {
@@ -3731,7 +3748,7 @@ function renderDashboard() {
 
   renderPriorityCandidates(stocks);
   renderQualityCandidates(stocks);
-  renderTable(stocks);
+  renderTable(stocks, roeTenStocks);
   renderSelectedSummary(selectedStock);
   renderDurationPanel(selectedStock);
   renderFairValuePanel(selectedStock);
