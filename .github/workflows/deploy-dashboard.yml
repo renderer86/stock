@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
 
     steps:
       - name: Check out latest dashboard
@@ -70,4 +70,15 @@ jobs:
 
       - name: Deploy GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Wait before retrying GitHub Pages
+        if: ${{ steps.deployment.outcome == 'failure' }}
+        shell: bash
+        run: sleep 15
+
+      - name: Retry GitHub Pages deployment
+        if: ${{ steps.deployment.outcome == 'failure' }}
+        id: deployment_retry
         uses: actions/deploy-pages@v4
