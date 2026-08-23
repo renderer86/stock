@@ -1,6 +1,6 @@
 {
   "source": "NAVER Search API / news",
-  "crawled_at_utc": "2026-08-23T20:40:24.562771+00:00",
+  "crawled_at_utc": "2026-08-23T22:38:39.812442+00:00",
   "category_labels": {
     "semiconductor": "반도체",
     "it": "IT",
@@ -56,10 +56,10 @@
     }
   ],
   "raw_counts": {
-    "semiconductor": 40,
+    "semiconductor": 39,
     "it": 40,
     "us": 40,
-    "kospi": 40,
+    "kospi": 39,
     "kosdaq": 40,
     "korea_rates": 40,
     "korea_flow": 40,
@@ -67,73 +67,99 @@
     "battery": 40,
     "bio": 40
   },
-  "count": 363,
-  "thumbnail_count": 57,
+  "count": 345,
+  "thumbnail_count": 49,
   "items": [
     {
-      "title": "\"AI가 車 부품까지 싹쓸이\"… 中 지능형 전기차, 메모리·MLCC 품귀에 원...",
-      "description": "인공지능(AI) 열풍에 따른 글로벌 데이터센터의 폭발적인 부품 흡수로 인해 차량용 반도체뿐만 아니라... 저장성의 차량용 회로기판 제조사 관계자는 \"AI 데이터센터에 납품되는 고부가 반도체와 회로기판의 마진이...",
-      "link": "https://www.g-enews.com/view.php?ud=2026082316155770090c8c1c064d_1",
-      "naver_link": "https://www.g-enews.com/view.php?ud=2026082316155770090c8c1c064d_1",
-      "published_at": "Mon, 24 Aug 2026 05:36:00 +0900",
+      "title": "하나증권 “은행주, 우호적 매크로 환경에도 약세 지속..주간 우리금융...",
+      "description": "국고채 입찰 담합 관련 과징금 불확실성 등도 우려 요인이다. 현 은행 PBR(주가순자산비율)이 0.68배로 다시 0.7배를 하회하고 있고 금리와 환율 등 매크로지표 방향성이 은행업종에는 우호적일 수 있다는 점에서...",
+      "link": "https://kpenews.com/View.aspx?No=4196031",
+      "naver_link": "https://kpenews.com/View.aspx?No=4196031",
+      "published_at": "Mon, 24 Aug 2026 07:38:00 +0900",
+      "categories": [
+        "korea_rates"
+      ],
+      "queries": [
+        "국고채 금리 한국은행"
+      ]
+    },
+    {
+      "title": "슈퍼마이크로, 내부 조사 완료…경영진 무혐의 속 직원 해고",
+      "description": "한국 반도체 밸류체인의 규제 대응 과제 고성능 반도체 가치사슬에 속한 한국 기업들도 규제 준수 시스템을 재정비해야 하는 과제를 안았다. 삼성전자와 SK하이닉스는 고대역폭메모리(HBM)를 글로벌 서버 제조사와 빅테크...",
+      "link": "https://www.g-enews.com/view.php?ud=202608240718301610fbbec65dfb_1",
+      "naver_link": "https://www.g-enews.com/view.php?ud=202608240718301610fbbec65dfb_1",
+      "published_at": "Mon, 24 Aug 2026 07:36:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
       ],
-      "thumbnail_url": "https://nimage.g-enews.com/phpwas/restmb_allidxmake.php?idx=5&simg=20260823161739072980c8c1c064d22114611240.jpg"
+      "thumbnail_url": "https://nimage.g-enews.com/phpwas/restmb_allidxmake.php?idx=5&simg=2026082407354407635fbbec65dfb211211153121.jpg"
     },
     {
-      "title": "[기술브릿지] AI 시대, 다시 주목받는 기계설비의 가치",
-      "description": "경쟁력은 반도체와 소프트웨어만으로 확보되지 않는다. 이를 안정적으로 운용하기 위한 기계설비 기술이 뒷받침되어야 비로소 AI 산업 생태계가 완성된다. 이러한 변화는 AI 데이터센터에만 국한되지 않는다. 반도체...",
-      "link": "https://www.kmecnews.co.kr/news/articleView.html?idxno=51372",
-      "naver_link": "https://www.kmecnews.co.kr/news/articleView.html?idxno=51372",
-      "published_at": "Mon, 24 Aug 2026 05:36:00 +0900",
+      "title": "함평군, '미래경제 TF' 출범…RE100·반도체·AI 산업 육성 사멸 건다",
+      "description": "AI·반도체 분야 교수진 등 관련 분야 전문가 5명이 위원으로 위촉됐다. 이어진 첫 회의에서는 반도체 산업과 RE100(재생에너지 100% 사용)을 축으로 한 함평의...",
+      "link": "http://www.breaknews.com/1230820",
+      "naver_link": "http://www.breaknews.com/1230820",
+      "published_at": "Mon, 24 Aug 2026 07:36:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "구미시, 기업지원 기본계획 용역 중간보고회 개최",
+      "description": "이날 보고회에서는 반도체·방산·이차전지 등 3대 전략제조산업과 로봇·제조AX를 공통 전환플랫폼으로 선정했다. 또 관내 제조 중소기업을 성장성과 혁신성을 기준으로 초기·잠재·예비선도·선도기업으로 유형화해...",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404880",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404880",
+      "published_at": "Mon, 24 Aug 2026 07:36:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
       ],
-      "thumbnail_url": "https://cdn.kmecnews.co.kr/news/photo/202608/51372_41447_2422.jpg"
+      "thumbnail_url": "https://cdn.m-i.kr/news/thumbnail/202608/1404880_1192957_5011_v150.jpg"
     },
     {
-      "title": "워시의 잭슨홀 데뷔, PCE 물가, 엔비디아…랠리의 3대 관문[이번주 美 증...",
-      "description": "(인공지능) 반도체 대장주인 엔비디아가 실적을 공시한다. 28일엔 케빈 워시 연준 의장이 잭슨홀... 엔비디아·마벨 실적, 반도체주 살릴까 마지막으로 엔비디아의 실적은 지난주 반도체주 낙폭이 특히 컸던 가운데 AI주...",
-      "link": "https://www.mt.co.kr/world/2026/08/24/2026082221180458282",
-      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403529?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:35:00 +0900",
+      "title": "삼성전자, 역대 최대 환원책 내고도 시간외 급락···시장은 왜 실망했...",
+      "description": "관건은 AI 반도체 호황에서 생긴 현금을 주주에게 돌려주면서도 차세대 기술 투자 여력을 지키는 균형이다.... 업계 관계자는 \"환원에 치중해 HBM과 첨단공정 등에 대한 투자를 줄이면 AI 반도체 경쟁에서 뒤처질 수 있고...",
+      "link": "https://www.smartbizn.com/news/articleView.html?idxno=151873",
+      "naver_link": "https://www.smartbizn.com/news/articleView.html?idxno=151873",
+      "published_at": "Mon, 24 Aug 2026 07:36:00 +0900",
       "categories": [
         "semiconductor",
-        "us"
+        "kospi"
       ],
       "queries": [
         "반도체",
-        "미국 증시"
+        "코스피"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/008/2026/08/24/0005403529_001_20260824053513482.jpg?type=w800"
+      "thumbnail_url": "https://cdn.smartbizn.com/news/photo/202608/151873_257812_3452.jpg"
     },
     {
-      "title": "“경기 고려 없는 반도체 증설 압박, 막대한 손실 감내해야 할 수도”",
-      "description": "박정호 명지대 교수가 말하는 반도체·인공지능의 가까운 미래 “광주전남 반도체 공장 조기 착공은 특별법 제정이나 기존 법안 수정 없이는 사실상 어렵습니다.” 24일 방송된 조선일보 경제부 유튜브 조선일보 머니...",
-      "link": "https://www.chosun.com/economy/money/2026/08/24/BZNZTXZ3JFBLFNPC2OP6F7B4B4/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
-      "naver_link": "https://n.news.naver.com/mnews/article/023/0003994509?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:31:00 +0900",
+      "title": "[ETF 언박싱] 삼전닉스 채권혼합 ETF 5파전…ACE, 4조 RISE 추격",
+      "description": "후발주자로 참전하는 ACE는 기존 삼성·닉스 2종에 AI반도체 관련 한 종목을 추가하는 전략으로... K반도체TOP2채권혼합50 ▲키움자산운용KIWOOM삼성전자&SK하이닉스채권혼합50에 ACE 상품까지 더해져 5파전으로...",
+      "link": "https://dealsite.co.kr/articles/167592",
+      "naver_link": "https://dealsite.co.kr/articles/167592",
+      "published_at": "Mon, 24 Aug 2026 07:32:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/023/2026/08/24/0003994509_001_20260824053111381.jpg?type=w800"
+      "thumbnail_url": "https://dtd31o1ybbmk8.cloudfront.net/photos/2026/08/20/f869d9ac15e34e4e86b679d3bab06914/thumb.jpg"
     },
     {
-      "title": "말 줄인 연준, 잭슨홀서 ‘베선트 풋’엔 입 열까 [트럼프 스톡커]",
-      "description": "엔비디아의 실적은 최근 부진한 흐름을 보이는 인공지능(AI) 반도체 관련주 주가에 여전히 대형 변수다.... 급등하는 국채 금리엔 7월 PCE가 분기점...엔비디아 실적도 AI 반도체주 중대 변수 연준이 19일 공개한 지난달...",
-      "link": "https://www.sedaily.com/article/20082255?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654365?sid=104",
-      "published_at": "Mon, 24 Aug 2026 05:31:00 +0900",
+      "title": "빠른 태세 전환, 지지율 하락에 부동산 세제 개편안 뜯어고치나: 슬로우...",
+      "description": "반도체 호황으로 더 걷힐 세금을 따로 쌓아두기로 했다. 박홍근(기획예산처 장관)은 “남을 때 저장해... 성장동력 계정은 반도체와 AI 중심 3대 메가 프로젝트에 쓴다. 청년 계정은 일자리와 주거, 결혼, 출산 등에 쓴다....",
+      "link": "https://slownews.kr/165343",
+      "naver_link": "https://slownews.kr/165343",
+      "published_at": "Mon, 24 Aug 2026 07:32:00 +0900",
       "categories": [
         "semiconductor",
         "us_rates"
@@ -142,174 +168,1647 @@
         "반도체",
         "미국 국채 금리 연준"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/011/2026/08/24/0004654365_001_20260824053111357.png?type=w800"
+      "thumbnail_url": "https://slownews.kr/wp-content/uploads/2026/08/GettyImages-a10648875-1.jpg"
     },
     {
-      "title": "“목표가 2~3배 극과 극”…엇갈리는 ‘삼전닉스’ 목표가, 개미들 갈팡...",
-      "description": "인공지능(AI) 데이터센터 투자 확대에 따른 메모리 반도체 호황과 사상 최대 수준의 실적 기대감은 여전하지만 금리와 외국인 수급, 반도체주 고평가 논란 등이 겹치면서 주가의 방향성을 쉽게 예단하기 어려운...",
-      "link": "https://www.dt.co.kr/article/12079667?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/029/0003043789?sid=105",
-      "published_at": "Mon, 24 Aug 2026 05:30:00 +0900",
+      "title": "1조6천억 기술 유출도 6년4개월, 특별법은 무기징역까지 [산업스파이, 대...",
+      "description": "삼성전자의 ‘18나노 D램 공정 기술’을 중국 반도체 기업 CXMT로 유출한 전직 임원에게 법원이 선고한 형량은... 중국 국적 전직 직원은 화웨이로 이직하는 과정에서 A4용지 4000여장 분량의 반도체 공정 관련 자료를 빼돌린...",
+      "link": "https://economist.co.kr/article/view/ecn202608190065",
+      "naver_link": "https://n.news.naver.com/mnews/article/243/0000102042?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:31:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/029/2026/08/24/0003043789_001_20260824053112465.jpg?type=w800"
+      "thumbnail_url": "https://imgnews.pstatic.net/image/243/2026/08/24/0000102042_001_20260824073106782.jpg?type=w800"
     },
     {
-      "title": "알테오젠, 대전에 2532억 '통 큰 투자'…바이오산업 판 키운다",
-      "description": "■ 'K-바이오 대표주자' 알테오젠, 대전에 글로벌 생산기지 2008년 설립된 알테오젠은 기존 바이오의약품의 성능을 개선한 차세대 바이오베터 등을 연구·개발하는 바이오기업으로, 코스닥 시가총액 상위권 기업으로...",
-      "link": "https://www.tournews21.com/news/articleView.html?idxno=141605",
-      "naver_link": "https://www.tournews21.com/news/articleView.html?idxno=141605",
-      "published_at": "Mon, 24 Aug 2026 05:26:00 +0900",
+      "title": "8월 수출 56% 급증…반도체 비중 47.2% '역대최고'",
+      "description": "기록을 끌어올린 건 반도체다. 이달 1~20일 반도체 수출은 260억3000만달러로 1년 전보다 198.8% 급증했다. 전체 수출에서 차지하는 비중도 47.2%로 지난해 같은 기간보다 22.5%포인트 높아졌다. 수출액과 비중 모두 1~20일...",
+      "link": "https://www.newswhoplus.com/news/articleView.html?idxno=67674",
+      "naver_link": "https://www.newswhoplus.com/news/articleView.html?idxno=67674",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://cdn.newswhoplus.com/news/thumbnail/202608/67674_104652_5055_v150.jpg"
+    },
+    {
+      "title": "[스타트 경제] 당정, 비거주 1주택자 '실거주 인정 범위' 확대...내용은...",
+      "description": "지금 KDI에서 경제성장률 전망치 3% 이상 올리면서 특히 반도체를 중심으로 한 성장 같은 것들이 굉장히 눈에 띄고 있다고 보시면 될 것 같고요. 물가 지수 역시 안정된 상황은 아니라서 2.6% 정도 되다 보니까, 근원물가지수...",
+      "link": "https://www.ytn.co.kr/_ln/0102_202608240730412376",
+      "naver_link": "https://n.news.naver.com/mnews/article/052/0002397144?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/052/2026/08/24/202608240730412376_t_20260824073416602.jpg?type=w800"
+    },
+    {
+      "title": "반도체 호황發 세수 '미래기금' 편성...교육교부금 연동 55년 만에 폐지",
+      "description": "반도체 호황으로 늘어난 세수를 기존처럼 지방과 교육재정에 자동 배분하는 대신 별도 기금에 쌓아 청년과... 반도체 호황으로 세수가 급증하더라도 증가분이 지금과 같은 비율로 교육·지방재정에 배분되지 않는...",
+      "link": "https://www.newswhoplus.com/news/articleView.html?idxno=67675",
+      "naver_link": "https://www.newswhoplus.com/news/articleView.html?idxno=67675",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://cdn.newswhoplus.com/news/thumbnail/202608/67675_104653_3352_v150.jpg"
+    },
+    {
+      "title": "\"韓 반도체 전략 다시 설계할 기회...지금이 클린칩 골든타임\"",
+      "description": "\"한국이 반도체·인공지능(AI)·데이터센터 인프라를 어디에 두고 어떻게 전력을 공급할지 장기 결정을... 여기서 클린칩은 재생에너지 등 저탄소 전력으로 생산한 반도체를 뜻한다. 베하레스 박사는 미국 워싱턴DC...",
+      "link": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=694807",
+      "naver_link": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=694807",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://cdn.digitaltoday.co.kr/news/photo/202608/694807_642683_2714.png"
+    },
+    {
+      "title": "경기도, 공인중개사무소 합동점검 불법 중개행위 69건 적발",
+      "description": "한편 경기도와 용인시는 지난 5~6월 부동산 거래 과열 현상이 나타난 용인 반도체클러스터 개발지역을 대상으로 합동점검을 실시해 무등록 중개행위 의심 2건과 이중등록 의심 1건 등 3건을 수사 의뢰했다고 밝혔다....",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404848",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404848",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://cdn.m-i.kr/news/thumbnail/202608/1404848_1192917_4517_v150.jpg"
+    },
+    {
+      "title": "삼성전자 DX 8000억 적자, 누구 책임?…동행노조 \"다음은 한남\"",
+      "description": "갈등의 중심에는 반도체(DS)와 DX부문의 성과보상 격차가 있다. 동행노조는 DX 직원 1인당 자사주 1000주... DX가 창출한 현금이 반도체 장기 투자와 삼성전자의 전사 경쟁력 강화에 쓰인 만큼 과거 기여도 역시 현재 보상에...",
+      "link": "https://www.newswhoplus.com/news/articleView.html?idxno=67677",
+      "naver_link": "https://www.newswhoplus.com/news/articleView.html?idxno=67677",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "블룸버그 \"엔비디아, AI서버가격 15% 인상 예고... 고객사에 통보\"",
+      "description": "이 같은 가격 조정은 메모리 반도체 품귀 현상에 따른 것이다. 엔비디아가 판매하는 가속기 프로세서는 AI 소프트웨어 구동에 꼭 필요한 심장과도 같은 존재이며, 이 프로세서가 제 성능을 내기 위해서는 메모리 반도체...",
+      "link": "https://www.getnews.co.kr/news/articleView.html?idxno=878615",
+      "naver_link": "https://www.getnews.co.kr/news/articleView.html?idxno=878615",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[넥스트-샷] 국채 불타도 3대 지수 깜짝 반등···유가 6일 연속 오릅니...",
+      "description": "핵심 반도체 소부장 위주의 핀포인트 대응이 유효할 것으로 전망됩니다. [넥스트-픽: 눈여겨볼 섹터]... 차세대 AI 칩용 HBM 패키징 및 후공정 검사 장비를 독점 공급하는 국내 핵심 반도체 소부장 기업으로의 저가...",
+      "link": "https://www.womaneconomy.co.kr/news/articleView.html?idxno=257684",
+      "naver_link": "https://www.womaneconomy.co.kr/news/articleView.html?idxno=257684",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us_rates"
+      ],
+      "queries": [
+        "반도체",
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "LB인베스트, 성과보수가 관리보수 넘었다…임원 평균 보수 4억",
+      "description": "반기 기준으로는 코스닥 시장에 상장한 2023년 이후 처음이다. 결성 11년차를 맞아 청산 단계에 진입한... 지난해 12월 공모가 5만5000원에 코스닥 시장에 상장한 직후 시가총액이 1조3576억원까지 오르며 최초 투자...",
+      "link": "https://www.bloter.net/news/articleView.html?idxno=671542",
+      "naver_link": "https://n.news.naver.com/mnews/article/293/0000089434?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:30:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/293/2026/08/24/0000089434_001_20260824073012026.png?type=w800"
+    },
+    {
+      "title": "[마켓 프리뷰] 반도체 랠리에 코스피 '방긋'…대척점에 선 코스닥",
+      "description": "- 코스피, 전장대비 0.88%↑…6912.95 장 마감 - 삼성전자·SK하이닉스 등 반도체주 관련 종목 강세 - 달러·원, 주간거래 6.1원 하락…1386.5원 장 마감 - 삼성전자 3.87%·SK하이닉스 2.31% 상승 마감 - 반도체 대형주 강세에 시장...",
+      "link": "https://biz.sbs.co.kr/article_hub/20000330259?division=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/374/0000528914?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:29:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "반도체",
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/374/2026/08/24/0000528914_001_20260824072906755.jpg?type=w800"
+    },
+    {
+      "title": "美연준 매파 카시카리 \"국채시장 정상 작동 … 금리 상승에도 문제없어...",
+      "description": "뉴데일리 김진희 기자 = 최근 미국 장기 국채금리 급등에도 불구하고 미국 연방준비제도(Fed, 연준) 내 대표적 매파 인사 닐 카시카리 미니애폴리스 연방준비은행(연은) 총재가 국채시장 자체에는 이상 징후가 없다고...",
+      "link": "https://www.newdaily.co.kr/site/data/html/2026/08/24/2026082400016.html",
+      "naver_link": "https://www.newdaily.co.kr/site/data/html/2026/08/24/2026082400016.html",
+      "published_at": "Mon, 24 Aug 2026 07:28:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "카익투벤처스, ‘밀착 밸류업’ 결실…90억 투자한 팹리스에 엔비디아·...",
+      "description": "전담 실무조직 ‘카익투어벤저스’ 가동 CFO·특허·기술검증 지원하며 글로벌 SI 유치 성과 반도체·AI... 24일 업계에 따르면 카익투벤처스는 출범 초기부터 인공지능(AI) 인프라와 반도체 등 국가 전략기술 분야에...",
+      "link": "https://www.mk.co.kr/article/12134328",
+      "naver_link": "https://n.news.naver.com/mnews/article/009/0005724683?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:27:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "“美정부 개입에 맞서는 건 위험…AI비중 줄여 비트코인·은 투자”",
+      "description": "베테랑 거시경제 투자자 조르디 비써가 비트코인(BTC) 투자자들이 미국 국채 금리의 방향을 예측할 때... 장기 국채 바이백(buyback·조기 환매) 한도를 두 배로 확대하기로 한 결정에 대해 비써는 ”그는 연준을 압박하고...",
+      "link": "https://www.edaily.co.kr/News/Read?newsId=01853206645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356720?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:24:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "[서학개미 브리핑] 이번달 美주식 순매수 규모 감소…SOXL 순매수 1위",
+      "description": "특히 필라델피아 반도체지수가 이틀 동안 7% 넘게 하락했을 때 매수세가 다시 유입되면서 매수 우위로... 메모리 반도체 개별종목들로 매수세가 크게 유입됐습니다. 샌디스크, 마이크론, 그리고 SK하이닉스 ADR까지...",
+      "link": "https://biz.sbs.co.kr/article_hub/20000330258?division=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/374/0000528913?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:22:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[마켓 브리핑] 국채금리에 증시 '좌우'…'베센트 풋'에도 금리 재상승",
+      "description": "특히 반도체 하드웨어 관련주들은 높은 밸류에이션과 AI 자금 조달 부담에 대한 경계심에 약세를 보이면서... 반도체주들에도 긍정적인 소식이 나왔습니다. 지난달 반도체 대폭락의 원인 중 하나였던 시추에이셔널...",
+      "link": "https://biz.sbs.co.kr/article_hub/20000330257?division=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/374/0000528912?sid=104",
+      "published_at": "Mon, 24 Aug 2026 07:22:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[ETF 매치업] 박스 등락장엔 코스닥 커버드콜…키움 11% vs KB 14%",
+      "description": "확대되고 코스닥 지수가 박스권에 갇히면서 매월 안정적인 현금흐름을 제공하는 커버드콜 ETF가 투자 대안으로 부상하고 있다. 키움투자자산운용이 국내 최초로 코스닥 커버드콜 ETF를 선보인 데 이어...",
+      "link": "https://dealsite.co.kr/articles/167594",
+      "naver_link": "https://dealsite.co.kr/articles/167594",
+      "published_at": "Mon, 24 Aug 2026 07:22:00 +0900",
       "categories": [
         "kosdaq"
       ],
       "queries": [
         "코스닥"
       ],
-      "thumbnail_url": "https://cdn.tournews21.com/news/photo/202608/141605_266289_4130.jpg"
+      "thumbnail_url": "https://dtd31o1ybbmk8.cloudfront.net/photos/2026/08/21/c39013ebecfc4f9f8b87311a9dfe2169/thumb.jpg"
     },
     {
-      "title": "번지는 ‘N% 성과급’ 청구서…夏鬪 확산",
-      "description": "반도체 업계의 파격적인 보상체계가 불러온 성과급 논란에다, 개정 노동조합법(노란봉투법) 시행... 삼성전자 DX(디바이스경험) 부문 노조는 DS(반도체) 부문과의 보상 격차를 문제 삼아 1인당 자사주 1000주 지급 등을...",
-      "link": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608231052304050952",
-      "naver_link": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608231052304050952",
-      "published_at": "Mon, 24 Aug 2026 05:22:00 +0900",
+      "title": "[리스트] MVP 상위 주식 20선...프로이천, 피에스케이 등 - 24일",
+      "description": "제이투케이바이오, 화신정공, GST, 대덕전자, 샘씨엔에스, 티디에스팜 등이 포함됐다. 한편... 2% 15 제이투케이바이오 8,750원 ▼1.7% 83점 69점 83점 96점 8.8 1.4 15.9% 16 화신정공 4,560원 ▲0.6% 83점...",
+      "link": "https://www.itooza.com/common/iview.php?no=2026082407154202776",
+      "naver_link": "https://www.itooza.com/common/iview.php?no=2026082407154202776",
+      "published_at": "Mon, 24 Aug 2026 07:22:00 +0900",
+      "categories": [
+        "bio"
+      ],
+      "queries": [
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "[단독] LNG '탈탄소 계획'‥수소 섞어도 감축 7.9% 불과",
+      "description": "용인 반도체클러스터 LNG 발전 사업도 2032년 수소 50% 혼소를 목표로 했지만, 기술과 공급 여건에 따라 혼소율과 감축량이 달라질 수 있다고 명시했습니다. [이지언/기후넥서스 선임연구원] \"(수소 혼소는) 소형 터빈...",
+      "link": "https://imnews.imbc.com/replay/2026/nwtoday/article/6846773_37012.html",
+      "naver_link": "https://n.news.naver.com/mnews/article/214/0001519591?sid=102",
+      "published_at": "Mon, 24 Aug 2026 07:20:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
-      ],
-      "thumbnail_url": "https://image.dnews.co.kr/photo/photo/2026/08/23/202608231052304050952-2-685637.jpg"
+      ]
     },
     {
-      "title": "반도체發 보상 인플레…산업계 ‘줄파업’ 불씨 초래",
-      "description": "확산 반도체 내부도 부문간 격차 불만 하반기 제조업 생산 차질 비상등 [대한경제=강주현 기자] 산업계 전체를 뒤흔드는 올해 하반기 노사 갈등의 불씨는 ‘영업이익 N% 성과급’이다. 삼성전자 DS(반도체) 부문과...",
-      "link": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608231428224570963",
-      "naver_link": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608231428224570963",
-      "published_at": "Mon, 24 Aug 2026 05:22:00 +0900",
+      "title": "제약·바이오 상반기 투자처 봤더니…신약·디지털헬스 집중 베팅",
+      "description": "동구바이오제약은 지난 6월 디앤디파마텍 주식 11만3104주(지분율 0.3%)를 106억2200만원에 사들였다. 동구바이오제약은 2018년 디앤디파마텍에 약 31억원을 초기 투자한 뒤 지난해 상반기까지 전량 엑시트(투자금 회수)...",
+      "link": "https://news.bizwatch.co.kr/article/healthcare/2026/08/21/0013",
+      "naver_link": "https://n.news.naver.com/mnews/article/648/0000050067?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:20:00 +0900",
+      "categories": [
+        "bio"
+      ],
+      "queries": [
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "SK하이닉스 성과급 60% 자사주 지급안, 오늘부터 찬반투표",
+      "description": "반도체 업황 호조로 회사 실적과 성과급 규모가 함께 커지면서 보상 방식까지 주식으로 확대하는 방안이 새 쟁점으로 떠오른 셈이다. 관건은 직원들이 주식 보상 비중 60%를 어느 정도 받아들이느냐다. 일부 조합원...",
+      "link": "https://www.etoday.co.kr/news/view/2617197",
+      "naver_link": "https://www.etoday.co.kr/news/view/2617197",
+      "published_at": "Mon, 24 Aug 2026 07:18:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
-      ],
-      "thumbnail_url": "https://image.dnews.co.kr/photo/photo/2026/08/23/202608231428224570963-2-685690.png"
+      ]
     },
     {
-      "title": "[사설] 100조 미래대응기금, ‘미래’ 명분에 재정원칙 훼손 없어야",
-      "description": "반도체 호황에 따른 세수 초과분을 별도 기금으로 적립하고, 55년간 유지된 교육교부금의 내국세 20.79... 반도체 추가세수와 교육교부금 개편을 하나의 패키지 법안으로 묶은 기금 구성 과정도 석연치 않다. 교육교부금의...",
-      "link": "https://www.seoul.co.kr/news/editOpinion/editorial/2026/08/24/20260824027004?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672801?sid=110",
-      "published_at": "Mon, 24 Aug 2026 05:15:00 +0900",
+      "title": "비트코인 쫓다 자본금 '털썩' 부채비율 9435% '비트맥스'",
+      "description": "코스닥 시장에서 부채비율이 가장 높은 상장사는 소프트웨어 전문기업 비트맥스(377030)로 나타났다.... 코스닥 상장사 가운데 가장 높은 수준이다. 부채비율이 이처럼 급등한 이유는 부채 증가보다 자본 규모가...",
+      "link": "https://www.edaily.co.kr/News/Read?newsId=01826966645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356718?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:17:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/018/2026/08/24/0006356718_001_20260824071707382.jpg?type=w800"
+    },
+    {
+      "title": "[굿모닝퓨처] 우리 국토를 넓게 쓰자",
+      "description": "이재명 정부는 그동안 발전이 지체되었던 호남 지역에 800조 원 규모의 반도체 생산 거점 조성 계획을 발표하는 등 역대 어느 정부보다 강력한 국토 균형발전 의지를 보이고 있습니다. 그러나 균형발전 정책은 그 성과가...",
+      "link": "https://www.goodmorningcc.com/news/articleView.html?idxno=451044",
+      "naver_link": "https://www.goodmorningcc.com/news/articleView.html?idxno=451044",
+      "published_at": "Mon, 24 Aug 2026 07:16:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
+      ]
+    },
+    {
+      "title": "비트코인, 7만7000달러선 거래…일주일 새 23.7%↑",
+      "description": "투자 플랫폼 파사이드인베스터에 따르면 미국 증시에 상장된 비트코인 ETF는 지난 17~21일(현지시간) 5거래일 연속 자금이 순유입됐다. 순유입 규모만 총 19억1780만달러다. 이때 이더리움 ETF에도 총...",
+      "link": "http://www.newsdream.kr/news/articleView.html?idxno=116697",
+      "naver_link": "http://www.newsdream.kr/news/articleView.html?idxno=116697",
+      "published_at": "Mon, 24 Aug 2026 07:16:00 +0900",
+      "categories": [
+        "us"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/081/2026/08/24/0003672801_001_20260824051512445.jpg?type=w800"
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.newsdream.kr/news/thumbnail/202608/116697_89444_1323_v150.jpg"
+    },
+    {
+      "title": "“우리 없으면 못살잖아요”…엔비디아, AI서버 제품가 15%인상 예고",
+      "description": "이번에 가격을 인상한 것은 전례 없는 메모리칩 반도체 가격 급등에 엔비디아도 원가 부담이 커지며... 고성능을 위해서는 메모리 반도체인 D램과의 결합이 필수적이다. 삼성전자와 SK하이닉스, 마이크론이 전 세계...",
+      "link": "https://www.mk.co.kr/article/12134324",
+      "naver_link": "https://n.news.naver.com/mnews/article/009/0005724681?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:12:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "1조 갤럭시코퍼 상장 연기…지드래곤 빠지면 -80%",
+      "description": "당초 계획대로 코스닥 시장에 안정적으로 입성하기 위해서는 매출의 약 80%를 전담하는 지드래곤의 잔류가... 입증해야 코스닥에 입성할 수 있기 때문이다. 갤럭시코너는 상장을 위해 소속 아티스트 지드래곤의 존속을...",
+      "link": "https://dealsite.co.kr/articles/167606",
+      "naver_link": "https://dealsite.co.kr/articles/167606",
+      "published_at": "Mon, 24 Aug 2026 07:12:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ],
+      "thumbnail_url": "https://dtd31o1ybbmk8.cloudfront.net/photos/2026/08/21/2171701f77f04db3b953e3c6f087ecdc/thumb.jpg"
+    },
+    {
+      "title": "[더벨][상업화 이룬 TPD, K-바이오 밸류 점검] 벤처부터 대기업까지…저...",
+      "description": "코스닥 상장사는 지난해 2월 입성한 오름테라퓨틱 한 곳이다. 미국에 본사를 둔 파인트리테라퓨틱스가 2027년 상반기를 목표로 기술성 평가를 준비하고 프레이저테라퓨틱스와 핀테라퓨틱스도 코스닥 입성을...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608182047463760103764",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608182047463760103764",
+      "published_at": "Mon, 24 Aug 2026 07:12:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "9월 금리 동결 59.0%, 인상도 41.0%",
+      "description": "미국 연방준비제도(Fed·연준)의 9월 기준금리 동결 가능성이 59.0%로 집계됐다. 25bp 인상 가능성도 41.0%로... 금리 기대 변화는 달러 유동성, 미국 국채 금리, 기술주 선호와 함께 투자심리에 영향을 줄 수 있지만 이번...",
+      "link": "https://www.tokenpost.kr/news/cryptocurrency/396168",
+      "naver_link": "https://www.tokenpost.kr/news/cryptocurrency/396168",
+      "published_at": "Mon, 24 Aug 2026 07:12:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "[동북아 정세 브리핑] 中 J-16 첫 아프리카 전개…북한 미사일·대만 로...",
+      "description": "AI와 생명공학을 결합한 이번 연구는 중국의 전략기술 경쟁이 반도체·로봇·우주를 넘어 농업과... 미중 기술갈등은 그동안 반도체와 AI, 통신장비, 희토류를 중심으로 전개됐지만 최근에는 배터리와 지식재산권으로...",
+      "link": "http://kor.theasian.asia/archives/413722",
+      "naver_link": "http://kor.theasian.asia/archives/413722",
+      "published_at": "Mon, 24 Aug 2026 07:10:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[거버넌스워치] 케이씨그룹 활동 반경 넓히는 딸과 사위…분가 구도는?",
+      "description": "반도체·디스플레이 장비·소재 중견그룹 케이씨(KC)의 창업주는 주식 대물림만큼이나 경영승계 작업을 빠른 속도로 진행했다. 이제 회장 자리만 물려줄 일만 남았다. 비록 후계구도와는 무관하지만 딸과 사위가...",
+      "link": "https://news.bizwatch.co.kr/article/governance/2026/08/21/0006",
+      "naver_link": "https://n.news.naver.com/mnews/article/648/0000050066?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:10:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[증시전략] 뉴욕증시, 美국채금리 급등에도 상승…잭슨홀·PCE 대기",
+      "description": "하지만 반도체주는 상승세를 타지 못했어요? - 뉴욕증시 일제히 상승 마감…최근 하락에 저가 매수세... 8…20개월래 최대 상승 - 필라반도체지수 0.51%↓…마이크론·엔비디아 등 약세 - 오랜 만에 달리는 비트코인...",
+      "link": "https://biz.sbs.co.kr/article_hub/20000330248?division=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/374/0000528911?sid=104",
+      "published_at": "Mon, 24 Aug 2026 07:08:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "반도체",
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/374/2026/08/24/0000528911_001_20260824070806597.jpg?type=w800"
+    },
+    {
+      "title": "美 국채금리 쇼크에도 연준 매파 \"시장 정상, 인플레 잡아야\"",
+      "description": "미국 국채 금리가 2007년 이후 최고 수준으로 치솟았지만 연방준비제도(연준) 내 대표적인 매파인 닐 카시카리 미니애폴리스 연방은행 총재는 채권시장이 정상적으로 작동하고 있다고 진단했다. 국채 금리 급등을...",
+      "link": "http://www.fnnews.com/news/202608240641239929",
+      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565218?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:07:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "엔비디아·잭슨홀에 달린 코스피…7000피 안착 시험대[주간 증시 전망]",
+      "description": "이번 실적 발표를 통해 고대역폭메모리(HBM)와 인공지능(AI) 인프라 수요의 지속성이 확인되면 국내 반도체... 이경민 대신증권 연구원은 “엔비디아의 호실적과 긍정적인 가이던스는 AI와 반도체 전반 투자심리 개선...",
+      "link": "https://www.sedaily.com/article/20082243?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654400?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:06:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi",
+        "kosdaq",
+        "us_rates"
+      ],
+      "queries": [
+        "반도체",
+        "코스피",
+        "코스닥",
+        "미국 국채 금리 연준"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/011/2026/08/24/0004654400_001_20260824070609335.jpg?type=w800"
+    },
+    {
+      "title": "카시카리 “미 국채시장 정상 작동, 유동성 있다”",
+      "description": "비트코인(BTC)과 이더리움(ETH) 같은 위험자산은 달러와 미국 국채금리, 유동성 기대 변화에 함께 반응한다. 본지는 앞서 연준 의사록의 매파 해석이 달러와 금리 흐름을 함께 보게 만들었다고 전했다. 7월 FOMC 이후 연준...",
+      "link": "https://www.tokenpost.kr/news/cryptocurrency/396166",
+      "naver_link": "https://www.tokenpost.kr/news/cryptocurrency/396166",
+      "published_at": "Mon, 24 Aug 2026 07:06:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "교부금만 손볼 일 아니다…'지방교육재정'의 큰 틀 다시 짜야",
+      "description": "반도체 호황 등으로 급증한 내국세가 일률적으로 초·중등 교육재정에 반영되는 구조를 바로잡고, 이를 통해 확보된 재원을 미래 인재 양성과 대학·청년 지원 등에 쓰겠다는 취지다. 반면 교육계의 목소리는 다르다. 학생...",
+      "link": "https://www.newsverse.kr/news/articleView.html?idxno=11259",
+      "naver_link": "https://www.newsverse.kr/news/articleView.html?idxno=11259",
+      "published_at": "Mon, 24 Aug 2026 07:04:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[오늘의 주요일정·24일] 윤석열·김건희 등 58명 기소한 종합특검 최종...",
+      "description": "호남권 반도체 클러스터 범시민추진위원회 출범식(광주상공회의소) ▲ 전재수 부산시장 10:00 2026년... 호남권 반도체 클러스터 범시민추진위원회 출범식(14:30 광주상공회의소 7층 대회의실) [경남]...",
+      "link": "https://www.safetimes.co.kr/news/articleView.html?idxno=245112",
+      "naver_link": "https://www.safetimes.co.kr/news/articleView.html?idxno=245112",
+      "published_at": "Mon, 24 Aug 2026 07:04:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[초점] \"잘나갈 때 미래에 베팅\"…산업계, AI·SW로 '다음 성장판' 선점...",
+      "description": "AI·반도체·로봇·데이터센터와 같은 산업은 초기 투자비가 크고 사업이 본격적인 수익으로 이어지기까지 상당한 시간이 필요하기 때문이다. 전문가들은 기업의 장기 투자를 뒷받침하기 위해서는 무엇보다 정책의...",
+      "link": "http://www.newsian.co.kr/news/articleView.html?idxno=94103",
+      "naver_link": "http://www.newsian.co.kr/news/articleView.html?idxno=94103",
+      "published_at": "Mon, 24 Aug 2026 07:04:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[더벨][Company Watch] 삼성·SK, 반도체 호황 탓 늘어난 원재료비 '반기...",
+      "description": "삼성전자와 SK하이닉스가 올해 상반기 반도체 원재료 구입에만 10조원에 달하는 자금을 투입했다. 메모리... 챗GPT를 활용한 이미지 20일 금융감독원 전자공시시스템에 따르면 삼성전자 반도체(DS) 부문의 올해 상반기...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201256590840109580",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201256590840109580",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[Invest]발전사업 힘 뺐던 현대건설, 전담팀 꾸려 다시 키운다",
+      "description": "AI 데이터센터와 반도체 공장을 중심으로 전력 수요가 빠르게 늘고 있다. 원전과 재생에너지만으로 단기간에 늘어난 수요를 충당하기 어려운 만큼, 상대적으로 사업 기간이 짧은 가스발전 수요도 커지고 있다.한 자문업계...",
+      "link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180116.html",
+      "naver_link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180116.html",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "“TSMC, 초미세 파운드리 시대 열었다” 1.6나노 공정 기술 개발 성공…...",
+      "description": "글로벌 파운드리(반도체 위탁 생산) 시장 1위 대만 TSMC가 선단 공정인 1.6nm(1nm는 10억분의 1m) 기술 개발에... 이렇듯 초미세 공정인 1.6나노 기술을 확보한 TSMC는 첨단 반도체를 양산하고자 하는 주요 고객사의...",
+      "link": "https://www.ceoscoredaily.com/page/view/2026082113525349612",
+      "naver_link": "https://www.ceoscoredaily.com/page/view/2026082113525349612",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[Invest]'로또 사듯 일단 넣었어요'…하이닉스 재무 경력 채용에 쏟아진...",
+      "description": "\"국내 최고 반도체 기업에서 일할 수 있는 기회인데 일단 넣어봐야죠.\"(한 증권사 관계자)\"(지원자 수가)백명... SK하이닉스가 자금운용 인력을 확충하는 배경에는 반도체 호황으로 불어난 현금성 자산도 자리하고 있다는...",
+      "link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180115.html",
+      "naver_link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180115.html",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[더벨][thebell interview] 프라임마스, 마이크론 효과 '미국 DOE 손잡는다...",
+      "description": "칩렛은 큰 반도체(대형 칩)를 기능별로 여러 작은 조각(소형 칩)으로 나눈 개념이다. 허블릿 구조에서는 특정 칩렛만 변경해 사용자가 원하는 기능을 구현할 수 있다. 현시점에서 주요 응용처가 CXL인 셈이다. *자사...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608211010512160104289",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608211010512160104289",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[Invest]\"완벽한 PB는 없다\"…개인기 대신 '팀 PB'로 변동성 장세 대응",
+      "description": "상반기 상승장에서는 삼성전자와 SK하이닉스 등 반도체 대형주를 중심으로 수익을 내기가 상대적으로... 심 상무에 따르면 상반기에는 상당수 운용사와 자문사의 포트폴리오가 반도체 중심으로 구성되면서 시장 상승의...",
+      "link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180114.html",
+      "naver_link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180114.html",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[더벨]삼성전자, 최대 110조 환원 '자사주 대신 현금 활용'",
+      "description": "삼성전자는 지난해에 이어 올해까지 계속되는 반도체 호황에 따른 역대급 실적을 경신하면서 주주환원 규모를 확장하게 됐다. 특히 FCF가 크게 늘어난 영향이 컸다. 삼성전자는 2024~2025년 매년 9조8000억원씩 총...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608211728190680105059",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608211728190680105059",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "[Invest]홍콩 넘어 본토 향하는 中 IPO 대어들…돈쏠림 규모에 놀란 韓 ...",
+      "description": "중국 반도체 기업들과 삼성전자, SK하이닉스 등 글로벌 선도 기업들과의 기술 격차는 여전히 벌어져 있는... 다만 막대한 자금력을 바탕으로 공급을 늘려 국내 기업들의 수익성에 영향을 미칠 가능성, AI반도체 분야...",
+      "link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180147.html",
+      "naver_link": "https://www.investchosun.com/site/data/html_dir/2026/08/21/2026082180147.html",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "코스피"
+      ],
+      "thumbnail_url": "https://img.investchosun.com/site/data/img_dir/2026/08/21/2026082180141_0.png"
+    },
+    {
+      "title": "[현장] 반도체 물 확보 전쟁, 농업용수 괜찮나 ① 나주호를 가다",
+      "description": "지난 6월 말 서남권 반도체 클러스터가 발표된 이후 농업용수가 뜨거운 쟁점으로 급부상했다. 김성환 기후환경에너지부 장관은 당시 청와대에서 열린 발표회에서 반도체 생산공장(팹)에 필요한 안정적인 물·전기 공급을...",
+      "link": "https://www.aflnews.co.kr/news/articleView.html?idxno=326729",
+      "naver_link": "https://www.aflnews.co.kr/news/articleView.html?idxno=326729",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "비트코인(BTC), S&P 500 대비 약세 흐름 종료...美 증시와 '엇박자' 시작",
+      "description": "블록체인 분석업체 글래스노드(Glassnode)는 비트코인이 미국 증시를 크게 앞서기 시작한 점에 주목했다. 최근 3개월 동안 흐름은 정반대였다. 비트코인이 S&P 500을 웃돈 거래일은 전체의 약 3분의 1에 그쳤다. 나머지...",
+      "link": "http://coinreaders.com/254362",
+      "naver_link": "http://coinreaders.com/254362",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "금리부터 잡혀야 간다…PCE·잭슨홀에 달린 3분기 코스피",
+      "description": "코스피 추가 상승이 걸린 최대 변수는 금리다. 미국 장기국채 금리가 높은 수준을 이어갈 경우 국내 증시의... 미국 30년물 국채금리가 5%를 웃돌면서 위험자산에 대한 투자심리가 위축됐고, 코스피 역시 7000선 돌파를...",
+      "link": "https://www.ebn.co.kr/news/articleView.html?idxno=1721331",
+      "naver_link": "https://www.ebn.co.kr/news/articleView.html?idxno=1721331",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kospi",
+        "us_rates"
+      ],
+      "queries": [
+        "코스피",
+        "미국 국채 금리 연준"
+      ],
+      "thumbnail_url": "https://cdn.ebn.co.kr/news/thumbnail/202608/1721331_752923_049_v150.jpg"
+    },
+    {
+      "title": "[더벨]인제니아테라퓨틱스, 경영권 방어 장치 차등임기·초과반수",
+      "description": "인제니아테라퓨틱스는 이달 18일 코스닥에 상장했다. 미국 델라웨어에 설립된 법인으로 미국 내 원주를 기초로 발행한 증권예탁증권(KDR) 형태로 국내 증시에 입성했다. 창업자 한상열 대표의 지분은 상장 전 19.24...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608210448379720106941",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608210448379720106941",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[더벨][하우스 분석 | IBK투자증권] SME솔루션 수익성 '점프'…IPO 재건 ...",
+      "description": "들어 코스닥 직상장으로 보폭을 넓히고 있다. 올해에만 케이앤에스아이앤씨(KNS아이앤씨)... 공동주관을 맡은 에이치엘지노믹스가 7월 코스닥에 입성한 데 이어 단독주관한 KNS아이앤씨도 지난 13일 상장을 마쳤다....",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201524474520105793",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201524474520105793",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "[더벨][마더스제약 IPO] 이달 말 코스닥 예심 청구…상반기 실적 반영",
+      "description": "전문의약품 기업 마더스제약이 코스닥 상장예비심사 청구를 앞두고 있다. 상반기 실적을 반영해 상장에... 20일 투자은행(IB) 업계에 따르면 마더스제약은 이달 말 한국거래소 코스닥시장본부에 상장예비심사를...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608191352123040103934",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608191352123040103934",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[더벨]크레센도, 자회사로 VC 시장 공식 진입",
+      "description": "HPSP는 2022년 코스닥시장에 입성했다. 이후 크레센도는 블록딜을 통해 일부 지분을 매각하며 대규모 투자금을 회수했다. 기술기업을 발굴해 성장자본을 공급하고 상장까지 연결한 사례로 꼽힌다.",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201535412040102081",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201535412040102081",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[더벨][비츠로넥스텍 로드맵 재편] 민관 협력 기반 발사체 사업 순항…...",
+      "description": "코스닥 상장사 비츠로넥스텍의 우주사업이 새로운 국면에 접어들었다. 기존 누리호 고도화 사업의 종료를 앞둔 상황에서 후속 누리호 발사 물량을 선제적으로 확보하면서 생산 기반을 이어갈 수 있게 됐다....",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608191605517760103632",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608191605517760103632",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[더벨]'상폐 결정' 파라택시스코리아, 합병 구상 '시험대'",
+      "description": "파라택시스코리아의 코스닥시장 퇴출이 사실상 확정되면서 파라택시스이더리움과 추진 중인 합병 조건의... ◇법차손 반복, 이의신청에도 퇴출 결정 20일 한국거래소에 따르면 코스닥시장위원회는...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608192249463600102786",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608192249463600102786",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "[더벨]삼진제약, 아리바이오 '우려에서 기대로' 재무 기여도 확대",
+      "description": "병기일은 12월4일, 신주 상장은 12월30일로 예정돼 있어 성사될 경우 비상장 아리바이오 지분은 코스닥 상장법인 주식으로 전환된다. 삼진제약이 보유한 비상장 지분이 상장주식으로 바뀌면서 투자자산의 유동성도...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201709318520101333",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201709318520101333",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "[더벨][코스닥 병목에 갇힌 VC] 공모가 아래서 나뉜 VC 성적…투자 시점...",
+      "description": "코스닥 상장 뒤 주가가 공모가를 밑돌았다고 모든 벤처캐피탈(VC)의 투자가 손실로 돌아선 것은 아니다.... 코스닥 약세가 수익권 펀드에는 회수배수 축소로 작용하고 손실권 펀드에는 원금 방어 부담으로 이어지는...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201001032240101530",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201001032240101530",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "[더벨][깐깐해진 잣대, 디지털헬스 IPO 점검] 같은 기술특례여도 다른 심...",
+      "description": "아직 매출이나 이익이 충분하지 않아도 기술력과 성장성을 인정받으면 코스닥 입성이 가능하다. 하지만... 한국거래소가 2025년 12월 마련한 '코스닥시장 기술특례상장 질적심사 가이드라인(바이오 산업)'도 이 같은 특성을...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201449561080105167",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608201449561080105167",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[더벨][상업화 이룬 TPD, K-바이오 밸류 점검] ADC 잇는 넥스트, 첫 약물...",
+      "description": "◇글로벌 기술이전·공동개발 선급금 1조 육박…코스닥 입성은 한 곳 지난해 TPD 분야 기술이전 및 공동연구, 인수합병 등을 포함한 계약 총액은 400억달러를 넘어섰다. 전년 대비 24% 늘어난 수준이다. 한화 기준...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608140810500220107458",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608140810500220107458",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[더벨][VC 경영분석] DSC인베, 지분법 급증…빠른 소진·회수로 선순환",
+      "description": "또 와이바이오로직스, 앱클론, 지놈앤컴퍼니 등 상장 주식의 평가이익도 동반 상장했다. 비상장 포트폴리오의 경우 상장까지 남은 시간이 길지 않아 실제 펀드 성과로 이어질 가능성이 높다. 올해 상반기 다른...",
+      "link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608200824079600106768",
+      "naver_link": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202608200824079600106768",
+      "published_at": "Mon, 24 Aug 2026 07:02:00 +0900",
+      "categories": [
+        "bio"
+      ],
+      "queries": [
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "다우데이타, 미래 사업 중심 혁신 성과…상반기 매출 51%·영업이익 37% ...",
+      "description": "이어 “앞으로도 AI, 종량제, 현지화 Master Licensing 등 IT 산업의 새로운 변화에 선제적으로 대응하겠다”며 “고객과 파트너의 성장을 함께 만드는 IT 인프라 전문기업으로 지속 성장하겠다”고 밝혔다. 다우데이타는...",
+      "link": "https://www.etnews.com/20260821000274",
+      "naver_link": "https://n.news.naver.com/mnews/article/030/0003459567?sid=105",
+      "published_at": "Mon, 24 Aug 2026 07:01:00 +0900",
+      "categories": [
+        "it"
+      ],
+      "queries": [
+        "IT 산업"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/030/2026/08/24/0003459567_001_20260824070109352.png?type=w800"
+    },
+    {
+      "title": "“노후자금 투자했는데”…소득 끊긴 은퇴자, 삼전닉스로 ‘연체’ 부메...",
+      "description": "연초 코스피가 급등하자 일부 투자자들이 주가 하락 위험을 충분히 고려하지 않은 채 은행과 증권사에서 돈을 빌려 투자했고, 이후 증시가 하락하면서 투자 손실이 대출 상환 부담으로 이어졌다는 분석이다. 특히...",
+      "link": "https://economist.co.kr/article/view/ecn202608180054",
+      "naver_link": "https://n.news.naver.com/mnews/article/243/0000102040?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:01:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/243/2026/08/24/0000102040_001_20260824070106362.jpg?type=w800"
+    },
+    {
+      "title": "증시 오늘 '핫이슈' \"베센트의 '이란 경제고립 작전', 중국 털어 미 국채...",
+      "description": "21일(현지시간) 미국 뉴욕 증시의 3대 주요 지수가 일제히 상승 마감했습니다. 변동성이 커진 미 국채 금리가 상승세를 이어가며 증시에 부담을 줬지만, 최근 주가 하락에 따른 저가 매수세가 유입되고 미 서비스업 경기...",
+      "link": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005906515",
+      "naver_link": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005906515",
+      "published_at": "Mon, 24 Aug 2026 07:00:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "8월 셋째 주 유튜브 영상 순위 [이투PICK 순삭랭킹]",
+      "description": "오선의 미국 증시 라이브 '모더나 177% 경이적인 폭등! 반면 오픈AI 실망감에 AMD·브로드컴은 울었다' 3. 달란트투자 '중국 대참사 터졌다 반도체 전기차 싹다 망할 판' 4. 부읽남TV...",
+      "link": "https://www.etoday.co.kr/news/view/2616334",
+      "naver_link": "https://www.etoday.co.kr/news/view/2616334",
+      "published_at": "Mon, 24 Aug 2026 07:00:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://img.etoday.co.kr/pto_db/2026/01/20260107131032_2278370_1025_768.png"
+    },
+    {
+      "title": "코스메카코리아, 실적 날개는 달았는데…오너 2세 ‘자본시장 리스크’...",
+      "description": "수원지검 성남지청 형사3부는 지난 11일 자본시장법 위반 혐의로 코스닥 상장사 코스메카코리아 조임래 대표이사의 두 형제인 코스메카코리아의 조현석 사장과 잉글우드랩 조현철 대표를 불구속 기소했다. 검찰에...",
+      "link": "https://www.socialvalue.kr/news/view/1065598105096246",
+      "naver_link": "https://www.socialvalue.kr/news/view/1065598105096246",
+      "published_at": "Mon, 24 Aug 2026 07:00:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[Who Is ?] 조동길 한솔그룹 회장",
+      "description": "<연합뉴스> △한솔아이원스, 코스닥 우량기업 복귀 한솔그룹 반도체 계열사 한솔아이원스가 4년 만에 코스닥시장 우량기업부로 복귀했다. 한솔아이원스는 2022년 한솔그룹에 인수됐다. 2024년을 기점으로 반도체...",
+      "link": "https://www.businesspost.co.kr/BP?command=article_view&num=444674",
+      "naver_link": "https://www.businesspost.co.kr/BP?command=article_view&num=444674",
+      "published_at": "Mon, 24 Aug 2026 07:00:00 +0900",
+      "categories": [
+        "kosdaq",
+        "battery"
+      ],
+      "queries": [
+        "코스닥",
+        "2차전지 주식"
+      ]
+    },
+    {
+      "title": "8월 24일 개장 전 주요 공시",
+      "description": "◆코스닥시장 에이프릴바이오는 미국 에보뮨(Evommune)에 기술이전한 APB-R3의 잔여 마스터셀뱅크 등을 넘기는 43만128달러 규모의 물질이전 계약을 체결했다고 공시했다. 2024년 6월 체결한 글로벌 기술이전 계약에...",
+      "link": "https://www.seoulfn.com/news/articleView.html?idxno=636205",
+      "naver_link": "https://www.seoulfn.com/news/articleView.html?idxno=636205",
+      "published_at": "Mon, 24 Aug 2026 07:00:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "\"로봇주 변신, M&A가 빠르다\"…상장사들 피지컬AI '쇼핑중' [fn마켓워치]",
+      "description": "코스닥 상장사 협진은 올해 초 AI 로봇 전문기업 앤로보틱스 지분 100%를 230억원에 인수한 뒤 사명까지 '앤로보틱스'로 변경했다. 자동차 내장재 업체 휴림에이텍은 지난 5월 오늘이엔엠의 로봇사업부를 영업양수하며...",
+      "link": "http://www.fnnews.com/news/202608231530453449",
+      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565217?sid=101",
+      "published_at": "Mon, 24 Aug 2026 07:00:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "美 ETF 자금, 코스닥 반도체 소부장까지 들어올까",
+      "description": "사진=연합뉴스 매일일보 = 정수연 기자 | 미국 증시에 한국 반도체 기업을 집중적으로 담는 상장지수펀드(ETF)가 등장했다. 삼성전자와 SK하이닉스뿐 아니라 코스닥 반도체 소재·부품·장비 기업도 투자 대상에...",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404824",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404824",
+      "published_at": "Mon, 24 Aug 2026 06:58:00 +0900",
+      "categories": [
+        "us",
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "미국 증시",
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://cdn.m-i.kr/news/thumbnail/202608/1404824_1192893_336_v150.jpg"
+    },
+    {
+      "title": "엔비디아, 중국과 경쟁할 월드베스트 오픈웨이트 모델 개발 속도 낸다",
+      "description": "2025년 1월 딥시크가 저비용 오픈웨이트 모델을 공개하며 미국 증시에 충격을 준 이후 미중 AI 경쟁은 계속되고 있다고 WSJ은 전했다. AI 회사들과 직접 경쟁할 생각이 없다고 해도 자체 오픈소스 AI 모델을 향한 엔비디아...",
+      "link": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=694835",
+      "naver_link": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=694835",
+      "published_at": "Mon, 24 Aug 2026 06:58:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.digitaltoday.co.kr/news/photo/202608/694835_642707_5636.png"
+    },
+    {
+      "title": "'연체율 최대'에 은행도 기업도 가계도 '불안'",
+      "description": "다주택자 양도소득세 중과 유예 종료를 앞두고 부동산 거래가 회복됐고 코스피 투자 열기에 신용대출과 증권사 신용공여 등 '빚투' 자금까지 급증했다. 가계 빚이 눈덩이처럼 불어나는 사이 대출 건전성 지표는 급격히...",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404723",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404723",
+      "published_at": "Mon, 24 Aug 2026 06:58:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "https://cdn.m-i.kr/news/thumbnail/202608/1404723_1192789_5249_v150.jpg"
+    },
+    {
+      "title": "'롤러코스피' 장세서 갈린 은행주… 4대 지주 '30% 쑥'·지방·인뱅 '마이...",
+      "description": "사진=연합뉴스 매일일보 = 박인철 기자 | 국내 증시가 대내외 변수로 등락을 반복하는 이른바 '롤러코스피' 장세가 이어지는 가운데, 대표적인 경기 방어주로 꼽히는 은행주 내에서도 주가 흐름이 엇갈리고 있다....",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404766",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404766",
+      "published_at": "Mon, 24 Aug 2026 06:58:00 +0900",
+      "categories": [
+        "kospi",
+        "korea_flow"
+      ],
+      "queries": [
+        "코스피",
+        "외국인 기관 순매수 증시"
+      ],
+      "thumbnail_url": "https://cdn.m-i.kr/news/thumbnail/202608/1404766_1192836_2312_v150.jpg"
+    },
+    {
+      "title": "조달비용은 뛰고 대출길은 막히고...'이중고'에 갇힌 카드사",
+      "description": "미국 30년물 국채금리는 지난 18일 연 5.31%로 19년 만에 최고치를 찍었고, 한국 30년물 국고채 금리도 같은 날 연 4.751%로 사상 최고치를 기록했다. 지난달 기준금리를 연 2.75%로 올린 한국은행 금융통화위원회가 오는 27일...",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404810",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404810",
+      "published_at": "Mon, 24 Aug 2026 06:58:00 +0900",
+      "categories": [
+        "korea_rates"
+      ],
+      "queries": [
+        "국고채 금리 한국은행"
+      ]
+    },
+    {
+      "title": "지수보다 수익률 좋아도 퇴출…액티브 ETF 잇따른 상폐",
+      "description": "김성훈 DS자산운용 대표는 지난 7월 'DS 코스닥액티브' 상장 기자간담회에서 \"상관계수 규제는 전 세계 어디에서도 찾아보기 어렵다\"며 \"업계에서도 폐지가 필요하다는 공감대가 형성돼 있다\"고 말했다. 김재칠...",
+      "link": "https://www.m-i.kr/news/articleView.html?idxno=1404533",
+      "naver_link": "https://www.m-i.kr/news/articleView.html?idxno=1404533",
+      "published_at": "Mon, 24 Aug 2026 06:56:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "'칠천피' 복귀 기다리는 증시…엔비디아·금리·주주환원 3대 변수",
+      "description": "코스피가 7000선 아래 숨고르기를 하면서 이번 주 국내 증시는 칠천피 안착 여부를 둘러싼 공방이 이어질 전망이다. 지난주 미국 장기금리 급등에 발목이 잡혔던 코스피는 삼성전자와 SK하이닉스의 대규모 주주환원에...",
+      "link": "https://www.ebn.co.kr/news/articleView.html?idxno=1721330",
+      "naver_link": "https://www.ebn.co.kr/news/articleView.html?idxno=1721330",
+      "published_at": "Mon, 24 Aug 2026 06:54:00 +0900",
+      "categories": [
+        "kospi",
+        "us_rates"
+      ],
+      "queries": [
+        "코스피",
+        "미국 국채 금리 연준"
+      ],
+      "thumbnail_url": "https://cdn.ebn.co.kr/news/thumbnail/202608/1721330_752922_5145_v150.jpg"
+    },
+    {
+      "title": "[오늘의 경제뉴스] 삼전·닉스 150조원급 주주환원 승부수…오늘부터 시...",
+      "description": "같은 날 미국 증시 마감 뒤에는 엔비디아가 2027회계연도 2분기 실적을 발표한다. 한국시간으로는 27일 아침 결과가 공개된다. 시장의 관심은 실적 자체뿐 아니라 데이터센터 매출과 향후 실적 전망, 주요 기술기업의 AI...",
+      "link": "https://www.newsverse.kr/news/articleView.html?idxno=11258",
+      "naver_link": "https://www.newsverse.kr/news/articleView.html?idxno=11258",
+      "published_at": "Mon, 24 Aug 2026 06:48:00 +0900",
+      "categories": [
+        "us",
+        "kospi"
+      ],
+      "queries": [
+        "미국 증시",
+        "코스피"
+      ],
+      "thumbnail_url": "https://cdn.newsverse.kr/news/thumbnail/202608/11258_19339_455_v150.jpg"
+    },
+    {
+      "title": "美연준 매파 인사, 국채금리 급등에 \"90년대는 지금보다 높아⋯시장 잘...",
+      "description": "미국 연방준비제도(Fed·연준) 내 대표적 매파(통화 긴축정책 선호론자) 인사가 현재 미국 국채 시장이... 이어 \"이는 우리가 인플레이션을 다시 낮추기 위해 연방기금금리를 주요 정책 수단으로 활용하는 데 집중할 수...",
+      "link": "http://www.inews24.com/view/1997445",
+      "naver_link": "https://n.news.naver.com/mnews/article/031/0001051724?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:48:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "‘연준 매파’ 카시카리 “미국 국채 시장 정상...다시 인플레이션 집중...",
+      "description": "(Fed·연준)의 대표적 매파 인사로 통하는 닐 카시카리 미니애폴리스 연방준비은행(연은) 총재가 미국 국채... 그는 “따라서 우린 금리를 주요 정책 수단으로 삼아 인플레이션을 다시 낮추는 데 집중할 수 있다”고...",
+      "link": "https://www.etoday.co.kr/news/view/2617192",
+      "naver_link": "https://www.etoday.co.kr/news/view/2617192",
+      "published_at": "Mon, 24 Aug 2026 06:46:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "인터폴드 급등·오피셜트럼프 상승·리플XRP 상승…달러 약세에도 거래...",
+      "description": "향후 관전 포인트는 최근 비트코인 회복을 뒷받침한 달러 약세와 현물 수요가 이어지는지, 미국 국채 수익률과 연준의 금리 경로가 어떻게 바뀌는지에 있다. 국내에서는 54.7% 감소한 거래대금이 다시 늘어나는지...",
+      "link": "https://www.topstarnews.net/news/articleView.html?idxno=16171272",
+      "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16171272",
+      "published_at": "Mon, 24 Aug 2026 06:44:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "기요사키 \"가짜 달러 말고 비트코인(BTC)·금·은 사라\"",
+      "description": "장기 국채 금리가 급등한 뒤 나온 조치다. 미국 재무부는 이번 조치가 시장 유동성 개선을 위한 것이며 공식적인 양적완화와는 다르다고 설명했다. 통화 기반을 확대할 권한은 연방준비제도(Fed, 연준)에 있다....",
+      "link": "http://coinreaders.com/254361",
+      "naver_link": "http://coinreaders.com/254361",
+      "published_at": "Mon, 24 Aug 2026 06:42:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "[뉴욕 주간전망] 美 장기물 국채 금리에 주목...엔비디아 실적도 관건",
+      "description": "75%)를 하회하는 PCE 물가를 2번 연속 확인함에 따라 향후 물가 하락, 금리 안정, 위험선호 심리 기대를 높일 것\"이라며 \"지난 7월 30일 발표됐던 6월 PCE 및 근원 PCE 결과가 8월 5일 미국 증시의 역사적 사상 최고치 경신에...",
+      "link": "http://www.opinionnews.co.kr/news/articleView.html?idxno=143416",
+      "naver_link": "http://www.opinionnews.co.kr/news/articleView.html?idxno=143416",
+      "published_at": "Mon, 24 Aug 2026 06:40:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "http://www.opinionnews.co.kr/news/thumbnail/202608/143416_105574_2244_v150.jpg"
+    },
+    {
+      "title": "회사채 금리 연초 대비 1%p 급등…자금조달 비상",
+      "description": "국고채 금리 상승에 시장금리 껑충…채권 발행 급감 국고채 금리 등 연동된 민투사업도 비상 BTL 조달금리... 미국 30년물 국채 금리가 최근 연 5.3%까지 오르는 등 주요국 금리가 상승세고, 한국은행도 연내 기준금리...",
+      "link": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608231054159150953",
+      "naver_link": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608231054159150953",
+      "published_at": "Mon, 24 Aug 2026 06:40:00 +0900",
+      "categories": [
+        "korea_rates"
+      ],
+      "queries": [
+        "국고채 금리 한국은행"
+      ]
+    },
+    {
+      "title": "'몸값 2조달러' 앤트로픽 상장 초읽기…국내 수혜주는?",
+      "description": "앤트로픽은 기업가치 2조 달러(약 2780조원)를 목표로, 이르면 9~10월 미국 증시에 입성할 것으로 전망된다. 국내에서는 앤트로픽 지분 장부가액이 3조5000억원을 넘어선 SK텔레콤이 가장 직접적인 수혜주로 꼽힌다....",
+      "link": "http://www.newsian.co.kr/news/articleView.html?idxno=94096",
+      "naver_link": "http://www.newsian.co.kr/news/articleView.html?idxno=94096",
+      "published_at": "Mon, 24 Aug 2026 06:38:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.newsian.co.kr/news/thumbnail/202608/94096_87870_1151_v150.jpg"
+    },
+    {
+      "title": "배당 1.04%, 미 국채 4.69%에 밀렸다",
+      "description": "이번 지표의 핵심은 ‘주식 약세’가 아니라 비교 기준의 변화다. 배당주가 국채보다 현금수익에서 앞서던 구도는 약해졌고, 미국 증시와 위험자산을 보는 출발점도 금리 수준을 빼고 설명하기 어려워졌다.",
+      "link": "https://www.tokenpost.kr/news/market/396161",
+      "naver_link": "https://www.tokenpost.kr/news/market/396161",
+      "published_at": "Mon, 24 Aug 2026 06:34:00 +0900",
+      "categories": [
+        "us",
+        "us_rates"
+      ],
+      "queries": [
+        "미국 증시",
+        "미국 국채 금리 연준"
+      ],
+      "thumbnail_url": "https://f1.tokenpost.kr/2026/08/4teq8tneos.jpg"
+    },
+    {
+      "title": "AI, '비전공' 청년, 그리고 이상적 인재상",
+      "description": "실전경험이 없는 인재를 키워 쓰기보다는, 즉시 현업에 투입할 수 있는 숙련 개발자를 영입하는 실리콘밸리 기업들의 채용 방식은 국경을 넘어 IT산업의 표준이 됐다. 코딩 테스트, 알고리즘 설계, 현직자 심층면접 등...",
+      "link": "https://www.labortoday.co.kr/news/articleView.html?idxno=236380",
+      "naver_link": "https://www.labortoday.co.kr/news/articleView.html?idxno=236380",
+      "published_at": "Mon, 24 Aug 2026 06:32:00 +0900",
+      "categories": [
+        "it"
+      ],
+      "queries": [
+        "IT 산업"
+      ],
+      "thumbnail_url": "https://cdn.labortoday.co.kr/news/thumbnail/202608/236380_114493_5719_v150.jpg"
+    },
+    {
+      "title": "서학개미, 한 주간 ‘삼전닉스’ 라운드힐 ETF 1200억 담았다 [마켓시그...",
+      "description": "미국 증시에서도 이달 10~20일 마이크론과 샌디스크가 각각 11.0%, 32.0% 오르며 반도체주 강세에 힘을 보탰다. 국내 ETF 시장에서는 미국 대표지수를 추종하는 상품으로 자금이 몰렸다. 코스콤 ETF CHECK에 따르면...",
+      "link": "https://www.sedaily.com/article/20082223?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654384?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:31:00 +0900",
+      "categories": [
+        "us",
+        "kospi"
+      ],
+      "queries": [
+        "미국 증시",
+        "코스피"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/011/2026/08/24/0004654384_001_20260824063109305.jpg?type=w800"
+    },
+    {
+      "title": "니어스랩·해치텍 신규 상장…스카이랩스 공모주청약 [이번주 증시캘린...",
+      "description": "해치텍이 코스닥 시장에 신규 상장한다. 스카이랩스의 공모주청약을 비롯해 상호변경과 주식소각에 따른 주권변경상장 등도 잇따라 예정돼 있다. 24일 금융투자 업계에 따르면 니어스랩은 이날 코스닥 시장에...",
+      "link": "https://www.sedaily.com/article/20082185?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654383?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:31:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "수수료 4배나 비싼데… 액티브ETF 3개중 2개, 지수 수익률보다 낮아",
+      "description": "코스닥을 비교지수로 삼은 DS자산운용의 'DS 코스닥액티브'가 20.9%포인트로 뒤를 이었다. 8.7% 하락하며 코스닥 상승률(12.2%)을 크게 밑돌았다. 그 다음 미래에셋자산운용의 'TIGER 글로벌AI전력인프라액티브'(-13.7...",
+      "link": "https://it.chosun.com/news/articleView.html?idxno=2023092168609",
+      "naver_link": "https://it.chosun.com/news/articleView.html?idxno=2023092168609",
+      "published_at": "Mon, 24 Aug 2026 06:30:00 +0900",
+      "categories": [
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "엔비디아 실적에 잭슨홀까지…이번 주 뉴욕증시 '분수령'",
+      "description": "결국 이번 주 뉴욕증시는 엔비디아가 보여줄 AI 산업의 성장성과 잭슨홀에서 제시될 연준의 정책 방향, 미국 경제지표가 보내는 경기·물가 신호 사이에서 방향을 모색할 전망이다. 특히 장기 국채 금리가 이들 재료에...",
+      "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=85864",
+      "naver_link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=85864",
+      "published_at": "Mon, 24 Aug 2026 06:22:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "[양종희號 3년 ㊤] 비은행 키우고 주주 챙겼다…KB금융, 당기순이익 6조...",
+      "description": "따르면 양 회장 취임 전인 2023년 11월 20일 KB금융 종가는 5만3900원이었으나 현재는 21일 기준 16만4300원으로 약 3배 상승했다. 같은 기간 코스피 지수 상승률 2.77배보다 높은 수준이다. [소비자가만드는신문=]",
+      "link": "http://www.consumernews.co.kr/news/articleView.html?idxno=761855",
+      "naver_link": "http://www.consumernews.co.kr/news/articleView.html?idxno=761855",
+      "published_at": "Mon, 24 Aug 2026 06:16:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "http://www.consumernews.co.kr/news/thumbnail/202608/761855_316800_516_v150.jpg"
+    },
+    {
+      "title": "[코스피·코스닥지수] 삼성SDI 지분 매각·넷마블 지분 인수 등 잇따라",
+      "description": "지난 21일 국내 증시에서는 주요 기업들의 대규모 투자와 지분 거래, 사업 재편과 관련한 공시가 잇따랐다. 삼성SDI의 삼성디스플레이 지분 매각을 비롯해 넷마블 주요 주주의 지분 인수, HD한국조선해양의 합작법인 설립...",
+      "link": "https://www.lecturernews.com/news/articleView.html?idxno=209249",
+      "naver_link": "https://www.lecturernews.com/news/articleView.html?idxno=209249",
+      "published_at": "Mon, 24 Aug 2026 06:12:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://cdn.lecturernews.com/news/thumbnail/202608/209249_478333_1151_v150.jpg"
+    },
+    {
+      "title": "코스피·코스닥 전 거래일(21일) 주요공시는?...인지컨트롤스 \"슬로바키...",
+      "description": "▲ 인지디스플레[037330] \"NEXVINA에 168억원 출자\" ▲ HD한국조선해양 \"인도 코친조선소와 합작법인 설립 검토 중단\" ▲ 방준혁 넷마블[251270] 의장, 텐센트 보유 지분 13.4% 인수 ▲ 삼성SDI \"삼성디스플레이 지분...",
+      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=479770",
+      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=479770",
+      "published_at": "Mon, 24 Aug 2026 06:10:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://www.pinpointnews.co.kr/image/logo/snslogo_20221006054135.png"
+    },
+    {
+      "title": "성균관대학교, 25일 '2026년 여름 학위수여식' 개최…3,202명 새로운 출...",
+      "description": "남 교수는 에임드바이오를 창업해 2025년 코스닥 상장을 이끌었으며, 현재 에임드바이오 의장 겸 최고기술책임자(CTO)를 맡고 있다. 그는 자신의 경험을 바탕으로 졸업생들에게 자신이 진정으로 원하는 일을 향해...",
+      "link": "https://www.lecturernews.com/news/articleView.html?idxno=209181",
+      "naver_link": "https://www.lecturernews.com/news/articleView.html?idxno=209181",
+      "published_at": "Mon, 24 Aug 2026 06:10:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "불닭대박 예견한 투자고수…“비축해둔 현금, 이럴때 과감히 써라”",
+      "description": "실제 2016년 설립된 더블유자산운용은 지난 10년간 코스피 대비 변동성은 훨씬 낮으면서 연평균 10%포인트... 6%(2026년 8월 12일 종가 기준)를 기록해 같은 기간 코스피 상승률인 192.6%를 크게 웃돌았다. ◆ PB 20년 경험...",
+      "link": "https://www.mk.co.kr/article/12134315",
+      "naver_link": "https://n.news.naver.com/mnews/article/009/0005724672?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:07:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "7000선 공방 코스피…엔비디아 실발·잭슨홀 '빅위크'",
+      "description": "제공=뉴스17000선 재진입을 노리는 코스피가 이번 주 굵직한 대내외 이벤트의 시험대에 오른다. 반도체... 24일 한국거래소에 따르면 코스피는 지난 21일 6912.95에 거래를 마쳤다. 7000선까지는 87.05포인트만을 남겨뒀다....",
+      "link": "https://news.mtn.co.kr/news-detail/2026082313395344679",
+      "naver_link": "https://news.mtn.co.kr/news-detail/2026082313395344679",
+      "published_at": "Mon, 24 Aug 2026 06:04:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "[주간수급리포트] 외국인 수급 롤러코스터…삼전 사고 하닉·전기 팔았...",
+      "description": "24일 한국거래소에 따르면 18일부터 21일까지 코스피 시장에서 개인은 1조9410억원 순매수했고 기관은 2조3750억원, 외국인은 1조8500억원을 순매도했다. 외국인 수급은 매일 방향을 바꿨다. 외국인은 18일 910억원...",
+      "link": "https://www.etoday.co.kr/news/view/2616956",
+      "naver_link": "https://www.etoday.co.kr/news/view/2616956",
+      "published_at": "Mon, 24 Aug 2026 06:02:00 +0900",
+      "categories": [
+        "kospi",
+        "korea_flow"
+      ],
+      "queries": [
+        "코스피",
+        "외국인 기관 순매수 증시"
+      ]
+    },
+    {
+      "title": "한미·SK바사·유한·대웅·종근당 5곳 R&D 1천억원 이상 투입",
+      "description": "일간보사·의학신문이 금융감독원에 보고된 코스피 제약사 35개사, 코스닥 제약사 31개사 등 66개사의... 35개 코스피 제약사의 경우 평균 R&D비중이 전년 동기 대비 0.25%p 증가한 9.76%를 기록했고, 31개 코스닥...",
+      "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010636",
+      "naver_link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010636",
+      "published_at": "Mon, 24 Aug 2026 06:02:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ]
+    },
+    {
+      "title": "메트로신문 8월24일자 한줄뉴스",
+      "description": "▲증시 상승을 이끌던 개인마저 관망세로 돌아선 가운데 코스피 지수는 올랐어도 전체 상장 종목의 85%는 제자리걸음을 걷는 '지수 착시' 현상이 극대화되고 있다. ▲한국예탁결제원이 외국인 투자자와 'KSD 원스톱...",
+      "link": "http://www.metroseoul.co.kr/article/20260823500264",
+      "naver_link": "http://www.metroseoul.co.kr/article/20260823500264",
+      "published_at": "Mon, 24 Aug 2026 06:02:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "대장주 2개면 충분하다…ETF도 몰빵하는 시대",
+      "description": "통상 ETF를 통한 핵심 자산으로 투자자들이 S&P500이나 코스피200 등의 대표 지수에 투자한다. 이를 핵심 자산으로 하고, 특정 초압축 ETF를 조합해 포트폴리오의 성장성을 공격적으로 끌어올릴 수 있다. 세 번째는 연금...",
+      "link": "https://magazine.hankyung.com/money/article/202607168391c",
+      "naver_link": "https://magazine.hankyung.com/money/article/202607168391c",
+      "published_at": "Mon, 24 Aug 2026 06:02:00 +0900",
+      "categories": [
+        "kospi",
+        "battery"
+      ],
+      "queries": [
+        "코스피",
+        "2차전지 주식"
+      ]
+    },
+    {
+      "title": "기술수출 11건·계약금 3115억…K-바이오 고순도 딜 확산",
+      "description": "이번 계약은 네오이뮨텍이 2021년 코스닥 시장에 상장한 이후 체결한 첫 기술수출이다. 네오이뮨텍은 계약금을 현금 대신 톨러런스 바이오의 완전희석 기준 지분 4%로 받는다. 또 임상개발과 매출 목표 달성에 따라...",
+      "link": "https://www.dailypharm.com/user/news/341683?REFERER=NP",
+      "naver_link": "https://www.dailypharm.com/user/news/341683?REFERER=NP",
+      "published_at": "Mon, 24 Aug 2026 06:02:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "화장품 호실적·금값 강세에 관련 ETF ‘두각’ [이런국장 저런주식]",
+      "description": "코스피 상승률이 올 상반기와 비교해 지지부진한 가운데 금과 화장품, 바이오 관련 상장지수펀드(ETF)... 같은 기간 코스피 상승률(4.81%)의 6배가 넘는 수준이다. SOL 화장품TOP3플러스는 에프앤가이드...",
+      "link": "https://www.sedaily.com/article/20082222?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654370?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:01:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq",
+        "bio"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥",
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "롯데 계열 전기차 충전사, 투자자들과 상장 1년 연기 합의... 중복상장보...",
+      "description": "에버온은 지난달 13일 한국거래소에 코스닥 상장 예비심사를 청구했다. 지난해 영업이익 55억원을 기록하며 흑자 전환에 성공한 만큼, 수익성을 확보한 전기차 충전 기업의 상장 사례가 될 수 있어서다. 에버온의 IPO...",
+      "link": "https://biz.chosun.com/stock/market_trend/2026/08/24/RPW4HCSNAJGILPXL472K4SZDFM/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+      "naver_link": "https://n.news.naver.com/mnews/article/366/0001187829?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:01:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "동시에 뛴 美·日·유럽 장기금리…한국도 주식·채권·대출에 연결된 ...",
+      "description": "금리에도 변화를 예상했다. 국고채 금리가 상승하면 금융시장의 금리 기준선 자체가 올라가면서 은행채와... 받는다\"며 \"한국은행 기준금리와 무관하게 선행적으로 금융여건이 타이트해지는 효과가 발생할 수 있다\"고...",
+      "link": "http://www.fnnews.com/news/202608201731565322",
+      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565205?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:01:00 +0900",
+      "categories": [
+        "korea_rates"
+      ],
+      "queries": [
+        "국고채 금리 한국은행"
+      ]
+    },
+    {
+      "title": "전문가 65% “8월 인상”… 국채 금리 급등에 속도 조절론도 [Pick코노미...",
+      "description": "26~27일 열리는 한국은행 금융통화위원회에서 지난달에 이어 연속으로 금리가 인상될 것이란 전망이 우세한... 최근 재정적자 우려로 미국의 국채 금리가 급등하면서 한국 국고채 금리도 덩달아 상승 압력을 받고 있다....",
+      "link": "https://www.sedaily.com/article/20082361?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654378?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:01:00 +0900",
+      "categories": [
+        "korea_rates",
+        "us_rates"
+      ],
+      "queries": [
+        "국고채 금리 한국은행",
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "거래 식었는데 'AI 슈퍼위크'…삼전닉스에 달린 '칠천피'",
+      "description": "거래대금과 회전율이 연중 최저 수준으로 떨어진 코스피가 7000선 돌파를 앞두고 'AI 반도체 슈퍼위크'를... 이번 주 '핫칩스(Hot Chips)'와 엔비디아 실적 발표가 두 종목의 주가는 물론 코스피 7000선 돌파 여부를 가를...",
+      "link": "https://www.news1.kr/finance/general-stock/6266779",
+      "naver_link": "https://n.news.naver.com/mnews/article/421/0009128100?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "美 국채 금리 상승이 왜 국내 증시를 흔든 걸까요[금알못]",
+      "description": "이에 따라 코스피는 외국인과 기관의 동반 매도에 6% 가까이 급락하며 6500선 아래로 밀려났습니다. 이달 초... 20일 코스피는 전 거래일보다 381.41포인트(5.89%) 급등한 6852.58로 마감하며 하루 만에 큰 폭으로 반등했습니다....",
+      "link": "https://www.newsis.com/view/NISX20260820_0003756362",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014142910?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq",
+        "korea_flow"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥",
+        "외국인 기관 순매수 증시"
+      ]
+    },
+    {
+      "title": "[이번주 관전포인트] 엔비디아·금리·한은, 이번 주가 고비다",
+      "description": "◇ 코스피, 성장성과 할인율의 저울 시장이 좋아하는 조합은 '엔비디아 호실적', 'PCE 둔화', '미 장기금리... 이 소식에 20일 코스피는 5.89% 급등했다. 삼성전자도 대규모 환원이 예상된다. 다만 삼성은 아직 공식 발표...",
+      "link": "http://www.newskr.kr/news/articleView.html?idxno=105797",
+      "naver_link": "http://www.newskr.kr/news/articleView.html?idxno=105797",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[MMM]코인보다 극심해진 주식시장 변동성…자본주의 엔진 흔들린다",
+      "description": "사상 유례없는 변동성에 코스피에는 '롤러코스피'라는 별명까지 붙었다. 기업의 혁신을 돕고 건전한 자본을 순환시켜 자본주의의 엔진 역할을 해온 주식시장에 둔탁한 경고음이 울리고 있다. 주식시장의 본질은 성장...",
+      "link": "https://www.mt.co.kr/finance/2026/08/24/2026082016170129933",
+      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403537?sid=101",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "'대미 투자 1호' 9월 공개 임박...에너지 수혜 입을 원전·건설株 반등할...",
+      "description": "24일 한국거래소에 따르면 21일 코스피 시장에서 주요 원전·건설·플랜트주들은 일제히 하락 마감했다. 현대건설은 7.21% 급락한 10만5600원에 거래를 마쳤다. 외국인 774억원과 개인 231억원의 동반 순매수에도...",
+      "link": "https://www.etoday.co.kr/news/view/2617078",
+      "naver_link": "https://www.etoday.co.kr/news/view/2617078",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "[미리보는 증시재료] 美 엔비디아·韓 금통위 '촉각'…코스피 향방 좌우",
+      "description": "24일 금융투자업계에 따르면, 지난주 마지막 거래일인 21일 코스피는 전 거래일보다 60.37포인트(0.88%) 오른 6912.95에 거래를 마쳤다. 지난 21일 오전 서울 중구 하나은행 딜링룸 전광판에 달러/원, 코스피, 코스닥 지수가...",
+      "link": "https://www.newspim.com/news/view/20260821000812",
+      "naver_link": "https://www.newspim.com/news/view/20260821000812",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ]
+    },
+    {
+      "title": "[주간IPO] 니어스랩·해치텍 코스닥 상장…한화M&S 코스피 상장",
+      "description": "한화머시너리앤서비스(M&S)홀딩스도 코스피 시장에 상장하며 증시에 새롭게 합류한다. 24일... 코스피 시장에는 한화머시너리앤서비스홀딩스가 25일 새롭게 상장한다. 한화머시너리앤서비스홀딩스는 기타...",
+      "link": "https://www.newspim.com/news/view/20260821000860",
+      "naver_link": "https://www.newspim.com/news/view/20260821000860",
+      "published_at": "Mon, 24 Aug 2026 06:00:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ]
+    },
+    {
+      "title": "청약 흥행 갈린 니어스랩·해치텍 코스닥 상장…스카이랩스는 청약",
+      "description": "기업공개(IPO) 시장에서 이번 주 니어스랩과 해치텍이 코스닥 시장에 나란히 입성한다. 일반청약 흥행... 25일 코스닥 시장에 상장한다. 삼성증권이 상장을 주관한 니어스랩은 풍력발전기 안전점검 분야에서 쌓은...",
+      "link": "https://www.newstopkorea.com/news/articleView.html?idxno=47203",
+      "naver_link": "https://www.newstopkorea.com/news/articleView.html?idxno=47203",
+      "published_at": "Mon, 24 Aug 2026 05:54:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ]
+    },
+    {
+      "title": "'매파' 카시카리 연은 총재 \"美 국채 시장 잘 작동\"…인플레 우려는 여...",
+      "description": "닐 카시카리 미니애폴리스 연방준비은행 총재가 미국 국채 시장이 최근 금리 상승에도 잘 작동하고 있다고 진단했습니다. 카시카리 총재는 미 국채 시장의 최근 움직임이 연준의 정책 결정에 영향을 미치거나 개입을...",
+      "link": "https://biz.sbs.co.kr/article_hub/20000330238?division=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/374/0000528894?sid=104",
+      "published_at": "Mon, 24 Aug 2026 05:53:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "의도와 결과는 다른 말이다",
+      "description": "물론, 아직 정책 성패를 논하기는 시기상조라는 지적은 충분히 있을 수 있다.주식시장에서는 코스피가 6000 내외 수준을 유지하고 있으니 ‘코스피 5000’이라는 정책 목표는 달성했다고 봐야 할 것이다. 코스닥은 코스피와...",
+      "link": "https://economychosun.com/site/data/html_dir/2026/08/14/2026081400034.html",
+      "naver_link": "https://economychosun.com/site/data/html_dir/2026/08/14/2026081400034.html",
+      "published_at": "Mon, 24 Aug 2026 05:52:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ]
+    },
+    {
+      "title": "ETF 괴리율 새 기준 첫 시험…초과 11건 늘었지만 국내 확산은 제한적",
+      "description": "코스피200이 6.41% 급락한 이날 새 기준을 넘은 ETF는 31개였지만, 종전 기준을 적용하면 22개로 줄어든다.... 코스피200이 6.75% 반등한 20일에는 초과 종목이 2개로 급감했다. 두 종목 역시 종전 기준이었다면 넘지...",
+      "link": "https://www.etoday.co.kr/news/view/2616946",
+      "naver_link": "https://www.etoday.co.kr/news/view/2616946",
+      "published_at": "Mon, 24 Aug 2026 05:50:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "워시의 잭슨홀 데뷔, PCE 물가, 엔비디아…랠리의 3대 관문[이번주 美 증...",
+      "description": "미국 증시가 장기 국채수익률 상승에 부담을 느끼며 약세를 보인 가운데 이번주에는 조정 연장이냐, 랠리 재개냐를 결정지을 빅 이벤트 3개가 주 후반에 몰아친다. 연방준비제도(연준)가 가장 선호하는 인플레이션...",
+      "link": "https://www.mt.co.kr/world/2026/08/24/2026082221180458282",
+      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403529?sid=101",
+      "published_at": "Mon, 24 Aug 2026 05:35:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/008/2026/08/24/0005403529_001_20260824053513482.jpg?type=w800"
+    },
+    {
+      "title": "말 줄인 연준, 잭슨홀서 ‘베선트 풋’엔 입 열까 [트럼프 스톡커]",
+      "description": "워시 연준 의장이 자신의 첫 잭슨홀미팅 연설에서 던질 메시지도 관건이다. 스콧 베선트 미국 재무부 장관이 국채 금리를 떨어뜨리겠다며 바이백(국채 재매입) 규모를 확대하겠다고 나선 터라 워시 의장이...",
+      "link": "https://www.sedaily.com/article/20082255?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654365?sid=104",
+      "published_at": "Mon, 24 Aug 2026 05:31:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
     },
     {
       "title": "[N2 모닝 경제 브리핑-8월 24일] 美 증시, 국채금리 부담에도 상승…다우...",
-      "description": "반도체주는 오는 26일 예정된 엔비디아 실적 발표와 장기 국채금리 상승에 대한 경계감으로 약세를 보였다. 이날 필라델피아반도체지수는 전장보다 59.60포인트(0.51%) 내린 11,740.40에 마감했다. 주간 기준으로는...",
+      "description": "미국 국채금리 상승세가 이어졌지만 기업 실적과 경제지표가 투자심리를 뒷받침했다. 미국의 8월... 실적과 미국 연방준비제도(Fed·연준)의 잭슨홀 경제정책 심포지엄을 주시할 전망이다. 엔비디아는 오는 26일...",
       "link": "https://www.news2day.co.kr/article/20260824500003",
       "naver_link": "https://www.news2day.co.kr/article/20260824500003",
       "published_at": "Mon, 24 Aug 2026 05:14:00 +0900",
       "categories": [
-        "semiconductor",
         "us_rates",
         "bio"
       ],
       "queries": [
-        "반도체",
         "미국 국채 금리 연준",
         "바이오 주식"
-      ],
-      "thumbnail_url": "https://cdn.news2day.co.kr/data2/content/image/2026/08/24/.cache/512/20260824500002.png"
-    },
-    {
-      "title": "연내 추가 금리 인상은 확실…여름이냐 가을이냐는 갈려[금통위 폴]",
-      "description": "반도체 호황을 바탕으로 한 성장세가 예상보다 강해진 가운데 근원물가 상승 압력이 얼마나 커질지가 오는... 특히 반도체 수출 호조와 교역 조건 개선 등으로 국내총소득(GDI)이 크게 늘어났고, 경기 회복이 물가 상승...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01449766645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356698?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:07:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/018/2026/08/24/0006356698_001_20260824050713900.jpg?type=w800"
-    },
-    {
-      "title": "젠슨 황, 리벨리온 박성현 만났다…\"인수 논의까지\"",
-      "description": "젠슨 황 엔비디아 최고경영자(CEO)가 국내 AI(인공지능) 반도체 기업 리벨리온의 박성현 CEO와 직접 만난 것으로 확인됐다. 외신에서 기술협력과 투자, 인수 가능성까지 논의됐다는 보도가 나온 가운데 리벨리온은...",
-      "link": "https://www.mt.co.kr/tech/2026/08/24/2026082315034829653",
-      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403523?sid=105",
-      "published_at": "Mon, 24 Aug 2026 05:05:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/008/2026/08/24/0005403523_001_20260824050513230.jpg?type=w800"
-    },
-    {
-      "title": "내년 엔비디아 AI 서버 가격 15% 인상… 삼전닉스 실적도 뛴다",
-      "description": "반도체는 공장과 장비 등에 들어가는 고정비 비중이 커, 가동률을 유지한 채 제품 가격이 오르면 매출보다 영업이익이 더 큰 폭으로 늘 수 있다. 엔비디아의 주요 HBM 공급사인 SK하이닉스는 베라 루빈 출하 확대에 따른...",
-      "link": "https://www.seoul.co.kr/news/economy/industry/2026/08/24/20260824032002?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672787?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:04:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "‘5극 3특’ 엔진 점화… 기업·청년·기술 선순환 이끈다",
-      "description": "美 텍사스, 감세·규제 해소 등 효과 서남권 반도체·대경권 로봇 성장축 산단·항만·대학 등 공동 활용 가능... 석유·가스 중심이던 텍사스는 반도체·전기차·항공우주·바이오 등 첨단산업을 집적하며 새로운...",
-      "link": "https://www.seoul.co.kr/news/economy/2026/08/24/20260824032005?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672790?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:04:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[ABC뉴스 칼럼] 테라스도 붕괴됐는데 SK하이닉스 어쩌나",
-      "description": "SK에코플랜트 전체 수주 잔고의 상당 부분을 차지하는 최대 일감이 바로 SK하이닉스 반도체 공장 공사이기 때문이다. 반도체 공장은 아파트보다 훨씬 더 가혹한 정밀도를 요구하는 시설이다. 아파트 발코니의 접합부는 몇...",
-      "link": "https://www.abcn.kr/news/articleView.html?idxno=90790",
-      "naver_link": "https://www.abcn.kr/news/articleView.html?idxno=90790",
-      "published_at": "Mon, 24 Aug 2026 05:04:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "150조 푼 삼전닉스… 투자·환원 ‘황금비율’ 시험대",
-      "description": "업계 관계자는 “환원에 치중해 HBM과 첨단공정 등에 대한 투자를 줄이면 AI 반도체 경쟁에서 뒤처질 수 있고, 반대로 현금을 지나치게 쌓아두면 주주가치 제고 기회를 놓칠 수 있다”고 지적했다.",
-      "link": "https://www.seoul.co.kr/news/economy/industry/2026/08/24/20260824029001?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672777?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:03:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
       ]
     },
     {
@@ -323,234 +1822,6 @@
       ],
       "queries": [
         "코스피"
-      ],
-      "thumbnail_url": "https://img.seoul.co.kr//img/n24/seoul_share.png"
-    },
-    {
-      "title": "미래기금 만든다는 정부…전문가 “투자·저축 양립은 모순”",
-      "description": "정부가 반도체 초호황 등으로 늘어나는 세수를 모아 미래 성장동력에 투자하겠다는 목표로... △청년 △성장동력 △지방 △교육·인재 등 4개 분야에 집중 투자하는 한편, 반도체 업황에 따라 3~5년 주기로 요동치는...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01413686645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356691?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "110조 다음은...삼성 FCF 50% 환원 주목 [K반도체 150조의 승부]",
-      "description": "반도체 호황기에 불어난 잉여현금흐름(FCF)을 주주와 나누면서도 불황기에는 안정적인 환원을 유지할... 올해처럼 반도체 호황으로 FCF가 급증하면 기존 50% 원칙만으로도 환원 규모가 크게 불어난다. 반대로 업황이...",
-      "link": "https://www.etoday.co.kr/news/view/2617031",
-      "naver_link": "https://www.etoday.co.kr/news/view/2617031",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "한남대, ‘국방 AX·AI 데이터센터’ 앞세워 지역 거점대학 도약",
-      "description": "외국어 계열이 강한 대학을 넘어 국방과 빅데이터, 반도체 등 첨단산업 분야로 체질 개선을 추진 중이다. 한남대는 ‘과학의 도시’ 대전의 전략 산업과 연계해 맞춤 인재 배출을 위한 학제 개편과 글로벌 혁신 모델...",
-      "link": "https://www.seoul.co.kr/news/society/education-news/2026/08/24/20260824018001?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672755?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "“대학은 미래 산업의 심장… AI로 지역 운명 바꿀 청년 키운다”[월요...",
-      "description": "사람 반도체·에너지 분야 연 450명 공급 기업·대학 인재 공동설계·양성 나서 지역 의료·바이오 산업 비전... 삼성전자와 SK하이닉스의 반도체 팹, 세계 2위 후공정 기업 앰코의 광주 공장 증설 등 전남광주는 이제 반도체...",
-      "link": "https://www.seoul.co.kr/news/plan/monday-interview/2026/08/24/20260824014001?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672745?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "지역의사 6명 뽑는 인하대… 첨단바이오의약학과 40명으로 증원",
-      "description": "인하대는 2024년부터 교육부의 ‘첨단산업 특성화대학 재정지원사업’에서 반도체, 바이오, 이차전지, 로봇 등 4개 전 분야에 전국 유일 선정됐다. 2027학년도 첨단바이오의약학과의 입학정원을 순증했다....",
-      "link": "https://www.seoul.co.kr/news/society/education-news/2026/08/24/20260824016002?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672750?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[사설] 반도체 부활 노리는 일본, 노동 시간 규제도 푸는데",
-      "description": "일례로 일본은 반도체 강국의 위상을 되찾으려 절치부심하고 있다. 파운드리(위탁생산) 절대강자인 대만... 이제 일본 반도체 산업은 노동시간 규제완화라는 또 하나의 칼을 손에 쥐게 됐다. 반도체와 인공지능(AI) 등...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01403846645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356688?sid=110",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[경제산책] 반도체가 가져온 한국경제의 행운과 도전",
-      "description": "반도체 슈퍼사이클(초호황)에 힘입어 7월 반도체 수출은 전년 동월 대비 176.3% 급증한 412억달러에 달했고 전체 수출 비중의 40%를 넘어섰다. 7월 전체 수출액은 전년 동월 대비 63% 증가한 990억달러로 월 기준 역대 최대...",
-      "link": "https://www.nongmin.com/article/20260821500587",
-      "naver_link": "https://n.news.naver.com/mnews/article/662/0000102500?sid=110",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "\"N% 성과급·하청 교섭 요구에 산업계 위기…노봉법 개정만이 답\"",
-      "description": "산업 안전처럼 특정 사안에서 원청 사용자성을 인정하고 해당 사안에 대해 교섭할 수는 있겠지만, 일단 교섭 테이블에 앉으면 임금, 복지 등 다른 요구까지 함께 나오는 게 현실이다.” -호남 반도체 공장이나 AI·로봇...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01394006645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356685?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "환율 1300원대로 10개월 만에 최저",
-      "description": "시장에서는 경상수지 흑자 속에 반도체 등 수출업체가 달러를 시장에 대거 매도한 것이 환율 하락에 영향을 미쳤다고 보고 있다. 월말에 집중해 달러를 매도하던 수출업체들이 최근 수시로 달러를 파는 전략을...",
-      "link": "https://www.nongmin.com/article/20260821500613",
-      "naver_link": "https://n.news.naver.com/mnews/article/662/0000102515?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor",
-        "us"
-      ],
-      "queries": [
-        "반도체",
-        "미국 증시"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/662/2026/08/24/0000102515_001_20260824050240792.jpg?type=w800"
-    },
-    {
-      "title": "\"호남 반도체 R&D 인력만이라도 주52시간 규제 풀자\"",
-      "description": "“지역은 호남, 업종은 반도체, 직무는 연구개발(R&D)로 한정하고 그것도 근로자가 원할 때만 주 52시간... 호남 반도체 메가특구가 기존 특구와 확실히 다른 투자 유인을 제시하려면 첨단산업 R&D 분야의 근로시간 규제부터...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01397286645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356686?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "삼성전자ㆍSK하이닉스, 최대 150조 주주환원⋯‘주가 리레이팅’ 시험대...",
-      "description": "증권가는 이번 주주환원 카드가 국내 반도체 대표주의 만성적 저평가를 씻어내고 주가 재평가를 끌어낼... 반도체 대표주들의 주주환원 정례화가 국내 증시 전반의 체질 개선을 끌어낼 것이란 기대도 나온다. 양일우...",
-      "link": "https://www.etoday.co.kr/news/view/2617061",
-      "naver_link": "https://www.etoday.co.kr/news/view/2617061",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "투자ㆍ환원 동시 확대...‘돈의 공식’ AI 슈퍼사이클이 바꿨다 [K-반도...",
-      "description": "AI 반도체 슈퍼사이클이 만들어낸 막대한 현금창출력이 자리한다. AI 슈퍼사이클은 국내 반도체 기업의 ‘돈 쓰는 공식’을 바꾸고 있다. 과거에는 생산능력 확대와 불황 대비가 자본배분의 최우선 순위였다면...",
-      "link": "https://www.etoday.co.kr/news/view/2617010",
-      "naver_link": "https://www.etoday.co.kr/news/view/2617010",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "삼성ㆍSK, AI 호황 과실 나눈다…역대급 주주환원 [K-반도체 150조의 승부...",
-      "description": "AI 반도체 호황을 등에 업고 역대급 주주환원에 나선다. SK하이닉스가 40조원 규모의 자사주 매입·소각을... 두 회사의 주주환원 규모가 최대 150조원에 달하면서 K-반도체가 본격적인 ‘주주환원 시대’에...",
-      "link": "https://www.etoday.co.kr/news/view/2617011",
-      "naver_link": "https://www.etoday.co.kr/news/view/2617011",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "“200조 푼다더니 반토막?”…삼성 ‘역대급 110조’에도 시간외서 던진...",
-      "description": "반도체 가격과 출하량, 환율, 성과급 충당금 등에 따라 실제 실적은 달라질 수 있다. 이익 증가를 이끄는... ◆주문 100개 중 60개만 공급한다는 계산 반도체 업황 낙관론을 뒷받침하는 또 다른 숫자는 60%다....",
-      "link": "https://www.segye.com/newsView/20260824500631?OutUrl=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/022/0004153035?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/022/2026/08/24/20260824500633_20260824051513034.jpg?type=w800"
-    },
-    {
-      "title": "[미리 보는 2026 GGGF] \"미·중 AI 패권 경쟁 속 한국의 AI와 피지컬 AI 가...",
-      "description": "피지컬 AI 확산도 변수.\" 미국·이란 전쟁과 러시아·우크라이나 전쟁 장기화에 따른 고유가와 고금리, AI가 촉발한 반도체 슈퍼사이클 등 영향으로 세계 경제가 요동치는 가운데 아주경제가 '제18회 착한 성장, 좋은...",
-      "link": "https://www.ajunews.com/view/20260823132630741",
-      "naver_link": "https://www.ajunews.com/view/20260823132630741",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "‘광주 군 공항 이전’ 급물살 탄다",
-      "description": "호남권 반도체 클러스터 조성을 위한 핵심 전제 조건인 광주 군 공항 이전 사업이 마침내 본격적인 행정 절차 궤도에 오른다. 23일 국방부와 전남광주통합특별시, 무안군 등에 따르면 국방부는 오는 28일 오후 4시 국방부...",
-      "link": "https://www.seoul.co.kr/news/publicnews/local_govern/news_local/2026/08/24/20260824019002?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672759?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[사설]N% 성과급 파업 확산, 노사 갈등 더 이상 방치 안 돼",
-      "description": "두 회사가 반도체 호황 덕에 영업이익이 급증해 10%대 성과급만으로도 직원들이 수억원대 보너스를 챙기는 것을 본 다른 기업 노동자들이 N% 성과급을 덩달아 요구하고 나선 것이다. 포스코 노조가 성과급 성격의 격려금...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01407126645550600&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356689?sid=110",
-      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
       ]
     },
     {
@@ -568,94 +1839,29 @@
       "thumbnail_url": "https://imgnews.pstatic.net/image/081/2026/08/24/0003672761_001_20260824050258662.png?type=w800"
     },
     {
-      "title": "SKT, 독보적 '풀스택 AI' 전략으로 AI 국가대표 굳힌다",
-      "description": "안정적 전력 공급(SK가스, SKMU 등), 건물·구조 설계(SK에코플랜트), 메모리 반도체(SK하이닉스), 대규모... 지난 6월에는 젠슨 황 엔비디아 CEO가 최태원 SK그룹 회장, 정재헌 대표 등 SK 경영진과 만나 반도체부터...",
-      "link": "https://www.nocutnews.co.kr/news/6566281?utm_source=naver&utm_medium=article&utm_campaign=20260824050030",
-      "naver_link": "https://n.news.naver.com/mnews/article/079/0004181343?sid=105",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
+      "title": "환율 1300원대로 10개월 만에 최저",
+      "description": "이낙원 NH농협은행 FX파생사업부 전문위원은 “미국 증시에 상장한 SK하이닉스가 조달한 약 260억달러를 원화로 환전한 것으로 추정되고, 수출기업들도 7월말~8월 중순 월평균 매도량의 10~15배의 달러를 정리한...",
+      "link": "https://www.nongmin.com/article/20260821500613",
+      "naver_link": "https://n.news.naver.com/mnews/article/662/0000102515?sid=101",
+      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
       "categories": [
-        "semiconductor"
+        "us"
       ],
       "queries": [
-        "반도체"
+        "미국 증시"
       ]
     },
     {
-      "title": "“150조 미래기금 사용조건 못박아야” “국채 상환에도 써야”",
-      "description": "일각 “정부 자의적 사용 우려” 지적 재정안정기금 등 보완 방안 제시 반도체 호황 지속 여부 등 변수도 기획처 “경제구조 변화 등 반영” 반도체 호황에 따른 추가·초과 세수를 활용해 조성될 150조원+알파(α) 규모의...",
-      "link": "https://www.seoul.co.kr/news/economy/2026/08/24/20260824002004?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672730?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
+      "title": "“200조 푼다더니 반토막?”…삼성 ‘역대급 110조’에도 시간외서 던진...",
+      "description": "◆28만전자 마감 뒤 애프터마켓 급락 보고서 발표 이후 삼성전자와 코스피는 롤러코스터를 탔다. 코스피는 지난 14일 장중 7010.86까지 오르며 7000선을 회복한 뒤 6977.94에 마감했다. 삼성전자도 이날 27만4500원까지...",
+      "link": "https://www.segye.com/newsView/20260824500631?OutUrl=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/022/0004153035?sid=101",
+      "published_at": "Mon, 24 Aug 2026 05:02:00 +0900",
       "categories": [
-        "semiconductor"
+        "kospi"
       ],
       "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "수도권은 밀고 지방은 당기고… 데이터센터 밀당[데이터센터의 명암]",
-      "description": "전문가들도 AI 연구소·대학 연구센터, AI 스타트업·기업, 로봇·바이오·반도체·제조업, 지역 인재 양성 등 생태계가 조정되어야 실제 경제 활성화로 이어질 수 있다고 본다. 데이터센터 수요처인 기업과 클라우드...",
-      "link": "https://www.seoul.co.kr/news/plan/datacenter/2026/08/24/20260824001006?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672728?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "학생 감소 반영한 새 교육교부금… 총액 늘지만 교육계는 반발",
-      "description": "올해 반도체 호황에 따른 추가 세수로 내년 교부금은 100조원에 육박할 수 있다는 전망이 나왔다. 이에 정부는 개편안 적용으로 발생하는 20조원 정도의 교부금 차액은 신설되는 미래대응기금 내 교육·인재 계정으로...",
-      "link": "https://www.seoul.co.kr/news/society/education-news/2026/08/24/20260824002003?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672729?sid=102",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[단독]메가특구법, 국힘 위원장 피해 정무위로…與 '속도전' 태세",
-      "description": "메가특구법은 인공지능(AI)과 반도체 등 첨단산업 육성을 위해 대규모 산업 거점을 조성하고 규제를 완화하는 내용을 골자로 한다. 정부와 여당은 메가특구를 중심으로 기업 투자를 끌어내고 지역별 전략 산업을...",
-      "link": "https://www.nocutnews.co.kr/news/6566352?utm_source=naver&utm_medium=article&utm_campaign=20260824050030",
-      "naver_link": "https://n.news.naver.com/mnews/article/079/0004181344?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[사설] 100조 미래기금, 통제 없는 정부 곳간으로 전락해선 안 돼",
-      "description": "정부가 반도체 호황으로 늘어날 추가 세수 등을 재원으로 '미래대응기금'을 만들기로 했다. 청년·성장 동력·지방·교육·인재 등에 투자해 잠재성장률을 높이고 세수 변동성을 완화한다는 구상이다. 첫해 기금 규모가...",
-      "link": "https://www.imaeil.com/page/view/2026082316494217087",
-      "naver_link": "https://n.news.naver.com/mnews/article/088/0001024788?sid=110",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[열린송현] 혁신 중소기업에 필요한 ‘오디세이의 금융’",
-      "description": "인공지능(AI)·반도체·로봇 같은 딥테크 기업은 언제 연구개발을 끝낼지도, 시장에서 성공할지도 불확실하다.... 정부가 추진하는 차세대 반도체, 피지컬 AI, AI 데이터센터 등 3대 메가 프로젝트에는 향후 10년간 1500조 원이...",
-      "link": "https://www.sedaily.com/article/20082203?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654360?sid=101",
-      "published_at": "Mon, 24 Aug 2026 05:01:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
+        "코스피"
       ]
     },
     {
@@ -669,8 +1875,7 @@
       ],
       "queries": [
         "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/025/2026/08/24/0003546242_001_20260824052822630.jpg?type=w800"
+      ]
     },
     {
       "title": "[요동치는 韓증시②] 단일종목 레버리지 거래대금 94% 급감…규제 효과...",
@@ -679,14 +1884,11 @@
       "naver_link": "https://www.news2day.co.kr/article/20260822500019",
       "published_at": "Mon, 24 Aug 2026 04:34:00 +0900",
       "categories": [
-        "kospi",
-        "kosdaq"
+        "kospi"
       ],
       "queries": [
-        "코스피",
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.news2day.co.kr/data2/content/image/2026/08/22/.cache/512/20260822500022.png"
+        "코스피"
+      ]
     },
     {
       "title": "“당장 사라던 유튜버 추천종목 급락”… 알고리즘에 갇힌 개미들",
@@ -695,14 +1897,11 @@
       "naver_link": "https://n.news.naver.com/mnews/article/020/0003742783?sid=101",
       "published_at": "Mon, 24 Aug 2026 04:33:00 +0900",
       "categories": [
-        "kospi",
-        "kosdaq"
+        "kospi"
       ],
       "queries": [
-        "코스피",
-        "코스닥"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/020/2026/08/24/0003742783_001_20260824043353450.jpg?type=w800"
+        "코스피"
+      ]
     },
     {
       "title": "“핀플루언서 믿고 주식 투자” 반년만에 원금 날린 스무살",
@@ -716,20 +1915,6 @@
       "queries": [
         "바이오 주식"
       ]
-    },
-    {
-      "title": "[IPO 워치] 니어스랩·해치텍 코스닥 입성…스카이랩스 청약",
-      "description": "차이로 코스닥 시장에 입성한다. 일반투자자 대상 공모청약에는 디지털 헬스케어 기업 스카이랩스가... 24일 금융투자업계에 따르면 니어스랩은 이날 코스닥 시장에 상장한다. 니어스랩은 AI 기술을 활용해 산업용...",
-      "link": "https://www.news2day.co.kr/article/20260822500021",
-      "naver_link": "https://www.news2day.co.kr/article/20260822500021",
-      "published_at": "Mon, 24 Aug 2026 04:32:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.news2day.co.kr/data2/content/image/2026/08/22/.cache/512/20260822500020.png"
     },
     {
       "title": "[시론] 미국 경제의 삼중고 늪",
@@ -770,11 +1955,10 @@
       "queries": [
         "미국 증시",
         "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/029/2026/08/24/0003043785_001_20260824041617126.png?type=w800"
+      ]
     },
     {
-      "title": "7천피 안착 시험대… '2대 분수령' 주목",
+      "title": "\"7천피, 이번엔 지켜낼까\"…코스피 운명 가를 2대 변수",
       "description": "지난주 코스피지수는 미국 국채금리 급등에 눌려 7000선 문턱에서 주저앉았지만 SK하이닉스·삼성전자의... 23일 한국거래소에 따르면 지난주(8월18~21일) 코스피지수는 전주말(6977.94) 대비 64.99포인트(0.93%) 떨어진 6912....",
       "link": "https://www.mt.co.kr/stock/2026/08/24/2026082319470622957",
       "naver_link": "https://n.news.naver.com/mnews/article/008/0005403513?sid=101",
@@ -788,8 +1972,7 @@
         "코스피",
         "외국인 기관 순매수 증시",
         "미국 국채 금리 연준"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/008/2026/08/24/0005403513_001_20260824040615772.jpg?type=w800"
+      ]
     },
     {
       "title": "미니애폴리스 연은 총재 \"이란 충돌 장기화하면 추가 금리인상 필요\"",
@@ -815,8 +1998,7 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://nimage.g-enews.com/phpwas/restmb_allidxmake.php?idx=5&simg=20260823230314044989a1f30943117511616074.jpg"
+      ]
     },
     {
       "title": "‘말 아낀’ 워시, 첫 잭슨홀 연설…시장 신뢰 시험대",
@@ -838,43 +2020,11 @@
       "naver_link": "https://www.the-today.com/news/articleView.html?idxno=88832",
       "published_at": "Mon, 24 Aug 2026 01:32:00 +0900",
       "categories": [
-        "us",
-        "kospi",
-        "kosdaq"
+        "us"
       ],
       "queries": [
-        "미국 증시",
-        "코스피",
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.the-today.com/news/photo/202608/88832_110223_2342.png"
-    },
-    {
-      "title": "국내 개미들, 코스피서 코인판으로 유턴...업비트 1시간 거래량 1조원 돌...",
-      "description": "인공지능 반도체 수요를 타고 코스피가 사상 최고치를 경신하면서 투자자들의 관심이 국내 주식으로 이동한 영향이 컸다. 업비트와 빗썸의 올해 상반기 영업수익도 각각 약 50% 감소했다. 최근 이틀간...",
-      "link": "http://coinreaders.com/254348",
-      "naver_link": "http://coinreaders.com/254348",
-      "published_at": "Mon, 24 Aug 2026 01:32:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
+        "미국 증시"
       ]
-    },
-    {
-      "title": "[시론] '호모 인베스티쿠스'의 등장",
-      "description": "활황장에서는 코스피지수 10000도 지척으로 보였건만 하락장에 접어드니 6000도 고평가로, AI 투자는 거품으로 보이기 시작한다. 수치는 바뀌지 않아도 그 수치를 보는 눈과 세상을 향한 무드는 통째로 뒤바뀐다. 시선과...",
-      "link": "https://www.hankyung.com/article/2026082371001",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323773?sid=110",
-      "published_at": "Mon, 24 Aug 2026 01:00:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/015/2026/08/24/0005323773_001_20260824010020895.jpg?type=w800"
     },
     {
       "title": "윅스닷컴 집단소송 대표원고 9월22일 마감",
@@ -887,78 +2037,7 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://f1.tokenpost.kr/2026/08/latqzpdwo2.jpg"
-    },
-    {
-      "title": "“롤러코스피 잠시 쉬어가세요”… 파킹통장이 다시 뜬다",
-      "description": "투자자 ‘대기 자금’ 보관처로 주목 직장인 윤모(32)씨는 최근 주식 투자로 번 수익금 1000만원을 빼 파킹통장 여러 곳에 나눠 넣었다. 증시가 하루에도 큰 폭으로 오르내리자 당분간 투자금을 현금으로 보관하며...",
-      "link": "https://www.chosun.com/economy/economy_general/2026/08/24/K5TLEWB6X5BGJM7H6ZPLJXU6PI/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
-      "naver_link": "https://n.news.naver.com/mnews/article/023/0003994459?sid=101",
-      "published_at": "Mon, 24 Aug 2026 00:38:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/023/2026/08/24/0003994459_001_20260824003820747.jpg?type=w800"
-    },
-    {
-      "title": "두산에너빌리티, 4거래일 조정 끝낼까…새주 반등 여부 촉각",
-      "description": "특히 21일 코스피가 0.88% 상승한 것과 비교하면 두산에너빌리티의 약세 흐름은 두드러졌다. 다만 최근 변동성이 컸던 만큼 지난주 움직임만으로 새주 방향성을 단정하기는 어려운 상황이다. 시장에서는 주가...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600505",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600505",
-      "published_at": "Mon, 24 Aug 2026 00:20:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202608/600505_411812_532_v150.jpg"
-    },
-    {
-      "title": "친환경 여행 넘어 경영 인프라로…여행기업 ESG의 진화, 한계는?",
-      "description": "금융위원회는 2028년(FY27) 연결자산총액 10조 원 이상 코스피 상장사부터 지속가능성 공시를 의무화하고 2029년 5조 원 이상으로 확대하는 최종안을 확정했으며, 이를 위해 연내 자본시장법 개정을 추진한다. 2030년에는...",
-      "link": "https://www.traveltimes.co.kr/news/articleView.html?idxno=500218",
-      "naver_link": "https://www.traveltimes.co.kr/news/articleView.html?idxno=500218",
-      "published_at": "Mon, 24 Aug 2026 00:16:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ],
-      "thumbnail_url": "https://cdn.traveltimes.co.kr/news/photo/202608/500218_50528_151.png"
-    },
-    {
-      "title": "'니어스랩 공모주 상장일' 청약 결과 뒤집고 따따상 기대 UP",
-      "description": "니어스랩 공모주 로고 드론 전문 기업 니어스랩이 24일 코스닥 시장에 입문한다. 앞서 지난 12~13일 일반투자자를 대상 공모주 청약을 실시한 결과 530대 1의 경쟁률을 기록했다. 청약에는 총 1억2057만1780주가...",
-      "link": "https://www.gukjenews.com/news/articleView.html?idxno=3671872",
-      "naver_link": "https://www.gukjenews.com/news/articleView.html?idxno=3671872",
-      "published_at": "Mon, 24 Aug 2026 00:10:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.gukjenews.com/news/thumbnail/202608/3671872_3839963_5319_v150.jpg"
-    },
-    {
-      "title": "[공모주] 니어스랩, 오늘 코스닥 상장일",
-      "description": "니어스랩, 오늘 코스닥 상장일 ©니어스랩 니어스랩이 공모가 4만1200원으로 24일 코스닥에 상장한다. AI 자율비행 드론 기업 니어스랩이 24일 코스닥 시장에 입성한다. 풍력발전 점검에서 방산용 군집드론까지...",
-      "link": "https://www.bntnews.co.kr/article/view/bnt202608240002",
-      "naver_link": "https://www.bntnews.co.kr/article/view/bnt202608240002",
-      "published_at": "Mon, 24 Aug 2026 00:08:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://www.bntnews.co.kr/data/bnt/image/2026/08/24/bnt202608240001.jpg"
+      ]
     },
     {
       "title": "유바이오로직스·휴젤 자사주 활용 주주환원·인재 확보",
@@ -984,118 +2063,20 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://cdn.digitaltoday.co.kr/news/photo/202608/694830_642701_212.jpg"
-    },
-    {
-      "title": "‘오너주주 58명ʼ GS, 역사적 신고가에 PBR 0.5배 [저PBR 숨은그림찾기...",
-      "description": "GS 주가가 랠리를 시작한 것은 코스피 지수가 약세로 돌아선 7월부터다. 7월 3일부터 8월 18일까지 30거래일간 코스피는 15% 하락했는데, GS는 63% 급등했다. 이 같은 급등세 바탕에는 손자회사인 GS칼텍스 중심의 견고한...",
-      "link": "https://www.fntimes.com/html/view.php?ud=202608220025191288dd55077bc2_18",
-      "naver_link": "https://www.fntimes.com/html/view.php?ud=202608220025191288dd55077bc2_18",
-      "published_at": "Mon, 24 Aug 2026 00:02:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "[데스크 칼럼] 돈 모이는 홍콩, 돈 불리는 싱가포르…한국은?",
-      "description": "코스피가 한때 8000이라는 상징적 고지를 밟았다. 증권사 창구와 ETF 시장으로 뭉칫돈이 몰리고 개인 투자자의... 이것이 코스피 8000 이후 한국 자본시장이 풀어야 할 가장 중요한 숙제다. 거래가 늘었다고 자본시장의...",
-      "link": "https://www.fntimes.com/html/view.php?ud=202608220115055230dd55077bc2_18",
-      "naver_link": "https://www.fntimes.com/html/view.php?ud=202608220115055230dd55077bc2_18",
-      "published_at": "Mon, 24 Aug 2026 00:02:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "110조 내놨는데 부족?",
-      "description": "서상영 미래에셋증권 연구원은 “삼성전자 주가 약세와 코스피 부진이 예상된다”며 “다만 핫칩스 2026에서 공개될 신제품 및 메모리 산업 관련 내용에 따라 반발 매수세가 유입될 수도 있다”고 전망했다....",
-      "link": "https://www.joongang.co.kr/article/25455479",
-      "naver_link": "https://n.news.naver.com/mnews/article/025/0003546192?sid=101",
-      "published_at": "Mon, 24 Aug 2026 00:02:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
     },
     {
       "title": "유승운 스톤브릿지 대표, 반기 최대 실적…펀드 결성·회수 가속 [VC 202...",
-      "description": "아델, 넥스아이는 코스닥 상장 예비 심사 청구한 상태다. 스톤브릿지벤처스 관계자는 \"5개 기업은... 개발사로, 코스닥 상장을 위한 예비심사를 청구한 상태다. 넥스아이는 면역항암제 불응 기전을 겨냥한 항암제...",
+      "description": "상반기 벤처캐피탈(VC) 업계는 주식시장 활황으로 포트폴리오사 대부분을 높은 수익률로 회수에 성공했다.... 포트폴리오\"라며 \"방산·피지컬AI, 바이오산약, 생성형 AI 등 최근 가장 주목받는 산업 영역에 걸쳐 있어...",
       "link": "https://www.fntimes.com/html/view.php?ud=202608220017094789dd55077bc2_18",
       "naver_link": "https://www.fntimes.com/html/view.php?ud=202608220017094789dd55077bc2_18",
       "published_at": "Mon, 24 Aug 2026 00:02:00 +0900",
       "categories": [
-        "kosdaq",
         "bio"
       ],
       "queries": [
-        "코스닥",
         "바이오 주식"
-      ],
-      "thumbnail_url": "https://cfnimage.commutil.kr/phpwas/restmb_allidxmake.php?pp=002&idx=999&simg=20260822001755081370dd55077bc212411124362.jpg&nmt=18"
-    },
-    {
-      "title": "[시론] 기업위험이 커질수록 보험은 늘어날까",
-      "description": "한국금융연구원이 2010년부터 2024년까지 유가증권시장과 코스닥시장 상장기업을 대상으로 1만6747개의 기업-연도 관측치를 분석한 결과 경영위험과 시장기반위험, 파산위험이 증가할수록 보험료 지출이 유의하게 감소하는...",
-      "link": "https://www.insnews.co.kr/news/articleView.html?idxno=92379",
-      "naver_link": "https://www.insnews.co.kr/news/articleView.html?idxno=92379",
-      "published_at": "Mon, 24 Aug 2026 00:02:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.insnews.co.kr/news/photo/202608/92379_57218_5929.jpg"
-    },
-    {
-      "title": "정기예금 1000조 눈앞, 골드바 2.8배 판매, 달러예금 역대 최대",
-      "description": "‘롤러코스피’ 장세에 당분간 주식 투자금을 늘리지 않기로 했다. 송씨는 “최근 원·달러 환율이 많이 내려온 것 같아 달러를 조금 사뒀다”며 “금값도 다시 오르고 있어 금 투자도 눈여겨보고 있다”고 말했다....",
-      "link": "https://www.joongang.co.kr/article/25455473",
-      "naver_link": "https://n.news.naver.com/mnews/article/025/0003546186?sid=101",
-      "published_at": "Mon, 24 Aug 2026 00:01:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
-    },
-    {
-      "title": "우리기술, 전일 급등 뒤 2%대 조정…빌 게이츠 방한 앞두고 원전·SMR 테...",
-      "description": "시가총액은 약 2조544억원으로 코스닥 시장 41위 수준을 기록했다. 차트에서도 장 초반 변동성이 두드러졌다. 개장 직후 주가가 빠르게 움직인 이후 1만1700원대까지 내려갔고, 이후에는 1만1800~1만1900원대를 중심으로...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600532",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600532",
-      "published_at": "Mon, 24 Aug 2026 00:00:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202608/600532_411838_4818_v150.jpg"
-    },
-    {
-      "title": "[공모주 현황]니어스랩, 月 첫 성적표 주목…자율비행 AI 드론 기술로 시...",
-      "description": "AI 기반 자율비행 드론 솔루션 기업 니어스랩이 오는 24일 코스닥 시장에 상장한다. 풍력발전기 점검에서 방산용 자율드론까지 사업 영역을 넓혀온 만큼 상장 이후 기술 경쟁력과 글로벌 확장성이 시장에서 어떤...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600120",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600120",
-      "published_at": "Mon, 24 Aug 2026 00:00:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202608/600120_411524_72_v150.jpg"
     },
     {
       "title": "[증시 프리즘] 외인·기관, 실적 시즌마다 반도체 '사자' 행렬…수급과...",
@@ -1134,36 +2115,7 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/018/2026/08/23/0006356677_001_20260823235612398.jpg?type=w800"
-    },
-    {
-      "title": "'상장 도전' 글로벌테크놀로지, 실적 관건은 '삼성 미니 LED TV 추가 채택...",
-      "description": "코스닥 상장에 도전하는 글로벌테크놀로지가 낙관적 실적 전망 관건은 삼성전자 네오 QLED TV 추가... 글로벌테크놀로지는 코스닥 상장 과정에서 보통주 400만주를 발행한다. 주당 희망공모가는 1만 3000~1만...",
-      "link": "https://zdnet.co.kr/view/?no=20260823233523",
-      "naver_link": "https://n.news.naver.com/mnews/article/092/0002434770?sid=105",
-      "published_at": "Sun, 23 Aug 2026 23:36:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/092/2026/08/23/0002434770_001_20260824004610081.png?type=w800"
-    },
-    {
-      "title": "LB세미콘, 공매도 과열종목 지정 연장에 따라 거래 제한 실시",
-      "description": "시장조성을 위한 헤지거래 목적의 호가는 예외적으로 공매도가 허용된다. 이번 조치는 코스닥시장 업무규정 제9조의2 및 시행세칙 제8조의5에 따라 이루어졌으며, 투자자들은 해당 사항을 참고해야 한다.",
-      "link": "https://www.topstarnews.net/news/articleView.html?idxno=16170983",
-      "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16170983",
-      "published_at": "Sun, 23 Aug 2026 22:56:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.topstarnews.net/news/photo/202608/16170983_2000882_5453_crop.jpg"
+      ]
     },
     {
       "title": "달러 캐리 18% 수익, 연초에도 1.3% 올랐다",
@@ -1185,26 +2137,10 @@
       "naver_link": "https://n.news.naver.com/mnews/article/138/0002238673?sid=101",
       "published_at": "Sun, 23 Aug 2026 22:02:00 +0900",
       "categories": [
-        "us",
-        "kospi"
+        "us"
       ],
       "queries": [
-        "미국 증시",
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/138/2026/08/23/0002238673_001_20260823220208298.png?type=w800"
-    },
-    {
-      "title": "[사설]증시 '밸류 업' 위한 상법개정… 기업투자 위축엔 눈 감나",
-      "description": "이재명 정부 '코스피 5,000' 대선공약에 발맞춘 증시 '밸류 업' 측면에서 3차에 걸친 상법개정은 일정한 효과를... 올해 7월 극심한 변동을 겪긴 했지만, 작년 7월 1일 3,090.61이던 코스피 종가는 이달 8월 1일 6,912.95로 2.2배로...",
-      "link": "https://www.sidae.com/article/2026082316310156583",
-      "naver_link": "https://n.news.naver.com/mnews/article/417/0001156116?sid=110",
-      "published_at": "Sun, 23 Aug 2026 22:00:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
+        "미국 증시"
       ]
     },
     {
@@ -1218,8 +2154,7 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://f1.tokenpost.kr/2026/08/xvntve59xc.jpg"
+      ]
     },
     {
       "title": "카카오, 'AI·투자' 사업 분할 결정…\"기업가치 증명 숙제\"",
@@ -1232,38 +2167,7 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://cdn.industrynews.co.kr/news/photo/202608/84827_104931_3526.jpg"
-    },
-    {
-      "title": "기보, 중소기업 M&A 플랫폼 통해 화장품 자동화장비 진출 지원",
-      "description": "코스닥 상장사인 APS이노베이션은 이차전지·디스플레이 생산공정 장비를 제조하는 기업으로, 이번 M&A를 통해 ㈜이래의 화장품 충진·포장 자동화장비 기술과 자사의 정밀기계 제어·제조 역량을 결합해 사업 다각화와...",
-      "link": "https://www.gukjenews.com/news/articleView.html?idxno=3672032",
-      "naver_link": "https://www.gukjenews.com/news/articleView.html?idxno=3672032",
-      "published_at": "Sun, 23 Aug 2026 21:34:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.gukjenews.com/news/thumbnail/202608/3672032_3840112_283_v150.jpg"
-    },
-    {
-      "title": "코스피 상장사 상반기 순이익 333%↑…삼전·하닉 65% 차지",
-      "description": "올해 상반기 코스피 상장사의 매출액과 영업이익, 순이익이 모두 전년 대비 크게 증가한 것으로 집계됐다. 삼성전자와 SK하이닉스 두 회사가 거둔 순이익이 전체의 3분의 2를 차지했으나 다른 상장사들도...",
-      "link": "https://www.idaegu.co.kr/news/articleView.html?idxno=557316",
-      "naver_link": "https://www.idaegu.co.kr/news/articleView.html?idxno=557316",
-      "published_at": "Sun, 23 Aug 2026 21:24:00 +0900",
-      "categories": [
-        "kospi",
-        "kosdaq"
-      ],
-      "queries": [
-        "코스피",
-        "코스닥"
-      ],
-      "thumbnail_url": "https://www.idaegu.co.kr/image/logo/snslogo_20241121032237.png"
+      ]
     },
     {
       "title": "충북도–GC녹십자, '충북형 바이오 오픈이노베이션' 생태계 구축나선다",
@@ -1276,21 +2180,6 @@
       ],
       "queries": [
         "바이오 주식"
-      ]
-    },
-    {
-      "title": "‘삼전닉스’ 아니면 줄줄 내렸다…‘파란불’ 가득한 계좌에 개미들 허...",
-      "description": "반면 코스닥은 21일 4%대 급락하고 코스피에서도 ‘삼전닉스’의 주주환원과 무관한 종목들 상당수가... 한국거래소에 따르면 이달 들어 지난 21일까지 코스피의 일평균 상장주식 회전율은 0.56%로, 연중 최고였던 3월(1....",
-      "link": "https://www.seoul.co.kr/news/economy/securities/2026/08/23/20260823500018?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672715?sid=101",
-      "published_at": "Sun, 23 Aug 2026 21:14:00 +0900",
-      "categories": [
-        "kospi",
-        "kosdaq"
-      ],
-      "queries": [
-        "코스피",
-        "코스닥"
       ]
     },
     {
@@ -1307,45 +2196,6 @@
       ]
     },
     {
-      "title": "[미리보는 이데일리 신문] 인허가 난항 사업에 美, 22조 투자 압박",
-      "description": "롤러코스피 △오피니언 -이제 성장은 신뢰에 달려 있다 -북·미 다시 움직이는데…韓은 없다 -AI시대 다시 뜨는 블루칼라 -[e갤러리] 류경하 ‘유유자적’ △피플 -AI를 쓰는 사람은 넘쳐나 AI로 ‘일할 줄 아는’ 인재...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=02450166645550272&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356670?sid=101",
-      "published_at": "Sun, 23 Aug 2026 20:58:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "왜 근본적 질문을 하지 않는가? [세상읽기]",
-      "description": "임기 말까지 코스피 5000을 달성하겠다는 공약은 진작에 이뤄졌다. 반도체 호황이라는 특수한 상황이 있기는 하지만, 경제성장률도 3%를 훌쩍 넘을 것 같다. 산업화 과정에서 부당하게 소외되었던 호남에 첨단 산업을 유치한...",
-      "link": "https://www.hani.co.kr/arti/opinion/column/1274243.html",
-      "naver_link": "https://n.news.naver.com/mnews/article/028/0002819786?sid=110",
-      "published_at": "Sun, 23 Aug 2026 20:38:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "은행 상반기 이자수익 32조 ‘역대 최대’",
-      "description": "특히 올해 2분기 주택 거래가 증가하고, 코스피 급등에 ‘빚투’(빚내서 투자)까지 늘면서 은행 대출이 많았다. 순이자마진(NIM)도 1.56%로 지난해 같은 기간보다 0.04%포인트 상승했다. NIM은 대출 수익에서 조달...",
-      "link": "https://www.khan.co.kr/article/202608232036035",
-      "naver_link": "https://n.news.naver.com/mnews/article/032/0003465906?sid=101",
-      "published_at": "Sun, 23 Aug 2026 20:36:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
       "title": "“특허만료? 딴걸로 돈벌면 돼”…머크 ‘암백신’으로 신고가 찍었다",
       "description": "키트루다 특허만료 우려커진 머크 mRNA 암백신 3상 성과에 돌파구 암치료의 패러다임 바꿀 신약 평가 주가 52주 신고가 기록 ‘파죽지세’ 글로벌 빅파마 머크의 주가가 고공행진하며 미국 증시에서 강렬한 존재감을...",
       "link": "https://www.mk.co.kr/article/12134279",
@@ -1356,78 +2206,19 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/009/2026/08/23/0005724648_001_20260823202410043.jpg?type=w800"
-    },
-    {
-      "title": "'-23%→-28%→-34%' 비명…'따상' 기대했는데 \"바로 팔자\"",
-      "description": "신규 상장이 몰리는 코스닥시장이 부진한데다 ‘공모주에 장기 투자할수록 손해’라는 인식이 확산한... 올해 상반기 코스닥 IPO 공모 금액(6347억원)은 코로나19 여파가 반영된 2020년 상반기 수준으로 쪼그라들었다....",
-      "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202608230137&t=NN",
-      "naver_link": "https://n.news.naver.com/mnews/article/215/0001263291?sid=101",
-      "published_at": "Sun, 23 Aug 2026 20:09:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "低PBR 명단 공개 앞두고 '밸류업 공시' 급증…올해 57곳",
-      "description": "공시한 코스피·코스닥 상장사는 57곳으로 집계됐다. 지난해 약 15곳과 비교하면 4배 가까이 늘어난... PBR이 코스피 하위 25% 또는 코스닥 하위 10%에 해당하는 기업을 공개할 예정이다. 공표는 매년 5월과 11월 첫...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600507",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600507",
-      "published_at": "Sun, 23 Aug 2026 20:08:00 +0900",
-      "categories": [
-        "kospi",
-        "kosdaq"
-      ],
-      "queries": [
-        "코스피",
-        "코스닥"
-      ]
-    },
-    {
-      "title": "달러예금·골드 구매 증가… 주식 매매는 연중 최저",
-      "description": "반면 코스피 시장의 손바뀜은 연중 최저 수준으로 쪼그라들며 시중의 자금이 확실한 피난처로 이동하는... 한국거래소에 따르면 지난 1일부터 21일까지 코스피의 일평균 상장주식 회전율은 0.56%로 집계됐다. 하루...",
-      "link": "https://www.segye.com/newsView/20260823508103?OutUrl=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/022/0004152990?sid=101",
-      "published_at": "Sun, 23 Aug 2026 20:02:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
     },
     {
       "title": "510% 수익낸 고수…“반도체 다음은 코스닥에서 나온다” [한국의 위대...",
-      "description": "10년간 코스피 대비 변동성은 훨씬 낮으면서, 연평균 10%포인트 이상 높은 수익률을 기록해왔다. 2019년 4월... 6%(2026년 8월 12일 종가 기준)를 기록해, 같은 기간 코스피 상승률 192.6%를 크게 웃돌았다. 한국투자증권...",
+      "description": "증권업과 주식투자를 익혔다. “이 일을 좋아하는 이유는 아주 명확합니다. 열심히 공부하고 고민해서... 메디톡스와 씨젠, 한스바이오메드 등 당시 시장에서 크게 주목받지 않던 중소형 성장주를 초기에 발굴했다....",
       "link": "https://www.mk.co.kr/article/12134275",
       "naver_link": "https://n.news.naver.com/mnews/article/009/0005724646?sid=101",
       "published_at": "Sun, 23 Aug 2026 19:55:00 +0900",
       "categories": [
-        "kospi",
-        "kosdaq",
         "bio"
       ],
       "queries": [
-        "코스피",
-        "코스닥",
         "바이오 주식"
-      ]
-    },
-    {
-      "title": "한화자산운용 '한화 고배당주플러스랩', 변동장서 두각",
-      "description": "사진=한화자산운용 한화자산운용은 한화 고배당주플러스랩(한화 고배당주랩)이 최근 코스피... 같은 기간 고점 대비 하락폭을 뜻하는 최대낙폭(MDD)이 코스피보다 우수해 하락폭을 크게 제한하며 변동성 장세에서 하락...",
-      "link": "http://www.bizwnews.com/news/articleView.html?idxno=144011",
-      "naver_link": "http://www.bizwnews.com/news/articleView.html?idxno=144011",
-      "published_at": "Sun, 23 Aug 2026 19:38:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
     },
     {
@@ -1437,41 +2228,22 @@
       "naver_link": "https://www.g-enews.com/view.php?ud=20260823193258520923c501012_1",
       "published_at": "Sun, 23 Aug 2026 19:36:00 +0900",
       "categories": [
-        "us",
-        "kospi",
-        "kosdaq"
+        "us"
       ],
       "queries": [
-        "미국 증시",
-        "코스피",
-        "코스닥"
-      ]
-    },
-    {
-      "title": "‘삼전닉스’ 주주환원 이어 AI반도체까지…금주 코스피 시험대",
-      "description": "그러나 후반에는 삼성전자와 SK하이닉스의 대규모 주주환원에 대한 기대감이 유입되며 코스피는 낙폭을 상당 부분 만회했다. 투자자들은 이번 주 주요 경제·기업 일정이 몰린 만큼 코스피를 예의주시하고 있다....",
-      "link": "http://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0200&key=20260824.22010006314",
-      "naver_link": "https://n.news.naver.com/mnews/article/658/0000153147?sid=101",
-      "published_at": "Sun, 23 Aug 2026 19:34:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
+        "미국 증시"
       ]
     },
     {
       "title": "환율 급락에 숨은 반전… 은행주, 3분기 실적 방어선 구축하나",
-      "description": "23일 하나증권 최정욱 연구원의 보고서에 따르면 지난주 은행 주가는 3.2% 떨어지며 코스피 전체 하락률(0.9... 외국인 투자자가 코스피 시장에서 약 1조9000억원어치를 팔아치우는 동안 은행 주식도 1260억원 넘게 매도했다....",
+      "description": "여전히 높은 물가와 한국은행 총재의 매파적(금리 인상 선호) 발언을 고려할 때, 8월에 기준금리를 올릴... 더 이상 크게 떨어지긴 힘들어… 당분간 숨고르기 예금보험료 인상이나 국고채 입찰 관련 조사 등 소소한...",
       "link": "https://www.pointe.co.kr/news/articleView.html?idxno=83677",
       "naver_link": "https://www.pointe.co.kr/news/articleView.html?idxno=83677",
       "published_at": "Sun, 23 Aug 2026 19:08:00 +0900",
       "categories": [
-        "kospi",
         "korea_rates"
       ],
       "queries": [
-        "코스피",
         "국고채 금리 한국은행"
       ]
     },
@@ -1556,83 +2328,16 @@
       "thumbnail_url": "https://imgnews.pstatic.net/image/003/2026/08/23/NISI20260818_0002215151_web_20260818165044_20260823183422625.jpg?type=w800"
     },
     {
-      "title": "합법적으로 양도세 안 내는 방법 [한경 프리미엄9 TODAY]",
-      "description": "‘증시 하락’ 예견한 전문가의 전망 이재만 하나증권 글로벌투자분석실장은 지난 5월 SK하이닉스가 삼성전자 시가총액을 추월하면 코스피지수 상승장이 끝날 수 있다고 예견했다. 코스피지수 조정장을 선제적으로...",
-      "link": "https://www.hankyung.com/article/2026082371111",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323740?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:32:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "2012년 남유럽 재정위기 땐 국채금리 급등, 은행 부실로 전이",
-      "description": "유럽에서 외화를 빌린 한국 은행들은 만기가 돌아온 차입금을 차환하기 어려워질 가능성을 우려했다. 위기가 확산하자 코스피지수가 하락하고 원화가 약세를 보이는 등 위험 회피 현상이 나타났다.",
-      "link": "https://www.hankyung.com/article/2026082371231",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323733?sid=104",
-      "published_at": "Sun, 23 Aug 2026 18:30:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "무너지는 코넥스…올 코스닥행 0건",
-      "description": "증시 입성 사다리의 첫 단추이자 코스닥시장 상장을 염두에 둔 벤처기업을 위한 코넥스시장이 기관투자가의 외면 속에 빠르게 사막화되고 있다. 코스닥시장으로 넘어가는 인큐베이터 역할을 사실상 상실하며...",
-      "link": "https://www.hankyung.com/article/2026082371691",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323735?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:30:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "'우회상장 통로' 스팩마저 꽁꽁…상장·합병 모두 가뭄",
-      "description": "지난 7월부터 코스닥시장 상장폐지 시가총액 기준이 200억원 미만으로 엄격해지면서 상대적으로 예상 시총 규모가 작은 기업이 주로 활용하던 스팩 시장이 직격타를 맞았다는 평가가 나온다. 스팩 합병으로 증시에...",
-      "link": "https://www.hankyung.com/article/2026082371701",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323736?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:30:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "[EBN 오늘 (23일) 이슈 종합]삼성전자 누적 특허 30만건 눈앞, 투자자 손...",
-      "description": "◆코스피 6900선 되찾았지만…투자자 손은 멈췄다 삼성전자와 SK하이닉스가 반등하며 코스피가 6900선을 되찾았지만 투자심리는 좀처럼 회복되지 않고 있다. 코스피 회전율과 거래량, 거래대금이 나란히 연중 최저...",
+      "description": "23일 한국거래소에 따르면 이달 들어 지난 21일까지 코스피 일평균 상장주식 회전율은 0.56%로 집계됐다.... 반도체가 높은 수준을 유지한 가운데 휴대폰과 전자, 바이오·헬스 업황이 크게 개선됐다. 다만 내수와...",
       "link": "https://www.ebn.co.kr/news/articleView.html?idxno=1721325",
       "naver_link": "https://www.ebn.co.kr/news/articleView.html?idxno=1721325",
       "published_at": "Sun, 23 Aug 2026 18:28:00 +0900",
       "categories": [
-        "kospi",
         "bio"
       ],
       "queries": [
-        "코스피",
         "바이오 주식"
-      ]
-    },
-    {
-      "title": "대전시, 알테오젠 2천532억 투자…글로벌 바이오 생산기지 만든다",
-      "description": "2008년 설립된 알테오젠은 기존 바이오의약품의 성능을 개선한 차세대 바이오베터 등을 연구·개발하는 코스닥 시가총액 상위 바이오기업이다. 이번 투자로 대전을 글로벌 바이오 생산 기반 구축을 위한 주요 거점으로...",
-      "link": "https://www.ccdn.co.kr/news/articleView.html?idxno=1095245",
-      "naver_link": "https://www.ccdn.co.kr/news/articleView.html?idxno=1095245",
-      "published_at": "Sun, 23 Aug 2026 18:28:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
       ]
     },
     {
@@ -1662,70 +2367,16 @@
       ]
     },
     {
-      "title": "역대급 주주환원… PER 4배 뚫고 '30만전자' 가나",
-      "description": "김동원 KB증권 리서치본부장은 \"대규모 주주환원은 삼성전자 기업가치 상승뿐 아니라 코스피 시장 전체 밸류에이션의 재평가를 이끄는 강력한 촉매로 작용할 전망\"이라며 \"삼성전자는 성장과 배당 매력을 동시에 갖춘...",
-      "link": "http://www.fnnews.com/news/202608231821039847",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565117?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:22:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "활력 잃은 코넥스…코스닥 이전상장 올 0건",
-      "description": "코스닥으로 이전상장한 기업이 한 곳도 없는 것으로 나타났다. 유동성 악화 속 '성장 사다리' 역할도 사실상 유명무실해졌다는 평가가 나온다. 23일 한국거래소에 따르면 올 들어 이날까지 코넥스에서 코스닥으로...",
-      "link": "http://www.fnnews.com/news/202608231821010054",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565116?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:22:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "엔비디아 실적 발표·잭슨홀 미팅에 주목 [주간 증시 전망]",
-      "description": "23일 증권업계에 따르면 NH투자증권은 이번주 코스피 예상 범위를 6400~7500으로 제시했다. 상승 요인으로 엔비디아 실적과 금리 변동성 완화를, 하락 요인으로 차익실현 매물을 꼽았다. 시장의 관심은 27일 예정된 엔비디아...",
-      "link": "http://www.fnnews.com/news/202608231819014099",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565112?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:20:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "금값 뛰니 채굴기업 ETF ‘귀한 몸’… 나흘 만에 12% 급등 [ETF 스퀘어]",
-      "description": "반면 방산과 이차전지, 코스닥 레버리지 상품에서는 두 자릿수 손실이 속출하며 투자 대상에 따라... 'KODEX 2차전지산업레버리지'(-15.20%), 'KODEX 코스닥150레버리지'(-13.69%) 등도 두 자릿수 하락률을 기록했다.",
-      "link": "http://www.fnnews.com/news/202608231818561055",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565111?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:20:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "삼전닉스 '150조+α' 역대급 돈잔치에도…\"7천피 안착이 관건\"",
       "description": "시장에서는 개인투자자의 손실이 누적된 데다 자금이 미국 증시로 이동하면서 국내 증시의 거래 활력이 되살아나는 데 시간이 걸리고 있다는 분석을 내놨다. 한지영 키움증권 연구원은 \"올해 초에는 과열 우려가...",
       "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202608230070&t=NN",
       "naver_link": "https://n.news.naver.com/mnews/article/215/0001263285?sid=101",
       "published_at": "Sun, 23 Aug 2026 18:15:00 +0900",
       "categories": [
-        "us",
-        "kospi"
+        "us"
       ],
       "queries": [
-        "미국 증시",
-        "코스피"
+        "미국 증시"
       ]
     },
     {
@@ -1739,45 +2390,6 @@
       ],
       "queries": [
         "미국 증시"
-      ]
-    },
-    {
-      "title": "\"국산 이미지센서 기술로 車 이어 휴머노이드·드론 공략\" [C리즈]",
-      "description": "이 회사는 지난 2015년 코스닥 시장에 상장했다. 이 대표는 \"모바일처럼 보안용 이미지센서 역시 경쟁이 치열해질 것으로 판단하고 자동차 전장 시장으로 눈을 돌렸다\"라며 \"자동차가 내연기관에서 전기차·수소차...",
-      "link": "http://www.fnnews.com/news/202608231811352014",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565097?sid=101",
-      "published_at": "Sun, 23 Aug 2026 18:13:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "[주간 증시전망] 미 연준 의장 통화정책에 시장관심 쏠릴 듯",
-      "description": "/사진 출처=클립아트코리아 김용식 KB증권 전주 부지점장 코스피지수는 전주 대비 64.99포인트(0.93%) 하락한 6912.95포인트로 마감했다. 미국 30년물 국채금리가 5.3%를 기록했고 일본 10년물 금리도 2.9%를 넘는 등 글로벌...",
-      "link": "https://www.jjan.kr/article/20260823500259",
-      "naver_link": "https://www.jjan.kr/article/20260823500259",
-      "published_at": "Sun, 23 Aug 2026 18:12:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "1,257억 자산가 안철수의 '후원 호소', 국민은 어떻게 봐야 하나?",
-      "description": "\"이재명 정부 출범 이후, 저는 늘 최전선에서 싸워왔습니다.\" \"6070 어르신들을 외지로 내쫓는 '부동산 고려장 세법개정'에 즉각 파기를 외쳤습니다.\" \"코스피를 카지노로 만든 삼전닉스 레버리지 ETF, 당장 상폐하라고...",
-      "link": "https://www.ngonews.kr/news/articleView.html?idxno=236086",
-      "naver_link": "https://www.ngonews.kr/news/articleView.html?idxno=236086",
-      "published_at": "Sun, 23 Aug 2026 18:10:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
     },
     {
@@ -1795,16 +2407,14 @@
     },
     {
       "title": "외인·기관·개인 팔아도 기타법인이 지수 견인…‘제4 매수주체’된 S...",
-      "description": "원, 코스피 하루 거래액의 0.34% 수준이던 기타법인 순매수 비중은 이틀간 3.77%로 11배 급증했다. 연중 ‘팔자’를 이어간 외국인 수급 공백을 메우는 수준이다. 올해 들어 21일까지 156거래일 동안 외국인은 코스피...",
+      "description": "SK하이닉스의 40조 원에 달하는 대규모 자사주 매입이 국내 증시 수급 구도를 바꾸고 있다. 평소 시장 영향력이 미미했던 ‘기타법인’이 핵심 매수 주체로 부상하며 전통적인 수급 주체인 개인·외국인·기관이...",
       "link": "https://www.sedaily.com/article/20082304?ref=naver",
       "naver_link": "https://n.news.naver.com/mnews/article/011/0004654301?sid=101",
       "published_at": "Sun, 23 Aug 2026 18:04:00 +0900",
       "categories": [
-        "kospi",
         "korea_flow"
       ],
       "queries": [
-        "코스피",
         "외국인 기관 순매수 증시"
       ]
     },
@@ -1819,19 +2429,6 @@
       ],
       "queries": [
         "바이오 주식"
-      ]
-    },
-    {
-      "title": "'따상' 기대하고 샀는데…석 달 만에 '-34%' 비명 터졌다",
-      "description": "투자은행(IB)업계에서는 신규 상장이 몰리는 코스닥시장의 부진뿐 아니라 ‘공모주에 장기 투자할수록... 올해 상반기 코스닥 IPO 공모 금액(6347억원)은 코로나19 여파가 반영된 2020년 상반기 수준으로 위축됐다. 일반...",
-      "link": "https://www.hankyung.com/article/2026082371711",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323676?sid=101",
-      "published_at": "Sun, 23 Aug 2026 17:48:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
       ]
     },
     {
@@ -1859,19 +2456,6 @@
       ],
       "queries": [
         "미국 증시"
-      ]
-    },
-    {
-      "title": "공모주도 '사팔'…장기투자 외면하는 기관",
-      "description": "투자은행(IB)업계에서는 신규 상장이 몰리는 코스닥시장의 부진뿐 아니라 ‘공모주에 장기 투자할수록... 올해 상반기 코스닥 IPO 공모 금액(6347억원)은 코로나19 여파가 반영된 2020년 상반기 수준으로 위축됐다. 일반...",
-      "link": "https://www.hankyung.com/article/2026082371351",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323671?sid=101",
-      "published_at": "Sun, 23 Aug 2026 17:42:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
       ]
     },
     {
@@ -1943,56 +2527,15 @@
       ]
     },
     {
-      "title": "담합으로 빼돌린 범죄수익, 최초로 동결한 소정수 부장검사",
-      "description": "3000억원대 반도체 소재 부품 가격 담합을 한 혐의를 받는 코스닥 상장사 A사와 임직원들이 이달 재판에 넘겨졌다. 검찰은 이들을 기소하기 전에 A사가 보유하고 있는 부동산에 대해 추징 보전을 했다. 담합 사건에서...",
-      "link": "https://www.hankyung.com/article/2026082370711",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323664?sid=102",
-      "published_at": "Sun, 23 Aug 2026 17:30:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "트래블월렛, IPO 준비 본궤도…\"2027년 코스닥 상장\"",
-      "description": "글로벌 외환·결제 핀테크 기업 트래블월렛이 기업공개(IPO) 대표주관사 선정을 마친 데 이어2027년 코스닥... 트래블월렛은 2027년 코스닥 상장을 목표로 대표주관사단과 상장 전략 및 세부 일정을 구체화하는 등 후속...",
-      "link": "https://www.bloter.net/news/articleView.html?idxno=671567",
-      "naver_link": "https://n.news.naver.com/mnews/article/293/0000089429?sid=105",
-      "published_at": "Sun, 23 Aug 2026 17:30:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "[기획] K-티끌이 만드는 AI 태산",
-      "description": "코스닥 상장사 로보티즈는 국내 휴머노이드 산업의 대표주자로 꼽힌다. LG전자가 2대주주이기도 한... 지난 5월 코스닥에 상장한 마키나락스는 AI 운영체제(OS) 기반의 피지컬 AI 기업으로, 가정용 휴머노이드보다 산업...",
-      "link": "https://www.dt.co.kr/article/12079660?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/029/0003043766?sid=105",
-      "published_at": "Sun, 23 Aug 2026 17:24:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "\"자산 30%는 현금으로 보유…주식 몰빵 강박부터 버려라\"",
-      "description": "2028년은 아직 모르겠습니다.\" 그는 앞으로 코스닥에서 투자 기회가 커질 수 있다고 전망한다. \"올해 조정을 크게 받은 종목 가운데 체질이 개선되는 강소 기업을 찾아내면 큰 수익을 낼 수 있을 것이라고 보고 있습니다....",
+      "description": "이 밖에 피지컬 AI, 전력 인프라·친환경에너지, 바이오테크, 우주·방산 등도 장기적으로 관심을 두고 있다. 최근에는 해외주식 전담 인력도 4명가량 채용해 관련 펀드를 준비하고 있다. 투자 대상이 해외로 넓어져도...",
       "link": "https://www.mk.co.kr/article/12134144",
       "naver_link": "https://n.news.naver.com/mnews/article/009/0005724547?sid=102",
       "published_at": "Sun, 23 Aug 2026 17:20:00 +0900",
       "categories": [
-        "kosdaq",
         "bio"
       ],
       "queries": [
-        "코스닥",
         "바이오 주식"
       ]
     },
@@ -2020,19 +2563,6 @@
       ],
       "queries": [
         "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "리센스메디컬, '안 아픈 시술' 시대 연다…4개 플랫폼으로 확장",
-      "description": "회사는 지난 3월 31일 기술특례 방식으로 코스닥에 상장했다. 기술특례상장은 당장 높은 이익을 내지 못하더라도 기술력과 성장 가능성을 인정받은 기업이 자본시장에 진입할 수 있도록 한 제도다. 리센스메디컬의...",
-      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=479750",
-      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=479750",
-      "published_at": "Sun, 23 Aug 2026 17:10:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
       ]
     },
     {
@@ -2090,6 +2620,19 @@
       ]
     },
     {
+      "title": "[주간증시전망] '7천피' 넘어 상승 시도··27일 엔비디아·금통위 '분수...",
+      "description": "같은 기간 기관은 2조3755억원, 외국인은 1조8504억원을 순매도했고 개인은 1조9413억원을 순매수했다.... 김종민 삼성증권 연구원도 한국 증시의 평가 기준이 이익 사이클을 보는 주가수익비율에서 주주가치 환원...",
+      "link": "https://www.seoulfn.com/news/articleView.html?idxno=636229",
+      "naver_link": "https://www.seoulfn.com/news/articleView.html?idxno=636229",
+      "published_at": "Sun, 23 Aug 2026 17:00:00 +0900",
+      "categories": [
+        "korea_flow"
+      ],
+      "queries": [
+        "외국인 기관 순매수 증시"
+      ]
+    },
+    {
       "title": "[주간 증시 전망대] 엔비디아·잭슨홀에 쏠린 눈… 코스피 7000선 안착 시...",
       "description": "워시 미국 연방준비제도(Fed·연준) 의장의 잭슨홀 기조연설 등에 주목할 전망이다. SK하이닉스가 40조원... 다만 높은 수준의 국제유가와 미국 장기 국채금리는 증시 변동성을 키울 수 있는 요인으로 꼽힌다. NH투자증권은...",
       "link": "http://www.the-biz.co.kr/news/articleView.html?idxno=726622",
@@ -2100,19 +2643,6 @@
       ],
       "queries": [
         "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "\"금·하이닉스 담았더니 웃었다\"…나흘새 12% '껑충' [ETF 스퀘어]",
-      "description": "반면 방산과 이차전지, 코스닥 레버리지 상품에서는 두 자릿수 손실이 속출하며 투자 대상에 따라... 'KODEX 2차전지산업레버리지'(-15.20%), 'KODEX 코스닥150레버리지'(-13.69%) 등도 두 자릿수 하락률을 기록했다.",
-      "link": "http://www.fnnews.com/news/202608230930509654",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565091?sid=101",
-      "published_at": "Sun, 23 Aug 2026 16:54:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
       ]
     },
     {
@@ -2129,19 +2659,6 @@
       ]
     },
     {
-      "title": "지역 상장사들 '경영체제 재편' 놓고 정중동",
-      "description": "코스닥 상장사 DKME에서는 최대주주 변경을 수반하는 주식양수도 계약 체결 이후에도 경영권을 둘러싼 법적 공방이 이어졌다. DKME는 지난 7월 16일 임태상·권오선 사외이사가 자진사임하면서 사외이사가 4명에서 2명으로...",
-      "link": "https://www.iusm.co.kr/news/articleView.html?idxno=1066924",
-      "naver_link": "https://www.iusm.co.kr/news/articleView.html?idxno=1066924",
-      "published_at": "Sun, 23 Aug 2026 16:52:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "성수동에 ‘크래프톤’ 17층 업무시설과 도심숲 생긴다",
       "description": "서울시는 지난 21일 제8차 도시·건축공동위원회 수권분과위원회를 열고 ‘성수정보기술(IT)산업·유통개발진흥지구 지구단위계획구역 내 성수동2가 276-2 일대에 대한 기반시설 등 충분 여부 심의안’을 조건부...",
       "link": "https://www.seoul.co.kr/news/publicnews/2026/08/23/20260823500071?wlog_tag3=naver",
@@ -2154,58 +2671,6 @@
         "IT 산업"
       ],
       "thumbnail_url": "https://imgnews.pstatic.net/image/081/2026/08/23/0003672678_001_20260823164416309.png?type=w800"
-    },
-    {
-      "title": "'성장 사다리' 유명무실…코넥스→코스닥 이전상장 '0건'",
-      "description": "코스닥으로 이전상장한 기업이 한 곳도 없는 것으로 나타났다. 유동성 악화 속 '성장 사다리' 역할도 사실상 유명무실해졌다는 평가가 나온다. 23일 한국거래소에 따르면 올 들어 이날까지 코넥스에서 코스닥으로...",
-      "link": "http://www.fnnews.com/news/202608231249294108",
-      "naver_link": "https://n.news.naver.com/mnews/article/014/0005565087?sid=101",
-      "published_at": "Sun, 23 Aug 2026 16:44:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "\"누적 신약 성과 19조…정작 '국가신약개발재단'은 없어져, 지속돼야\"",
-      "description": "연구비를 비용 처리하면 그만큼 당기순손실이 늘어난다. 한국거래소는 코스닥 상장 기업이 3년간 2회 이상 자기자본 대비 법차손 비율이 50%를 초과하면 관리종목으로 지정한다.",
-      "link": "https://www.mt.co.kr/thebio/2026/08/23/2026082114383887482",
-      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403462?sid=101",
-      "published_at": "Sun, 23 Aug 2026 16:25:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "우리투자증권 IPO 재시동 건다…자율주행 스타트업 예심 청구",
-      "description": "자율주행 인공지능(AI) 소프트웨어 기업 라이드플럭스가 코스닥 상장을 위한 예비심사를 청구하며... 23일 투자은행(IB)업계에 따르면 라이드플럭스는 지난 14일 한국거래소에 코스닥 상장을 위한 예비심사청구서를...",
-      "link": "https://www.hankyung.com/article/2026082366371",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005323634?sid=101",
-      "published_at": "Sun, 23 Aug 2026 16:10:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "“지역 딥테크 펀드 늘어만 가는데”…특구펀드, 운용 차별화 방안 고심",
-      "description": "이 중 46개사(17%)가 코스닥에 상장했다. 다만 지역 주력 산업 활성화와 기술창업 확산 목적의 정책펀드가 잇달아 결성되면서 특구펀드의 존재감은 옅어지고 있다. 중소벤처기업부 소관 모태펀드는 딥테크 유형 출자...",
-      "link": "https://www.etnews.com/20260821000177",
-      "naver_link": "https://n.news.naver.com/mnews/article/030/0003459525?sid=105",
-      "published_at": "Sun, 23 Aug 2026 16:01:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
     },
     {
       "title": "꺾이지 않는 美장기금리…주담대 금리까지 밀어올렸다",
@@ -2231,19 +2696,6 @@
       ],
       "queries": [
         "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "㈜알테오젠, 대전에 K-바이오 생산 전초기지 마련",
-      "description": "2008년에 설립된 알테오젠은 기존 바이오의약품보다 성능을 개선한 차세대 바이오베터 등을 연구·개발하는 코스닥 시가총액 상위 기업으로 이번 협약을 통해 글로벌 바이오 생산 기반의 전초기지를 대전에 구축하게...",
-      "link": "https://www.ggilbo.com/news/articleView.html?idxno=1176832",
-      "naver_link": "https://www.ggilbo.com/news/articleView.html?idxno=1176832",
-      "published_at": "Sun, 23 Aug 2026 15:48:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
       ]
     },
     {
@@ -2326,8 +2778,7 @@
       ],
       "queries": [
         "IT 산업"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/014/2026/08/23/0005565065_001_20260823151214794.png?type=w800"
+      ]
     },
     {
       "title": "코스피 6900선 되찾았지만…투자자 손은 멈췄다",
@@ -2394,8 +2845,7 @@
       ],
       "queries": [
         "IT 산업"
-      ],
-      "thumbnail_url": "https://cdn.newscj.com/news/thumbnail/202608/3427091_3540364_280_v150.jpg"
+      ]
     },
     {
       "title": "트럼프, 6월 한 달간 1000건 이상 금융거래…메타 팔고 버크셔 샀다",
@@ -2554,19 +3004,6 @@
       ]
     },
     {
-      "title": "AI 헤지 포트폴리오 5일 10% 하락",
-      "description": "당시에도 AI 관련 대형주와 비AI 종목의 움직임이 갈라지면서 미국 증시 내부의 종목별 변동성이 커졌다는 분석이 제시됐다. 자금 이동은 AI 바깥으로도 확산됐다. 골드만삭스는 유럽과 일본 은행, 금광주, 구리광산주 등...",
-      "link": "https://www.tokenpost.kr/news/cryptocurrency/395907",
-      "naver_link": "https://www.tokenpost.kr/news/cryptocurrency/395907",
-      "published_at": "Sun, 23 Aug 2026 13:02:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
       "title": "[채권-주간] 드디어 열리는 8월 금통위…이후엔 잭슨홀 관심",
       "description": "한국은행에서 열린 금융통화위원회 본회의에 참석해 의사봉을 두드리고 있다. 2026.7.16 [사진공동취재단] photo@yna.co.kr ◇ 국내 10년 입찰 소화·美 재무부 바이백 확대 영향…핵심은 초장기 지난주(8월18일~21일) 국고채...",
       "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4431362",
@@ -2595,19 +3032,6 @@
       ]
     },
     {
-      "title": "“비트코인 8만달러 눈앞”…3년 만에 최대 주간 상승 [주간 블록체인]",
-      "description": "비트코인 상승과 함께 미국 증시의 가상자산 관련 종목에도 매수세가 몰렸다. 비트코인을 대규모로 보유한 스트래티지 등 관련 종목이 강세를 나타내면서 가상자산 시장의 반등이 증시로도 확산되는 모습을 보였다....",
-      "link": "https://www.ddaily.co.kr/page/view/2026082312191572401",
-      "naver_link": "https://n.news.naver.com/mnews/article/138/0002238653?sid=101",
-      "published_at": "Sun, 23 Aug 2026 12:31:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
       "title": "[공시] 브이티·에스티오·씨유테크 등...24일 코스닥 76개 종목 '자사주...",
       "description": "코스닥시장 상장 76개 종목이 오는 24일 주가 안정과 주주가치 제고 등을 목적으로 자기주식... 동구바이오제약(006620) 2만 주, 상상인(038540) 2만 주, 백금T&A(046310) 2만 주, GST(083450) 2만 주, 월덱스...",
       "link": "https://www.newstnt.com/news/articleView.html?idxno=714872",
@@ -2621,19 +3045,6 @@
       ]
     },
     {
-      "title": "서학개미로 갈아탈까…전문가 \"하반기 美증시 더 오른다\"",
-      "description": "미국 증시가 지난주 사상 최고치 행진을 이어간 가운데 남은 하반기에도 상승세가 지속될 것이란 전망이 나왔다. 물가 부담 완화와 기업들의 강한 실적이 추가 상승을 견인할 것이란 분석이다. 문남중 대신증권...",
-      "link": "https://www.newsis.com/view/NISX20260821_0003757603",
-      "naver_link": "https://n.news.naver.com/mnews/article/003/0014142280?sid=104",
-      "published_at": "Sun, 23 Aug 2026 12:00:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
       "title": "고금리 반갑다던 보험사, 해지 늘면 ‘현금 비상’… 채권 급매 우려까...",
       "description": "보험연구원이 한국은행 경제통계시스템 올해 자료를 분석한 결과 국고채 10년물 금리는 지난달 24일 4.45%를 기록했다. 작년 4월보다 1.89%p 상승한 수준으로 2022년 10월 4.63% 이후 가장 높다. 국고채 20년물과 30년물 금리도...",
       "link": "https://m.skyedaily.com/news_view.html?ID=310251",
@@ -2644,32 +3055,6 @@
       ],
       "queries": [
         "국고채 금리 한국은행"
-      ]
-    },
-    {
-      "title": "삼전닉스 반등에도 개미들은 불신…코스피 회전율·거래량 연중 최저",
-      "description": "개인 투자자의 손실이 누적된 데다 국내 주식에서 일부 자금이 미국 증시로 이동한 것도 거래 감소의 배경으로 꼽힌다. 김현성 상상인증권 연구원은 가계 자금이 증시로 이동하는 흐름은 이어지고 있지만 국내 주식과...",
-      "link": "https://www.etnews.com/20260823000039",
-      "naver_link": "https://n.news.naver.com/mnews/article/030/0003459468?sid=101",
-      "published_at": "Sun, 23 Aug 2026 11:41:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "환율 1300원대 내려오자 ‘달러 사재기’…환차손 우려 커진 해외주식 ...",
-      "description": "미국 뉴욕증시가 이달 사상 최고치를 경신했지만 국내 투자자의 해외주식 거래대금은 연중 최저 수준까지 떨어졌다. ◇ 다시 나타난 달러 사재기 23일 금융권에 따르면, KB국민·신한·하나·우리·NH농협 등 5대...",
-      "link": "https://www.chosun.com/economy/economy_general/2026/08/23/OXT2RIQCNNCORAB7HWS6PCA7RM/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
-      "naver_link": "https://n.news.naver.com/mnews/article/023/0003994378?sid=101",
-      "published_at": "Sun, 23 Aug 2026 11:25:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
@@ -2803,6 +3188,19 @@
       ]
     },
     {
+      "title": "성수동에 17층 크래프톤 업무시설…지상부는 '도심숲'으로",
+      "description": "서울시는 지난 21일 제8차 도시·건축공동위원회 수권분과위원회를 열고 '성수IT산업·유통개발진흥지구 지구단위계획구역 내 성수동2가 276-2 일대 기반시설 등 충분 여부 심의안'을 조건부 가결했다고 23일 밝혔다....",
+      "link": "https://www.mt.co.kr/estate/2026/08/23/2026082310521087053",
+      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403388?sid=101",
+      "published_at": "Sun, 23 Aug 2026 11:15:00 +0900",
+      "categories": [
+        "it"
+      ],
+      "queries": [
+        "IT 산업"
+      ]
+    },
+    {
       "title": "공사 멈춘 성수동 자동차시설…15층 IT·문화콘텐츠 업무시설로",
       "description": "서울시는 지난 21일 제7차 도시·건축공동위원회 수권분과위원회를 열고 '성수IT산업·유통개발진흥지구 지구단위계획구역 내 성수동2가 278번지 외 1필지 기반시설 등 충분 여부 검토 심의안'을 조건부 가결했다고 23일...",
       "link": "https://www.mt.co.kr/estate/2026/08/23/2026082311061410570",
@@ -2820,19 +3218,6 @@
       "description": "한편 ‘성수IT산업·유통개발진흥지구 지구단위계획구역 내 성수동2가 276-2 일대에 대한 기반시설 등 충분여부 심의(안)’도 조건부 가결됐다. 건축계획안에 따르면 단지는 지상17층, 높이 119.5m 규모로 조성된다. 건물...",
       "link": "https://www.dailian.co.kr/news/view/1680961/?sc=Naver",
       "naver_link": "https://n.news.naver.com/mnews/article/119/0003124256?sid=101",
-      "published_at": "Sun, 23 Aug 2026 11:15:00 +0900",
-      "categories": [
-        "it"
-      ],
-      "queries": [
-        "IT 산업"
-      ]
-    },
-    {
-      "title": "성수동에 17층 크래프톤 업무시설…지상부는 '도심숲'으로",
-      "description": "서울시는 지난 21일 제8차 도시·건축공동위원회 수권분과위원회를 열고 '성수IT산업·유통개발진흥지구 지구단위계획구역 내 성수동2가 276-2 일대 기반시설 등 충분 여부 심의안'을 조건부 가결했다고 23일 밝혔다....",
-      "link": "https://www.mt.co.kr/estate/2026/08/23/2026082310521087053",
-      "naver_link": "https://n.news.naver.com/mnews/article/008/0005403388?sid=101",
       "published_at": "Sun, 23 Aug 2026 11:15:00 +0900",
       "categories": [
         "it"
@@ -2881,58 +3266,6 @@
       ]
     },
     {
-      "title": "“고금리엔 주주환원株 투자…기아·LG·GS 등 주목”",
-      "description": "미국 연방준비제도(Fed·연준)가 두 차례 기준금리를 추가 인상하고 미국 10년물 국채금리가 3.5%에서 4.9%까지 상승했던 2023년 3~10월 S&P500 내 ROE 상승 폭 상위 3개 업종의 평균 주가 수익률은 10.4%를 기록했다....",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01338246645550272&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356334?sid=101",
-      "published_at": "Sun, 23 Aug 2026 11:00:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "코스피 회전율 올해 최저…반도체 반등에도 투자심리 '냉랭'",
-      "description": "시장에서는 개인투자자의 손실이 누적된 데다 자금이 미국 증시로 이동하면서 국내 증시의 거래 활력이 되살아나는 데 시간이 걸리고 있다고 분석합니다. 현대차증권 김재승 연구원은 연합뉴스와의 통화에서...",
-      "link": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005906189",
-      "naver_link": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005906189",
-      "published_at": "Sun, 23 Aug 2026 10:56:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "뉴욕증시, 잭슨홀·엔비디아 실적·PCE 물가지표 촉각",
-      "description": "주요국 중앙은행들이 모여 경제 현황을 논의하는 잭슨홀 심포지엄에서 케빈 워시 연방준비제도(Fed·연준)... 하지만 재무부의 바이백 확대 조치에도 불구하고 미국 국채금리는 급락 후 거의 원복했고 지난주 증시에...",
-      "link": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005906180",
-      "naver_link": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005906180",
-      "published_at": "Sun, 23 Aug 2026 10:48:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "금시세(금값) 주간 급등",
-      "description": "62달러 -이번 주 PCE·워시 연준 의장 잭슨홀 연설 주목 지난 한 주 국내외 금시세가... 주 초반에는 미국 장기 국채금리 상승이 금가격을 끌어내렸지만 주 중반...",
-      "link": "http://www.kjdaily.com/article.php?aid=1787447900684974227",
-      "naver_link": "http://www.kjdaily.com/article.php?aid=1787447900684974227",
-      "published_at": "Sun, 23 Aug 2026 10:24:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
       "title": "이럴 수가, 돈 문제만 아니었다…'고소득 1인 가구'가 고립되기 더 쉬운...",
       "description": "금융업, 문화산업과 예술계, IT 산업, 프리랜서 직종이 대표적이다. 24시간 불규칙하게 일하거나 개인의 성과와 개성이 크게 중시되는 일자리일수록 혼자 사는 비중이 높은 것으로 풀이됐다.이런 이들은 대개 직장 가까운...",
       "link": "https://www.wikitree.co.kr/articles/1153711",
@@ -2943,19 +3276,6 @@
       ],
       "queries": [
         "IT 산업"
-      ]
-    },
-    {
-      "title": "“하이닉스 주식 너무 비싸” 삼성전자처럼 못 해?…250만→5만원 ‘액...",
-      "description": "미국 증시에 상장된 SK하이닉스 ADR는 최근 종가 기준 주당 163.41달러이다. 한화로는 약 22만원 수준이다. 다만, 액면분할이 투자 접근성 향상에는 기여하지만 그 자체가 주가 상승을 담보하는 건 아니다. 이미...",
-      "link": "https://biz.heraldcorp.com/article/10848972?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/016/0002687123?sid=101",
-      "published_at": "Sun, 23 Aug 2026 10:13:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
@@ -2972,109 +3292,16 @@
       ]
     },
     {
-      "title": "아이온큐·리게티컴퓨팅 등 급등…美 양자컴퓨터주 주가 일제히 강세",
-      "description": "미국 증시에서 양자컴퓨터 관련주들이 일제히 강세로 거래를 마쳤다. 아이온큐와 리게티컴퓨팅을 비롯해 인플렉션, 퀀텀컴퓨팅 등이 큰 폭으로 오르면서 양자컴퓨터 테마에 다시 시장의 시선이 쏠렸다. 21일...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600469",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600469",
-      "published_at": "Sun, 23 Aug 2026 10:06:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "주성엔지니어링, 코스닥 급락 속 4%대↓…새주 반등 여부는?",
-      "description": "특히 주말 사이 미국 증시가 상승했다는 점이 새주 국내 증시에 어떤 영향을 미칠지도 주목된다. 21일(현지시간) 뉴욕증시에서는 3대 주요 지수가 나란히 상승했다. 다우존스30 산업평균지수는 전 거래일 대비 517....",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600467",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600467",
-      "published_at": "Sun, 23 Aug 2026 10:04:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "비트코인 8만달러 눈앞…'연말 10만달러' vs '숏스퀴즈 경계'",
-      "description": "미국의 국채 바이백(재매입) 확대와 가상자산 규제 완화 기대에 현물 상장지수펀드(ETF) 자금까지... 미국 장기금리와 국제유가가 여전히 높은 가운데 물가 압력이 다시 커지면 연방준비제도(Fed·연준)의 긴축 우려가...",
-      "link": "http://www.newsian.co.kr/news/articleView.html?idxno=94088",
-      "naver_link": "http://www.newsian.co.kr/news/articleView.html?idxno=94088",
-      "published_at": "Sun, 23 Aug 2026 09:48:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "삼전닉스 뛰는데 거래는 뚝…코스피 회전율 ‘연중 최저’",
-      "description": "개인 투자자의 손실이 누적된 데다 자금 일부가 미국 증시로 이동하면서 지수 반등이 거래 회복으로 이어지지 않는 모습이다. 23일 한국거래소에 따르면 이달 들어 지난 21일까지 코스피의 일평균 상장주식 회전율은...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01243126645550272&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356305?sid=101",
-      "published_at": "Sun, 23 Aug 2026 09:33:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "“삼전닉스 올라도 안 산다”…코스피 7000 향해도 투자자들 ‘관망’",
-      "description": "매매에 뛰어드는 모습은 나타나지 않고 있는 셈이다. 앞선 증시 급락 과정에서 투자자들의 손실이 누적된 데다 투자자금 일부가 미국 증시로 이동했기 때문 아니냐는 해석이 나온다. 박성준 기자 mediapark@ekn.kr",
-      "link": "https://www.ekn.kr/web/view.php?key=20260823029405478",
-      "naver_link": "https://www.ekn.kr/web/view.php?key=20260823029405478",
-      "published_at": "Sun, 23 Aug 2026 09:32:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
       "title": "트럼프發 관세 폭탄 속 반도체 ‘110조 주주환원’ 증시 구원투수 등판",
-      "description": "정책과 미국 국채 금리 급등이라는 다중 악재에 휘청이고 있다. 미국과 캐나다의... 미 연준의 금리 인하 경로는 더욱 불투명해질 수 있다. 이는 고밸류에이션 기술주...",
+      "description": "45%) 등 시가총액 상위 이차전지 및 제약·바이오 종목들이 일제히 약세를 면치... 권 부총재는 최근 외환시장 동향에 대해 “주식시장 조정에 따른 단기 플로우...",
       "link": "http://www.breaknews.com/1230787",
       "naver_link": "http://www.breaknews.com/1230787",
       "published_at": "Sun, 23 Aug 2026 09:32:00 +0900",
       "categories": [
-        "us_rates",
         "bio"
       ],
       "queries": [
-        "미국 국채 금리 연준",
         "바이오 주식"
-      ]
-    },
-    {
-      "title": "금시세(금값)",
-      "description": "달러화 강세와 약세, 글로벌 중앙은행의 금 매입, 제롬 파월 연준 의장의 발언과 FOMC 회의 내용, 전쟁 등이... 장기 국채금리와 기간 프리미엄 상승 압력으로 이어지는 가운데, 미국 재무부는 장기물 국채 환매(바이백)...",
-      "link": "https://www.bntnews.co.kr/article/view/bnt202608230005",
-      "naver_link": "https://www.bntnews.co.kr/article/view/bnt202608230005",
-      "published_at": "Sun, 23 Aug 2026 09:04:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "[금값시세] 금시세 상승",
-      "description": "반대로 미국 물가가 다시 높아지거나 고용지표가 강하게 나타나 연준의 금리 인하 기대가 후퇴할 경우 국채금리와 달러 가치가 상승하면서 금값이 조정을 받을 수 있다. 최근 국제 금값의 상승 배경에는 미국...",
-      "link": "https://www.gametoc.co.kr/news/articleView.html?idxno=110862",
-      "naver_link": "https://www.gametoc.co.kr/news/articleView.html?idxno=110862",
-      "published_at": "Sun, 23 Aug 2026 09:02:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
       ]
     },
     {
@@ -3104,19 +3331,6 @@
       ]
     },
     {
-      "title": "미 재무부 바이백 개입 무색 '국채 안정화 실패' 신호",
-      "description": "야후파이낸스는 8월 22일(현지시각) 미국 국채 금리가 이틀 연속 오르며 정부의 시장 개입 효과가 제한적인... 모건스탠리 미국 금리 전략팀을 이끄는 전문가들은 보고서를 통해 정부의 이러한 조치가 연준의 신뢰성...",
-      "link": "https://www.g-enews.com/view.php?ud=2026082307450836242bd56fbc3c_1",
-      "naver_link": "https://www.g-enews.com/view.php?ud=2026082307450836242bd56fbc3c_1",
-      "published_at": "Sun, 23 Aug 2026 07:50:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
       "title": "[비즈톡톡] 코오롱티슈진 ‘임상 쇼크’ 후폭풍… 주가조사·감원 이중...",
       "description": "23일 바이오업계에 따르면 코오롱티슈진은 최근 10명 미만 규모의 독립 조사 기구를 구성한 것으로... 임직원의 주식 매매도 엄격하게 금지했다는데요. 코오롱티슈진은 현재 미국 본사에서 해고 칼바람이 불고 있습니다....",
       "link": "https://biz.chosun.com/science-chosun/bio/2026/08/23/MXJD6RNFX5EXFL7PTYW7LICRHI/?utm_source=naver&utm_medium=original&utm_campaign=biz",
@@ -3136,51 +3350,10 @@
       "naver_link": "https://www.joongangenews.com/news/articleView.html?idxno=541950",
       "published_at": "Sun, 23 Aug 2026 07:16:00 +0900",
       "categories": [
-        "korea_flow",
-        "us_rates"
+        "korea_flow"
       ],
       "queries": [
-        "외국인 기관 순매수 증시",
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "[뉴욕증시-주간전망] '베선트 풋'에 곤란해진 워시…엔비디아 실적·PCE...",
-      "description": "주요국 중앙은행들이 모여 경제 현황을 논의하는 잭슨홀 심포지엄에서 케빈 워시 연방준비제도(Fed·연준)... 하지만 재무부의 바이백 확대 조치에도 불구하고 미국 국채금리는 급락 후 거의 원복했고 지난주 증시에...",
-      "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4431342",
-      "naver_link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4431342",
-      "published_at": "Sun, 23 Aug 2026 07:02:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "1300원대 내려온 원·달러 환율…저점 더 낮출까[주간외환전망]",
-      "description": "미국 장기물 국채 금리와 유가 상승 등 악재에도 반도체 기업을 중심으로 한 수출업체의 달러 매도 물량이... PCE 물가가 예상보다 높게 나오거나 잭슨홀에서 케빈 워시 연준 의장이 ‘매파적’ 메시지를 내놓을 경우...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01088966645550272&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356264?sid=101",
-      "published_at": "Sun, 23 Aug 2026 06:02:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "급락 뒤 급반등 ‘롤러코스피’…美금리에 울고 주주환원에 웃었다 [선...",
-      "description": "재정적자와 국채 공급 증가, 물가 등 장기금리를 끌어올리는 근본적인 요인까지 없애는 조치는 아니기 때문입니다. 지난달 연방공개시장위원회(FOMC) 의사록에서도 미국 연방준비제도(Fed·연준)의 물가에 대한 경계감이...",
-      "link": "https://www.sedaily.com/article/20082160?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/011/0004654169?sid=101",
-      "published_at": "Sun, 23 Aug 2026 06:02:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
+        "외국인 기관 순매수 증시"
       ]
     },
     {
@@ -3197,31 +3370,16 @@
       ]
     },
     {
-      "title": "'AI 반도체 슈퍼위크'…코스피 '주주환원 약발' 계속되나",
+      "title": "[마켓인사이트] 'AI 반도체 슈퍼위크'…코스피 '주주환원 약발' 계속되나",
       "description": "미 장기채 금리 고공행진에도 뉴욕증시 3대 주가지수 상승마감 다우존스 0.98%↑, S&P 500 0.43%↑·나스닥 0.44... 기관과 외국인이 2조3천755억원과 1조8천512억원을 순매도했고, 개인은 1조9천412억원을 순매수했다....",
       "link": "https://www.yna.co.kr/view/AKR20260822023400008?input=1195m",
       "naver_link": "https://n.news.naver.com/mnews/article/001/0016265034?sid=101",
       "published_at": "Sun, 23 Aug 2026 06:00:00 +0900",
       "categories": [
-        "korea_flow",
-        "us_rates"
+        "korea_flow"
       ],
       "queries": [
-        "외국인 기관 순매수 증시",
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "금리 부담 vs 주주환원…'칠천피 문턱' 엔비디아·잭슨홀 변수",
-      "description": "이번 주 코스피는 미국의 국채금리 변동성과 반도체 투톱의 주주환원 기대가 맞붙으며 등락을 이어갔다.... 그간 워시 의장은 연준이 기준금리를 직접 올리지 않더라도 시장금리 상승세가 긴축 효과를 낼 수 있다는...",
-      "link": "https://www.news1.kr/finance/market-exr/6266075",
-      "naver_link": "https://n.news.naver.com/mnews/article/421/0009127182?sid=101",
-      "published_at": "Sun, 23 Aug 2026 06:00:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
+        "외국인 기관 순매수 증시"
       ]
     },
     {
@@ -3264,19 +3422,6 @@
       ]
     },
     {
-      "title": "금값시세 '강세'",
-      "description": "중동 정세와 국제유가, 미국 국채 금리, 달러 가치 등이 동시에 움직이면서 금시장은 어느 한 가지 재료보다... 유가가 물가 전망을 흔들고, 물가 전망은 다시 연준의 금리 경로와 미 국채 수익률에 영향을 미칠 수 있다....",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=600015",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=600015",
-      "published_at": "Sun, 23 Aug 2026 00:20:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
       "title": "[증시 프리즘] \"40조원 자사주 소각의 힘\"…반도체 대형주 수급 불씨 살...",
       "description": "발표 직후 외국인은 유가증권시장에서 SK하이닉스 물량을 대거 사들이며 순매수세로 전환했고 기관 역시 동반 매수에 나서며 지수 하방을 든든하게 지지했다. 대규모 자사주 소각이라는 확실한 주주환원 시그널이 대외...",
       "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=85788",
@@ -3287,32 +3432,6 @@
       ],
       "queries": [
         "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "[뉴욕증시 전망] 엔비디아 실적·잭슨홀 '빅위크'…월가 랠리 시험대",
-      "description": "이어 27일부터 29일까지 미국 와이오밍주 잭슨홀에서 연준의 연례 경제정책 심포지엄이 열린다. 최근 글로벌 채권시장에서 장기물 금리가 급등하면서 증시에 부담이 커졌다. 30년 만기 미국 국채 수익률은 2007년 이후 최고...",
-      "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=85832",
-      "naver_link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=85832",
-      "published_at": "Sun, 23 Aug 2026 00:00:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
-      "title": "“1400원 깨지자 달러 쟁였다”...5대 은행 달러예금 ‘급증’",
-      "description": "환율 하락은 미국 연방준비제도(Fed·연준)의 9월 추가 기준금리 인상 기대가 약해지면서 달러화가 약세를 보인 영향이 컸다. 미국 장기 국채금리가 높은 수준을 이어감에도 달러화가 이전처럼 강세를 나타내지...",
-      "link": "https://www.ekn.kr/web/view.php?key=20260822024355369",
-      "naver_link": "https://www.ekn.kr/web/view.php?key=20260822024355369",
-      "published_at": "Sat, 22 Aug 2026 20:30:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
       ]
     },
     {
@@ -3394,44 +3513,16 @@
       ]
     },
     {
-      "title": "[금값시세] 금시세 상승",
-      "description": "국제 금값이 4600달러 선을 넘어선 가운데 시장에서는 미국 국채금리와 달러 가치 움직임, 연방준비제도의... 동시에 미국 물가를 자극하는 요인이 될 수 있다. 물가 상승 압력이 다시 커지면 연준이 금리 인하에...",
-      "link": "https://www.gametoc.co.kr/news/articleView.html?idxno=110852",
-      "naver_link": "https://www.gametoc.co.kr/news/articleView.html?idxno=110852",
-      "published_at": "Sat, 22 Aug 2026 12:20:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
       "title": "코스닥시장 세그먼트 개편: 일본의 시장구분 재편이 주는 시사점",
       "description": "새 체계에서는 시장별 특성을 명 확히 하여 글로벌 기관투자자를 타깃으로 하는 대형 우량기업 중심의... 2) 외국인 투자자의 주식 순매수 역시 프라임 시장에서만 누적 18.1조엔을 기록하며 글로벌 자금을 유치한다는...",
       "link": "http://www.ifs.or.kr/bbs/board.php?bo_table=News&wr_id=55979",
       "naver_link": "http://www.ifs.or.kr/bbs/board.php?bo_table=News&wr_id=55979",
       "published_at": "Sat, 22 Aug 2026 12:00:00 +0900",
       "categories": [
-        "korea_flow",
-        "bio"
+        "korea_flow"
       ],
       "queries": [
-        "외국인 기관 순매수 증시",
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "장기금리 급등…금융시장·세계 경제에 울린 ‘경고’",
-      "description": "특히 금리 상승은 기술기업이나 바이오기업과 같이 성장산업의 주가에 충격을 미쳐 주식시장에도 하락 압력을 준다. 실제로 8월18일 미국 국채금리가 급등하자 나스닥 주가지수는 1.3% 하락했고 필라델피아...",
-      "link": "https://www.hani.co.kr/arti/economy/economy_general/1274130.html",
-      "naver_link": "https://n.news.naver.com/mnews/article/028/0002819674?sid=101",
-      "published_at": "Sat, 22 Aug 2026 11:28:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
+        "외국인 기관 순매수 증시"
       ]
     },
     {
@@ -3461,32 +3552,6 @@
       ]
     },
     {
-      "title": "12조 넣고 58조 벌었다...미국 정부가 인텔 주식을 쓸어 담는 진짜 이유",
-      "description": "달러를 주식으로 전환해 인텔 지분 9.9%를 확보했다. 당시 89억 달러였던 이 지분의 평가액은 인텔 주가가 300... 반도체·양자정보과학·바이오·핵융합·핵심광물이 명시적으로 함께 묶여 있다. AI는 신소재 탐색과...",
-      "link": "https://www.the-today.com/news/articleView.html?idxno=88762",
-      "naver_link": "https://www.the-today.com/news/articleView.html?idxno=88762",
-      "published_at": "Sat, 22 Aug 2026 11:10:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "[마켓펄스] 고금리 우려 누른 경기확장 신호…뉴욕증시 일제히 반등",
-      "description": "주식시장도 마찬가지다. 지수의 등락은 물론 금리와 환율, 수급과 업종 순환, 글로벌 이슈까지 시장은... 바이오주 역시 상승했다. 코로나19 백신에 쓰인 메신저 리보핵산(mRNA) 기술 기반의 개인 맞춤형 암...",
-      "link": "https://www.ntoday.co.kr/news/articleView.html?idxno=128901",
-      "naver_link": "https://www.ntoday.co.kr/news/articleView.html?idxno=128901",
-      "published_at": "Sat, 22 Aug 2026 10:56:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
       "title": "40조 'SK하닉' 110조 예고 '삼전'… 주주환원 랠리 시동 [주간 증시해설...",
       "description": "# 채권 = 국내 채권금리가 하락세(가격 상승)로 돌아섰다. 한때 4%를 넘보던 국고채 3년물 금리는 19일 3.79... 채권금리 하락으로 이어졌다. 이제 시장의 관심은 8월 27일 금융통화위원회를 개최하는 한국은행으로...",
       "link": "https://www.thescoop.co.kr/news/articleView.html?idxno=311352",
@@ -3499,58 +3564,6 @@
       "queries": [
         "국고채 금리 한국은행",
         "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "AI는 의식이 있는가…인간 본성을 데이터로 바꾸는 기술의 위험",
-      "description": "바이오 기술은 건강수명 연장과 메신저 리보핵산(mRNA), 유전자 가위 크리스퍼(CRISPR), 맞춤형 의료... 항공사 경영진이 자사 항공기의 잇따른 추락 사고를 주요 언론에서 직접 경고하는데도 투자자들이 계속 주식을...",
-      "link": "https://www.koreaittimes.com/news/articleView.html?idxno=156345",
-      "naver_link": "https://www.koreaittimes.com/news/articleView.html?idxno=156345",
-      "published_at": "Sat, 22 Aug 2026 10:00:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "“모더나의 ‘mRNA 암 백신’은 역사적 사건”…국내 증시 진짜 수혜주...",
-      "description": "26년간 여러 기관에서 주식 운용을 담당했던 펀드매니저 출신 이해진 임플바이오리서치 대표는 최근 매일경제와의 인터뷰에서 이번 mRNA 임상 결과가 국내외 바이오 시장에 주는 파급력이 매우 크다고 분석했다. 이...",
-      "link": "https://www.mk.co.kr/article/12133745",
-      "naver_link": "https://n.news.naver.com/mnews/article/009/0005724291?sid=101",
-      "published_at": "Sat, 22 Aug 2026 09:39:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "변동성 장세에 '틈새 투자상품' 봇물",
-      "description": "증시 변동성이 커지면서 증권사가 스팩(SPAC), 벤처캐피탈(VC), 사모펀드, 주식워런트증권(ELW) 등 다양한... 일반 투자자가 직접 접근하기 어려운 비상장 스타트업 대신 이들 기업에 투자하는 VC를 통해 AI·바이오·로봇 등...",
-      "link": "https://it.chosun.com/news/articleView.html?idxno=2023092168633",
-      "naver_link": "https://it.chosun.com/news/articleView.html?idxno=2023092168633",
-      "published_at": "Sat, 22 Aug 2026 09:30:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "역사적 통계는 ‘중간 선거 후 반등’…의회 분열이 오히려 호재?",
-      "description": "선거 전 조정이 주식 비중을 늘리는 기회가 될 수 있다는 것이다. 1950년 이후 중간선거가 끝난 뒤 12개월... 반면 청정에너지(친환경), 제약·바이오, 가상자산 등은 상대적 약세나 극심한 변동성에 노출될 위험이 크다는...",
-      "link": "https://magazine.hankyung.com/business/article/202608202192b",
-      "naver_link": "https://n.news.naver.com/mnews/article/050/0000109965?sid=101",
-      "published_at": "Sat, 22 Aug 2026 09:15:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
       ]
     },
     {
@@ -3606,19 +3619,6 @@
       ]
     },
     {
-      "title": "'시장 퇴출 위기' 몰린 바이오·헬스 기업은?…의견거절·상폐 사유 속출",
-      "description": "이번 반기보고서 제출을 계기로 바이오·헬스케어 상장사 중 한계기업 시장 퇴출 압력이 더욱 거세질... 이번에 문제가 불거진 기업 대부분은 이미 정상적으로 주식이 거래되는 일반 상장사와는 거리가 있다....",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=01794166645549944&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006356021?sid=105",
-      "published_at": "Sat, 22 Aug 2026 08:02:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
       "title": "외국인은 SK하이닉스 ‘직진’…기관·개인은 반대로",
       "description": "여기에 조선주에서도 외국인 매수와 기관 매도가 맞서면서 최근 증시 주도 업종을 둘러싼 투자 주체별 시각차가 뚜렷하게 드러났다. 향후 수급의 관건 역시 외국인의 매수 지속 여부가 될 것으로 보인다. 특히...",
       "link": "https://www.news2day.co.kr/article/20260822500003",
@@ -3638,51 +3638,10 @@
       "naver_link": "https://n.news.naver.com/mnews/article/037/0000038712?sid=101",
       "published_at": "Sat, 22 Aug 2026 07:01:00 +0900",
       "categories": [
-        "battery",
-        "bio"
+        "battery"
       ],
       "queries": [
-        "2차전지 주식",
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "퇴출 기로에 놓인 '바이오 동전주'...액면병합 넘어 옥석가리기 시험대",
-      "description": "상장 유지에 비상이 걸린 일부 바이오기업들은 주식병합에 나섰다. 에이비온과 노을·랩지노믹스·샤페론은 기존 주식 5주를 1주로 합치는 5대1 주식병합을 추진했다. 주식병합을 실시하면 발행주식 수는 기존의 5분의...",
-      "link": "https://www.news2day.co.kr/article/20260821500174",
-      "naver_link": "https://www.news2day.co.kr/article/20260821500174",
-      "published_at": "Sat, 22 Aug 2026 06:32:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "삼성전자·SK하이닉스 덕에 엄청나게 걷히는 세금, 이렇게 쓰인다 (정부...",
-      "description": "소형모듈원자로(SMR)와 핵융합, 첨단바이오, 우주항공, 양자 등 7대 SEED(씨앗) 프로그램에도 투자한다. 지방... 여유자금은 전담운용기관을 통해 주식과 채권 등에 투자해 국채이자율 이상의 수익률을 추구한다. 다음 연도...",
-      "link": "https://www.wikitree.co.kr/articles/1154047",
-      "naver_link": "https://www.wikitree.co.kr/articles/1154047",
-      "published_at": "Sat, 22 Aug 2026 06:26:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "복지부 약배송 확대, 식약처 안전성 관리… 규제 변화 주목",
-      "description": "동구바이오제약의 GMP 소송 판결과과 GLP-1 이상사례가 이어졌습니다. 유통은 확대되고 제조·안전 관리는... 이번 계약에 따라 네오이뮨텍은 계약금으로 Tolerance Bio의 완전 희석 기준 지분 4%에 해당하는 주식을...",
-      "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78556",
-      "naver_link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78556",
-      "published_at": "Sat, 22 Aug 2026 06:12:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
+        "2차전지 주식"
       ]
     },
     {
@@ -4024,58 +3983,6 @@
       ]
     },
     {
-      "title": "코스피, 주주환원 모멘텀에 2일 연속↑··· 반도체·보험 강세, 코스닥...",
-      "description": "21일 국내 증시는 뚜렷한 차별화 장세를 보였다. 코스피가 주주환원 기대감에 힘입어 2거래일 연속 상승... 개인이 6235억원을 순매수한 반면, 외국인(-2875억원)과 기관(-3464억원)이 동반 순매도하며 하락을...",
-      "link": "https://www.thereport.co.kr/news/articleView.html?idxno=90666",
-      "naver_link": "https://www.thereport.co.kr/news/articleView.html?idxno=90666",
-      "published_at": "Fri, 21 Aug 2026 17:24:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "삼성전자 주주환원 기대감 '솔솔'…코스피, 반도체株 질주에 6,900선 '회...",
-      "description": "간밤 뉴욕증시에서도 다우존스30산업평균지수와 S&P500지수, 나스닥지수가 각각 1.32%, 0.87%, 1.00% 하락했다.... 기관은 2천487억원을 순매수하며 지수 상승을 이끌었다. 외국인은 코스피200 선물 시장에서는 3천170억원...",
-      "link": "https://www.youthdaily.co.kr/news/article.html?no=225499",
-      "naver_link": "https://www.youthdaily.co.kr/news/article.html?no=225499",
-      "published_at": "Fri, 21 Aug 2026 17:20:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "반도체·주주환원 기대에 코스피 6900선 회복…코스닥은 4%대 급락",
-      "description": "SK하이닉스로 매수세를 끌어들이며 지수를 끌어올렸다. 다만 증시 전반의 투자심리가 강했던 것은... 유가증권시장에서 기관은 2484억원어치를 순매수했다. 반면 외국인은 1711억원, 개인은 1조1655억원을 각각...",
-      "link": "https://www.goodkyung.com/news/articleView.html?idxno=290522",
-      "naver_link": "https://www.goodkyung.com/news/articleView.html?idxno=290522",
-      "published_at": "Fri, 21 Aug 2026 17:18:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "‘삼전·닉스’가 상승 이끈 코스피, 대척점 선 코스닥은 하락",
-      "description": "기관이 3465억원, 외국인이 2836억원어치를 각각 순매도했다. 개인은 6236억원 규모를 순매수했다. 미국 국채 금리가 상승으로 돌아선 점이 코스닥을 포함한 국내증시 전반에 매크로적 악재로 작용했다. 미국 국채...",
-      "link": "https://news.bizwatch.co.kr/article/market/2026/08/21/0037",
-      "naver_link": "https://n.news.naver.com/mnews/article/648/0000050043?sid=101",
-      "published_at": "Fri, 21 Aug 2026 17:17:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
-    },
-    {
       "title": "국채 금리 일제히 상승…다음주 금통위 경계감",
       "description": "국고채 금리가 일제히 상승했습니다. 오는 27일 한국은행의 8월 금융통화위원회를 앞두고 연속 기준금리 인상 경계감이 강해진 영향입니다. 오늘(21일) 서울 채권시장에서 3년 만기 국고채 금리는 전 거래일보다 4.3bp...",
       "link": "https://biz.sbs.co.kr/article_hub/20000330109?division=NAVER",
@@ -4375,71 +4282,6 @@
       ]
     },
     {
-      "title": "구윤철 “금리상승에 가계 빚 부담 늘어…취약차주 지원책 조속히 마련...",
-      "description": "박종우 한국은행 부총재보가 참석했다. 구 부총리는 주요국 장기국채 금리가 수십 년 만에 최고 수준으로... 그는 “국고채 시장의 발행·유통 여건을 상시 점검하고 기업의 자금조달 비용과 가계의 이자 부담 등...",
-      "link": "https://www.seoul.co.kr/news/economy/2026/08/21/20260821500105?wlog_tag3=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/081/0003672319?sid=101",
-      "published_at": "Fri, 21 Aug 2026 11:15:00 +0900",
-      "categories": [
-        "korea_rates"
-      ],
-      "queries": [
-        "국고채 금리 한국은행"
-      ]
-    },
-    {
-      "title": "구윤철 “취약차주 지원방안 조속히 발표”…채무조정·자금지원 확대",
-      "description": "구 부총리는 이날 서울 은행회관에서 이억원 금융위원장, 이찬진 금융감독원장, 박종우 한국은행 부총재보... 이에 국내 채권시장과 국고채 발행·유통 여건을 상시 점검하고 장기금리 상승이 기업·가계의 자금조달...",
-      "link": "https://biz.heraldcorp.com/article/10847883?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/016/0002686652?sid=101",
-      "published_at": "Fri, 21 Aug 2026 11:13:00 +0900",
-      "categories": [
-        "korea_rates"
-      ],
-      "queries": [
-        "국고채 금리 한국은행"
-      ]
-    },
-    {
-      "title": "1.5조 국고채 순매도, 외국인 단기채 줄였다",
-      "description": "한국은행의 통화정책 방향도 단기물 수요에 영향을 준 요인으로 거론됐다. 한 시중은행 채권 딜러는 \"재정거래 유인 축소에 더해 통화정책 방향의 영향도 있지 않을까 싶다\"며 \"최종금리 레벨이 점점 더 가시화되면...",
-      "link": "https://www.tokenpost.kr/news/cryptocurrency/394695",
-      "naver_link": "https://www.tokenpost.kr/news/cryptocurrency/394695",
-      "published_at": "Fri, 21 Aug 2026 11:04:00 +0900",
-      "categories": [
-        "korea_rates"
-      ],
-      "queries": [
-        "국고채 금리 한국은행"
-      ]
-    },
-    {
-      "title": "구윤철 \"금리 상승 부담 줄이도록 취약차주 지원책 조속히 마련\"",
-      "description": "구 부총리는 \"국고채 시장의 발행·유통 여건을 상시 점검하는 한편, 기업의 자금조달 비용과 가계의 이자... 이날 회의에는 이억원 금융위원회 위원장, 이찬진 금융감독원 원장, 박종우 한국은행 부총재보가...",
-      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008715407&plink=ORI&cooper=NAVER",
-      "naver_link": "https://n.news.naver.com/mnews/article/055/0001382360?sid=101",
-      "published_at": "Fri, 21 Aug 2026 11:04:00 +0900",
-      "categories": [
-        "korea_rates"
-      ],
-      "queries": [
-        "국고채 금리 한국은행"
-      ]
-    },
-    {
-      "title": "대출 연체율 치솟는데…기업 숨통 조이는 '금리'",
-      "description": "국내외 국채 금리 상승과 한국은행의 기준금리 인상 여파로 회사채 금리가 뛰면서 신규 자금조달과 차환... 회사채 금리는 통상 국고채 금리에 기업의 신용위험 등을 반영하는 신용스프레드를 더해 결정된다. 국고채...",
-      "link": "https://view.asiae.co.kr/article/2026082110025230109",
-      "naver_link": "https://n.news.naver.com/mnews/article/277/0005805723?sid=101",
-      "published_at": "Fri, 21 Aug 2026 10:55:00 +0900",
-      "categories": [
-        "korea_rates"
-      ],
-      "queries": [
-        "국고채 금리 한국은행"
-      ]
-    },
-    {
       "title": "성남, 도심 속 자연과 문화가 어우러진 여름 가볼 만한 곳",
       "description": "경기도 성남은 IT 산업의 중심지인 판교와 오랜 역사를 지닌 자연이 조화를 이루는 도시다. 도심 속에서 자연을 느끼고, 다양한 문화 시설을 경험하며 가족 단위의 사람들이 여유로운 시간을 보낼 수 있는 곳이다. 이곳은...",
       "link": "https://www.topstarnews.net/news/articleView.html?idxno=16164992",
@@ -4554,32 +4396,6 @@
       ],
       "queries": [
         "2차전지 주식"
-      ]
-    },
-    {
-      "title": "[사설] 전남광주시, e스포츠 잠재력 산업으로 키워야",
-      "description": "스포츠와 공연, 영상과 관광, IT 산업을 결합할 수 있는 새로운 문화산업이다. 시민들이 원하는 콘텐츠를 지역에서 즐길 수 있게 하고, 외지 팬들이 지역을 찾게 만드는 것은 통합특별시가 풀어야 할 과제이기도 하다....",
-      "link": "https://www.jnilbo.com/news/articleView.html?idxno=90000058336",
-      "naver_link": "https://www.jnilbo.com/news/articleView.html?idxno=90000058336",
-      "published_at": "Thu, 20 Aug 2026 16:47:00 +0900",
-      "categories": [
-        "it"
-      ],
-      "queries": [
-        "IT 산업"
-      ]
-    },
-    {
-      "title": "네이버 노조 \"개별 교섭은 자원 낭비\"…16개 계열사 '통합교섭' 요구",
-      "description": "앞서 지난 12일 산업별 노조 차원에서 IT 업종의 교섭구조 개편 토론회를 열고 네이버를 중심에 둔 발전 방안을 논의했던 만큼, 노조는 이번 통합교섭을 단일 기업의 변화를 넘어 IT 산업 전반으로 넓힐 수 있는 새로운...",
-      "link": "https://www.financialpost.co.kr/news/articleView.html?idxno=271285",
-      "naver_link": "https://www.financialpost.co.kr/news/articleView.html?idxno=271285",
-      "published_at": "Thu, 20 Aug 2026 16:40:00 +0900",
-      "categories": [
-        "it"
-      ],
-      "queries": [
-        "IT 산업"
       ]
     },
     {
@@ -4887,32 +4703,6 @@
       "link": "https://biz.chosun.com/stock/stock_general/2026/08/18/EH5SYAUVDRDFFPJVIGRF3BIJM4/?utm_source=naver&utm_medium=original&utm_campaign=biz",
       "naver_link": "https://n.news.naver.com/mnews/article/366/0001186904?sid=101",
       "published_at": "Tue, 18 Aug 2026 16:11:00 +0900",
-      "categories": [
-        "battery"
-      ],
-      "queries": [
-        "2차전지 주식"
-      ]
-    },
-    {
-      "title": "美 국채금리 5% 쇼크⋯코스피 '7000 랠리' 복병되나",
-      "description": "미 국채만으로 수익을 기대할 수 있게 되면서 외국인 투자자 입장에서는 상대적으로 위험한 국내 주식을... 특히 코스피 상승을 주도하고 있는 반도체 등 기술주를 비롯해 바이오, 2차전지 등 성장주가 금리 쇼크의...",
-      "link": "http://www.inews24.com/view/1995903",
-      "naver_link": "https://n.news.naver.com/mnews/article/031/0001050485?sid=101",
-      "published_at": "Tue, 18 Aug 2026 15:52:00 +0900",
-      "categories": [
-        "battery"
-      ],
-      "queries": [
-        "2차전지 주식"
-      ]
-    },
-    {
-      "title": "[진단_음료업계 ⑧한울앤제주] 김백산·김명호 체제 한울앤제주, 상장 ...",
-      "description": "자본잠식률을 낮추기 위해 주식 병합과 무상감자 등 자본구조 재편에 나섰지만, 이는 영업활동을 통한... 한울앤제주는 주주총회를 통해 반도체 장치 제조업, 2차전지 소재 사업, 폐기물 수집 및 처리업 등 기존 주력 사업인...",
-      "link": "http://www.newsworker.co.kr/news/articleView.html?idxno=441542",
-      "naver_link": "http://www.newsworker.co.kr/news/articleView.html?idxno=441542",
-      "published_at": "Tue, 18 Aug 2026 13:36:00 +0900",
       "categories": [
         "battery"
       ],
