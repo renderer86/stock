@@ -1,21 +1,41 @@
 {
   "schema_version": 2,
   "source": "User-configured public portfolio",
-  "count": 5,
-  "stock_count": 4,
-  "generated_at_utc": "2026-08-06T14:53:55+00:00",
+  "count": 7,
+  "stock_count": 6,
+  "generated_at_utc": "2026-08-29T00:00:00+00:00",
   "title": "나의 포트폴리오",
   "formation": "자유 전술",
   "weighting_note": "사용자 지정 실제 비중 · 잔여 0.06% 현금",
   "convergence_years": 3,
-  "as_of": "2026-08-06",
+  "as_of": "2026-08-29",
   "holdings": [
+    {
+      "code": "000660",
+      "name": "SK하이닉스",
+      "type": "stock",
+      "weight_pct": 13.46,
+      "position": "LW",
+      "role": "AI 메모리 선도",
+      "mark": "SK hynix",
+      "crest_theme": "hynix",
+      "notes": {
+        "investment_idea": "HBM 중심의 AI 메모리 수요 확대와 기술 리더십을 핵심 투자 논리로 본다. HBM의 높은 수익성이 일반 DRAM·NAND 사이클의 변동성을 얼마나 상쇄하는지가 장기 가치의 핵심이다.",
+        "price_view": "AI 인프라 투자와 HBM 공급계약 기대를 상당 부분 반영한 주가로 해석한다. 상승 추세가 유지되려면 단순 출하 증가보다 HBM 세대 전환, 가격, 수익성의 동반 개선이 계속 확인돼야 한다.",
+        "key_variables": "1. HBM4·HBM4E 고객 인증과 출하 일정\n2. HBM 시장 점유율과 평균판매가격\n3. 범용 DRAM·NAND 가격 및 재고 사이클\n4. 설비투자 증가가 공급과잉으로 이어지는 시점\n5. 핵심 AI 고객의 투자 지속성",
+        "scenario": "기준: HBM 리더십을 유지하고 범용 메모리 가격도 안정되어 높은 현금창출이 이어진다.\n강세: HBM4E와 차세대 AI 메모리에서 기술 격차가 유지되며 이익 추정치가 추가 상향된다.\n약세: 경쟁사의 공급 확대와 AI 투자 둔화가 겹쳐 HBM 프리미엄과 범용 메모리 가격이 동시에 하락한다.",
+        "catalysts": "HBM4E 샘플·양산 일정, 주요 AI 고객과의 장기 협력, 분기 HBM 매출 비중 상승, DRAM 가격 및 영업이익 전망 상향",
+        "source_urls": [
+          "https://news.skhynix.com/press-center/press-release/"
+        ]
+      }
+    },
     {
       "code": "042700",
       "name": "한미반도체",
       "type": "stock",
-      "weight_pct": 17.47,
-      "position": "ST",
+      "weight_pct": 17.55,
+      "position": "FW",
       "role": "HBM 장비 성장",
       "mark": "HANMI",
       "crest_theme": "hanmi",
@@ -28,10 +48,30 @@
       }
     },
     {
+      "code": "078340",
+      "name": "컴투스",
+      "type": "stock",
+      "weight_pct": 5.16,
+      "position": "RW",
+      "role": "저PBR 실적 회복",
+      "mark": "Com2uS",
+      "crest_theme": "com2us",
+      "notes": {
+        "investment_idea": "큰 순자산과 낮은 PBR을 바탕으로 게임 본업의 이익 회복과 자본효율 개선 가능성을 본다. 핵심은 보유 자산 자체보다 낮은 ROE가 지속적으로 개선되는지다.",
+        "price_view": "낮은 PBR은 자산가치 대비 할인뿐 아니라 낮은 수익성과 투자자산 변동성을 함께 반영한 것으로 본다. 신작 성과와 기존 게임의 안정적인 이익이 EPS 개선으로 이어지는지 확인한다.",
+        "key_variables": "1. 서머너즈 워와 야구 게임의 매출 지속성\n2. 신작 흥행과 마케팅비 회수 기간\n3. 연결 자회사 손익 개선\n4. 투자자산 평가손익과 지분법손익\n5. ROE와 주주환원 확대",
+        "scenario": "기준: 기존작 매출이 유지되고 비용 효율화로 영업이익이 완만하게 회복된다.\n강세: 신작 흥행과 자회사 손익 개선이 겹쳐 EPS와 ROE가 빠르게 상승한다.\n약세: 신작 성과가 부진하고 투자자산·관계기업 손실이 이어져 낮은 PBR이 장기간 유지된다.",
+        "catalysts": "신작 흥행 지표, 분기 영업이익률 개선, 자회사 적자 축소, 투자자산 가치 현실화, 배당·자사주 소각 확대",
+        "source_urls": [
+          "https://ir.com2us.com/ko/ir/data/data-earnings"
+        ]
+      }
+    },
+    {
       "code": "214450",
       "name": "파마리서치",
       "type": "stock",
-      "weight_pct": 38.92,
+      "weight_pct": 39.11,
       "position": "AM",
       "role": "리쥬란 글로벌 성장",
       "mark": "PR",
@@ -52,7 +92,7 @@
       "code": "383220",
       "name": "F&F",
       "type": "stock",
-      "weight_pct": 19.63,
+      "weight_pct": 5.7,
       "position": "CM",
       "role": "브랜드 현금창출",
       "mark": "F&F",
@@ -69,7 +109,7 @@
       "code": "138040",
       "name": "메리츠금융지주",
       "type": "stock",
-      "weight_pct": 23.92,
+      "weight_pct": 18.96,
       "position": "CB",
       "role": "자본배분·주주환원",
       "mark": "meritz",
@@ -110,6 +150,11 @@
       "type": "실제 비중 반영",
       "date": "2026-08-06",
       "reason": "한미반도체 17.47%, 파마리서치 38.92%, F&F 19.63%, 메리츠금융지주 23.92%로 조정하고 잔여 0.06%를 현금으로 배치"
+    },
+    {
+      "type": "공격진 및 비중 개편",
+      "date": "2026-08-29",
+      "reason": "SK하이닉스 13.46%를 LW, 한미반도체 17.55%를 FW, 컴투스 5.16%를 RW로 배치하고 파마리서치 39.11%, F&F 5.70%, 메리츠금융지주 18.96%로 조정"
     }
   ]
 }

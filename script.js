@@ -979,6 +979,7 @@ function formatMarketMapOptional(value, formatter) {
 
 const PORTFOLIO_POSITIONS = {
   ST: { x: 50, y: 12, label: "ST · 최전방 공격수", group: "attack" },
+  FW: { x: 50, y: 18, label: "FW · 중앙 공격수", group: "attack" },
   CF: { x: 50, y: 18, label: "CF · 중앙 공격수", group: "attack" },
   SS: { x: 50, y: 23, label: "SS · 세컨드 스트라이커", group: "attack" },
   LF: { x: 32, y: 24, label: "LF · 왼쪽 포워드", group: "attack" },
@@ -1015,7 +1016,6 @@ const PORTFOLIO_POSITION_ALIASES = {
   CAM: "AM",
   CDM: "DM",
   RL: "RM",
-  FW: "CF",
   FWD: "CF",
   WG: "WF",
   MF: "CM",
@@ -1338,7 +1338,7 @@ function renderPortfolioEditor(holding = null) {
       <div class="portfolio-editor-grid">
         <label><span>종목코드 또는 종목명</span><input name="code" value="${escapeHtml(holding?.code || "")}" placeholder="예: 214450 또는 파마리서치" required></label>
         <label><span>표시 이름</span><input name="name" value="${escapeHtml(holding?.name || "")}" placeholder="비워두면 종목 데이터에서 검색"></label>
-        <label><span>포지션 코드</span><input name="position" list="portfolio-position-options" value="${escapeHtml(position)}" placeholder="ST, CF, WF, AM, LM, RM, CB, GK" required></label>
+        <label><span>포지션 코드</span><input name="position" list="portfolio-position-options" value="${escapeHtml(position)}" placeholder="ST, FW, CF, WF, AM, LM, RM, CB, GK" required></label>
         <label><span>비중 (%)</span><input name="weight_pct" type="number" min="0" max="100" step="0.01" value="${Number(holding?.weight_pct ?? 0)}"></label>
         <label class="is-wide"><span>전술 역할 한 줄</span><input name="role" value="${escapeHtml(holding?.role || "")}" placeholder="예: 리쥬란 글로벌 성장"></label>
       </div>
