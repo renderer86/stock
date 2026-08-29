@@ -20,7 +20,7 @@ class PortfolioBoardTests(unittest.TestCase):
 
         self.assertEqual(
             {holding["code"] for holding in stocks},
-            {"042700", "138040", "214450", "383220"},
+            {"000660", "042700", "078340", "138040", "214450", "383220"},
         )
         self.assertAlmostEqual(
             sum(float(holding["weight_pct"]) for holding in holdings),
@@ -33,10 +33,12 @@ class PortfolioBoardTests(unittest.TestCase):
 
         by_code = {holding["code"]: holding for holding in stocks}
         expected = {
-            "042700": (17.47, "ST"),
-            "214450": (38.92, "AM"),
-            "383220": (19.63, "CM"),
-            "138040": (23.92, "CB"),
+            "000660": (13.46, "LW"),
+            "042700": (17.55, "FW"),
+            "078340": (5.16, "RW"),
+            "214450": (39.11, "AM"),
+            "383220": (5.7, "DM"),
+            "138040": (18.96, "CB"),
         }
         for code, (weight, position) in expected.items():
             self.assertEqual(float(by_code[code]["weight_pct"]), weight)
