@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 376,
-  "crawled_at_utc": "2026-09-11T12:34:44.423461+00:00",
+  "crawled_at_utc": "2026-09-14T14:40:11.018755+00:00",
   "stocks": [
     {
       "code": "005110",
@@ -4761,11 +4761,11 @@
       "holders": [
         {
           "holder_name": "미코",
-          "report_date": "2026-09-03",
+          "report_date": "2026-09-14",
           "ratio": 41.85,
           "raw": {
-            "rcept_no": "20260903000282",
-            "rcept_dt": "2026-09-03",
+            "rcept_no": "20260914000369",
+            "rcept_dt": "2026-09-14",
             "corp_code": "00997812",
             "corp_name": "코미코",
             "report_tp": "일반",
@@ -4774,9 +4774,9 @@
             "stkqy_irds": "0",
             "stkrt": "41.85",
             "stkrt_irds": "0",
-            "ctr_stkqy": "13,383,133",
-            "ctr_stkrt": "26.06",
-            "report_resn": "- 보고자의 주식담보계약 연장"
+            "ctr_stkqy": "14,832,409",
+            "ctr_stkrt": "28.88",
+            "report_resn": "- 보고자의 주식담보대출계약 체결"
           }
         },
         {
@@ -4797,6 +4797,26 @@
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "일반투자목적으로 장내에서 발행회사 주식 매수"
+          }
+        },
+        {
+          "holder_name": "MORGANSTANLEY&COINTLPLC",
+          "report_date": "2026-09-14",
+          "ratio": 5.59,
+          "raw": {
+            "rcept_no": "20260914000204",
+            "rcept_dt": "2026-09-14",
+            "corp_code": "00997812",
+            "corp_name": "코미코",
+            "report_tp": "약식",
+            "repror": "MORGANSTANLEY&COINTLPLC",
+            "stkqy": "2,869,957",
+            "stkqy_irds": "2,869,957",
+            "stkrt": "5.59",
+            "stkrt_irds": "5.59",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "5%이상 보유에 따른 신규보고"
           }
         },
         {
@@ -4842,7 +4862,7 @@
       ],
       "top_holder_name": "미코",
       "top_holder_ratio": 41.85,
-      "latest_report_date": "2026-09-03"
+      "latest_report_date": "2026-09-14"
     },
     {
       "code": "462980",
@@ -7126,11 +7146,31 @@
             "ctr_stkrt": "-",
             "report_resn": "신규보고의무 발생"
           }
+        },
+        {
+          "holder_name": "베어링자산운용",
+          "report_date": "2026-09-14",
+          "ratio": 5.01,
+          "raw": {
+            "rcept_no": "20260914000390",
+            "rcept_dt": "2026-09-14",
+            "corp_code": "00140955",
+            "corp_name": "한솔케미칼",
+            "report_tp": "약식",
+            "repror": "베어링자산운용",
+            "stkqy": "541,028",
+            "stkqy_irds": "3,910",
+            "stkrt": "5.01",
+            "stkrt_irds": "0.03",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "지분률 5% 이상 보유에 따른 보고의무 발생"
+          }
         }
       ],
       "top_holder_name": "조동혁",
       "top_holder_ratio": 13.65,
-      "latest_report_date": "2026-08-04"
+      "latest_report_date": "2026-09-14"
     },
     {
       "code": "005690",
@@ -12508,6 +12548,26 @@
           }
         },
         {
+          "holder_name": "삼성자산운용",
+          "report_date": "2026-09-14",
+          "ratio": 7.33,
+          "raw": {
+            "rcept_no": "20260914000251",
+            "rcept_dt": "2026-09-14",
+            "corp_code": "00524421",
+            "corp_name": "테스",
+            "report_tp": "약식",
+            "repror": "삼성자산운용",
+            "stkqy": "1,419,622",
+            "stkqy_irds": "1,419,622",
+            "stkrt": "7.33",
+            "stkrt_irds": "7.33",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "매매로 인한 신규보고의무 발생(삼성액티브자산운용의 위탁운용분 포함)"
+          }
+        },
+        {
           "holder_name": "신한자산운용",
           "report_date": "2026-07-21",
           "ratio": 6.23,
@@ -12530,7 +12590,7 @@
       ],
       "top_holder_name": "주숭일",
       "top_holder_ratio": 29.46,
-      "latest_report_date": "2026-07-21"
+      "latest_report_date": "2026-09-14"
     },
     {
       "code": "033780",
@@ -13728,11 +13788,31 @@
             "ctr_stkrt": "-",
             "report_resn": "특별관계자 장내 매도"
           }
+        },
+        {
+          "holder_name": "삼성자산운용",
+          "report_date": "2026-09-14",
+          "ratio": 6.07,
+          "raw": {
+            "rcept_no": "20260914000254",
+            "rcept_dt": "2026-09-14",
+            "corp_code": "00372226",
+            "corp_name": "티에스이",
+            "report_tp": "약식",
+            "repror": "삼성자산운용",
+            "stkqy": "671,388",
+            "stkqy_irds": "671,388",
+            "stkrt": "6.07",
+            "stkrt_irds": "6.07",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "매매로 인한 신규보고의무 발생(삼성액티브자산운용의 위탁운용분 포함)"
+          }
         }
       ],
       "top_holder_name": "권상준",
       "top_holder_ratio": 50.32,
-      "latest_report_date": "2026-07-01"
+      "latest_report_date": "2026-09-14"
     },
     {
       "code": "115500",
@@ -17154,28 +17234,28 @@
       "holders": [
         {
           "holder_name": "유대규",
-          "report_date": "2026-08-18",
-          "ratio": 27.87,
+          "report_date": "2026-09-14",
+          "ratio": 28.34,
           "raw": {
-            "rcept_no": "20260818000311",
-            "rcept_dt": "2026-08-18",
+            "rcept_no": "20260914000350",
+            "rcept_dt": "2026-09-14",
             "corp_code": "01015160",
             "corp_name": "PS일렉트로닉스",
             "report_tp": "일반",
             "repror": "유대규",
             "stkqy": "13,211,240",
             "stkqy_irds": "0",
-            "stkrt": "27.87",
-            "stkrt_irds": "0",
+            "stkrt": "28.34",
+            "stkrt_irds": "0.47",
             "ctr_stkqy": "5,926,013",
-            "ctr_stkrt": "12.50",
-            "report_resn": "담보계약의 변경(만기상환 및 연장)"
+            "ctr_stkrt": "12.71",
+            "report_resn": "담보계약의 연장 및 변경"
           }
         }
       ],
       "top_holder_name": "유대규",
-      "top_holder_ratio": 27.87,
-      "latest_report_date": "2026-08-18"
+      "top_holder_ratio": 28.34,
+      "latest_report_date": "2026-09-14"
     },
     {
       "code": "006910",
