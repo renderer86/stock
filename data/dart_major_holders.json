@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 376,
-  "crawled_at_utc": "2026-09-21T14:45:16.452130+00:00",
+  "crawled_at_utc": "2026-09-22T13:04:26.508245+00:00",
   "stocks": [
     {
       "code": "005110",
@@ -1906,22 +1906,22 @@
         },
         {
           "holder_name": "지케이에셋",
-          "report_date": "2026-05-12",
-          "ratio": 9.916,
+          "report_date": "2026-09-22",
+          "ratio": 8.434,
           "raw": {
-            "rcept_no": "20260512000401",
-            "rcept_dt": "2026-05-12",
+            "rcept_no": "20260922000070",
+            "rcept_dt": "2026-09-22",
             "corp_code": "01022142",
             "corp_name": "엠디바이스",
             "report_tp": "약식",
             "repror": "지케이에셋",
-            "stkqy": "1,123,353",
-            "stkqy_irds": "1,123,353",
-            "stkrt": "9.916",
-            "stkrt_irds": "9.916",
+            "stkqy": "939,946",
+            "stkqy_irds": "-183,407",
+            "stkrt": "8.434",
+            "stkrt_irds": "-1.482",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "전환사채취득 및 장내매수에 따른 신규보고"
+            "report_resn": " 발행사의 매도청구권(Call Option) 행사로 전환사채권 \n감소에 의한 변동"
           }
         },
         {
@@ -1947,7 +1947,7 @@
       ],
       "top_holder_name": "조호경",
       "top_holder_ratio": 31.86,
-      "latest_report_date": "2026-05-12"
+      "latest_report_date": "2026-09-22"
     },
     {
       "code": "0013V0",
@@ -4575,22 +4575,22 @@
       "holders": [
         {
           "holder_name": "김준기",
-          "report_date": "2026-06-24",
-          "ratio": 27.57,
+          "report_date": "2026-09-22",
+          "ratio": 27.83,
           "raw": {
-            "rcept_no": "20260624000441",
-            "rcept_dt": "2026-06-24",
+            "rcept_no": "20260922000500",
+            "rcept_dt": "2026-09-22",
             "corp_code": "00159102",
             "corp_name": "DB손해보험",
             "report_tp": "일반",
             "repror": "김준기",
-            "stkqy": "18,060,507",
-            "stkqy_irds": "45,000",
-            "stkrt": "27.57",
-            "stkrt_irds": "0.07",
-            "ctr_stkqy": "6,735,867",
-            "ctr_stkrt": "10.28",
-            "report_resn": "- 특별관계자 (김남호, 김주원) 보유 주식 중 일부 주식      계약 사항 변경\n- 특별관계자 (DB하이텍) 의 당사 주식 매수"
+            "stkqy": "18,227,007",
+            "stkqy_irds": "166,500",
+            "stkrt": "27.83",
+            "stkrt_irds": "0.26",
+            "ctr_stkqy": "6,771,575",
+            "ctr_stkrt": "10.34",
+            "report_resn": "- 특별관계자 (김영만) 의 등기 임원 퇴임\n- 특별관계자 (DB하이텍) 의 당사 주식 매수\n- 특별관계자 (김남호, 김주원) 보유 주식 중 일부 주식      계약 사항 변경"
           }
         },
         {
@@ -4635,8 +4635,8 @@
         }
       ],
       "top_holder_name": "김준기",
-      "top_holder_ratio": 27.57,
-      "latest_report_date": "2026-08-04"
+      "top_holder_ratio": 27.83,
+      "latest_report_date": "2026-09-22"
     },
     {
       "code": "058630",
@@ -6118,6 +6118,26 @@
       "has_major_holders": true,
       "holders": [
         {
+          "holder_name": "글로벌커넥트플랫폼홀딩스",
+          "report_date": "2026-09-22",
+          "ratio": 67.11,
+          "raw": {
+            "rcept_no": "20260922000536",
+            "rcept_dt": "2026-09-22",
+            "corp_code": "01468061",
+            "corp_name": "레뷰코퍼레이션",
+            "report_tp": "일반",
+            "repror": "글로벌커넥트플랫폼홀딩스",
+            "stkqy": "7,262,000",
+            "stkqy_irds": "7,262,000",
+            "stkrt": "67.11",
+            "stkrt_irds": "67.11",
+            "ctr_stkqy": "7,249,400",
+            "ctr_stkrt": "66.99",
+            "report_resn": "- 대표보고자 변경에 따른 신규 보고\n- 장외에서 현물출자로 주식 취득"
+          }
+        },
+        {
           "holder_name": "글로벌커넥트플랫폼사모투자",
           "report_date": "2026-06-24",
           "ratio": 58.55,
@@ -6135,26 +6155,6 @@
             "ctr_stkqy": "6,323,160",
             "ctr_stkrt": "58.49",
             "report_resn": "1. 발행회사 자기주식 소각에 따른 보유비율 변동\n2. 특별관계자 사임 및 보통주 장내매도"
-          }
-        },
-        {
-          "holder_name": "LG유플러스",
-          "report_date": "2026-03-20",
-          "ratio": 8.32,
-          "raw": {
-            "rcept_no": "20260320001127",
-            "rcept_dt": "2026-03-20",
-            "corp_code": "01468061",
-            "corp_name": "레뷰코퍼레이션",
-            "report_tp": "일반",
-            "repror": "LG유플러스",
-            "stkqy": "926,240",
-            "stkqy_irds": "0",
-            "stkrt": "8.32",
-            "stkrt_irds": "0.00",
-            "ctr_stkqy": "0",
-            "ctr_stkrt": "0",
-            "report_resn": "주식양수도 계약 해제에 따른 변경보고"
           }
         },
         {
@@ -6178,9 +6178,9 @@
           }
         }
       ],
-      "top_holder_name": "글로벌커넥트플랫폼사모투자",
-      "top_holder_ratio": 58.55,
-      "latest_report_date": "2026-06-24"
+      "top_holder_name": "글로벌커넥트플랫폼홀딩스",
+      "top_holder_ratio": 67.11,
+      "latest_report_date": "2026-09-22"
     },
     {
       "code": "068790",
@@ -10861,11 +10861,11 @@
       "holders": [
         {
           "holder_name": "정지완",
-          "report_date": "2026-09-10",
+          "report_date": "2026-09-22",
           "ratio": 78.46,
           "raw": {
-            "rcept_no": "20260910000452",
-            "rcept_dt": "2026-09-10",
+            "rcept_no": "20260922000436",
+            "rcept_dt": "2026-09-22",
             "corp_code": "00247975",
             "corp_name": "솔브레인홀딩스",
             "report_tp": "일반",
@@ -10882,7 +10882,7 @@
       ],
       "top_holder_name": "정지완",
       "top_holder_ratio": 78.46,
-      "latest_report_date": "2026-09-10"
+      "latest_report_date": "2026-09-22"
     },
     {
       "code": "194700",
