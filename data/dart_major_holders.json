@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 376,
-  "crawled_at_utc": "2026-09-22T13:04:26.508245+00:00",
+  "crawled_at_utc": "2026-09-23T13:12:24.928762+00:00",
   "stocks": [
     {
       "code": "005110",
@@ -3889,11 +3889,32 @@
       },
       "status": "000",
       "message": "정상",
-      "has_major_holders": false,
-      "holders": [],
-      "top_holder_name": null,
-      "top_holder_ratio": null,
-      "latest_report_date": null
+      "has_major_holders": true,
+      "holders": [
+        {
+          "holder_name": "HB테크놀러지",
+          "report_date": "2026-09-23",
+          "ratio": 27.51,
+          "raw": {
+            "rcept_no": "20260923000528",
+            "rcept_dt": "2026-09-23",
+            "corp_code": "00523936",
+            "corp_name": "HB솔루션",
+            "report_tp": "일반",
+            "repror": "HB테크놀러지",
+            "stkqy": "20,124,500",
+            "stkqy_irds": "-3,623,360",
+            "stkrt": "27.51",
+            "stkrt_irds": "-7.08",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "- 특별관계해소, 특별관계추가\n- 특별관계자의 보유주식 수 변동\n- 보고자의 보유전환사채 전환청구기간 만료에 따른 변동 보고"
+          }
+        }
+      ],
+      "top_holder_name": "HB테크놀러지",
+      "top_holder_ratio": 27.51,
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "214450",
@@ -6138,26 +6159,6 @@
           }
         },
         {
-          "holder_name": "글로벌커넥트플랫폼사모투자",
-          "report_date": "2026-06-24",
-          "ratio": 58.55,
-          "raw": {
-            "rcept_no": "20260624000360",
-            "rcept_dt": "2026-06-24",
-            "corp_code": "01468061",
-            "corp_name": "레뷰코퍼레이션",
-            "report_tp": "일반",
-            "repror": "글로벌커넥트플랫폼사모투자",
-            "stkqy": "6,335,760",
-            "stkqy_irds": "-45,000",
-            "stkrt": "58.55",
-            "stkrt_irds": "1.48",
-            "ctr_stkqy": "6,323,160",
-            "ctr_stkrt": "58.49",
-            "report_resn": "1. 발행회사 자기주식 소각에 따른 보유비율 변동\n2. 특별관계자 사임 및 보통주 장내매도"
-          }
-        },
-        {
           "holder_name": "장대규",
           "report_date": "2025-03-31",
           "ratio": 6.64,
@@ -6311,7 +6312,7 @@
             "rcept_no": "20260916000475",
             "rcept_dt": "2026-09-16",
             "corp_code": "01323032",
-            "corp_name": "케이카",
+            "corp_name": "KG모빌리티플랫폼",
             "report_tp": "일반",
             "repror": "KG스틸",
             "stkqy": "25,682,810",
@@ -6331,7 +6332,7 @@
             "rcept_no": "20260907000253",
             "rcept_dt": "2026-09-07",
             "corp_code": "01323032",
-            "corp_name": "케이카",
+            "corp_name": "KG모빌리티플랫폼",
             "report_tp": "일반",
             "repror": "케이모빌리티밸류업",
             "stkqy": "9,612,860",
@@ -9048,11 +9049,31 @@
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
           }
+        },
+        {
+          "holder_name": "OrbisInvestmentManagementLimited",
+          "report_date": "2026-09-23",
+          "ratio": 5.02,
+          "raw": {
+            "rcept_no": "20260923000623",
+            "rcept_dt": "2026-09-23",
+            "corp_code": "00296290",
+            "corp_name": "키움증권",
+            "report_tp": "약식",
+            "repror": "OrbisInvestmentManagementLimited",
+            "stkqy": "1,317,597",
+            "stkqy_irds": "6,746",
+            "stkrt": "5.02",
+            "stkrt_irds": "0.03",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "- 단순투자목적으로 장내에서 발행회사의 주식 매수"
+          }
         }
       ],
       "top_holder_name": "다우기술",
       "top_holder_ratio": 42.51,
-      "latest_report_date": "2026-03-30"
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "290550",
@@ -9665,22 +9686,22 @@
       "holders": [
         {
           "holder_name": "장병규",
-          "report_date": "2026-09-11",
-          "ratio": 38.46,
+          "report_date": "2026-09-23",
+          "ratio": 38.66,
           "raw": {
-            "rcept_no": "20260911000576",
-            "rcept_dt": "2026-09-11",
+            "rcept_no": "20260923000499",
+            "rcept_dt": "2026-09-23",
             "corp_code": "00760971",
             "corp_name": "크래프톤",
             "report_tp": "일반",
             "repror": "장병규",
-            "stkqy": "17,966,453",
-            "stkqy_irds": "4,292",
-            "stkrt": "38.46",
-            "stkrt_irds": "0.01",
+            "stkqy": "18,107,683",
+            "stkqy_irds": "141,230",
+            "stkrt": "38.66",
+            "stkrt_irds": "0.20",
             "ctr_stkqy": "13,815,482",
-            "ctr_stkrt": "29.58",
-            "report_resn": "주식매수선택권 행사, 특별관계 해소, 특별관계 추가"
+            "ctr_stkrt": "29.50",
+            "report_resn": "특별관계 추가"
           }
         },
         {
@@ -9705,8 +9726,8 @@
         }
       ],
       "top_holder_name": "장병규",
-      "top_holder_ratio": 38.46,
-      "latest_report_date": "2026-09-11"
+      "top_holder_ratio": 38.66,
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "264660",
@@ -12427,22 +12448,22 @@
       "holders": [
         {
           "holder_name": "송영숙",
-          "report_date": "2026-09-01",
+          "report_date": "2026-09-23",
           "ratio": 69.13,
           "raw": {
-            "rcept_no": "20260901000258",
-            "rcept_dt": "2026-09-01",
+            "rcept_no": "20260923000630",
+            "rcept_dt": "2026-09-23",
             "corp_code": "00161426",
             "corp_name": "한미사이언스",
             "report_tp": "일반",
             "repror": "송영숙",
             "stkqy": "47,278,858",
-            "stkqy_irds": "-7,967",
+            "stkqy_irds": "0",
             "stkrt": "69.13",
-            "stkrt_irds": "-0.01",
-            "ctr_stkqy": "56,208,641",
-            "ctr_stkrt": "82.19",
-            "report_resn": "- 특수관계인 보유주식 일부 장내매도\n- 보유주식에 대한 담보계약 변경"
+            "stkrt_irds": "0.00",
+            "ctr_stkqy": "57,936,708",
+            "ctr_stkrt": "84.71",
+            "report_resn": "- 보유주식에 대한 담보계약 변경\n\n- 주식매매계약 체결\n- 특별관계 추가"
           }
         },
         {
@@ -12488,7 +12509,7 @@
       ],
       "top_holder_name": "송영숙",
       "top_holder_ratio": 69.13,
-      "latest_report_date": "2026-09-01"
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "095610",
@@ -17172,19 +17193,19 @@
       "holders": [
         {
           "holder_name": "김만진",
-          "report_date": "2024-11-22",
-          "ratio": 51.05,
+          "report_date": "2026-09-23",
+          "ratio": 52.82,
           "raw": {
-            "rcept_no": "20241122000473",
-            "rcept_dt": "2024-11-22",
+            "rcept_no": "20260923000517",
+            "rcept_dt": "2026-09-23",
             "corp_code": "00267906",
             "corp_name": "베뉴지",
             "report_tp": "일반",
             "repror": "김만진",
-            "stkqy": "24,605,932",
-            "stkqy_irds": "1,137,000",
-            "stkrt": "51.05",
-            "stkrt_irds": "2.36",
+            "stkqy": "25,458,886",
+            "stkqy_irds": "852,954",
+            "stkrt": "52.82",
+            "stkrt_irds": "1.77",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "지분 변동보고"
@@ -17212,8 +17233,8 @@
         }
       ],
       "top_holder_name": "김만진",
-      "top_holder_ratio": 51.05,
-      "latest_report_date": "2026-08-18"
+      "top_holder_ratio": 52.82,
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "332570",
@@ -17234,11 +17255,11 @@
       "holders": [
         {
           "holder_name": "유대규",
-          "report_date": "2026-09-14",
+          "report_date": "2026-09-23",
           "ratio": 28.34,
           "raw": {
-            "rcept_no": "20260914000350",
-            "rcept_dt": "2026-09-14",
+            "rcept_no": "20260922000546",
+            "rcept_dt": "2026-09-23",
             "corp_code": "01015160",
             "corp_name": "PS일렉트로닉스",
             "report_tp": "일반",
@@ -17246,7 +17267,7 @@
             "stkqy": "13,211,240",
             "stkqy_irds": "0",
             "stkrt": "28.34",
-            "stkrt_irds": "0.47",
+            "stkrt_irds": "0.00",
             "ctr_stkqy": "5,926,013",
             "ctr_stkrt": "12.71",
             "report_resn": "담보계약의 연장 및 변경"
@@ -17255,7 +17276,7 @@
       ],
       "top_holder_name": "유대규",
       "top_holder_ratio": 28.34,
-      "latest_report_date": "2026-09-14"
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "006910",
@@ -18099,6 +18120,26 @@
           }
         },
         {
+          "holder_name": "오션인더블유",
+          "report_date": "2026-09-23",
+          "ratio": 17.02,
+          "raw": {
+            "rcept_no": "20260923000264",
+            "rcept_dt": "2026-09-23",
+            "corp_code": "01105621",
+            "corp_name": "엔투텍",
+            "report_tp": "약식",
+            "repror": "오션인더블유",
+            "stkqy": "7,077,140",
+            "stkqy_irds": "7,077,140",
+            "stkrt": "17.02",
+            "stkrt_irds": "17.02",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "발행회사 발행 전환사채 취득"
+          }
+        },
+        {
           "holder_name": "한국채권투자운용",
           "report_date": "2025-07-29",
           "ratio": 13.08,
@@ -18121,7 +18162,7 @@
       ],
       "top_holder_name": "몬타나 신기술조합 제72호",
       "top_holder_ratio": 46.02,
-      "latest_report_date": "2026-09-07"
+      "latest_report_date": "2026-09-23"
     },
     {
       "code": "189860",
