@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 376,
-  "crawled_at_utc": "2026-09-25T13:14:03.421049+00:00",
+  "crawled_at_utc": "2026-09-28T16:06:36.907848+00:00",
   "stocks": [
     {
       "code": "005110",
@@ -911,26 +911,6 @@
       "has_major_holders": true,
       "holders": [
         {
-          "holder_name": "F&F 홀딩스",
-          "report_date": "2024-09-27",
-          "ratio": 62.82,
-          "raw": {
-            "rcept_no": "20240927000680",
-            "rcept_dt": "2024-09-27",
-            "corp_code": "01568413",
-            "corp_name": "F&F",
-            "report_tp": "일반",
-            "repror": "F&F 홀딩스",
-            "stkqy": "24,063,000",
-            "stkqy_irds": "5,000",
-            "stkrt": "62.82",
-            "stkrt_irds": "0.02",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "장내매수로 인한 지분변동"
-          }
-        },
-        {
           "holder_name": "국민연금공단",
           "report_date": "2025-10-01",
           "ratio": 8.32,
@@ -991,8 +971,8 @@
           }
         }
       ],
-      "top_holder_name": "F&F 홀딩스",
-      "top_holder_ratio": 62.82,
+      "top_holder_name": "국민연금공단",
+      "top_holder_ratio": 8.32,
       "latest_report_date": "2026-06-10"
     },
     {
