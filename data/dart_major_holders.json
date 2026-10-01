@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 376,
-  "crawled_at_utc": "2026-09-30T14:19:26.017010+00:00",
+  "crawled_at_utc": "2026-10-01T15:00:43.887047+00:00",
   "stocks": [
     {
       "code": "005110",
@@ -2904,6 +2904,26 @@
           }
         },
         {
+          "holder_name": "미래에셋자산운용",
+          "report_date": "2026-10-01",
+          "ratio": 6.95,
+          "raw": {
+            "rcept_no": "20261001000503",
+            "rcept_dt": "2026-10-01",
+            "corp_code": "00369657",
+            "corp_name": "리노공업",
+            "report_tp": "약식",
+            "repror": "미래에셋자산운용",
+            "stkqy": "5,296,338",
+            "stkqy_irds": "790,575",
+            "stkrt": "6.95",
+            "stkrt_irds": "1.04",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "지분율 변동"
+          }
+        },
+        {
           "holder_name": "삼성자산운용",
           "report_date": "2026-07-08",
           "ratio": 6.42,
@@ -2922,31 +2942,11 @@
             "ctr_stkrt": "-",
             "report_resn": "매매로 인한 변동보고의무 발생(삼성액티브자산운용의 위탁운용분 포함)"
           }
-        },
-        {
-          "holder_name": "미래에셋자산운용",
-          "report_date": "2026-08-03",
-          "ratio": 5.91,
-          "raw": {
-            "rcept_no": "20260803000359",
-            "rcept_dt": "2026-08-03",
-            "corp_code": "00369657",
-            "corp_name": "리노공업",
-            "report_tp": "약식",
-            "repror": "미래에셋자산운용",
-            "stkqy": "4,505,763",
-            "stkqy_irds": "-3,614,752",
-            "stkrt": "5.91",
-            "stkrt_irds": "-4.75",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "지분율 변동"
-          }
         }
       ],
       "top_holder_name": "이채윤",
       "top_holder_ratio": 25.48,
-      "latest_report_date": "2026-08-03"
+      "latest_report_date": "2026-10-01"
     },
     {
       "code": "101160",
@@ -7357,11 +7357,31 @@
             "ctr_stkrt": "-",
             "report_resn": "특별관계자 추가"
           }
+        },
+        {
+          "holder_name": "미원화학우리사주조합",
+          "report_date": "2026-10-01",
+          "ratio": 10.65,
+          "raw": {
+            "rcept_no": "20261001000598",
+            "rcept_dt": "2026-10-01",
+            "corp_code": "00855163",
+            "corp_name": "미원화학",
+            "report_tp": "약식",
+            "repror": "미원화학우리사주조합",
+            "stkqy": "2,341,881",
+            "stkqy_irds": "2,131,946",
+            "stkrt": "10.65",
+            "stkrt_irds": "1.10",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "1% 변동"
+          }
         }
       ],
       "top_holder_name": "김정돈",
       "top_holder_ratio": 55.66,
-      "latest_report_date": "2026-09-18"
+      "latest_report_date": "2026-10-01"
     },
     {
       "code": "080220",
@@ -8082,11 +8102,11 @@
       "holders": [
         {
           "holder_name": "오리온홀딩스",
-          "report_date": "2026-07-13",
+          "report_date": "2026-10-01",
           "ratio": 43.82,
           "raw": {
-            "rcept_no": "20260713000223",
-            "rcept_dt": "2026-07-13",
+            "rcept_no": "20261001000377",
+            "rcept_dt": "2026-10-01",
             "corp_code": "01238169",
             "corp_name": "오리온",
             "report_tp": "일반",
@@ -8094,7 +8114,7 @@
             "stkqy": "17,321,233",
             "stkqy_irds": "0",
             "stkrt": "43.82",
-            "stkrt_irds": "0.01",
+            "stkrt_irds": "0",
             "ctr_stkqy": "898,788",
             "ctr_stkrt": "2.27",
             "report_resn": "주요 계약내용 변경"
@@ -8143,7 +8163,7 @@
       ],
       "top_holder_name": "오리온홀딩스",
       "top_holder_ratio": 43.82,
-      "latest_report_date": "2026-09-01"
+      "latest_report_date": "2026-10-01"
     },
     {
       "code": "241710",
@@ -12160,28 +12180,28 @@
       "holders": [
         {
           "holder_name": "대성출판",
-          "report_date": "2026-06-05",
-          "ratio": 58.44,
+          "report_date": "2026-10-01",
+          "ratio": 60.95,
           "raw": {
-            "rcept_no": "20260605000394",
-            "rcept_dt": "2026-06-05",
+            "rcept_no": "20261001000446",
+            "rcept_dt": "2026-10-01",
             "corp_code": "00398808",
             "corp_name": "디지털대성",
             "report_tp": "일반",
             "repror": "대성출판",
-            "stkqy": "16,172,407",
-            "stkqy_irds": "405,600",
-            "stkrt": "58.44",
-            "stkrt_irds": "1.47",
+            "stkqy": "16,486,676",
+            "stkqy_irds": "314,269",
+            "stkrt": "60.95",
+            "stkrt_irds": "2.51",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "- 특별관계자 변동\n- 보유주식수 변동"
+            "report_resn": "- 특별관계자 변동\n- 보유주식수 변동\n- 주식 소각에 따른 보유비율 변동"
           }
         }
       ],
       "top_holder_name": "대성출판",
-      "top_holder_ratio": 58.44,
-      "latest_report_date": "2026-06-05"
+      "top_holder_ratio": 60.95,
+      "latest_report_date": "2026-10-01"
     },
     {
       "code": "060850",
@@ -17815,11 +17835,11 @@
       "holders": [
         {
           "holder_name": "이완근",
-          "report_date": "2026-09-01",
+          "report_date": "2026-10-01",
           "ratio": 32.53,
           "raw": {
-            "rcept_no": "20260901000268",
-            "rcept_dt": "2026-09-01",
+            "rcept_no": "20261001000381",
+            "rcept_dt": "2026-10-01",
             "corp_code": "00231664",
             "corp_name": "우리기술투자",
             "report_tp": "일반",
@@ -17827,16 +17847,16 @@
             "stkqy": "25,961,047",
             "stkqy_irds": "0",
             "stkrt": "32.53",
-            "stkrt_irds": "1.62",
-            "ctr_stkqy": "17,371,753",
-            "ctr_stkrt": "21.77",
-            "report_resn": "- 자기주식 이익소각에 따른 보유 비율 변동\n- 최대주주 보유주식 담보계약 변경"
+            "stkrt_irds": "0",
+            "ctr_stkqy": "18,856,902",
+            "ctr_stkrt": "23.63",
+            "report_resn": "최대주주 특별관계자 보유주식 담보계약 변경"
           }
         }
       ],
       "top_holder_name": "이완근",
       "top_holder_ratio": 32.53,
-      "latest_report_date": "2026-09-01"
+      "latest_report_date": "2026-10-01"
     },
     {
       "code": "004920",
