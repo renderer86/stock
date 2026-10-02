@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 376,
-  "crawled_at_utc": "2026-10-01T15:00:43.887047+00:00",
+  "crawled_at_utc": "2026-10-02T14:17:45.348954+00:00",
   "stocks": [
     {
       "code": "005110",
@@ -88,22 +88,22 @@
       "holders": [
         {
           "holder_name": "이주민",
-          "report_date": "2026-07-08",
-          "ratio": 40.15,
+          "report_date": "2026-10-02",
+          "ratio": 40.16,
           "raw": {
-            "rcept_no": "20260708000398",
-            "rcept_dt": "2026-07-08",
+            "rcept_no": "20261002000352",
+            "rcept_dt": "2026-10-02",
             "corp_code": "01379129",
             "corp_name": "매드업",
             "report_tp": "일반",
             "repror": "이주민",
-            "stkqy": "7,551,600",
-            "stkqy_irds": "7,551,600",
-            "stkrt": "40.15",
-            "stkrt_irds": "40.15",
+            "stkqy": "7,557,600",
+            "stkqy_irds": "6,000",
+            "stkrt": "40.16",
+            "stkrt_irds": "0.01",
             "ctr_stkqy": "7,236,000",
-            "ctr_stkrt": "38.47",
-            "report_resn": "코스닥시장 상장에 따른 신규 보고"
+            "ctr_stkrt": "38.45",
+            "report_resn": "특별관계자의 주식 증여 취소에 따른 주식수 변동 및\n스톡옵션 행사로 인한 발행주식총수 증가"
           }
         },
         {
@@ -148,8 +148,8 @@
         }
       ],
       "top_holder_name": "이주민",
-      "top_holder_ratio": 40.15,
-      "latest_report_date": "2026-07-08"
+      "top_holder_ratio": 40.16,
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "458870",
@@ -582,19 +582,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 9.58,
+          "report_date": "2026-10-02",
+          "ratio": 8.5,
           "raw": {
-            "rcept_no": "20260701000308",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000348",
+            "rcept_dt": "2026-10-02",
             "corp_code": "01649204",
             "corp_name": "달바글로벌",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,189,390",
-            "stkqy_irds": "256,625",
-            "stkrt": "9.58",
-            "stkrt_irds": "2.05",
+            "stkqy": "1,061,744",
+            "stkqy_irds": "-127,646",
+            "stkrt": "8.50",
+            "stkrt_irds": "-1.08",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -643,7 +643,7 @@
       ],
       "top_holder_name": "반성연",
       "top_holder_ratio": 20.56,
-      "latest_report_date": "2026-09-17"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "033100",
@@ -1492,11 +1492,11 @@
       "holders": [
         {
           "holder_name": "정철",
-          "report_date": "2026-09-11",
+          "report_date": "2026-10-02",
           "ratio": 39.25,
           "raw": {
-            "rcept_no": "20260911000478",
-            "rcept_dt": "2026-09-11",
+            "rcept_no": "20261002000465",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00150165",
             "corp_name": "브이티",
             "report_tp": "일반",
@@ -1507,13 +1507,13 @@
             "stkrt_irds": "0",
             "ctr_stkqy": "2,076,153",
             "ctr_stkrt": "5.95",
-            "report_resn": "주식대여  계약연장"
+            "report_resn": "주식담보대출 연장"
           }
         }
       ],
       "top_holder_name": "정철",
       "top_holder_ratio": 39.25,
-      "latest_report_date": "2026-09-11"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "114840",
@@ -1658,19 +1658,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 8.29,
+          "report_date": "2026-10-02",
+          "ratio": 7.27,
           "raw": {
-            "rcept_no": "20260701000271",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000427",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00366438",
             "corp_name": "산일전기",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "2,536,651",
-            "stkqy_irds": "15,548",
-            "stkrt": "8.29",
-            "stkrt_irds": "0.01",
+            "stkqy": "2,228,956",
+            "stkqy_irds": "-307,695",
+            "stkrt": "7.27",
+            "stkrt_irds": "-1.02",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -1679,7 +1679,7 @@
       ],
       "top_holder_name": "박동석",
       "top_holder_ratio": 45.37,
-      "latest_report_date": "2026-08-13"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "002960",
@@ -3521,19 +3521,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 8.42,
+          "report_date": "2026-10-02",
+          "ratio": 7.38,
           "raw": {
-            "rcept_no": "20260701000274",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000425",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00160843",
             "corp_name": "DB하이텍",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "3,663,665",
-            "stkqy_irds": "497,740",
-            "stkrt": "8.42",
-            "stkrt_irds": "1.14",
+            "stkqy": "3,209,187",
+            "stkqy_irds": "-454,478",
+            "stkrt": "7.38",
+            "stkrt_irds": "-1.04",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -3562,7 +3562,7 @@
       ],
       "top_holder_name": "DB",
       "top_holder_ratio": 25.03,
-      "latest_report_date": "2026-09-29"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "034950",
@@ -3932,11 +3932,31 @@
             "ctr_stkrt": "10.21",
             "report_resn": "1. 특별관계자의 장내매매\n2. 특별관계자의 주요계약체결\n3. 발행주식수 변동에 따른 지분율 변동"
           }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 7.14,
+          "raw": {
+            "rcept_no": "20261002000153",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00970453",
+            "corp_name": "파마리서치",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "825,365",
+            "stkqy_irds": "315,912",
+            "stkrt": "7.14",
+            "stkrt_irds": "2.73",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
         }
       ],
       "top_holder_name": "정상수",
       "top_holder_ratio": 41.54,
-      "latest_report_date": "2025-11-12"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "282620",
@@ -4596,22 +4616,22 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-04-01",
-          "ratio": 8.33,
+          "report_date": "2026-10-02",
+          "ratio": 9.36,
           "raw": {
-            "rcept_no": "20260401004830",
-            "rcept_dt": "2026-04-01",
+            "rcept_no": "20261002000451",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00159102",
             "corp_name": "DB손해보험",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "5,456,861",
-            "stkqy_irds": "355,290",
-            "stkrt": "8.33",
-            "stkrt_irds": "1.12",
+            "stkqy": "6,131,719",
+            "stkqy_irds": "674,858",
+            "stkrt": "9.36",
+            "stkrt_irds": "1.03",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "주식소각 및 단순추가취득/처분"
+            "report_resn": "단순추가취득/처분"
           }
         },
         {
@@ -4637,7 +4657,7 @@
       ],
       "top_holder_name": "김준기",
       "top_holder_ratio": 27.83,
-      "latest_report_date": "2026-09-22"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "058630",
@@ -4716,26 +4736,6 @@
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "특별관계자 보유주식수 감소에 따른 변동"
-          }
-        },
-        {
-          "holder_name": "국민연금공단",
-          "report_date": "2026-04-01",
-          "ratio": 5.13,
-          "raw": {
-            "rcept_no": "20260401002332",
-            "rcept_dt": "2026-04-01",
-            "corp_code": "00208444",
-            "corp_name": "피에스케이홀딩스",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "1,106,700",
-            "stkqy_irds": "29,975",
-            "stkrt": "5.13",
-            "stkrt_irds": "0.14",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
           }
         }
       ],
@@ -4818,26 +4818,6 @@
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "5%이상 보유에 따른 신규보고"
-          }
-        },
-        {
-          "holder_name": "국민연금공단",
-          "report_date": "2025-10-01",
-          "ratio": 5.04,
-          "raw": {
-            "rcept_no": "20251001000254",
-            "rcept_dt": "2025-10-01",
-            "corp_code": "00997812",
-            "corp_name": "코미코",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "527,136",
-            "stkqy_irds": "10,761",
-            "stkrt": "5.04",
-            "stkrt_irds": "0.10",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
           }
         }
       ],
@@ -4985,26 +4965,6 @@
           }
         },
         {
-          "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 7.12,
-          "raw": {
-            "rcept_no": "20260701000574",
-            "rcept_dt": "2026-07-01",
-            "corp_code": "01365825",
-            "corp_name": "피에스케이",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "2,062,489",
-            "stkqy_irds": "-295,414",
-            "stkrt": "7.12",
-            "stkrt_irds": "-1.02",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
-          }
-        },
-        {
           "holder_name": "신한자산운용",
           "report_date": "2026-07-20",
           "ratio": 6.34,
@@ -5022,6 +4982,26 @@
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "5% 이상 보유 신규보고"
+          }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 6.04,
+          "raw": {
+            "rcept_no": "20261002000262",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "01365825",
+            "corp_name": "피에스케이",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "1,749,309",
+            "stkqy_irds": "-313,180",
+            "stkrt": "6.04",
+            "stkrt_irds": "-1.08",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
           }
         },
         {
@@ -5047,7 +5027,7 @@
       ],
       "top_holder_name": "피에스케이홀딩스",
       "top_holder_ratio": 32.84,
-      "latest_report_date": "2026-07-20"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "064400",
@@ -5088,19 +5068,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 6.09,
+          "report_date": "2026-10-02",
+          "ratio": 7.24,
           "raw": {
-            "rcept_no": "20260701000341",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000386",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00139834",
             "corp_name": "LG씨엔에스",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "5,901,726",
-            "stkqy_irds": "1,012,934",
-            "stkrt": "6.09",
-            "stkrt_irds": "1.04",
+            "stkqy": "7,014,974",
+            "stkqy_irds": "1,113,248",
+            "stkrt": "7.24",
+            "stkrt_irds": "1.15",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -5109,7 +5089,7 @@
       ],
       "top_holder_name": "LG",
       "top_holder_ratio": 45.96,
-      "latest_report_date": "2026-07-01"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "060250",
@@ -5356,6 +5336,26 @@
           }
         },
         {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 6.03,
+          "raw": {
+            "rcept_no": "20261002000280",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00158325",
+            "corp_name": "NICE평가정보",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "3,514,129",
+            "stkqy_irds": "565,728",
+            "stkrt": "6.03",
+            "stkrt_irds": "1.03",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
+        },
+        {
           "holder_name": "KayneAndersonRudnickInvestmentManagement,LLC",
           "report_date": "2026-06-15",
           "ratio": 5.61,
@@ -5374,31 +5374,11 @@
             "ctr_stkrt": "-",
             "report_resn": "- 투자자금 회수목적으로 장내에서 주식 매도"
           }
-        },
-        {
-          "holder_name": "국민연금공단",
-          "report_date": "2026-04-01",
-          "ratio": 5.0,
-          "raw": {
-            "rcept_no": "20260401002262",
-            "rcept_dt": "2026-04-01",
-            "corp_code": "00158325",
-            "corp_name": "NICE평가정보",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "2,948,401",
-            "stkqy_irds": "11,769",
-            "stkrt": "5.00",
-            "stkrt_irds": "0.02",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
-          }
         }
       ],
       "top_holder_name": "피델리티인스티튜셔널에셋매니지먼트트러스트컴퍼니",
       "top_holder_ratio": 7.5,
-      "latest_report_date": "2026-07-10"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "200670",
@@ -5670,39 +5650,39 @@
       "holders": [
         {
           "holder_name": "현대홀딩스컴퍼니",
-          "report_date": "2026-07-13",
+          "report_date": "2026-10-02",
           "ratio": 24.95,
           "raw": {
-            "rcept_no": "20260713000068",
-            "rcept_dt": "2026-07-13",
+            "rcept_no": "20261002000536",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00164724",
             "corp_name": "현대엘리베이터",
             "report_tp": "일반",
             "repror": "현대홀딩스컴퍼니",
             "stkqy": "9,753,278",
-            "stkqy_irds": "6,487",
+            "stkqy_irds": "0",
             "stkrt": "24.95",
-            "stkrt_irds": "0.02",
-            "ctr_stkqy": "3,808,394",
-            "ctr_stkrt": "9.74",
-            "report_resn": "- 보유주식 수 변동"
+            "stkrt_irds": "0.00",
+            "ctr_stkqy": "3,893,394",
+            "ctr_stkrt": "9.96",
+            "report_resn": "- 보유주식등에 관한 계약 변경"
           }
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-01-02",
-          "ratio": 10.28,
+          "report_date": "2026-10-02",
+          "ratio": 9.27,
           "raw": {
-            "rcept_no": "20260102000234",
-            "rcept_dt": "2026-01-02",
+            "rcept_no": "20261002000393",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00164724",
             "corp_name": "현대엘리베이터",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "4,019,261",
-            "stkqy_irds": "394,641",
-            "stkrt": "10.28",
-            "stkrt_irds": "1.01",
+            "stkqy": "3,625,527",
+            "stkqy_irds": "-393,734",
+            "stkrt": "9.27",
+            "stkrt_irds": "-1.01",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -5711,7 +5691,7 @@
       ],
       "top_holder_name": "현대홀딩스컴퍼니",
       "top_holder_ratio": 24.95,
-      "latest_report_date": "2026-07-13"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "043260",
@@ -5793,26 +5773,6 @@
       "has_major_holders": true,
       "holders": [
         {
-          "holder_name": "국민연금공단",
-          "report_date": "2026-04-01",
-          "ratio": 7.26,
-          "raw": {
-            "rcept_no": "20260401004537",
-            "rcept_dt": "2026-04-01",
-            "corp_code": "00245472",
-            "corp_name": "티씨케이",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "811,261",
-            "stkqy_irds": "107,701",
-            "stkrt": "7.26",
-            "stkrt_irds": "1.23",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
-          }
-        },
-        {
           "holder_name": "케이씨",
           "report_date": "2026-03-10",
           "ratio": 6.9,
@@ -5830,6 +5790,26 @@
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "장내 매도를 통한 지분 변동\n발행회사 주식소각으로 보유비율변동"
+          }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 6.25,
+          "raw": {
+            "rcept_no": "20261002000177",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00245472",
+            "corp_name": "티씨케이",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "699,186",
+            "stkqy_irds": "-112,075",
+            "stkrt": "6.25",
+            "stkrt_irds": "-1.01",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
           }
         },
         {
@@ -5873,9 +5853,9 @@
           }
         }
       ],
-      "top_holder_name": "국민연금공단",
-      "top_holder_ratio": 7.26,
-      "latest_report_date": "2026-05-07"
+      "top_holder_name": "케이씨",
+      "top_holder_ratio": 6.9,
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "065710",
@@ -7030,19 +7010,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 11.89,
+          "report_date": "2026-10-02",
+          "ratio": 10.86,
           "raw": {
-            "rcept_no": "20260701000235",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000485",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00140955",
             "corp_name": "한솔케미칼",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,351,428",
-            "stkqy_irds": "-126,165",
-            "stkrt": "11.89",
-            "stkrt_irds": "-1.11",
+            "stkqy": "1,172,771",
+            "stkqy_irds": "-178,657",
+            "stkrt": "10.86",
+            "stkrt_irds": "-1.03",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -7111,7 +7091,7 @@
       ],
       "top_holder_name": "조동혁",
       "top_holder_ratio": 13.65,
-      "latest_report_date": "2026-09-14"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "005690",
@@ -8204,19 +8184,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 12.98,
+          "report_date": "2026-10-02",
+          "ratio": 10.44,
           "raw": {
-            "rcept_no": "20260701000570",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000242",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00763473",
             "corp_name": "코스메카코리아",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,385,741",
-            "stkqy_irds": "108,057",
-            "stkrt": "12.98",
-            "stkrt_irds": "1.02",
+            "stkqy": "1,115,354",
+            "stkqy_irds": "-270,387",
+            "stkrt": "10.44",
+            "stkrt_irds": "-2.54",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -8245,7 +8225,7 @@
       ],
       "top_holder_name": "박은희",
       "top_holder_ratio": 38.95,
-      "latest_report_date": "2026-09-16"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "317450",
@@ -8598,11 +8578,11 @@
       "holders": [
         {
           "holder_name": "대명화학",
-          "report_date": "2026-09-11",
+          "report_date": "2026-10-02",
           "ratio": 76.59,
           "raw": {
-            "rcept_no": "20260911000605",
-            "rcept_dt": "2026-09-11",
+            "rcept_no": "20261002000656",
+            "rcept_dt": "2026-10-02",
             "corp_code": "01806951",
             "corp_name": "폰드그룹",
             "report_tp": "일반",
@@ -8611,15 +8591,15 @@
             "stkqy_irds": "0",
             "stkrt": "76.59",
             "stkrt_irds": "0.00",
-            "ctr_stkqy": "32,872,385",
-            "ctr_stkrt": "57.10",
+            "ctr_stkqy": "32,639,603",
+            "ctr_stkrt": "56.69",
             "report_resn": "[변경] 주식담보계약 등의 주요계약 일부변경"
           }
         }
       ],
       "top_holder_name": "대명화학",
       "top_holder_ratio": 76.59,
-      "latest_report_date": "2026-09-11"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "041830",
@@ -8717,11 +8697,31 @@
             "ctr_stkrt": "-",
             "report_resn": "시간외대량매수"
           }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 5.3,
+          "raw": {
+            "rcept_no": "20261002000146",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00269922",
+            "corp_name": "인바디",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "714,368",
+            "stkqy_irds": "74,949",
+            "stkrt": "5.30",
+            "stkrt_irds": "0.56",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
         }
       ],
       "top_holder_name": "차기철",
       "top_holder_ratio": 28.66,
-      "latest_report_date": "2026-09-21"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "124500",
@@ -8972,19 +8972,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2025-10-01",
-          "ratio": 11.69,
+          "report_date": "2026-10-02",
+          "ratio": 10.59,
           "raw": {
-            "rcept_no": "20251001000452",
-            "rcept_dt": "2025-10-01",
+            "rcept_no": "20261002000438",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00296290",
             "corp_name": "키움증권",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "3,058,758",
-            "stkqy_irds": "-216,402",
-            "stkrt": "11.69",
-            "stkrt_irds": "-1.14",
+            "stkqy": "2,776,497",
+            "stkqy_irds": "-282,261",
+            "stkrt": "10.59",
+            "stkrt_irds": "-1.10",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -9013,7 +9013,7 @@
       ],
       "top_holder_name": "다우기술",
       "top_holder_ratio": 42.51,
-      "latest_report_date": "2026-09-23"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "290550",
@@ -10122,28 +10122,28 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-03-25",
-          "ratio": 10.61,
+          "report_date": "2026-10-02",
+          "ratio": 9.61,
           "raw": {
-            "rcept_no": "20260325000918",
-            "rcept_dt": "2026-03-25",
+            "rcept_no": "20261002000501",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00828497",
             "corp_name": "한미약품",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,359,079",
-            "stkqy_irds": "-118,583",
-            "stkrt": "10.61",
-            "stkrt_irds": "-0.92",
+            "stkqy": "1,230,775",
+            "stkqy_irds": "-128,304",
+            "stkrt": "9.61",
+            "stkrt_irds": "-1.00",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분, 일반투자목적에서 단순투자목적으로 보유목적 변경"
+            "report_resn": "단순추가취득/처분"
           }
         }
       ],
       "top_holder_name": "한미사이언스",
       "top_holder_ratio": 49.55,
-      "latest_report_date": "2026-09-29"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "099410",
@@ -12470,19 +12470,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-04-01",
-          "ratio": 9.44,
+          "report_date": "2026-10-02",
+          "ratio": 8.42,
           "raw": {
-            "rcept_no": "20260401004600",
-            "rcept_dt": "2026-04-01",
+            "rcept_no": "20261002000192",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00524421",
             "corp_name": "테스",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,827,463",
-            "stkqy_irds": "161,710",
-            "stkrt": "9.44",
-            "stkrt_irds": "1.01",
+            "stkqy": "1,630,673",
+            "stkqy_irds": "-196,790",
+            "stkrt": "8.42",
+            "stkrt_irds": "-1.02",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -12531,7 +12531,7 @@
       ],
       "top_holder_name": "주숭일",
       "top_holder_ratio": 29.46,
-      "latest_report_date": "2026-09-14"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "033780",
@@ -13812,19 +13812,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2025-04-01",
-          "ratio": 6.04,
+          "report_date": "2026-10-02",
+          "ratio": 6.06,
           "raw": {
-            "rcept_no": "20250401004114",
-            "rcept_dt": "2025-04-01",
+            "rcept_no": "20261002000402",
+            "rcept_dt": "2026-10-02",
             "corp_code": "01093007",
             "corp_name": "LS에코에너지",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,850,377",
-            "stkqy_irds": "318,141",
-            "stkrt": "6.04",
-            "stkrt_irds": "1.04",
+            "stkqy": "1,855,375",
+            "stkqy_irds": "4,998",
+            "stkrt": "6.06",
+            "stkrt_irds": "0.02",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -13833,7 +13833,7 @@
       ],
       "top_holder_name": "LS전선",
       "top_holder_ratio": 64.36,
-      "latest_report_date": "2026-01-16"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "290560",
@@ -13958,28 +13958,28 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2025-03-11",
-          "ratio": 13.41,
+          "report_date": "2026-10-02",
+          "ratio": 12.36,
           "raw": {
-            "rcept_no": "20250311000683",
-            "rcept_dt": "2025-03-11",
+            "rcept_no": "20261002000473",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00104856",
             "corp_name": "삼성증권",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "11,978,669",
-            "stkqy_irds": "714,245",
-            "stkrt": "13.41",
-            "stkrt_irds": "0.80",
+            "stkqy": "11,040,930",
+            "stkqy_irds": "-937,739",
+            "stkrt": "12.36",
+            "stkrt_irds": "-1.05",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "일반투자목적에서 단순투자목적으로 보유목적 변경"
+            "report_resn": "단순추가취득/처분"
           }
         }
       ],
       "top_holder_name": "삼성생명",
       "top_holder_ratio": 29.62,
-      "latest_report_date": "2026-03-27"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "025880",
@@ -14707,26 +14707,6 @@
           }
         },
         {
-          "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 6.57,
-          "raw": {
-            "rcept_no": "20260701000451",
-            "rcept_dt": "2026-07-01",
-            "corp_code": "00153375",
-            "corp_name": "태광",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "1,698,486",
-            "stkqy_irds": "263,435",
-            "stkrt": "6.57",
-            "stkrt_irds": "1.02",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
-          }
-        },
-        {
           "holder_name": "베어링자산운용",
           "report_date": "2025-11-07",
           "ratio": 6.09,
@@ -14745,11 +14725,31 @@
             "ctr_stkrt": "-",
             "report_resn": "1% 이상 변동에 따른 공시의무 발생"
           }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 5.53,
+          "raw": {
+            "rcept_no": "20261002000168",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00153375",
+            "corp_name": "태광",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "1,429,994",
+            "stkqy_irds": "-268,492",
+            "stkrt": "5.53",
+            "stkrt_irds": "-1.04",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
         }
       ],
       "top_holder_name": "대신인터내셔날",
       "top_holder_ratio": 46.11,
-      "latest_report_date": "2026-08-04"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "171090",
@@ -14787,11 +14787,31 @@
             "ctr_stkrt": "-",
             "report_resn": "주식매수선택권 행사"
           }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 5.16,
+          "raw": {
+            "rcept_no": "20261002000150",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00327819",
+            "corp_name": "선익시스템",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "522,334",
+            "stkqy_irds": "18,312",
+            "stkrt": "5.16",
+            "stkrt_irds": "0.18",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
         }
       ],
       "top_holder_name": "동아엘텍",
       "top_holder_ratio": 44.94,
-      "latest_report_date": "2026-07-06"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "058860",
@@ -15057,11 +15077,31 @@
             "ctr_stkrt": "0.52",
             "report_resn": "보유주식등에 관한 계약 변경"
           }
+        },
+        {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 5.05,
+          "raw": {
+            "rcept_no": "20261002000143",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "00135917",
+            "corp_name": "한화손해보험",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "5,892,111",
+            "stkqy_irds": "110,960",
+            "stkrt": "5.05",
+            "stkrt_irds": "0.10",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
         }
       ],
       "top_holder_name": "한화생명",
       "top_holder_ratio": 63.92,
-      "latest_report_date": "2026-04-07"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "082740",
@@ -15410,19 +15450,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 10.25,
+          "report_date": "2026-10-02",
+          "ratio": 10.24,
           "raw": {
-            "rcept_no": "20260701000243",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000489",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00261443",
             "corp_name": "NC",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "2,208,456",
-            "stkqy_irds": "451,959",
-            "stkrt": "10.25",
-            "stkrt_irds": "2.10",
+            "stkqy": "2,206,581",
+            "stkqy_irds": "-1,875",
+            "stkrt": "10.24",
+            "stkrt_irds": "-0.01",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -15471,7 +15511,7 @@
       ],
       "top_holder_name": "김택진",
       "top_holder_ratio": 11.99,
-      "latest_report_date": "2026-07-01"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "052690",
@@ -15818,19 +15858,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 8.05,
+          "report_date": "2026-10-02",
+          "ratio": 6.71,
           "raw": {
-            "rcept_no": "20260701000496",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000187",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00544577",
             "corp_name": "브이엠",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "2,120,278",
-            "stkqy_irds": "288,829",
-            "stkrt": "8.05",
-            "stkrt_irds": "1.00",
+            "stkqy": "1,765,807",
+            "stkqy_irds": "-354,471",
+            "stkrt": "6.71",
+            "stkrt_irds": "-1.34",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -15859,7 +15899,7 @@
       ],
       "top_holder_name": "최우형",
       "top_holder_ratio": 10.87,
-      "latest_report_date": "2026-07-16"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "226400",
@@ -16328,19 +16368,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 7.23,
+          "report_date": "2026-10-02",
+          "ratio": 6.19,
           "raw": {
-            "rcept_no": "20260701000242",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000462",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00111722",
             "corp_name": "미래에셋증권",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "40,436,529",
-            "stkqy_irds": "-6,337,654",
-            "stkrt": "7.23",
-            "stkrt_irds": "-1.02",
+            "stkqy": "33,606,185",
+            "stkqy_irds": "-6,830,344",
+            "stkrt": "6.19",
+            "stkrt_irds": "-1.04",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -16349,7 +16389,7 @@
       ],
       "top_holder_name": "미래에셋캐피탈",
       "top_holder_ratio": 35.17,
-      "latest_report_date": "2026-08-07"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "009540",
@@ -16408,19 +16448,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-04-01",
-          "ratio": 6.07,
+          "report_date": "2026-10-02",
+          "ratio": 5.77,
           "raw": {
-            "rcept_no": "20260401004707",
-            "rcept_dt": "2026-04-01",
+            "rcept_no": "20261002000241",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00871833",
             "corp_name": "에스티팜",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "1,259,923",
-            "stkqy_irds": "220,474",
-            "stkrt": "6.07",
-            "stkrt_irds": "1.05",
+            "stkqy": "1,204,511",
+            "stkqy_irds": "-55,412",
+            "stkrt": "5.77",
+            "stkrt_irds": "-0.30",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -16429,7 +16469,7 @@
       ],
       "top_holder_name": "동아쏘시오홀딩스",
       "top_holder_ratio": 37.69,
-      "latest_report_date": "2026-04-30"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "053580",
@@ -16616,19 +16656,19 @@
       "holders": [
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 5.31,
+          "report_date": "2026-10-02",
+          "ratio": 6.4,
           "raw": {
-            "rcept_no": "20260701000181",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000263",
+            "rcept_dt": "2026-10-02",
             "corp_code": "01199550",
             "corp_name": "HD현대에너지솔루션",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "594,799",
-            "stkqy_irds": "42,694",
-            "stkrt": "5.31",
-            "stkrt_irds": "0.38",
+            "stkqy": "716,842",
+            "stkqy_irds": "122,043",
+            "stkrt": "6.40",
+            "stkrt_irds": "1.09",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -16636,8 +16676,8 @@
         }
       ],
       "top_holder_name": "국민연금공단",
-      "top_holder_ratio": 5.31,
-      "latest_report_date": "2026-07-01"
+      "top_holder_ratio": 6.4,
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "017510",
@@ -16845,19 +16885,19 @@
         },
         {
           "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 9.48,
+          "report_date": "2026-10-02",
+          "ratio": 8.48,
           "raw": {
-            "rcept_no": "20260701000347",
-            "rcept_dt": "2026-07-01",
+            "rcept_no": "20261002000340",
+            "rcept_dt": "2026-10-02",
             "corp_code": "00159795",
             "corp_name": "한국카본",
             "report_tp": "약식",
             "repror": "국민연금공단",
-            "stkqy": "4,901,021",
-            "stkqy_irds": "-546,527",
-            "stkrt": "9.48",
-            "stkrt_irds": "-1.01",
+            "stkqy": "4,383,858",
+            "stkqy_irds": "-517,163",
+            "stkrt": "8.48",
+            "stkrt_irds": "-1.00",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "단순추가취득/처분"
@@ -16866,7 +16906,7 @@
       ],
       "top_holder_name": "조문수",
       "top_holder_ratio": 35.36,
-      "latest_report_date": "2026-07-06"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "059100",
@@ -17628,6 +17668,26 @@
           }
         },
         {
+          "holder_name": "국민연금공단",
+          "report_date": "2026-10-02",
+          "ratio": 6.2,
+          "raw": {
+            "rcept_no": "20261002000157",
+            "rcept_dt": "2026-10-02",
+            "corp_code": "01343665",
+            "corp_name": "RF머트리얼즈",
+            "report_tp": "약식",
+            "repror": "국민연금공단",
+            "stkqy": "1,115,862",
+            "stkqy_irds": "252,086",
+            "stkrt": "6.20",
+            "stkrt_irds": "1.40",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "단순추가취득/처분"
+          }
+        },
+        {
           "holder_name": "한기우",
           "report_date": "2026-07-29",
           "ratio": 5.9,
@@ -17650,7 +17710,7 @@
       ],
       "top_holder_name": "RFHIC",
       "top_holder_ratio": 46.76,
-      "latest_report_date": "2026-07-29"
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "204620",
@@ -17727,26 +17787,6 @@
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "1% 이상 변동"
-          }
-        },
-        {
-          "holder_name": "국민연금공단",
-          "report_date": "2026-07-01",
-          "ratio": 6.61,
-          "raw": {
-            "rcept_no": "20260701000176",
-            "rcept_dt": "2026-07-01",
-            "corp_code": "01042711",
-            "corp_name": "글로벌텍스프리",
-            "report_tp": "약식",
-            "repror": "국민연금공단",
-            "stkqy": "4,647,418",
-            "stkqy_irds": "1,136,481",
-            "stkrt": "6.61",
-            "stkrt_irds": "1.61",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "단순추가취득/처분"
           }
         },
         {
@@ -19177,28 +19217,28 @@
       "holders": [
         {
           "holder_name": "원익홀딩스",
-          "report_date": "2026-07-09",
-          "ratio": 33.09,
+          "report_date": "2026-10-02",
+          "ratio": 34.14,
           "raw": {
-            "rcept_no": "20260709000534",
-            "rcept_dt": "2026-07-09",
+            "rcept_no": "20261002000537",
+            "rcept_dt": "2026-10-02",
             "corp_code": "01187148",
             "corp_name": "케어랩스",
             "report_tp": "일반",
             "repror": "원익홀딩스",
-            "stkqy": "6,423,914",
-            "stkqy_irds": "185,000",
-            "stkrt": "33.09",
-            "stkrt_irds": "0.95",
+            "stkqy": "6,627,722",
+            "stkqy_irds": "203,808",
+            "stkrt": "34.14",
+            "stkrt_irds": "1.05",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "보고자의 장내매수에 따른 보유지분 증가"
+            "report_resn": "보고자 및 특별관계자의 장내매수에 따른 보유지분 증가"
           }
         }
       ],
       "top_holder_name": "원익홀딩스",
-      "top_holder_ratio": 33.09,
-      "latest_report_date": "2026-07-09"
+      "top_holder_ratio": 34.14,
+      "latest_report_date": "2026-10-02"
     },
     {
       "code": "300080",
