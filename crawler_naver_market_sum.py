@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -18,6 +19,7 @@ BASE_URL = "https://stock.naver.com/market/stock/kr/stocklist/capitalization"
 STOCK_LIST_API_URL = "https://stock.naver.com/api/domestic/market/stock/default"
 MOBILE_MARKET_VALUE_API_URL = "https://m.stock.naver.com/api/stocks/marketValue/{market}"
 DETAIL_URL = "https://stock.naver.com/domestic/stock/{code}"
+ITEM_PRICE_API_URL = "https://stock.naver.com/api/domestic/detail/{code}/price"
 DEFAULT_OUTPUT = Path("data/market_sum.json")
 DEFAULT_ROE_OUTPUT = Path("data/market_sum_by_roe.json")
 USER_AGENT = (
@@ -31,6 +33,7 @@ REQUEST_RETRIES = 3
 # 정상 수집 시 코스피 약 940, 코스닥 약 1,820 종목이다. 응답 구조가 바뀌어
 # 일부만 받아진 경우 기존 JSON을 덮어쓰지 않도록 실패 처리한다.
 MIN_STOCKS_PER_MARKET = 500
+FUND_DETAIL_WORKERS = 4
 
 MARKETS = [
     {"sosok": "0", "market": "KOSPI", "market_label": "코스피"},
@@ -296,6 +299,48 @@ def crawl_mobile_market_value(
     return page, items
 
 
+def fill_preferred_pbr(stocks: list[dict[str, Any]]) -> int:
+    """우선주 PBR을 보통주 BPS(주가 / PBR)로 계산한다.
+
+    새 API는 우선주 PBR을 비워 준다. 기존 네이버 화면 값과 0.02 이내로 일치한다.
+    """
+    by_code = {stock["code"]: stock for stock in stocks}
+    filled = 0
+    for stock in stocks:
+        code = stock["code"]
+        if stock.get("pbr") is not None or not stock.get("current_price") or code.endswith("0"):
+            continue
+        common = by_code.get(code[:5] + "0")
+        if not common or not common.get("pbr") or not common.get("current_price"):
+            continue
+        bps = common["current_price"] / common["pbr"]
+        stock["pbr"] = round(stock["current_price"] / bps, 2)
+        filled += 1
+    return filled
+
+
+def fill_fund_details(session: requests.Session, funds: list[dict[str, Any]]) -> int:
+    """ETF·ETN의 외국인비율과 상장주식수를 종목별 시세 API로 채운다."""
+
+    def fetch(fund: dict[str, Any]) -> tuple[dict[str, Any], Any]:
+        try:
+            return fund, get_json(session, ITEM_PRICE_API_URL.format(code=fund["code"]), {})
+        except RuntimeError:
+            return fund, None
+
+    filled = 0
+    with ThreadPoolExecutor(max_workers=FUND_DETAIL_WORKERS) as executor:
+        for fund, detail in executor.map(fetch, funds):
+            if not isinstance(detail, dict):
+                continue
+            fund["foreigner_ratio"] = parse_float(detail.get("frgnHoldRate"))
+            listed_shares = scaled_int(detail.get("listedStockCnt"), 1_000)
+            if listed_shares is not None:
+                fund["listed_shares"] = listed_shares
+            filled += 1
+    return filled
+
+
 def crawl_market(
     session: requests.Session,
     market_info: dict[str, str],
@@ -317,6 +362,13 @@ def crawl_market(
         for item in mobile_items
         if str(item.get("itemCode") or "").strip() not in known_codes
     ]
+    preferred_pbr_count = fill_preferred_pbr(stocks)
+    fund_detail_count = fill_fund_details(session, funds)
+    print(
+        f"[NAVER] {market_info['market']} preferred PBR filled: {preferred_pbr_count:,} | "
+        f"ETF/ETN details: {fund_detail_count:,}/{len(funds):,}",
+        flush=True,
+    )
 
     merged = [row for row in stocks + funds if row["code"]]
     merged.sort(

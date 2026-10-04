@@ -1,9 +1,19 @@
 import unittest
 
-from crawler_naver_market_sum import MARKETS, fund_row, stock_row
+from crawler_naver_market_sum import MARKETS, fill_preferred_pbr, fund_row, stock_row
 
 
 class NaverMarketSumTest(unittest.TestCase):
+    def test_preferred_pbr_uses_common_stock_bps(self) -> None:
+        stocks = [
+            {"code": "005930", "current_price": 276000, "pbr": 3.2},
+            {"code": "005935", "current_price": 201000, "pbr": None},
+            {"code": "02826K", "current_price": 100000, "pbr": None},
+        ]
+        self.assertEqual(fill_preferred_pbr(stocks), 1)
+        self.assertEqual(stocks[1]["pbr"], 2.33)
+        self.assertIsNone(stocks[2]["pbr"])
+
     def test_stock_row_keeps_legacy_units(self) -> None:
         row = stock_row(
             {

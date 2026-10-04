@@ -2,15 +2,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qs, urlparse
 
 import requests
-from bs4 import BeautifulSoup
 
 from collector_common import atomic_write_json, utc_now_iso
 
@@ -19,11 +16,16 @@ ROOT_DIR = Path(__file__).resolve().parent
 KOREA_INPUT = ROOT_DIR / "data" / "market_sum_by_roe.json"
 US_INPUT = ROOT_DIR / "data" / "us_market_snapshot.json"
 DEFAULT_OUTPUT = ROOT_DIR / "data" / "market_heatmap.json"
-NAVER_SECTOR_URL = "https://finance.naver.com/sise/sise_group.naver"
-NAVER_SECTOR_DETAIL_URL = "https://finance.naver.com/sise/sise_group_detail.naver"
-NAVER_ITEM_URL = "https://finance.naver.com/item/main.naver"
+# 2026-09 네이버 증권 개편으로 finance.naver.com 업종 화면이 stock.naver.com
+# 으로 리다이렉트된다. 새 화면이 쓰는 업종 JSON API를 사용한다.
+NAVER_SECTOR_URL = "https://stock.naver.com/market/stock/kr/industry"
+NAVER_SECTOR_LIST_API_URL = "https://stock.naver.com/api/domestic/market/upjong/list"
+NAVER_SECTOR_STOCKS_API_URL = (
+    "https://stock.naver.com/api/domestic/market/upjong/{sector_id}/stocklist"
+)
+NAVER_SECTOR_PAGE_SIZE = 200
+NAVER_ITEM_URL = "https://stock.naver.com/domestic/stock/{code}"
 NASDAQ_ITEM_URL = "https://www.nasdaq.com/market-activity/stocks"
-CODE_PATTERN = re.compile(r"(?:\?|&)code=([0-9A-Z]{6})(?:&|$)", re.IGNORECASE)
 REQUEST_TIMEOUT = 30
 KOREA_BROAD_SECTOR_RULES = (
     (
@@ -188,13 +190,13 @@ def korea_broad_sector(industry: str) -> str:
     return "기타"
 
 
-def fetch_soup(
+def fetch_json(
     session: requests.Session,
     url: str,
     *,
     params: dict[str, Any] | None = None,
     attempts: int = 3,
-) -> BeautifulSoup:
+) -> Any:
     last_error: Exception | None = None
     for attempt in range(attempts):
         try:
@@ -204,9 +206,8 @@ def fetch_soup(
                 timeout=REQUEST_TIMEOUT,
             )
             response.raise_for_status()
-            response.encoding = "euc-kr"
-            return BeautifulSoup(response.text, "html.parser")
-        except requests.RequestException as exc:
+            return response.json()
+        except (requests.RequestException, ValueError) as exc:
             last_error = exc
             if attempt + 1 < attempts:
                 time.sleep(1.0 * (attempt + 1))
@@ -229,20 +230,16 @@ def make_session() -> requests.Session:
 
 def fetch_sector_catalog() -> list[dict[str, str]]:
     session = make_session()
-    soup = fetch_soup(
+    rows = fetch_json(
         session,
-        NAVER_SECTOR_URL,
-        params={"type": "upjong"},
+        NAVER_SECTOR_LIST_API_URL,
+        params={"startIdx": 0, "pageSize": NAVER_SECTOR_PAGE_SIZE, "sortType": "changeRate"},
     )
     sectors: list[dict[str, str]] = []
     seen: set[str] = set()
-    for link in soup.select(
-        "table.type_1 a[href*='sise_group_detail.naver'][href*='type=upjong']"
-    ):
-        href = str(link.get("href") or "")
-        query = parse_qs(urlparse(href).query)
-        sector_id = str((query.get("no") or [""])[0]).strip()
-        name = link.get_text(" ", strip=True)
+    for row in rows if isinstance(rows, list) else []:
+        sector_id = str(row.get("no") or "").strip()
+        name = str(row.get("name") or "").strip()
         if not sector_id or not name or sector_id in seen:
             continue
         seen.add(sector_id)
@@ -254,18 +251,29 @@ def fetch_sector_catalog() -> list[dict[str, str]]:
 
 def fetch_sector_members(sector: dict[str, str]) -> tuple[str, dict[str, str]]:
     session = make_session()
-    soup = fetch_soup(
-        session,
-        NAVER_SECTOR_DETAIL_URL,
-        params={"no": sector["id"], "type": "upjong"},
-    )
     members: dict[str, str] = {}
-    for link in soup.select("table.type_5 td.name a[href*='code=']"):
-        href = str(link.get("href") or "")
-        match = CODE_PATTERN.search(href)
-        if match:
-            members[match.group(1)] = sector["name"]
-    return sector["name"], members
+    # startIdx 는 0부터 시작하는 페이지 번호다.
+    page_index = 0
+    while True:
+        rows = fetch_json(
+            session,
+            NAVER_SECTOR_STOCKS_API_URL.format(sector_id=sector["id"]),
+            params={
+                "marketType": "ALL",
+                "orderType": "marketSum",
+                "startIdx": page_index,
+                "pageSize": NAVER_SECTOR_PAGE_SIZE,
+            },
+        )
+        if not isinstance(rows, list):
+            raise RuntimeError(f"Unexpected sector member response: {type(rows).__name__}")
+        for row in rows:
+            code = str(row.get("itemcode") or "").strip()
+            if code:
+                members[code] = sector["name"]
+        if len(rows) < NAVER_SECTOR_PAGE_SIZE:
+            return sector["name"], members
+        page_index += 1
 
 
 def previous_korea_sector_map(output: Path) -> dict[str, str]:
@@ -278,9 +286,9 @@ def previous_korea_sector_map(output: Path) -> dict[str, str]:
     markets = payload.get("markets") or {}
     stocks = (markets.get("KR") or {}).get("stocks") or []
     return {
-        str(row.get("symbol") or ""): str(row.get("sector") or "")
+        str(row.get("symbol") or ""): str(row.get("industry") or "")
         for row in stocks
-        if row.get("symbol") and row.get("sector")
+        if row.get("symbol") and row.get("industry") not in (None, "", "기타")
     }
 
 
@@ -374,7 +382,7 @@ def normalize_korea_stocks(
                 "per": number(row.get("per")),
                 "foreigner_ratio": number(row.get("foreigner_ratio")),
                 "sales_growth": number(row.get("sales_increasing_rate")),
-                "url": f"{NAVER_ITEM_URL}?code={code}",
+                "url": NAVER_ITEM_URL.format(code=code),
             }
         )
     stocks.sort(key=lambda item: item["market_cap"], reverse=True)
