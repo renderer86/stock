@@ -1,21 +1,23 @@
 from __future__ import annotations
 
 import argparse
-import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qs, urljoin, urlparse
 
 import requests
-from bs4 import BeautifulSoup
 
 from collector_common import atomic_write_json
 
 
-BASE_URL = "https://finance.naver.com/sise/sise_market_sum.naver"
-FIELD_SUBMIT_URL = "https://finance.naver.com/sise/field_submit.naver"
+# 2026-09 네이버 증권 개편으로 finance.naver.com/sise/sise_market_sum.naver 가
+# stock.naver.com 으로 리다이렉트된다. 새 PC 화면이 쓰는 JSON API에서 종목
+# 재무 지표를 받고, 이 API가 제외하는 ETF·ETN 등은 모바일 시가총액 API로 보완한다.
+BASE_URL = "https://stock.naver.com/market/stock/kr/stocklist/capitalization"
+STOCK_LIST_API_URL = "https://stock.naver.com/api/domestic/market/stock/default"
+MOBILE_MARKET_VALUE_API_URL = "https://m.stock.naver.com/api/stocks/marketValue/{market}"
+DETAIL_URL = "https://stock.naver.com/domestic/stock/{code}"
 DEFAULT_OUTPUT = Path("data/market_sum.json")
 DEFAULT_ROE_OUTPUT = Path("data/market_sum_by_roe.json")
 USER_AGENT = (
@@ -23,6 +25,12 @@ USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/137.0.0.0 Safari/537.36"
 )
+STOCK_PAGE_SIZE = 100
+MOBILE_PAGE_SIZE = 100
+REQUEST_RETRIES = 3
+# 정상 수집 시 코스피 약 940, 코스닥 약 1,820 종목이다. 응답 구조가 바뀌어
+# 일부만 받아진 경우 기존 JSON을 덮어쓰지 않도록 실패 처리한다.
+MIN_STOCKS_PER_MARKET = 500
 
 MARKETS = [
     {"sosok": "0", "market": "KOSPI", "market_label": "코스피"},
@@ -56,63 +64,12 @@ FIELD_GROUPS: list[list[str]] = [
     ],
 ]
 
-FIELD_LABELS = {
-    "market_sum": "시가총액",
-    "property_total": "자산총계",
-    "debt_total": "부채총계",
-    "sales": "매출액",
-    "sales_increasing_rate": "매출액증가율",
-    "operating_profit": "영업이익",
-    "operating_profit_increasing_rate": "영업이익증가율",
-    "net_income": "당기순이익",
-    "eps": "주당순이익",
-    "dividend": "보통주배당금",
-    "per": "PER",
-    "roe": "ROE",
-    "quant": "거래량",
-    "frgn_rate": "외국인비율",
-    "listed_stock_cnt": "상장주식수",
-    "roa": "ROA",
-    "pbr": "PBR",
-    "reserve_ratio": "유보율",
-}
 
-HEADER_TO_FIELD_ID = {label: field_id for field_id, label in FIELD_LABELS.items()}
-FIELD_OUTPUT_KEYS = {
-    "market_sum": "market_cap_krw_100m",
-    "property_total": "property_total_krw_100m",
-    "debt_total": "debt_total_krw_100m",
-    "sales": "sales_krw_100m",
-    "sales_increasing_rate": "sales_increasing_rate",
-    "operating_profit": "operating_profit_krw_100m",
-    "operating_profit_increasing_rate": "operating_profit_increasing_rate",
-    "net_income": "net_income_krw_100m",
-    "eps": "eps",
-    "dividend": "dividend",
-    "per": "per",
-    "roe": "roe",
-    "roa": "roa",
-    "pbr": "pbr",
-    "reserve_ratio": "reserve_ratio",
-    "quant": "volume",
-    "frgn_rate": "foreigner_ratio",
-    "listed_stock_cnt": "listed_shares",
-}
-
-
-def clean_text(value: str) -> str:
-    return " ".join(value.replace("\xa0", " ").split())
-
-
-def extract_number_text(value: str) -> str:
-    text = clean_text(value).replace(",", "").replace("%", "")
-    match = re.search(r"-?\d+(?:\.\d+)?", text)
-    return match.group(0) if match else ""
-
-
-def parse_float(value: str) -> float | None:
-    text = extract_number_text(value)
-    if not text or text.upper() == "N/A":
+def parse_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    text = str(value).replace(",", "").replace("%", "").strip()
+    if not text or text.upper() == "N/A" or text == "-":
         return None
     try:
         return float(text)
@@ -120,32 +77,19 @@ def parse_float(value: str) -> float | None:
         return None
 
 
-def parse_int(value: str) -> int | None:
-    text = extract_number_text(value)
-    if not text or text.upper() == "N/A":
-        return None
-    try:
-        return int(float(text))
-    except ValueError:
-        return None
+def parse_int(value: Any) -> int | None:
+    number = parse_float(value)
+    return None if number is None else int(number)
 
 
-def parse_by_field(field_id: str, value: str) -> float | int | None:
-    float_fields = {
-        "sales_increasing_rate",
-        "operating_profit_increasing_rate",
-        "roe",
-        "roa",
-        "pbr",
-        "per",
-        "frgn_rate",
-    }
-    return parse_float(value) if field_id in float_fields else parse_int(value)
+def scaled_int(value: Any, divisor: int) -> int | None:
+    number = parse_float(value)
+    return None if number is None else int(round(number / divisor))
 
 
-def extract_code(href: str) -> str:
-    query = parse_qs(urlparse(href).query)
-    return query.get("code", [""])[0]
+def abs_int(value: Any) -> int | None:
+    number = parse_int(value)
+    return None if number is None else abs(number)
 
 
 def create_session() -> requests.Session:
@@ -154,195 +98,202 @@ def create_session() -> requests.Session:
         {
             "User-Agent": USER_AGENT,
             "Referer": BASE_URL,
+            "Accept": "application/json",
             "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
         }
     )
     return session
 
 
-def fetch_page(session: requests.Session, page: int, sosok: str) -> str:
-    response = session.get(BASE_URL, params={"page": page, "sosok": sosok}, timeout=20)
-    response.raise_for_status()
-    response.encoding = "euc-kr"
-    return response.text
+def get_json(session: requests.Session, url: str, params: dict[str, Any]) -> Any:
+    last_error: Exception | None = None
+    for attempt in range(1, REQUEST_RETRIES + 1):
+        try:
+            response = session.get(url, params=params, timeout=30)
+            response.raise_for_status()
+            return response.json()
+        except (requests.RequestException, ValueError) as exc:
+            last_error = exc
+            if attempt < REQUEST_RETRIES:
+                time.sleep(attempt * 2)
+    raise RuntimeError(f"Naver API request failed: {url} {params}: {last_error}")
 
 
-def apply_field_selection(session: requests.Session, field_ids: list[str], page: int, sosok: str) -> None:
-    body: list[tuple[str, str]] = [
-        ("menu", "market_sum"),
-        (
-            "returnUrl",
-            f"http://finance.naver.com/sise/sise_market_sum.naver?page={page}&sosok={sosok}",
+def stock_row(item: dict[str, Any], market_info: dict[str, str], page: int) -> dict[str, Any]:
+    code = str(item.get("itemcode") or "").strip()
+    stock = {
+        "market": market_info["market"],
+        "market_label": market_info["market_label"],
+        "sosok": market_info["sosok"],
+        "page": page,
+        "rank": None,
+        "name": str(item.get("itemname") or "").strip(),
+        "code": code,
+        "detail_url": DETAIL_URL.format(code=code),
+        "security_type": item.get("type"),
+        "current_price": parse_int(item.get("nowPrice")),
+        "diff": abs_int(item.get("prevChangePrice")),
+        "diff_rate": parse_float(item.get("prevChangeRate")),
+        # 새 API는 액면가를 제공하지 않는다. 0은 펀드형(ETF 등) 표시로 쓰이므로
+        # 일반 종목은 None으로 둔다.
+        "par_value": None,
+        "market_cap_krw_100m": scaled_int(item.get("marketSum"), 100_000_000),
+        "property_total_krw_100m": parse_int(item.get("propertyTotal")),
+        "debt_total_krw_100m": parse_int(item.get("debtTotal")),
+        "sales_krw_100m": parse_int(item.get("sales")),
+        "sales_increasing_rate": parse_float(item.get("salesIncreasingRate")),
+        "operating_profit_krw_100m": parse_int(item.get("operatingProfit")),
+        "operating_profit_increasing_rate": parse_float(
+            item.get("operatingProfitIncreasingRate")
         ),
-    ]
-    body.extend(("fieldIds", field_id) for field_id in field_ids)
-
-    response = session.post(FIELD_SUBMIT_URL, data=body, timeout=20)
-    response.raise_for_status()
-
-
-def get_total_pages(html: str) -> int:
-    soup = BeautifulSoup(html, "html.parser")
-
-    last_link = soup.select_one("td.pgRR a")
-    if last_link and last_link.get("href"):
-        match = re.search(r"page=(\d+)", last_link["href"])
-        if match:
-            return int(match.group(1))
-
-    page_numbers: list[int] = []
-    for anchor in soup.select("table.Nnavi a[href*='page=']"):
-        match = re.search(r"page=(\d+)", anchor.get("href", ""))
-        if match:
-            page_numbers.append(int(match.group(1)))
-
-    if page_numbers:
-        return max(page_numbers)
-
-    raise RuntimeError("Failed to detect the last page.")
-
-
-def extract_selected_field_ids(soup: BeautifulSoup) -> list[str]:
-    headers = [clean_text(th.get_text(" ", strip=True)) for th in soup.select("table.type_2 thead th")]
-    dynamic_headers = headers[6:-1]
-
-    selected_field_ids: list[str] = []
-    for header in dynamic_headers:
-        field_id = HEADER_TO_FIELD_ID.get(header)
-        if not field_id:
-            raise RuntimeError(f"Unknown header label: {header}")
-        selected_field_ids.append(field_id)
-
-    return selected_field_ids
-
-
-def parse_stock_rows(html: str, page: int, market_info: dict[str, str]) -> list[dict[str, Any]]:
-    soup = BeautifulSoup(html, "html.parser")
-    selected_field_ids = extract_selected_field_ids(soup)
-    stocks: list[dict[str, Any]] = []
-
-    for row in soup.select("table.type_2 tr"):
-        name_link = row.select_one("a.tltle")
-        if not name_link:
-            continue
-
-        cells = [clean_text(cell.get_text(" ", strip=True)) for cell in row.find_all("td")]
-        required_len = 6 + len(selected_field_ids) + 1
-        if len(cells) < required_len:
-            continue
-
-        code = extract_code(name_link.get("href", ""))
-        raw_selected: dict[str, str] = {}
-        parsed_selected: dict[str, float | int | None] = {}
-
-        for offset, field_id in enumerate(selected_field_ids):
-            raw_value = cells[6 + offset]
-            raw_selected[field_id] = raw_value
-            parsed_selected[FIELD_OUTPUT_KEYS[field_id]] = parse_by_field(field_id, raw_value)
-
-        stock = {
-            "market": market_info["market"],
-            "market_label": market_info["market_label"],
-            "sosok": market_info["sosok"],
-            "page": page,
-            "rank": parse_int(cells[0]),
-            "name": clean_text(name_link.get_text(strip=True)),
-            "code": code,
-            "detail_url": urljoin(BASE_URL, f"/item/main.naver?code={code}"),
-            "current_price": parse_int(cells[2]),
-            "diff": parse_int(cells[3]),
-            "diff_rate": parse_float(cells[4]),
-            "par_value": parse_int(cells[5]),
-            **parsed_selected,
-            "raw": {
-                "current_price": cells[2],
-                "diff": cells[3],
-                "diff_rate": cells[4],
-                "par_value": cells[5],
-                **raw_selected,
-            },
-        }
-        stock["is_suspended"] = (
-            stock.get("volume") == 0
-            and stock.get("diff") == 0
-            and stock.get("diff_rate") == 0
-        )
-        stocks.append(stock)
-
-    return stocks
-
-
-def merge_stock_maps(base: dict[str, dict[str, Any]], updates: list[dict[str, Any]]) -> None:
-    for stock in updates:
-        code = stock["code"]
-        current = base.get(code)
-        if current is None:
-            base[code] = stock
-            continue
-
-        for key, value in stock.items():
-            if key == "raw":
-                current.setdefault("raw", {}).update(value)
-                continue
-            if value is not None:
-                current[key] = value
-
-
-def crawl_field_group(
-    session: requests.Session,
-    field_ids: list[str],
-    market_info: dict[str, str],
-    total_pages: int,
-    delay: float,
-    *,
-    group_index: int,
-    group_count: int,
-    market_started_at: float,
-    progress_every: int,
-) -> list[dict[str, Any]]:
-    results: list[dict[str, Any]] = []
-    labels = ", ".join(FIELD_LABELS[field_id] for field_id in field_ids)
-    group_started_at = time.monotonic()
-    print(
-        f"[NAVER] {market_info['market']} field group "
-        f"{group_index}/{group_count} started: {labels}",
-        flush=True,
+        "net_income_krw_100m": parse_int(item.get("netIncome")),
+        "eps": parse_int(item.get("eps")),
+        "dividend": parse_int(item.get("dividend")),
+        "per": parse_float(item.get("per")),
+        "roe": parse_float(item.get("roe")),
+        "roa": parse_float(item.get("roa")),
+        "pbr": parse_float(item.get("pbr")),
+        "reserve_ratio": parse_int(item.get("reserveRatio")),
+        "volume": parse_int(item.get("tradeVolume")),
+        "foreigner_ratio": parse_float(item.get("frgnHoldRate")),
+        # 기존 네이버 화면과 같은 천 주 단위로 저장한다.
+        "listed_shares": scaled_int(item.get("listedStockCnt"), 1_000),
+        "trade_stop": item.get("tradeStopYn") == "Y",
+    }
+    # 새 API는 적자 기업의 PER을 null로 준다. 기존 화면처럼 음수 PER을 유지한다.
+    if stock["per"] is None and stock["eps"] and stock["current_price"]:
+        stock["per"] = round(stock["current_price"] / stock["eps"], 2)
+    stock["is_suspended"] = stock["trade_stop"] or (
+        stock.get("volume") == 0
+        and stock.get("diff") == 0
+        and stock.get("diff_rate") == 0
     )
+    return stock
 
-    for page in range(1, total_pages + 1):
-        apply_field_selection(session, field_ids, page, market_info["sosok"])
-        html = fetch_page(session, page, market_info["sosok"])
-        results.extend(parse_stock_rows(html, page, market_info))
-        if (
-            page == 1
-            or page == total_pages
-            or page % max(progress_every, 1) == 0
-        ):
-            group_percent = page / total_pages * 100
-            overall_completed = (group_index - 1) * total_pages + page
-            overall_total = group_count * total_pages
-            overall_percent = overall_completed / overall_total * 100
-            market_elapsed = time.monotonic() - market_started_at
+
+def fund_row(item: dict[str, Any], market_info: dict[str, str], page: int) -> dict[str, Any]:
+    code = str(item.get("itemCode") or "").strip()
+    price = parse_int(item.get("closePriceRaw") or item.get("closePrice"))
+    market_cap_raw = parse_float(item.get("marketValueRaw"))
+    listed_shares = (
+        int(round(market_cap_raw / price / 1_000))
+        if market_cap_raw and price
+        else None
+    )
+    stock = {
+        "market": market_info["market"],
+        "market_label": market_info["market_label"],
+        "sosok": market_info["sosok"],
+        "page": page,
+        "rank": None,
+        "name": str(item.get("stockName") or "").strip(),
+        "code": code,
+        "detail_url": DETAIL_URL.format(code=code),
+        "security_type": item.get("stockEndType"),
+        "current_price": price,
+        "diff": abs_int(
+            item.get("compareToPreviousClosePriceRaw")
+            or item.get("compareToPreviousClosePrice")
+        ),
+        "diff_rate": parse_float(item.get("fluctuationsRatio")),
+        "par_value": 0,
+        "market_cap_krw_100m": parse_int(item.get("marketValue")),
+        "property_total_krw_100m": None,
+        "debt_total_krw_100m": None,
+        "sales_krw_100m": None,
+        "sales_increasing_rate": None,
+        "operating_profit_krw_100m": None,
+        "operating_profit_increasing_rate": None,
+        "net_income_krw_100m": None,
+        "eps": None,
+        "dividend": None,
+        "per": None,
+        "roe": None,
+        "roa": None,
+        "pbr": None,
+        "reserve_ratio": None,
+        "volume": parse_int(
+            item.get("accumulatedTradingVolumeRaw")
+            or item.get("accumulatedTradingVolume")
+        ),
+        "foreigner_ratio": None,
+        "listed_shares": listed_shares,
+        "trade_stop": (item.get("tradeStopType") or {}).get("name") not in (None, "TRADING"),
+    }
+    stock["is_suspended"] = stock["trade_stop"] or (
+        stock.get("volume") == 0
+        and stock.get("diff") == 0
+        and stock.get("diff_rate") == 0
+    )
+    return stock
+
+
+def crawl_stock_list(
+    session: requests.Session,
+    market_info: dict[str, str],
+    delay: float,
+    progress_every: int,
+) -> tuple[int, list[dict[str, Any]]]:
+    rows: list[dict[str, Any]] = []
+    page_index = 0
+    while True:
+        items = get_json(
+            session,
+            STOCK_LIST_API_URL,
+            {
+                "tradeType": "KRX",
+                "marketType": market_info["market"],
+                "orderType": "marketSum",
+                # startIdx 는 행 위치가 아니라 0부터 시작하는 페이지 번호다.
+                "startIdx": page_index,
+                "pageSize": STOCK_PAGE_SIZE,
+            },
+        )
+        if not isinstance(items, list):
+            raise RuntimeError(f"Unexpected stock list response: {type(items).__name__}")
+        page_index += 1
+        rows.extend(stock_row(item, market_info, page_index) for item in items)
+        if page_index == 1 or page_index % max(progress_every, 1) == 0 or len(items) < STOCK_PAGE_SIZE:
             print(
-                f"[NAVER] {market_info['market']} group {group_index}/{group_count} "
-                f"page {page}/{total_pages} ({group_percent:.0f}%) | "
-                f"market {overall_percent:.0f}% | rows {len(results):,} | "
-                f"{market_elapsed:.1f}s elapsed",
+                f"[NAVER] {market_info['market']} stock list page {page_index} | rows {len(rows):,}",
                 flush=True,
             )
+        if len(items) < STOCK_PAGE_SIZE:
+            break
         time.sleep(delay)
-
-    print(
-        f"[NAVER] {market_info['market']} field group "
-        f"{group_index}/{group_count} completed "
-        f"({len(results):,} rows, {time.monotonic() - group_started_at:.1f}s)",
-        flush=True,
-    )
-    return results
+    return page_index, rows
 
 
-def write_json(path: Path, payload: Any) -> None:
-    atomic_write_json(path, payload)
+def crawl_mobile_market_value(
+    session: requests.Session,
+    market_info: dict[str, str],
+    delay: float,
+    progress_every: int,
+) -> tuple[int, list[dict[str, Any]]]:
+    url = MOBILE_MARKET_VALUE_API_URL.format(market=market_info["market"])
+    items: list[dict[str, Any]] = []
+    page = 1
+    total_count: int | None = None
+    while True:
+        payload = get_json(session, url, {"page": page, "pageSize": MOBILE_PAGE_SIZE})
+        stocks = payload.get("stocks") if isinstance(payload, dict) else None
+        if not isinstance(stocks, list):
+            raise RuntimeError("Unexpected mobile market value response")
+        total_count = parse_int(payload.get("totalCount")) or total_count
+        items.extend({**stock, "_page": page} for stock in stocks)
+        if page == 1 or page % max(progress_every, 1) == 0:
+            print(
+                f"[NAVER] {market_info['market']} market value page {page} | "
+                f"rows {len(items):,}/{total_count or '?'}",
+                flush=True,
+            )
+        if not stocks or len(stocks) < MOBILE_PAGE_SIZE or (
+            total_count is not None and len(items) >= total_count
+        ):
+            break
+        page += 1
+        time.sleep(delay)
+    return page, items
 
 
 def crawl_market(
@@ -352,43 +303,37 @@ def crawl_market(
     progress_every: int,
 ) -> tuple[int, list[dict[str, Any]]]:
     market_started_at = time.monotonic()
-    print(
-        f"[NAVER] {market_info['market']} detecting page count...",
-        flush=True,
-    )
-    first_html = fetch_page(session, 1, market_info["sosok"])
-    total_pages = get_total_pages(first_html)
-    print(
-        f"[NAVER] {market_info['market']} has {total_pages} pages; "
-        f"{len(FIELD_GROUPS)} field groups will be collected.",
-        flush=True,
-    )
-
-    merged: dict[str, dict[str, Any]] = {}
-    for group_index, field_ids in enumerate(FIELD_GROUPS, start=1):
-        grouped_rows = crawl_field_group(
-            session,
-            field_ids,
-            market_info,
-            total_pages,
-            delay,
-            group_index=group_index,
-            group_count=len(FIELD_GROUPS),
-            market_started_at=market_started_at,
-            progress_every=progress_every,
+    stock_pages, stocks = crawl_stock_list(session, market_info, delay, progress_every)
+    if len(stocks) < MIN_STOCKS_PER_MARKET:
+        raise RuntimeError(
+            f"{market_info['market']} returned only {len(stocks)} stocks; "
+            "the Naver API response may have changed."
         )
-        merge_stock_maps(merged, grouped_rows)
 
-    stocks = sorted(
-        merged.values(),
-        key=lambda item: (item.get("rank") is None, item.get("rank") or 999999),
+    _, mobile_items = crawl_mobile_market_value(session, market_info, delay, progress_every)
+    known_codes = {stock["code"] for stock in stocks}
+    funds = [
+        fund_row(item, market_info, item["_page"])
+        for item in mobile_items
+        if str(item.get("itemCode") or "").strip() not in known_codes
+    ]
+
+    merged = [row for row in stocks + funds if row["code"]]
+    merged.sort(
+        key=lambda item: (
+            item.get("market_cap_krw_100m") is None,
+            -(item.get("market_cap_krw_100m") or 0),
+        )
     )
+    for rank, row in enumerate(merged, start=1):
+        row["rank"] = rank
+
     print(
-        f"[NAVER] {market_info['market']} completed: "
-        f"{len(stocks):,} stocks in {time.monotonic() - market_started_at:.1f}s",
+        f"[NAVER] {market_info['market']} completed: {len(stocks):,} stocks + "
+        f"{len(funds):,} ETF/ETN/other in {time.monotonic() - market_started_at:.1f}s",
         flush=True,
     )
-    return total_pages, stocks
+    return stock_pages, merged
 
 
 def crawl_all(
@@ -430,9 +375,13 @@ def crawl_all(
     return pages_by_market, all_stocks
 
 
+def write_json(path: Path, payload: Any) -> None:
+    atomic_write_json(path, payload)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Crawl Naver market cap pages for both KOSPI and KOSDAQ."
+        description="Collect Naver market cap and valuation data for KOSPI and KOSDAQ."
     )
     parser.add_argument(
         "--output",
@@ -448,7 +397,7 @@ def main() -> None:
         "--delay",
         type=float,
         default=0.2,
-        help="Sleep time between page requests in seconds.",
+        help="Sleep time between API requests in seconds.",
     )
     parser.add_argument(
         "--progress-every",
@@ -463,9 +412,15 @@ def main() -> None:
         progress_every=max(args.progress_every, 1),
     )
     crawled_at = datetime.now(timezone.utc).isoformat()
+    sources = [
+        f"{STOCK_LIST_API_URL}?marketType=KOSPI",
+        f"{STOCK_LIST_API_URL}?marketType=KOSDAQ",
+        MOBILE_MARKET_VALUE_API_URL.format(market="KOSPI"),
+        MOBILE_MARKET_VALUE_API_URL.format(market="KOSDAQ"),
+    ]
 
     all_payload = {
-        "source": [f"{BASE_URL}?sosok=0", f"{BASE_URL}?sosok=1"],
+        "source": sources,
         "markets": MARKETS,
         "field_groups": FIELD_GROUPS,
         "pages_by_market": pages_by_market,
@@ -484,7 +439,7 @@ def main() -> None:
         ),
     )
     roe_payload = {
-        "source": [f"{BASE_URL}?sosok=0", f"{BASE_URL}?sosok=1"],
+        "source": sources,
         "sort": "roe_desc",
         "markets": MARKETS,
         "field_groups": FIELD_GROUPS,
