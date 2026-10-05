@@ -1,30 +1,30 @@
 {
-  "generated_at_utc": "2026-10-05T14:41:45.758773+00:00",
+  "generated_at_utc": "2026-10-05T16:38:44.671994+00:00",
   "file_count": 26,
   "files": [
     {
       "file": "data/ai_market_briefing.json",
-      "bytes": 3579,
+      "bytes": 3585,
       "source": "Gemini API + locally collected market JSON",
       "count": null,
-      "data_date": "2026-10-05T02:46:31.126899+00:00"
+      "data_date": "2026-10-05T16:38:43.090758+00:00"
     },
     {
       "file": "data/dart_disclosures.json",
-      "bytes": 823997,
+      "bytes": 705000,
       "source": "OpenDART disclosure list API",
-      "count": 2427,
-      "data_date": "2026-10-05T02:42:40.160921+00:00"
+      "count": 2078,
+      "data_date": "2026-10-05T16:35:24.283598+00:00"
     },
     {
       "file": "data/dart_event_details.json",
-      "bytes": 53379,
+      "bytes": 45776,
       "source": [
         "OpenDART document.xml",
         "OpenDART DS005 major event APIs"
       ],
       "count": null,
-      "data_date": "2026-10-05T02:46:10.393674+00:00"
+      "data_date": "2026-10-05T16:38:28.020630+00:00"
     },
     {
       "file": "data/dart_financial_panel.json",
@@ -35,20 +35,20 @@
     },
     {
       "file": "data/dart_insider_trades.json",
-      "bytes": 387894,
+      "bytes": 359138,
       "source": [
         "OpenDART elestock.json",
         "OpenDART document.xml"
       ],
-      "count": 260,
-      "data_date": "2026-10-05T02:46:10.393767+00:00"
+      "count": 238,
+      "data_date": "2026-10-05T16:38:28.020772+00:00"
     },
     {
       "file": "data/dart_major_holders.json",
       "bytes": 612377,
       "source": "OpenDART majorstock.json",
       "count": 377,
-      "data_date": "2026-10-05T02:42:28.271427+00:00"
+      "data_date": "2026-10-05T16:35:14.191271+00:00"
     },
     {
       "file": "data/financial_n_estimates.json",
@@ -62,7 +62,7 @@
       "bytes": 369635,
       "source": "FnGuide CompanyInfo/getRtoAccumulate",
       "count": 377,
-      "data_date": "2026-10-05T02:39:55.487761+00:00"
+      "data_date": "2026-10-05T16:32:45.201633+00:00"
     },
     {
       "file": "data/investment_screens.json",
@@ -87,14 +87,14 @@
       "bytes": 767485,
       "source": "KRX authenticated data via pykrx",
       "count": null,
-      "data_date": "2026-10-05T02:35:26.367819+00:00"
+      "data_date": "2026-10-05T16:28:20.669631+00:00"
     },
     {
       "file": "data/krx_openapi.json",
-      "bytes": 38959,
+      "bytes": 38976,
       "source": "KRX Data Marketplace Open API",
       "count": null,
-      "data_date": "2026-10-05T02:35:03.940729+00:00",
+      "data_date": "2026-10-05T16:28:00.362999+00:00",
       "dataset_status": {
         "kospi_stocks": "not_authorized",
         "kosdaq_stocks": "not_authorized",
@@ -108,20 +108,20 @@
     },
     {
       "file": "data/market_heatmap.json",
-      "bytes": 1397073,
+      "bytes": 1396795,
       "source": [
         "Naver Finance market cap and sectors",
         "Nasdaq screener and Yahoo Finance snapshot"
       ],
       "count": 3600,
-      "data_date": "2026-10-05T02:37:13.644143+00:00"
+      "data_date": "2026-10-05T16:30:05.808168+00:00"
     },
     {
       "file": "data/market_indices.json",
-      "bytes": 644644,
+      "bytes": 644331,
       "source": "Yahoo Finance Chart + Naver Finance index daily",
       "count": 8,
-      "data_date": "2026-10-05T02:23:34.694013+00:00"
+      "data_date": "2026-10-05T16:15:35.690364+00:00"
     },
     {
       "file": "data/market_sum.json",
@@ -133,7 +133,7 @@
         "https://m.stock.naver.com/api/stocks/marketValue/KOSDAQ"
       ],
       "count": 4306,
-      "data_date": "2026-10-05T02:37:00.539450+00:00"
+      "data_date": "2026-10-05T16:29:53.147289+00:00"
     },
     {
       "file": "data/market_sum_by_roe.json",
@@ -145,21 +145,21 @@
         "https://m.stock.naver.com/api/stocks/marketValue/KOSDAQ"
       ],
       "count": 4306,
-      "data_date": "2026-10-05T02:37:00.539450+00:00"
+      "data_date": "2026-10-05T16:29:53.147289+00:00"
     },
     {
       "file": "data/naver_etf_brands.json",
       "bytes": 23311,
       "source": "Naver Finance ETF",
       "count": null,
-      "data_date": "2026-10-05T02:23:33Z"
+      "data_date": "2026-10-05T16:15:34Z"
     },
     {
       "file": "data/naver_news.json",
-      "bytes": 271346,
+      "bytes": 337019,
       "source": "NAVER Search API / news",
-      "count": 351,
-      "data_date": "2026-10-05T14:41:44.242168+00:00"
+      "count": 438,
+      "data_date": "2026-10-05T16:38:37.237057+00:00"
     },
     {
       "file": "data/naver_year_end_prices.json",
@@ -184,10 +184,10 @@
     },
     {
       "file": "data/us_finnhub.json",
-      "bytes": 18223243,
+      "bytes": 18237134,
       "source": "Finnhub API",
       "count": 100,
-      "data_date": "2026-10-05T02:34:56.587134+00:00"
+      "data_date": "2026-10-05T16:27:53.792508+00:00"
     },
     {
       "file": "data/us_finra_short_interest.json",
@@ -205,20 +205,20 @@
     },
     {
       "file": "data/us_market_snapshot.json",
-      "bytes": 8816899,
+      "bytes": 8799509,
       "source": [
         "Nasdaq stock screener",
         "Yahoo Finance Chart"
       ],
-      "count": 6695,
-      "data_date": "2026-10-05T02:23:51.594013+00:00"
+      "count": 6627,
+      "data_date": "2026-10-05T16:15:53.785878+00:00"
     },
     {
       "file": "data/us_sec_filings.json",
-      "bytes": 711961,
+      "bytes": 699942,
       "source": "SEC EDGAR Full-Text Search and company ticker mapping",
       "count": 200,
-      "data_date": "2026-10-05T02:27:16.319225+00:00"
+      "data_date": "2026-10-05T16:20:16.258323+00:00"
     }
   ]
 }
