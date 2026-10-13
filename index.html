@@ -7,72 +7,49 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260820-valuation-ratio">
+  <link rel="stylesheet" href="style.css?v=20261014-dashboard-refresh">
 </head>
 <body>
+  <a class="skip-link" href="#dashboard-main">본문으로 이동</a>
   <div class="page-shell">
     <header class="topbar">
       <div>
         <p class="eyebrow">Value Framework Dashboard</p>
         <h1>최재혁 방식 가치평가</h1>
-        <p class="intro">
-          기업분석의 귀결점은 ROE와 N이라고 봅니다. ROE 추정은 과거 ROE를 기준으로 하고, ROE 지속기간 N은 높은 ROE의 지속성,
-          마진 안정성, 성장 안정성, 재무 체력의 함수로 1차 추정합니다. 할인율은 기본 10%를 사용하며, 낮은 PBR에서 높은 ROE가
-          더 오래 지속될 수 있는 기업을 찾는 관점으로 가치평가를 정리합니다.
-        </p>
+        <p class="intro">수익성의 지속성과 기업가치를 함께 살펴보는 투자 연구실</p>
       </div>
+      <form id="stock-search-form" class="header-search" role="search">
+        <label class="sr-only" for="stock-search-input">국내 종목명 또는 코드 검색</label>
+        <div class="header-search-field">
+          <input id="stock-search-input" type="search" list="stock-search-options" placeholder="국내 종목명 · 코드 검색" autocomplete="off" aria-describedby="stock-search-status">
+          <button type="submit">찾기</button>
+        </div>
+        <datalist id="stock-search-options"></datalist>
+        <span id="stock-search-status" class="search-status" role="status"></span>
+      </form>
       <div class="topbar-meta">
         <span class="meta-label">마지막 갱신</span>
         <strong id="last-updated-value">Loading</strong>
       </div>
     </header>
 
-    <div class="market-ticker-stack">
-      <section class="rate-ticker" aria-label="한국 및 미국 국채 금리">
-        <div class="rate-ticker-label">
-          <span class="rate-live-dot" aria-hidden="true"></span>
-          <span>국채 금리</span>
-        </div>
-        <div class="rate-ticker-viewport">
-          <div id="rate-ticker-track" class="rate-ticker-track">
-            <div class="rate-ticker-loading">한국·미국 국채 금리를 불러오는 중입니다.</div>
-          </div>
-        </div>
-        <div id="rate-ticker-date" class="rate-ticker-date">Loading</div>
-      </section>
-
-      <section class="rate-ticker etf-ticker etf-ticker-koact" aria-label="KoAct ETF 시세">
-        <div class="rate-ticker-label">
-          <span class="rate-live-dot" aria-hidden="true"></span>
-          <span>KoAct ETF</span>
-        </div>
-        <div class="rate-ticker-viewport">
-          <div id="koact-etf-ticker-track" class="rate-ticker-track">
-            <div class="rate-ticker-loading">KoAct ETF 시세를 불러오는 중입니다.</div>
-          </div>
-        </div>
-        <div id="koact-etf-ticker-date" class="rate-ticker-date">Naver</div>
-      </section>
-
-      <section class="rate-ticker etf-ticker etf-ticker-time" aria-label="TIME ETF 시세">
-        <div class="rate-ticker-label">
-          <span class="rate-live-dot" aria-hidden="true"></span>
-          <span>TIME ETF</span>
-        </div>
-        <div class="rate-ticker-viewport">
-          <div id="time-etf-ticker-track" class="rate-ticker-track">
-            <div class="rate-ticker-loading">TIME ETF 시세를 불러오는 중입니다.</div>
-          </div>
-        </div>
-        <div id="time-etf-ticker-date" class="rate-ticker-date">Naver</div>
-      </section>
-    </div>
+    <nav class="workspace-tabs" aria-label="대시보드 기능">
+      <button class="workspace-tab is-active" type="button" data-workspace="priority" aria-current="page">우선 검토 후보</button>
+      <button class="workspace-tab" type="button" data-workspace="valuation">가치평가</button>
+      <button class="workspace-tab" type="button" data-workspace="market">시장</button>
+      <button class="workspace-tab" type="button" data-workspace="korea">국내 수급·공매도</button>
+      <button class="workspace-tab" type="button" data-workspace="disclosures">공시·임원매수</button>
+      <button class="workspace-tab" type="button" data-workspace="us">미국 시장</button>
+      <button class="workspace-tab" type="button" data-workspace="intelligence">뉴스·브리핑</button>
+      <button class="workspace-tab" type="button" data-workspace="portfolio">포트폴리오</button>
+      <button class="workspace-tab" type="button" data-workspace="data">데이터 상태</button>
+    </nav>
 
     <section class="market-overview" aria-labelledby="market-overview-title">
       <div class="market-overview-head">
         <div>
-          <p class="section-kicker">Global Market Pulse</p>
-          <h2 id="market-overview-title">주요 지수·가상자산 차트</h2>
+          <p class="section-kicker">Market snapshot</p>
+          <h2 id="market-overview-title">시장 요약</h2>
         </div>
         <div class="market-overview-meta">
           <span id="market-overview-updated">데이터 불러오는 중</span>
@@ -101,50 +78,25 @@
       </div>
     </section>
 
-    <section class="today-news-board" aria-labelledby="today-news-title">
-      <div class="today-news-head">
-        <div>
-          <p class="section-kicker">Today's News</p>
-          <h2 id="today-news-title">오늘의 뉴스</h2>
-          <p>시장에 영향을 줄 만한 최신 기사를 분야별로 빠르게 확인합니다.</p>
-        </div>
-        <div class="today-news-head-meta">
-          <span id="today-news-updated">뉴스 불러오는 중</span>
-          <button id="open-intelligence-news" type="button">전체 뉴스 화면</button>
-        </div>
-      </div>
-      <div class="today-news-tabs" role="tablist" aria-label="오늘의 뉴스 분야">
-        <button type="button" role="tab" data-today-news-category="semiconductor" class="is-active" aria-selected="true">반도체</button>
-        <button type="button" role="tab" data-today-news-category="it" aria-selected="false">IT</button>
-        <button type="button" role="tab" data-today-news-category="us" aria-selected="false">미국</button>
-        <button type="button" role="tab" data-today-news-category="kospi" aria-selected="false">코스피</button>
-        <button type="button" role="tab" data-today-news-category="kosdaq" aria-selected="false">코스닥</button>
-      </div>
-      <div id="today-news-content" class="today-news-content" aria-live="polite">
-        <div class="today-news-loading">반도체 뉴스를 불러오는 중입니다.</div>
-      </div>
-    </section>
-
-    <nav class="workspace-tabs" aria-label="대시보드 기능">
-      <button class="workspace-tab is-active" type="button" data-workspace="priority">우선 검토 후보</button>
-      <button class="workspace-tab" type="button" data-workspace="valuation">가치평가</button>
-      <button class="workspace-tab" type="button" data-workspace="korea">국내 수급·공매도</button>
-      <button class="workspace-tab" type="button" data-workspace="disclosures">공시·임원매수</button>
-      <button class="workspace-tab" type="button" data-workspace="us">미국 시장</button>
-      <button class="workspace-tab" type="button" data-workspace="intelligence">뉴스·브리핑</button>
-      <button class="workspace-tab" type="button" data-workspace="data">데이터 상태</button>
-    </nav>
-
-    <main class="dashboard-layout">
+    <main id="dashboard-main" class="dashboard-layout" tabindex="-1">
       <div id="workspace-priority" class="workspace-view is-active" data-workspace-view="priority">
-      <section class="panel priority-workspace-panel">
+        <div class="workspace-intro">
+          <div><p class="section-kicker">Research shortlist</p><h2>오늘의 검토 후보</h2><p>수익성 · 재무 체력 · 기업가치를 비교하고, 종목을 눌러 상세 계산을 확인하세요.</p></div>
+          <details class="evaluation-guide"><summary>평가 방법 알아보기</summary><p class="intro">
+          기업분석의 귀결점은 ROE와 N이라고 봅니다. ROE 추정은 과거 ROE를 기준으로 하고, ROE 지속기간 N은 높은 ROE의 지속성,
+          마진 안정성, 성장 안정성, 재무 체력의 함수로 1차 추정합니다. 할인율은 기본 10%를 사용하며, 낮은 PBR에서 높은 ROE가
+          더 오래 지속될 수 있는 기업을 찾는 관점으로 가치평가를 정리합니다.
+        </p></details>
+        </div>
+      <section id="buffett-panel" class="panel priority-workspace-panel">
         <div class="section-head">
           <div>
-            <p class="section-kicker">0. Buffett Compounders</p>
+            <p class="section-kicker">Buffett Compounders</p>
             <h2>버핏 스타일</h2>
-            <p class="section-description">최근 3개 연속 사업연도에 비금융 ROIC 12% 이상·금융 ROE 10% 이상을 유지하고, 기존 7개 버핏 조건 중 하나 이상의 강점이 확인된 관심종목입니다. 비금융주는 현금/시가총액 50% 이하를 추가로 요구하며, FCF 수익률은 10년 평균(불완전하면 최근 3년 평균)으로 계산합니다.</p>
+            <details class="screen-method"><summary>선정 기준 보기</summary><p class="section-description">최근 3개 연속 사업연도에 비금융 ROIC 12% 이상·금융 ROE 10% 이상을 유지하고, 기존 7개 버핏 조건 중 하나 이상의 강점이 확인된 관심종목입니다. 비금융주는 현금/시가총액 50% 이하를 추가로 요구하며, FCF 수익률은 10년 평균(불완전하면 최근 3년 평균)으로 계산합니다.</p></details>
           </div>
           <div class="section-side">
+            <button class="table-detail-toggle" type="button" data-detail-panel="buffett-panel" aria-controls="buffett-table" aria-expanded="false">상세 지표 보기</button>
             <span class="stat-pill" id="priority-count-badge">Loading</span>
             <button
               class="stat-pill subtle pending-detail-trigger"
@@ -158,7 +110,7 @@
         </div>
 
         <div class="table-wrap compact-table">
-          <table class="buffett-watchlist-table">
+          <table id="buffett-table" class="buffett-watchlist-table">
             <thead>
               <tr>
                 <th data-priority-sort-key="buffettRank">순위</th>
@@ -180,14 +132,15 @@
         </div>
       </section>
 
-      <section class="panel priority-workspace-panel quality-factor-panel">
+      <section id="quality-panel" class="panel priority-workspace-panel quality-factor-panel">
         <div class="section-head">
           <div>
-            <p class="section-kicker">1. Statistical Quality Basket</p>
+            <p class="section-kicker">Statistical Quality Basket</p>
             <h2>퀄리티 팩터</h2>
-            <p class="section-description">GP/A 상위군에서 피오트로스키 F-Score·EPS 안정성·부채·배당 또는 자사주 조건을 통과한 종목을 GP/A 순으로 정렬한 동일가중 바스켓입니다.</p>
+            <details class="screen-method"><summary>선정 기준 보기</summary><p class="section-description">GP/A 상위군에서 피오트로스키 F-Score·EPS 안정성·부채·배당 또는 자사주 조건을 통과한 종목을 GP/A 순으로 정렬한 동일가중 바스켓입니다.</p></details>
           </div>
           <div class="section-side">
+            <button class="table-detail-toggle" type="button" data-detail-panel="quality-panel" aria-controls="quality-table" aria-expanded="false">상세 지표 보기</button>
             <span class="stat-pill" id="quality-count-badge">Loading</span>
             <button
               class="stat-pill subtle pending-detail-trigger"
@@ -201,7 +154,7 @@
         </div>
 
         <div class="table-wrap compact-table">
-          <table>
+          <table id="quality-table" class="quality-watchlist-table">
             <thead>
               <tr>
                 <th>순위</th>
@@ -224,7 +177,7 @@
       </div>
 
       <div id="workspace-valuation" class="workspace-view" data-workspace-view="valuation">
-      <section class="panel">
+      <section id="valuation-panel" class="panel">
         <div class="section-head">
           <div>
             <p class="section-kicker">1. Top Table</p>
@@ -232,13 +185,14 @@
             <p class="section-description" id="valuation-price-summary">기준 적정가와 현재주가 비교 계산 중</p>
           </div>
           <div class="section-side">
+            <button class="table-detail-toggle" type="button" data-detail-panel="valuation-panel" aria-controls="valuation-table" aria-expanded="false">상세 지표 보기</button>
             <span class="stat-pill" id="roe-count-badge">Loading</span>
             <span class="stat-pill subtle" id="table-summary-badge">ROE 필터 적용 중</span>
           </div>
         </div>
 
         <div class="table-wrap">
-          <table>
+          <table id="valuation-table">
             <thead>
               <tr>
                 <th data-sort-key="rank">순위</th>
@@ -639,6 +593,31 @@
       </div>
 
       <div id="workspace-intelligence" class="workspace-view" data-workspace-view="intelligence">
+    <section class="today-news-board" aria-labelledby="today-news-title">
+      <div class="today-news-head">
+        <div>
+          <p class="section-kicker">Today's News</p>
+          <h2 id="today-news-title">오늘의 뉴스</h2>
+          <p>시장에 영향을 줄 만한 최신 기사를 분야별로 빠르게 확인합니다.</p>
+        </div>
+        <div class="today-news-head-meta">
+          <span id="today-news-updated">뉴스 불러오는 중</span>
+          <button id="open-intelligence-news" type="button">전체 뉴스 보기</button>
+        </div>
+      </div>
+      <div class="today-news-tabs" role="tablist" aria-label="오늘의 뉴스 분야">
+        <button type="button" role="tab" data-today-news-category="semiconductor" class="is-active" aria-selected="true">반도체</button>
+        <button type="button" role="tab" data-today-news-category="it" aria-selected="false">IT</button>
+        <button type="button" role="tab" data-today-news-category="us" aria-selected="false">미국</button>
+        <button type="button" role="tab" data-today-news-category="kospi" aria-selected="false">코스피</button>
+        <button type="button" role="tab" data-today-news-category="kosdaq" aria-selected="false">코스닥</button>
+      </div>
+      <div id="today-news-content" class="today-news-content" aria-live="polite">
+        <div class="today-news-loading">반도체 뉴스를 불러오는 중입니다.</div>
+      </div>
+    </section>
+
+
         <section class="feature-hero panel">
           <div>
             <p class="section-kicker">Market Intelligence</p>
@@ -696,11 +675,54 @@
           <div id="data-status-grid" class="data-status-grid"></div>
         </section>
       </div>
-    </main>
-
+      <div id="workspace-portfolio" class="workspace-view" data-workspace-view="portfolio">
     <section id="portfolio-board" class="portfolio-board" aria-labelledby="portfolio-board-title">
       <div class="portfolio-loading">포트폴리오 전술판을 준비하고 있습니다.</div>
     </section>
+
+      </div>
+      <div id="workspace-market" class="workspace-view" data-workspace-view="market">
+        <div class="workspace-intro"><div><p class="section-kicker">Market overview</p><h2>시장 흐름</h2><p>국채 금리와 ETF 시세, 섹터별 히트맵을 확인하세요.</p></div></div>
+    <div class="market-ticker-stack">
+      <section class="rate-ticker" aria-label="한국 및 미국 국채 금리">
+        <div class="rate-ticker-label">
+          <span class="rate-live-dot" aria-hidden="true"></span>
+          <span>국채 금리</span>
+        </div>
+        <div class="rate-ticker-viewport">
+          <div id="rate-ticker-track" class="rate-ticker-track">
+            <div class="rate-ticker-loading">한국·미국 국채 금리를 불러오는 중입니다.</div>
+          </div>
+        </div>
+        <div id="rate-ticker-date" class="rate-ticker-date">Loading</div>
+      </section>
+
+      <section class="rate-ticker etf-ticker etf-ticker-koact" aria-label="KoAct ETF 시세">
+        <div class="rate-ticker-label">
+          <span class="rate-live-dot" aria-hidden="true"></span>
+          <span>KoAct ETF</span>
+        </div>
+        <div class="rate-ticker-viewport">
+          <div id="koact-etf-ticker-track" class="rate-ticker-track">
+            <div class="rate-ticker-loading">KoAct ETF 시세를 불러오는 중입니다.</div>
+          </div>
+        </div>
+        <div id="koact-etf-ticker-date" class="rate-ticker-date">Naver</div>
+      </section>
+
+      <section class="rate-ticker etf-ticker etf-ticker-time" aria-label="TIME ETF 시세">
+        <div class="rate-ticker-label">
+          <span class="rate-live-dot" aria-hidden="true"></span>
+          <span>TIME ETF</span>
+        </div>
+        <div class="rate-ticker-viewport">
+          <div id="time-etf-ticker-track" class="rate-ticker-track">
+            <div class="rate-ticker-loading">TIME ETF 시세를 불러오는 중입니다.</div>
+          </div>
+        </div>
+        <div id="time-etf-ticker-date" class="rate-ticker-date">Naver</div>
+      </section>
+    </div>
 
     <section id="market-map-board" class="market-map-board" aria-labelledby="market-map-title">
       <div class="market-map-head">
@@ -777,6 +799,9 @@
       </div>
 
     </section>
+      </div>
+    </main>
+
   </div>
 
   <div
@@ -838,6 +863,6 @@
     ></aside>
   </div>
 
-  <script src="script.js?v=20260820-valuation-ratio"></script>
+  <script src="script.js?v=20261014-dashboard-refresh"></script>
 </body>
 </html>

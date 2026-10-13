@@ -1889,7 +1889,6 @@ function renderMarketHeatmap(stocks) {
   const width = Math.max(0, Math.floor(containerRect.width - horizontalBorder));
   const height = Math.max(0, Math.floor(containerRect.height - verticalBorder));
   if (width < 20 || height < 20) {
-    window.requestAnimationFrame(() => renderMarketHeatmap(stocks));
     return;
   }
 
@@ -2267,7 +2266,7 @@ function renderTodayNews() {
       </span>
     </a>
     <div class="today-news-list">
-      ${rest.slice(0, 8).map((row, index) => {
+      ${rest.slice(0, 4).map((row, index) => {
         const thumbnail = newsThumbnailUrl(row);
         return `
           <a class="today-news-item ${thumbnail ? "has-thumbnail" : ""}" href="${escapeHtml(row.link || "#")}" target="_blank" rel="noopener">
@@ -2314,6 +2313,7 @@ function bindTodayNews() {
   });
   document.getElementById("open-intelligence-news")?.addEventListener("click", () => {
     switchWorkspace("intelligence");
+    document.getElementById("news-feed")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
@@ -3964,6 +3964,9 @@ async function loadStocks() {
     bindTableSortHeaders();
     renderDashboard();
     renderPortfolioBoard();
+    document.getElementById("stock-search-options").innerHTML = state.rawStocks.map((stock) =>
+      `<option value="${escapeHtml(stock.code)}">${escapeHtml(stock.name)}</option>`
+    ).join("");
   } catch (error) {
     renderError("데이터를 불러오지 못했습니다. 최신 JSON을 다시 생성한 뒤 서버에서 페이지를 열어주세요.");
     console.error(error);
@@ -4123,7 +4126,7 @@ async function loadWorkspaceData(name, force = false) {
 }
 
 function switchWorkspace(name, updateHash = true) {
-  const target = document.querySelector(`[data-workspace-view="${name}"]`);
+  const target = document.querySelector(`[data-workspace-view="${CSS.escape(name)}"]`);
   if (!target) {
     return;
   }
@@ -4132,13 +4135,27 @@ function switchWorkspace(name, updateHash = true) {
     view.classList.toggle("is-active", view === target);
   });
   document.querySelectorAll("[data-workspace]").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.workspace === name);
+    const selected = button.dataset.workspace === name;
+    button.classList.toggle("is-active", selected);
+    if (selected) {
+      button.setAttribute("aria-current", "page");
+    } else {
+      button.removeAttribute("aria-current");
+    }
   });
   if (updateHash) {
     history.replaceState(null, "", `#${name}`);
   }
   loadWorkspaceData(name);
-  window.scrollTo({ top: document.querySelector(".workspace-tabs").offsetTop - 8, behavior: "smooth" });
+  if (name === "market") {
+    requestAnimationFrame(renderMarketMap);
+  }
+  if (updateHash) {
+    // Keep the small header and navigation visible when switching workspaces.
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.querySelector(`.workspace-tabs [data-workspace="${name}"]`)
+      ?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+  }
 }
 
 function institutionNetValue(row) {
@@ -4939,6 +4956,50 @@ function bindFeatureControls() {
     button.addEventListener("click", () => switchWorkspace(button.dataset.workspace));
   });
 
+  document.querySelectorAll("[data-detail-panel]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const panel = document.getElementById(button.dataset.detailPanel);
+      const expanded = panel.classList.toggle("show-detail-metrics");
+      button.setAttribute("aria-expanded", String(expanded));
+      button.textContent = expanded ? "핵심 지표만 보기" : "상세 지표 보기";
+    });
+  });
+
+  document.getElementById("stock-search-form")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = document.getElementById("stock-search-input").value.trim().toLowerCase();
+    const status = document.getElementById("stock-search-status");
+    if (!query) {
+      status.textContent = "종목명 또는 코드를 입력하세요.";
+      return;
+    }
+    if (!state.rawStocks.length) {
+      status.textContent = "종목 데이터를 준비 중입니다. 잠시 후 다시 검색하세요.";
+      return;
+    }
+    const exact = state.rawStocks.find((stock) =>
+      stock.code.toLowerCase() === query || stock.name.toLowerCase() === query
+    );
+    const matches = exact ? [exact] : state.rawStocks.filter((stock) =>
+      stock.code.toLowerCase().includes(query) || stock.name.toLowerCase().includes(query)
+    );
+    if (matches.length !== 1) {
+      status.textContent = matches.length
+        ? `${matches.length}개 종목이 검색됩니다. 종목명 전체 또는 코드를 입력하세요.`
+        : "일치하는 국내 종목이 없습니다.";
+      return;
+    }
+    state.selectedCode = matches[0].code;
+    status.textContent = `${matches[0].name} 상세 가치평가를 열었습니다.`;
+    renderDashboard();
+    switchWorkspace("valuation", false);
+    history.replaceState(null, "", "#valuation");
+    const workbench = document.getElementById("selected-stock-workbench");
+    workbench.setAttribute("tabindex", "-1");
+    workbench.focus({ preventScroll: true });
+    workbench.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
   const bindings = [
     ["flow-market-select", "change", (event) => { state.flowMarket = event.target.value; state.shortMarket = state.flowMarket; document.getElementById("short-market-select").value = state.shortMarket; renderFlowSummary(); renderFlowTickerTable(); renderKoreaShortTable(); }],
     ["flow-investor-select", "change", (event) => { state.flowInvestor = event.target.value; renderFlowTickerTable(); }],
@@ -5045,9 +5106,10 @@ bindPortfolioBoard();
 bindScreenPendingModal();
 initResponsiveTables();
 const initialWorkspace = location.hash.replace("#", "");
-if (["priority", "valuation", "korea", "disclosures", "us", "intelligence", "data"].includes(initialWorkspace)) {
+if (document.querySelector(`[data-workspace-view="${CSS.escape(initialWorkspace)}"]`)) {
   switchWorkspace(initialWorkspace, false);
 }
+window.addEventListener("hashchange", () => switchWorkspace(location.hash.slice(1), false));
 loadTreasuryTicker();
 loadEtfBrandTickers();
 loadMarketOverview();
