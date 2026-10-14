@@ -525,6 +525,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--korea-limit", type=int, default=1800)
     parser.add_argument("--us-limit", type=int, default=1800)
+    parser.add_argument("--market-scope", choices=["all", "korea", "us"], default="all")
     return parser
 
 
@@ -533,10 +534,14 @@ def main() -> None:
     output = args.output if args.output.is_absolute() else ROOT_DIR / args.output
     korea_payload = load_json(KOREA_INPUT)
     us_payload = load_json(US_INPUT)
-    sector_map, errors, sector_count = crawl_korea_sector_map(
-        output,
-        workers=args.workers,
-    )
+    previous = load_json(output) if args.market_scope != "all" else {}
+    if args.market_scope == "us":
+        sector_map, errors, sector_count = {}, [], 0
+    else:
+        sector_map, errors, sector_count = crawl_korea_sector_map(
+            output,
+            workers=args.workers,
+        )
     payload = build_payload(
         korea_payload=korea_payload,
         us_payload=us_payload,
@@ -546,6 +551,15 @@ def main() -> None:
         korea_limit=args.korea_limit,
         us_limit=args.us_limit,
     )
+    if args.market_scope != "all":
+        preserved_market = "US" if args.market_scope == "korea" else "KR"
+        if preserved_market in previous.get("markets", {}):
+            payload["markets"][preserved_market] = previous["markets"][preserved_market]
+        if args.market_scope == "us":
+            for key in ("sector_catalog_count", "sector_mapping_count", "errors"):
+                if key in previous:
+                    payload[key] = previous[key]
+        payload["count"] = sum(market["count"] for market in payload["markets"].values())
     atomic_write_json(output, payload, compact=True)
     print(f"Output: {output}", flush=True)
     print(

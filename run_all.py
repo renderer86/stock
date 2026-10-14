@@ -175,6 +175,17 @@ def main() -> None:
         )
     )
     parser.add_argument(
+        "--market-scope",
+        choices=["all", "korea", "us"],
+        default="all",
+        help="Region to refresh in the shared index and heatmap JSON files.",
+    )
+    parser.add_argument(
+        "--skip-domestic",
+        action="store_true",
+        help="Skip Korean stocks, ETF tickers, KRX, FnGuide, DART, news and briefing.",
+    )
+    parser.add_argument(
         "--skip-rates",
         action="store_true",
         help="Skip the ECOS and FRED treasury yield crawler.",
@@ -319,6 +330,13 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    if args.skip_domestic:
+        args.skip_etf_tickers = True
+        args.skip_krx = True
+        args.skip_dart = True
+        args.skip_news = True
+        args.skip_ai_briefing = True
+
     if not args.skip_rates and not os.environ.get("ECOS_API_KEY", "").strip():
         args.skip_rates = True
         record_skipped_step(
@@ -352,7 +370,7 @@ def main() -> None:
         run_step(
             "Global market indices and crypto charts",
             "crawler_market_indices.py",
-            [],
+            ["--market-scope", args.market_scope],
             optional=True,
         )
 
@@ -431,7 +449,8 @@ def main() -> None:
     remaining_after_naver = []
     if not args.skip_market_heatmap:
         remaining_after_naver.append("Korea and U.S. market heatmap")
-    remaining_after_naver.append("FnGuide ROE history")
+    if not args.skip_domestic:
+        remaining_after_naver.append("FnGuide ROE history")
     if not args.skip_dart:
         remaining_after_naver.extend(
             [
@@ -449,38 +468,40 @@ def main() -> None:
     if not args.skip_ai_briefing and os.environ.get("GEMINI_API_KEY", "").strip():
         remaining_after_naver.append("Gemini market briefing")
     remaining_after_naver.append("Build data manifest")
-    print(
-        "[PIPELINE] Naver market data is not the final step. "
-        f"After it: {' -> '.join(remaining_after_naver)}",
-        flush=True,
-    )
-    run_step(
-        "Naver market data",
-        "crawler_naver_market_sum.py",
-        ["--delay", str(args.naver_delay)],
-    )
+    if not args.skip_domestic:
+        print(
+            "[PIPELINE] Naver market data is not the final step. "
+            f"After it: {' -> '.join(remaining_after_naver)}",
+            flush=True,
+        )
+        run_step(
+            "Naver market data",
+            "crawler_naver_market_sum.py",
+            ["--delay", str(args.naver_delay)],
+        )
     if not args.skip_market_heatmap:
         run_step(
             "Korea and U.S. market heatmap",
             "crawler_market_heatmap.py",
-            [],
+            ["--market-scope", args.market_scope],
             optional=True,
         )
-    run_step(
-        "FnGuide ROE history",
-        "crawler_fnguide_roe_history.py",
-        [
-            "--delay",
-            str(args.fnguide_delay),
-            "--min-roe",
-            str(args.fnguide_min_roe),
-            "--min-roa",
-            str(args.min_roa),
-            "--limit",
-            str(args.fnguide_limit),
-            *(["--no-financial-roa-exempt"] if args.no_financial_roa_exempt else []),
-        ],
-    )
+    if not args.skip_domestic:
+        run_step(
+            "FnGuide ROE history",
+            "crawler_fnguide_roe_history.py",
+            [
+                "--delay",
+                str(args.fnguide_delay),
+                "--min-roe",
+                str(args.fnguide_min_roe),
+                "--min-roa",
+                str(args.min_roa),
+                "--limit",
+                str(args.fnguide_limit),
+                *(["--no-financial-roa-exempt"] if args.no_financial_roa_exempt else []),
+            ],
+        )
 
     if not args.skip_dart:
         run_step(

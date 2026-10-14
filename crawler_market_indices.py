@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import json
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -306,10 +307,16 @@ def main() -> None:
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
     parser.add_argument("--range", dest="range_value", default="2y")
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--market-scope", choices=["all", "korea", "us"], default="all")
     args = parser.parse_args()
 
+    selected_assets = [
+        asset for asset in ASSETS
+        if args.market_scope == "all"
+        or (asset["group"] == "Korea") == (args.market_scope == "korea")
+    ]
     print(
-        f"[MARKET CHARTS] Collecting {len(ASSETS)} assets "
+        f"[MARKET CHARTS] Collecting {len(selected_assets)} assets "
         f"(range={args.range_value})",
         flush=True,
     )
@@ -318,7 +325,7 @@ def main() -> None:
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
         futures = {
             pool.submit(fetch_asset, asset, args.range_value): asset
-            for asset in ASSETS
+            for asset in selected_assets
         }
         for index, future in enumerate(as_completed(futures), start=1):
             asset = futures[future]
@@ -326,7 +333,7 @@ def main() -> None:
                 row = future.result()
                 rows_by_id[str(asset["id"])] = row
                 print(
-                    f"[MARKET CHARTS] {index}/{len(ASSETS)} OK "
+                    f"[MARKET CHARTS] {index}/{len(selected_assets)} OK "
                     f"{asset['name']} {row['current']:,.2f} "
                     f"({row['change_pct']:+.2f}%)",
                     flush=True,
@@ -334,19 +341,24 @@ def main() -> None:
             except Exception as exc:  # noqa: BLE001
                 errors[str(asset["id"])] = str(exc)
                 print(
-                    f"[MARKET CHARTS] {index}/{len(ASSETS)} FAIL "
+                    f"[MARKET CHARTS] {index}/{len(selected_assets)} FAIL "
                     f"{asset['name']}: {exc}",
                     flush=True,
                 )
+
+    if not rows_by_id:
+        raise SystemExit("No market index or crypto chart was collected.")
+
+    if args.market_scope != "all" and Path(args.output).exists():
+        previous = json.loads(Path(args.output).read_text(encoding="utf-8"))
+        # Keep the other region and any failed charts from this region.
+        rows_by_id = {**{row["id"]: row for row in previous.get("assets", [])}, **rows_by_id}
 
     assets = [
         rows_by_id[str(asset["id"])]
         for asset in ASSETS
         if str(asset["id"]) in rows_by_id
     ]
-    if not assets:
-        raise SystemExit("No market index or crypto chart was collected.")
-
     payload = {
         "schema_version": 1,
         "source": "Yahoo Finance Chart + Naver Finance index daily",

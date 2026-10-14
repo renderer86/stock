@@ -9,9 +9,13 @@ on:
       - "requirements.txt"
       - ".github/workflows/update-market-data.yml"
   schedule:
-    # 08:30 KST Monday-Friday (23:30 UTC Sunday-Thursday)
-    - cron: "30 23 * * 0-4"
-    # 16:30 KST Monday-Friday (07:30 UTC Monday-Friday)
+    # Monday 08:30 KST: rates only (Sunday is not a U.S. trading session).
+    - cron: "30 23 * * 0"
+    # Tuesday-Friday 08:30 KST: prior U.S. close and weekday rates.
+    - cron: "30 23 * * 1-4"
+    # Saturday 08:30 KST: Friday U.S. close, without rates.
+    - cron: "30 23 * * 5"
+    # 16:30 KST Monday-Friday: Korean stocks, KRX and DART.
     - cron: "30 7 * * 1-5"
   workflow_dispatch:
     inputs:
@@ -23,6 +27,8 @@ on:
         options:
           - all
           - market-close
+          - morning
+          - us-open
           - rates
 
 permissions:
@@ -76,8 +82,14 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             profile="${{ inputs.profile }}"
-          elif [[ "${{ github.event.schedule }}" == "30 23 * * 0-4" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "30 23 * * 0" ]]; then
             profile="rates"
+          elif [[ "${{ github.event.schedule }}" == "30 23 * * 1-4" ]]; then
+            profile="morning"
+          elif [[ "${{ github.event.schedule }}" == "30 23 * * 5" ]]; then
+            profile="us-open"
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            profile="all"
           else
             profile="market-close"
           fi

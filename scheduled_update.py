@@ -12,12 +12,19 @@ from env_loader import load_env_file
 ROOT_DIR = Path(__file__).resolve().parent
 PROFILE_COMMANDS = {
     "rates": ["crawler_treasury_yields.py"],
-    "market-close": ["run_all.py", "--skip-rates"],
+    "market-close": [
+        "run_all.py", "--skip-rates", "--skip-finra", "--skip-us-market",
+        "--skip-sec", "--skip-finnhub", "--market-scope", "korea",
+    ],
+    "us-open": ["run_all.py", "--skip-domestic", "--skip-rates", "--market-scope", "us"],
+    "morning": ["run_all.py", "--skip-domestic", "--market-scope", "us"],
     "all": ["run_all.py"],
 }
 PROFILE_REQUIRED_ENV = {
     "rates": ("ECOS_API_KEY",),
     "market-close": ("DART_API_KEY", "KRX_ID", "KRX_PW"),
+    "us-open": (),
+    "morning": ("ECOS_API_KEY",),
     "all": ("ECOS_API_KEY", "DART_API_KEY", "KRX_ID", "KRX_PW"),
 }
 
@@ -29,7 +36,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "profile",
         choices=PROFILE_COMMANDS,
-        help="rates, market-close, or all",
+        help="rates, market-close (Korea), us-open (U.S.), morning (U.S. + rates), or all",
     )
     parser.add_argument(
         "--dry-run",

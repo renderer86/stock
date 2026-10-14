@@ -299,8 +299,16 @@ DART 10년 재무 패널은 기업별 전체 재무 API 대신 연도별 일괄 
 GitHub Actions에서 다음 일정으로 실행됩니다.
 
 - 평일 08:30 KST: ECOS·FRED 한국/미국 국채 금리
-- 평일 16:30 KST: 국내외 전체 시장·공시·뉴스·AI 브리핑
+- 화~토요일 08:30 KST: 미국 종목·SEC·Finnhub·FINRA 및 미국 지수·가상자산
+- 평일 16:30 KST: 국내 종목·ETF·KRX 수급/공매도·FnGuide·DART·뉴스·AI 브리핑
 - 수동 실행: GitHub의 `Actions` → `Update market data` → `Run workflow`
+
+장 마감의 `market-close` 프로필은 미국 수집을 거치지 않습니다. 미국 수집은
+`us-open`, 미국 수집과 금리를 함께 실행할 때는 `morning` 프로필을 사용합니다.
+월요일 아침은 `rates`, 화~금요일 아침은 `morning`, 토요일 아침은 `us-open`으로
+실행해 미국 금요일 장 마감까지 반영합니다. 공통 지수·히트맵 JSON은 해당 지역만
+갱신하고 다른 지역의 기존 데이터를 보존합니다. 전체를 한 번에 수집하려면 `all`을
+선택합니다. 같은 저장소의 데이터 쓰기는 충돌을 방지하기 위해 순서대로 실행됩니다.
 
 `Update dashboard news`는 전체 크롤링과 분리되어 2시간마다 반도체·IT·미국·코스피·
 코스닥 뉴스를 갱신합니다. 뉴스 JSON이 바뀌면 `Deploy dashboard page`가 자동으로
@@ -329,7 +337,9 @@ Gemini 브리핑은 신규 키에서 지원되는 `gemini-3.5-flash-lite`를 기
 
 워크플로는 갱신된 `data/*.json`을 `github-actions[bot]` 이름으로 자동 커밋하고
 현재 브랜치에 푸시한 다음, 같은 실행 안에서 갱신된 대시보드를 GitHub Pages에
-직접 배포합니다. 예약 실행은 GitHub 서버 상황에 따라 몇 분 늦어질 수 있습니다.
+직접 배포합니다. 위 시각은 수집 시작 예약이며, 수집이 완료된 후 배포합니다.
+GitHub 예약 실행 자체는 서버 상황에 따라 수 시간 늦어질 수도 있으므로
+국내·미국 수집을 분리해도 정시 시작을 보장하지는 않습니다.
 수집 성공·실패 요약은 등록한 Telegram 채팅으로 전송됩니다.
 
 KRX Open API 인증키만 발급받는 것과 각 API 사용 승인은 별개입니다. `krx_openapi.json`에서
@@ -344,6 +354,8 @@ KRX Open API 인증키만 발급받는 것과 각 API 사용 승인은 별개입
 ```powershell
 python scheduled_update.py rates --dry-run
 python scheduled_update.py market-close --dry-run
+python scheduled_update.py us-open --dry-run
+python scheduled_update.py morning --dry-run
 python scheduled_update.py all --dry-run
 ```
 
