@@ -315,7 +315,7 @@ function fillLoopingTicker(track, items, secondsPerItem = 4.5) {
   );
   track.innerHTML = `${segment}${segment.replace(
     'class="rate-ticker-segment"',
-    'class="rate-ticker-segment" aria-hidden="true"'
+    'class="rate-ticker-segment" aria-hidden="true" inert'
   )}`;
 }
 
@@ -388,86 +388,81 @@ async function loadTreasuryTicker() {
   }
 }
 
-function renderEtfBrandTicker(payload, brand, trackId, dateId) {
-  const track = document.getElementById(trackId);
-  const dateNode = document.getElementById(dateId);
-  const brandData = (payload?.brands || []).find(
-    (item) => String(item?.brand || "").toLocaleLowerCase() === brand.toLocaleLowerCase()
-  );
-  const etfs = Array.isArray(brandData?.etfs) ? brandData.etfs : [];
-
-  if (!etfs.length) {
+function renderEtfTicker(payload) {
+  const track = document.getElementById("active-etf-ticker-track");
+  const updated = document.getElementById("active-etf-ticker-updated");
+  const brands = (payload?.brands || []).filter((group) =>
+    ["koact", "time", "timefolio"].includes(String(group?.brand || "").toLowerCase())
+  ).map((group) => ({
+    label: String(group.brand).toLowerCase() === "koact" ? "KoAct" : "TIMEFOLIO",
+    etfs: Array.isArray(group.etfs) ? group.etfs : []
+  }));
+  // Interleave the brands so both appear throughout the news-style ticker.
+  const items = [];
+  const count = Math.max(0, ...brands.map((group) => group.etfs.length));
+  for (let index = 0; index < count; index += 1) {
+    brands.forEach((group) => {
+      const item = group.etfs[index];
+      if (!item) return;
+      const changeRate = item.change_rate == null ? NaN : Number(item.change_rate);
+      const direction = !Number.isFinite(changeRate) || changeRate === 0
+        ? "is-flat" : changeRate > 0 ? "is-up" : "is-down";
+      const changeText = !Number.isFinite(changeRate) ? "—"
+        : changeRate > 0 ? `▲ +${formatNumber(changeRate, 2)}%`
+        : changeRate < 0 ? `▼ ${formatNumber(changeRate, 2)}%` : "— 0.00%";
+      const price = item.current_price == null ? NaN : Number(item.current_price);
+      const name = item.short_name || item.name || "";
+      items.push(`
+        <a class="rate-ticker-item etf-ticker-item ${direction}"
+          href="https://finance.naver.com/item/main.naver?code=${encodeURIComponent(String(item.code || ""))}"
+          target="_blank" rel="noopener noreferrer">
+          <span class="etf-brand-label">${group.label}</span>
+          <span class="rate-maturity">${escapeHtml(name)}</span>
+          <strong>${Number.isFinite(price) ? `${formatInteger(price)}원` : "N/A"}</strong>
+          <span class="rate-change">${changeText}</span>
+        </a>
+      `);
+    });
+  }
+  if (!items.length) {
     track.classList.add("is-static");
-    track.innerHTML = `<div class="rate-ticker-loading">${escapeHtml(brand)} ETF 데이터가 없습니다.</div>`;
-    dateNode.textContent = "No data";
+    track.innerHTML = '<div class="rate-ticker-loading">표시할 KoAct·TIMEFOLIO ETF 시세가 없습니다.</div>';
+    updated.textContent = "시세 없음";
     return;
   }
-
-  const items = etfs.map((item) => {
-    const changeRate = Number(item?.change_rate);
-    const direction = Number.isNaN(changeRate) || changeRate === 0
-      ? "is-flat"
-      : changeRate > 0
-        ? "is-up"
-        : "is-down";
-    const changeText = Number.isNaN(changeRate)
-      ? "N/A"
-      : changeRate > 0
-        ? `▲ +${formatNumber(changeRate, 2)}%`
-        : changeRate < 0
-          ? `▼ ${formatNumber(changeRate, 2)}%`
-          : "— 0.00%";
-    const code = encodeURIComponent(String(item?.code || ""));
-
-    return `
-      <a
-        class="rate-ticker-item etf-ticker-item ${direction}"
-        href="https://finance.naver.com/item/main.naver?code=${code}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span class="rate-maturity">${escapeHtml(item?.short_name || item?.name || "")}</span>
-        <strong>${formatInteger(Number(item?.current_price))}원</strong>
-        <span class="rate-change">${changeText}</span>
-      </a>
-    `;
-  });
-
-  fillLoopingTicker(track, items, 3);
-  dateNode.textContent = `Naver · ${etfs.length}개`;
+  fillLoopingTicker(track, items, 6);
+  updated.textContent = payload.crawled_at_utc
+    ? `${formatCompactDateTime(payload.crawled_at_utc)} 기준` : "수집 시각 없음";
+  updated.title = `Naver Finance · ${items.length}개 ETF · 한국 시간(KST)`;
 }
 
 async function loadEtfBrandTickers() {
   try {
     const response = await fetch(ETF_BRANDS_URL, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} for ETF brands`);
-    }
-    const payload = await response.json();
-    renderEtfBrandTicker(
-      payload,
-      "KoAct",
-      "koact-etf-ticker-track",
-      "koact-etf-ticker-date"
-    );
-    renderEtfBrandTicker(
-      payload,
-      "TIME",
-      "time-etf-ticker-track",
-      "time-etf-ticker-date"
-    );
+    if (!response.ok) throw new Error(`HTTP ${response.status} for ETF brands`);
+    renderEtfTicker(await response.json());
   } catch (error) {
-    [
-      ["koact-etf-ticker-track", "koact-etf-ticker-date", "KoAct"],
-      ["time-etf-ticker-track", "time-etf-ticker-date", "TIME"]
-    ].forEach(([trackId, dateId, brand]) => {
-      const track = document.getElementById(trackId);
-      track.classList.add("is-static");
-      track.innerHTML = `<div class="rate-ticker-loading">${brand} ETF 데이터를 불러오지 못했습니다.</div>`;
-      document.getElementById(dateId).textContent = "Unavailable";
-    });
+    const track = document.getElementById("active-etf-ticker-track");
+    track.classList.add("is-static");
+    track.innerHTML = '<div class="rate-ticker-loading">ETF 시세를 불러오지 못했습니다.</div>';
+    document.getElementById("active-etf-ticker-updated").textContent = "불러오기 실패";
     console.error(error);
   }
+}
+
+function bindEtfTickerDock() {
+  const dock = document.getElementById("etf-ticker-dock");
+  const button = document.getElementById("etf-ticker-pause");
+  const setPaused = (paused) => {
+    dock.classList.toggle("is-paused", paused);
+    button.setAttribute("aria-pressed", String(paused));
+    const label = paused ? "ETF 시세 흐름 재생" : "ETF 시세 흐름 일시정지";
+    button.setAttribute("aria-label", label);
+    button.title = label;
+    button.querySelector("span").textContent = paused ? "▶" : "Ⅱ";
+  };
+  setPaused(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  button.addEventListener("click", () => setPaused(!dock.classList.contains("is-paused")));
 }
 
 function marketTone(value) {
@@ -5099,6 +5094,7 @@ function initResponsiveTables() {
 }
 
 bindFeatureControls();
+bindEtfTickerDock();
 bindMarketOverview();
 bindTodayNews();
 bindMarketMap();

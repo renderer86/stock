@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261014-stock-detail">
+  <link rel="stylesheet" href="style.css?v=20261018-fixed-etf-ticker">
 </head>
 <body>
   <a class="skip-link" href="#dashboard-main">본문으로 이동</a>
@@ -682,7 +682,7 @@
 
       </div>
       <div id="workspace-market" class="workspace-view" data-workspace-view="market">
-        <div class="workspace-intro"><div><p class="section-kicker">Market overview</p><h2>시장 흐름</h2><p>국채 금리와 ETF 시세, 섹터별 히트맵을 확인하세요.</p></div></div>
+        <div class="workspace-intro"><div><p class="section-kicker">Market overview</p><h2>시장 흐름</h2><p>국채 금리와 섹터별 히트맵을 확인하세요. ETF 시세는 화면 하단에서 볼 수 있습니다.</p></div></div>
     <div class="market-ticker-stack">
       <section class="rate-ticker" aria-label="한국 및 미국 국채 금리">
         <div class="rate-ticker-label">
@@ -697,31 +697,6 @@
         <div id="rate-ticker-date" class="rate-ticker-date">Loading</div>
       </section>
 
-      <section class="rate-ticker etf-ticker etf-ticker-koact" aria-label="KoAct ETF 시세">
-        <div class="rate-ticker-label">
-          <span class="rate-live-dot" aria-hidden="true"></span>
-          <span>KoAct ETF</span>
-        </div>
-        <div class="rate-ticker-viewport">
-          <div id="koact-etf-ticker-track" class="rate-ticker-track">
-            <div class="rate-ticker-loading">KoAct ETF 시세를 불러오는 중입니다.</div>
-          </div>
-        </div>
-        <div id="koact-etf-ticker-date" class="rate-ticker-date">Naver</div>
-      </section>
-
-      <section class="rate-ticker etf-ticker etf-ticker-time" aria-label="TIME ETF 시세">
-        <div class="rate-ticker-label">
-          <span class="rate-live-dot" aria-hidden="true"></span>
-          <span>TIME ETF</span>
-        </div>
-        <div class="rate-ticker-viewport">
-          <div id="time-etf-ticker-track" class="rate-ticker-track">
-            <div class="rate-ticker-loading">TIME ETF 시세를 불러오는 중입니다.</div>
-          </div>
-        </div>
-        <div id="time-etf-ticker-date" class="rate-ticker-date">Naver</div>
-      </section>
     </div>
 
     <section id="market-map-board" class="market-map-board" aria-labelledby="market-map-title">
@@ -863,6 +838,19 @@
     ></aside>
   </div>
 
-  <script src="script.js?v=20261014-stock-detail"></script>
+  <aside id="etf-ticker-dock" class="etf-ticker-dock" aria-label="KoAct·TIMEFOLIO 액티브 ETF 시세">
+    <span class="etf-dock-label">액티브 ETF</span>
+    <div class="rate-ticker-viewport">
+      <div id="active-etf-ticker-track" class="rate-ticker-track is-static">
+        <div class="rate-ticker-loading">KoAct·TIMEFOLIO ETF 시세를 불러오는 중입니다.</div>
+      </div>
+    </div>
+    <span id="active-etf-ticker-updated" class="etf-dock-updated">수집 시각 확인 중</span>
+    <button id="etf-ticker-pause" class="etf-dock-pause" type="button" aria-label="ETF 시세 흐름 일시정지" aria-pressed="false" aria-controls="active-etf-ticker-track" title="시세 흐름 일시정지">
+      <span aria-hidden="true">Ⅱ</span>
+    </button>
+  </aside>
+
+  <script src="script.js?v=20261018-fixed-etf-ticker"></script>
 </body>
 </html>

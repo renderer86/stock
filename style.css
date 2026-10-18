@@ -11,6 +11,7 @@
   --positive: #d8483f;
   --negative: #3478c7;
   --shadow: 0 2px 8px rgba(32, 39, 53, 0.03);
+  --etf-dock-height: 44px;
 }
 
 * {
@@ -5495,4 +5496,90 @@ tbody tr.is-selected { background: var(--accent-soft); }
   .summary-code { font-size: 0.8rem; }
   .summary-identity-row { gap: 10px; }
   .selected-panel-head { flex-wrap: wrap; gap: 8px; }
+}
+
+
+/* Persistent, single-line ETF news ticker across all workspaces. */
+html {
+  scroll-padding-bottom: calc(var(--etf-dock-height) + env(safe-area-inset-bottom, 0px) + 16px);
+}
+body {
+  padding-bottom: calc(var(--etf-dock-height) + env(safe-area-inset-bottom, 0px));
+}
+.etf-ticker-dock {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  height: calc(var(--etf-dock-height) + env(safe-area-inset-bottom, 0px));
+  padding: 0 12px env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: 0 -3px 14px rgba(32, 39, 53, 0.05);
+  color: var(--text);
+}
+.etf-dock-label {
+  padding: 0 14px 0 4px;
+  border-right: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.etf-ticker-dock .rate-ticker-viewport,
+.etf-ticker-dock .rate-ticker-track,
+.etf-ticker-dock .rate-ticker-segment,
+.etf-ticker-dock .rate-ticker-item,
+.etf-ticker-dock .rate-ticker-divider,
+.etf-ticker-dock .rate-ticker-loading {
+  height: var(--etf-dock-height);
+  min-height: 0;
+}
+.etf-ticker-dock .rate-ticker-item {
+  gap: 9px;
+  padding: 0 18px;
+  font-size: 12px;
+}
+.etf-brand-label {
+  color: var(--accent);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+.etf-ticker-dock .etf-ticker-item .rate-maturity { color: var(--muted); }
+.etf-ticker-dock .etf-ticker-item strong { color: var(--text); font-size: 13px; }
+.etf-ticker-dock .rate-change { font-size: 12px; }
+.etf-ticker-dock .rate-ticker-item:hover { background: var(--accent-soft); }
+.etf-dock-updated {
+  padding: 0 12px;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.etf-dock-pause {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.etf-dock-pause:hover { color: var(--accent); border-color: var(--accent); }
+.etf-ticker-dock.is-paused .rate-ticker-track,
+.etf-ticker-dock .rate-ticker-viewport:hover .rate-ticker-track,
+.etf-ticker-dock .rate-ticker-viewport:focus-within .rate-ticker-track {
+  animation-play-state: paused;
+}
+@media (max-width: 640px) {
+  .etf-ticker-dock { grid-template-columns: auto minmax(0, 1fr) auto; padding-inline: 8px; }
+  .etf-dock-label { padding: 0 8px 0 0; font-size: 10px; }
+  .etf-dock-updated { display: none; }
+  .etf-ticker-dock .rate-ticker-item { gap: 7px; padding-inline: 12px; }
 }
