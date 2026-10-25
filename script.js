@@ -24,10 +24,25 @@ const FINNHUB_URL = "./data/us_finnhub.json";
 const DATA_MANIFEST_URL = "./data/data_manifest.json";
 const MARKET_IMPLIED_DISCOUNT_PCT = 10;
 const MARKET_IMPLIED_ROE_GUARD_PP = 2;
+const WATCHLIST_STOCKS = [
+  { code: "032350", name: "롯데관광개발", interpretation: "카지노 실적 성장 기대" },
+  { code: "093050", name: "LF", interpretation: "저평가 자산가치 및 주주환원" },
+  { code: "005930", name: "삼성전자", interpretation: "반도체 업황 개선 기대" },
+  { code: "290650", name: "엘앤씨바이오", interpretation: "의료기기 성장 기대 유지" },
+  { code: "251970", name: "펌텍코리아", interpretation: "화장품 용기 산업의 구조적 성장" },
+  { code: "383220", name: "F&F", interpretation: "소비 회복 및 브랜드 가치" },
+  { code: "043370", name: "피에이치에이", interpretation: "자동차 부품 저평가" },
+  { code: "053610", name: "프로텍", interpretation: "반도체 패키징 성장 기대" },
+  { code: "214450", name: "파마리서치", interpretation: "" },
+  { code: "003230", name: "삼양식품", interpretation: "" },
+  { code: "192820", name: "코스맥스", interpretation: "" },
+  { code: "257720", name: "실리콘투", interpretation: "" }
+];
 
 const state = {
   rawStocks: [],
   rawStockByCode: new Map(),
+  marketDataUpdatedAt: null,
   roeHistoryByCode: new Map(),
   financialNByCode: new Map(),
   investmentScreenByCode: new Map(),
@@ -2819,6 +2834,41 @@ function getFilteredStocks(enrichedStocks = null) {
     .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
 }
 
+function renderWatchlist() {
+  const tbody = document.getElementById("watchlist-body");
+  document.getElementById("watchlist-count-badge").textContent = `${WATCHLIST_STOCKS.length}개 종목`;
+  document.getElementById("watchlist-updated-badge").textContent = state.marketDataUpdatedAt
+    ? `시세 ${formatCompactDateTime(state.marketDataUpdatedAt)}`
+    : "시세 데이터 대기";
+
+  tbody.innerHTML = WATCHLIST_STOCKS.map((item, index) => {
+    const stock = state.rawStockByCode.get(item.code);
+    const financials = state.investmentScreenByCode.get(item.code)?.long_term_financials;
+    const roic = financials?.latest?.roic_pct;
+    const roicYear = financials?.period?.end_year;
+    const revenueCagr = financials?.cagr?.revenue_pct;
+    const period = financials?.period;
+    const cagrPeriod = period?.start_year && period?.end_year
+      ? `${period.start_year}–${period.end_year}`
+      : "기간 미확인";
+    const identity = stock
+      ? `<button type="button" class="watchlist-stock-link" data-select-korea-code="${item.code}" aria-label="${escapeHtml(item.name)} 상세 가치평가">${escapeHtml(item.name)}</button>`
+      : `<strong>${escapeHtml(item.name)}</strong>`;
+
+    return `
+      <tr>
+        <td><span class="rank-chip">${index + 1}</span></td>
+        <td class="watchlist-identity-cell">${identity}<div class="table-subtext">${item.code}</div></td>
+        <td class="watchlist-cagr-cell"><div class="${metricClass(revenueCagr)}">${formatPercent(revenueCagr, 1)}</div><div class="table-subtext">${revenueCagr == null ? "데이터 부족" : escapeHtml(cagrPeriod)}</div></td>
+        <td class="watchlist-interpretation-cell">${escapeHtml(item.interpretation || "—")}</td>
+        <td><div>${formatPercent(roic, 1)}</div><div class="table-subtext">${roic == null ? "데이터 부족" : (roicYear ? `${escapeHtml(roicYear)}년` : "연간 기준")}</div></td>
+        <td>${stock?.per == null ? "N/A" : `${formatNumber(stock.per, 2)}배`}</td>
+        <td>${stock?.pbr == null ? "N/A" : `${formatNumber(stock.pbr, 2)}배`}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
 function getPriorityCandidates(stocks) {
   const stockByCode = new Map(stocks.map((stock) => [stock.code, stock]));
   const rankings = state.investmentScreensPayload?.rankings?.buffett_watchlist
@@ -3751,6 +3801,7 @@ function renderDashboard() {
   const selectedStock = stocks.find((stock) => stock.code === state.selectedCode)
     || (selectedRawStock ? enrichStock(selectedRawStock) : null);
 
+  renderWatchlist();
   renderPriorityCandidates(stocks);
   renderQualityCandidates(stocks);
   renderTable(stocks, roeTenStocks);
@@ -3830,6 +3881,7 @@ function bindTableSortHeaders() {
 }
 
 function renderError(message) {
+  renderWatchlist();
   document.getElementById("priority-candidates-body").innerHTML = `<tr><td colspan="12" class="empty-state">${message}</td></tr>`;
   document.getElementById("quality-candidates-body").innerHTML = `<tr><td colspan="11" class="empty-state">${message}</td></tr>`;
   document.getElementById("roe-table-body").innerHTML = `<tr><td colspan="16" class="empty-state">${message}</td></tr>`;
@@ -3958,6 +4010,7 @@ async function loadStocks() {
     state.rawStockByCode = new Map(
       state.rawStocks.map((stock) => [stock.code, stock])
     );
+    state.marketDataUpdatedAt = marketPayload.crawled_at_utc || null;
     state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
     state.dartMajorByCode = buildDartMajorMap(dartPayload);
     state.financialNByCode = buildFinancialNMap(financialNPayload);
@@ -4058,7 +4111,7 @@ function setWorkspaceLoading(name, loading) {
 }
 
 async function loadWorkspaceData(name, force = false) {
-  if (name === "valuation" || name === "priority") {
+  if (["valuation", "priority", "screens"].includes(name)) {
     return;
   }
   if ((!force && state.loadedWorkspaces.has(name)) || state.loadingWorkspaces.has(name)) {
@@ -5122,4 +5175,5 @@ loadMarketOverview();
 loadTodayNews();
 loadMarketMap();
 loadPortfolio();
+renderWatchlist();
 loadStocks();

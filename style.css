@@ -5389,6 +5389,14 @@ td { font-size: 13px; }
 .buffett-name-cell { min-width: 190px; }
 .buffett-strength-tags span, .buffett-strict-badge { border-radius: 4px; }
 .rank-chip { min-width: 24px; height: 24px; border-radius: 5px; background: #f2f4f7; color: var(--muted); font-size: 11px; }
+#watchlist-table th, #watchlist-table td { text-align: right; }
+#watchlist-table :is(th, td):nth-child(2), #watchlist-table :is(th, td):nth-child(4) { text-align: left; }
+#watchlist-table .watchlist-identity-cell { min-width: 150px; }
+#watchlist-table .watchlist-interpretation-cell { min-width: 220px; white-space: normal; }
+.watchlist-stock-link { padding: 0; border: 0; background: transparent; color: var(--accent); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.watchlist-stock-link:hover { text-decoration: underline; }
+.watchlist-stock-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+.watchlist-cagr-cell > div:first-child { font-weight: 600; }
 .priority-workspace-panel tbody tr:hover, tbody tr:hover { background: #f7f9ff; }
 tbody tr.is-selected { background: var(--accent-soft); }
 .today-news-board { margin: 0; padding: 20px; }
@@ -5438,6 +5446,11 @@ tbody tr.is-selected { background: var(--accent-soft); }
   .stat-pill { font-size: 10px; padding: 0 7px; }
   .priority-workspace-panel .table-wrap { max-height: 600px; }
   .priority-workspace-panel td { text-align: left; }
+  #watchlist-table td { text-align: left; }
+  #watchlist-table .watchlist-identity-cell, #watchlist-table .watchlist-interpretation-cell { min-width: 0; }
+  #watchlist-table tbody tr { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  #watchlist-table tbody td { grid-column: span 2; }
+  #watchlist-table tbody td:nth-child(2), #watchlist-table tbody td:nth-child(4) { grid-column: span 4; }
   .table-wrap table.has-mobile-sort thead { background: #f2f4f7; }
   .table-wrap table.has-mobile-sort thead th.is-active { background: white; box-shadow: none; }
   .table-wrap tbody tr { border-radius: 8px; background: white; box-shadow: none; }
