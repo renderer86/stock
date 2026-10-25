@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261018-fixed-etf-ticker">
+  <link rel="stylesheet" href="style.css?v=20261025-screen-metrics-v2">
 </head>
 <body>
   <a class="skip-link" href="#dashboard-main">본문으로 이동</a>
@@ -93,7 +93,7 @@
           <div>
             <p class="section-kicker">Buffett Compounders</p>
             <h2>버핏 스타일</h2>
-            <details class="screen-method"><summary>선정 기준 보기</summary><p class="section-description">최근 3개 연속 사업연도에 비금융 ROIC 12% 이상·금융 ROE 10% 이상을 유지하고, 기존 7개 버핏 조건 중 하나 이상의 강점이 확인된 관심종목입니다. 비금융주는 현금/시가총액 50% 이하를 추가로 요구하며, FCF 수익률은 10년 평균(불완전하면 최근 3년 평균)으로 계산합니다.</p></details>
+            <details class="screen-method"><summary>선정 기준 보기</summary><p class="section-description">최근 3개 연속 사업연도에 비금융 보수 ROIC 12% 이상·금융 ROE 10% 이상을 유지하고, 기존 7개 버핏 조건 중 하나 이상의 강점이 확인된 관심종목입니다. 보수 ROIC는 현금을 차감하지 않은 기초·기말 평균 자본총계와 이자부채(리스 포함)를 사용합니다. 비금융주는 현금/시가총액 50% 이하를 추가로 요구합니다. FCF 수익률은 리스 상환액 차감 후 최근 12개월(TTM), 없으면 최근 3년 평균을 사용하며 지속가능 현금흐름의 확정값은 아닙니다. 금융업에는 일반기업 FCF를 적용하지 않습니다. 계산 기간은 각 지표 아래에 표시합니다.</p></details>
           </div>
           <div class="section-side">
             <button class="table-detail-toggle" type="button" data-detail-panel="buffett-panel" aria-controls="buffett-table" aria-expanded="false">상세 지표 보기</button>
@@ -116,13 +116,13 @@
                 <th data-priority-sort-key="buffettRank">순위</th>
                 <th data-priority-sort-key="name">종목명</th>
                 <th data-priority-sort-key="sector">업종</th>
-                <th data-priority-sort-key="recentReturnAverage">최근 3년 ROIC·ROE</th>
+                <th data-priority-sort-key="recentReturnAverage">최근 3년 보수 ROIC·ROE</th>
                 <th data-priority-sort-key="grossMarginSigma">마진 σ</th>
                 <th data-priority-sort-key="fcfConversion">FCF 전환</th>
                 <th data-priority-sort-key="netDebtToEbitda">순부채/EBITDA</th>
                 <th data-priority-sort-key="incrementalRoic">증분 ROIC</th>
                 <th data-priority-sort-key="payoutRatio">주주환원</th>
-                <th data-priority-sort-key="fcfYield">정상 FCF 수익률</th>
+                <th data-priority-sort-key="fcfYield">리스 차감 FCF 수익률</th>
                 <th data-priority-sort-key="estimatedNBase">고ROE 지속기간 N</th>
                 <th data-priority-sort-key="nConfidenceScore">지속기간 N 신뢰도</th>
               </tr>
@@ -851,6 +851,6 @@
     </button>
   </aside>
 
-  <script src="script.js?v=20261018-fixed-etf-ticker"></script>
+  <script src="script.js?v=20261025-screen-metrics-v2"></script>
 </body>
 </html>

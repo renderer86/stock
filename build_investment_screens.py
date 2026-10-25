@@ -32,6 +32,7 @@ def parse_args() -> argparse.Namespace:
         default=str(DEFAULT_HISTORICAL_PRICES),
     )
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument("--interim", default="data/dart_financial_interim.json")
     parser.add_argument("--quality-basket-size", type=int, default=25)
     return parser.parse_args()
 
@@ -61,7 +62,7 @@ def main() -> None:
     output_path = Path(args.output)
     payload = InvestmentScreenBuilder(
         quality_basket_size=args.quality_basket_size
-    ).build(panel, n_estimates, market_sum, historical_prices)
+    ).build(panel, n_estimates, market_sum, historical_prices, load_json(Path(args.interim), required=False))
     atomic_write_json(output_path, payload, compact=True)
     summary = payload["summary"]
     print(

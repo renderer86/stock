@@ -76,7 +76,16 @@ def atomic_write_json(path: Path, payload: Any, *, compact: bool = False) -> Non
                 separators=(",", ":") if compact else None,
             )
             handle.write("\n")
-        os.replace(temporary_path, path)
+        # Windows readers/indexers may briefly deny replacement of an open file.
+        # Keep the completed temporary file and retry the atomic swap only.
+        for attempt in range(6):
+            try:
+                os.replace(temporary_path, path)
+                break
+            except PermissionError as exc:
+                if getattr(exc, "winerror", None) not in {5, 32, 33} or attempt == 5:
+                    raise
+                time.sleep(0.1 * 2**attempt)
     finally:
         if temporary_path.exists():
             temporary_path.unlink()

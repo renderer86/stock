@@ -4,6 +4,7 @@ from collector_common import redact_sensitive_url_text
 from crawler_dart_financial_details import (
     company_screening_features,
     derive_row_metrics,
+    derive_company_metrics,
     parse_dividend_report,
     parse_stock_total,
     standardize_accounts,
@@ -228,9 +229,11 @@ class DartFinancialDetailsTest(unittest.TestCase):
                     "metrics": {"roe_pct": 15, "roa_pct": 5 + index},
                     "detail_metrics": {
                         "roic_pct": 15,
+                        "screening_roic_pct": 15,
                         "net_income": 100,
                         "gross_margin_pct": 40 + index * 0.1,
                         "free_cash_flow": 1000 if index == 9 else 0,
+                        "free_cash_flow_after_leases": 1000 if index == 9 else 0,
                         "net_debt": -10,
                         "net_debt_to_ebitda": -0.1,
                         "nopat": 100 + index * 4,
@@ -268,11 +271,11 @@ class DartFinancialDetailsTest(unittest.TestCase):
         )
         self.assertEqual(
             features["buffett"]["valuation"]["normalized_fcf_basis"],
-            "10y_average",
+            "3y_average_after_leases",
         )
-        self.assertEqual(
+        self.assertAlmostEqual(
             features["buffett"]["valuation"]["normalized_annual_fcf"],
-            100,
+            1000 / 3,
         )
         self.assertEqual(
             features["buffett"]["valuation"]["cash_to_market_cap_pct"],

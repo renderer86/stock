@@ -56,8 +56,8 @@ class DashboardPendingDetailTests(unittest.TestCase):
         self.assertIn("최근 3개 연속 사업연도", html)
         self.assertIn("buffett_watchlist", script)
         self.assertIn("buffett-strength-tags", script)
-        self.assertIn("정상 FCF 수익률", html)
-        self.assertIn("최신 ROIC", script)
+        self.assertIn("리스 차감 FCF 수익률", html)
+        self.assertIn("최신 보수 ROIC", script)
         self.assertGreater(payload["summary"]["buffett_watchlist_count"], 2)
         for ranking in payload["rankings"]["buffett_watchlist"]:
             buffett = payload["results"][ranking["ticker"]]["buffett"]
@@ -67,7 +67,7 @@ class DashboardPendingDetailTests(unittest.TestCase):
             self.assertTrue(buffett["strength_tags"])
             self.assertIn(
                 buffett["valuation"]["normalized_fcf_basis"],
-                ("10y_average", "3y_average_fallback", None),
+                ("3y_average_after_leases", None),
             )
 
         korea_info = payload["results"]["025770"]["buffett"]
@@ -77,7 +77,8 @@ class DashboardPendingDetailTests(unittest.TestCase):
                 "cash_to_market_cap_le_50pct_or_financial"
             ]
         )
-        self.assertIsNone(korea_info["incremental_roic_5y_pct"])
+        self.assertTrue(korea_info["incremental_roic_5y_basis"]["denominator_valid"])
+        self.assertGreater(korea_info["incremental_roic_5y_basis"]["delta_invested_capital"], 0)
 
     def test_buffett_watchlist_has_a_mobile_card_layout(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -167,7 +168,7 @@ class DashboardPendingDetailTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        first = screens["rankings"]["buffett_watchlist"][0]
+        first = next(row for row in screens["rankings"]["buffett_watchlist"] if row["ticker"] == "030000")
         stock = next(
             row for row in market["stocks"] if row["code"] == first["ticker"]
         )

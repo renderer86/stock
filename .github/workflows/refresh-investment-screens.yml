@@ -23,6 +23,7 @@ jobs:
     timeout-minutes: 30
     env:
       TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+      DART_API_KEY: ${{ secrets.DART_API_KEY }}
 
     steps:
       - name: Check out latest data
@@ -54,8 +55,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python -u rebuild_financial_metrics.py
           python -u crawler_naver_year_end_prices.py
           python -u estimate_financial_n.py --config config/financial_n_engine.json
+          python -u build_investment_screens.py
+          python -u crawler_dart_financial_interim.py
           python -u build_investment_screens.py
           python -u build_data_manifest.py
 
@@ -68,8 +72,13 @@ jobs:
           git add \
             data/naver_year_end_prices.json \
             data/financial_n_estimates.json \
+            data/dart_financial_panel.json \
+            data/dart_financial_panel/ \
             data/investment_screens.json \
             data/data_manifest.json
+          if [[ -f data/dart_financial_interim.json ]]; then
+            git add data/dart_financial_interim.json
+          fi
 
           if git diff --cached --quiet; then
             echo "No Buffett or quality screen changes to commit."
@@ -105,5 +114,6 @@ jobs:
             data/financial_n_estimates.json
             data/naver_year_end_prices.json
             data/investment_screens.json
+            data/dart_financial_interim.json
             data/data_manifest.json
           retention-days: 14

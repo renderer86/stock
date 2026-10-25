@@ -28,7 +28,8 @@ DART_STOCK_TOTAL_URL = "https://opendart.fss.or.kr/api/stockTotqySttus.json"
 DART_DIVIDEND_URL = "https://opendart.fss.or.kr/api/alotMatter.json"
 ANNUAL_REPORT_CODE = "11011"
 KST = ZoneInfo("Asia/Seoul")
-DETAIL_SCHEMA_VERSION = 1
+DETAIL_SCHEMA_VERSION = 2
+SCREEN_METRICS_VERSION = "2026-10-25-cash-retained-average-capital-v2"
 TERMINAL_STATUSES = {"complete", "no_data", "not_required"}
 
 
@@ -296,13 +297,18 @@ ACCOUNT_SPECS: dict[str, dict[str, Any]] = {
     },
     "lease_liabilities_current": {
         "statements": {"BS"},
-        "ids": {"ifrs-full_LeaseLiabilitiesCurrent"},
+        "ids": {"ifrs-full_LeaseLiabilitiesCurrent", "ifrs-full_CurrentLeaseLiabilities"},
         "aliases": {"유동리스부채", "리스부채유동"},
     },
     "lease_liabilities_noncurrent": {
         "statements": {"BS"},
-        "ids": {"ifrs-full_LeaseLiabilitiesNoncurrent"},
-        "aliases": {"비유동리스부채", "리스부채비유동"},
+        "ids": {"ifrs-full_LeaseLiabilitiesNoncurrent", "ifrs-full_NoncurrentLeaseLiabilities"},
+        "aliases": {"비유동리스부채", "리스부채비유동", "장기리스부채"},
+    },
+    "lease_liabilities_total": {
+        "statements": {"BS"},
+        "ids": {"ifrs-full_LeaseLiabilities"},
+        "aliases": {"리스부채합계"},
     },
     "inventories": {
         "statements": {"BS"},
@@ -411,6 +417,7 @@ ACCOUNT_SPECS: dict[str, dict[str, Any]] = {
         "statements": {"CF"},
         "ids": {
             "ifrs-full_PurchaseOfPropertyPlantAndEquipment",
+            "ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
             "dart_PurchaseOfPropertyPlantAndEquipment",
         },
         "aliases": {"유형자산의취득", "유형자산취득"},
@@ -419,9 +426,18 @@ ACCOUNT_SPECS: dict[str, dict[str, Any]] = {
         "statements": {"CF"},
         "ids": {
             "ifrs-full_PurchaseOfIntangibleAssets",
+            "ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities",
             "dart_PurchaseOfIntangibleAssets",
         },
         "aliases": {"무형자산의취득", "무형자산취득"},
+    },
+    "lease_principal_paid": {
+        "statements": {"CF"},
+        "ids": {
+            "ifrs-full_PaymentsOfLeaseLiabilitiesClassifiedAsFinancingActivities",
+            "dart_PaymentsOfFinanceLeaseLiabilitiesClassifiedAsFinancingActivities",
+        },
+        "aliases": {"리스부채의상환", "리스부채상환", "리스부채의지급", "리스부채의감소", "금융리스부채의상환"},
     },
     "dividends_paid": {
         "statements": {"CF"},
@@ -537,6 +553,17 @@ def standardize_accounts(
         values[key] = amount
         if match:
             matches[key] = match
+
+    # This function receives full statements, so absence of a CF payment line
+    # means no separately reported payment. A missing CF remains unknown.
+    lease_spec = ACCOUNT_SPECS["lease_principal_paid"]
+    lease_line_present = any(r["statement"] == "CF" and (
+        normalize_account_id(r["account_id"]) in {normalize_account_id(v) for v in lease_spec["ids"]}
+        or r["normalized_name"] in {normalize_text(v) for v in lease_spec["aliases"]}
+    ) for r in rows)
+    if values["lease_principal_paid"] is None and not lease_line_present and any(r["statement"] == "CF" for r in rows):
+        values["lease_principal_paid"] = 0
+        matches["lease_principal_paid"] = {"match": "not_separately_reported_in_full_cf"}
 
     if values["gross_profit"] is None:
         revenue = values["revenue"]
@@ -736,14 +763,16 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
     if net_income is None:
         net_income = values.get("owners_net_income")
     cash = values.get("cash")
+    lease_debt = values.get("lease_liabilities_total")
+    if lease_debt is None:
+        lease_debt = sum_known(values.get("lease_liabilities_current"), values.get("lease_liabilities_noncurrent"))
     debt = sum_known(
         values.get("short_term_borrowings"),
         values.get("current_portion_long_term_debt"),
         values.get("current_bonds"),
         values.get("long_term_borrowings"),
         values.get("bonds"),
-        values.get("lease_liabilities_current"),
-        values.get("lease_liabilities_noncurrent"),
+        lease_debt,
     )
     invested_capital = (
         equity + debt - cash
@@ -753,7 +782,7 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
     pretax_income = values.get("pretax_income")
     tax_expense = values.get("income_tax_expense")
     raw_tax_rate = safe_ratio(tax_expense, pretax_income)
-    if raw_tax_rate is not None and 0 <= raw_tax_rate <= 0.5:
+    if pretax_income is not None and pretax_income > 0 and raw_tax_rate is not None and 0 <= raw_tax_rate <= 1:
         tax_rate = raw_tax_rate
         tax_rate_source = "reported_effective"
     else:
@@ -775,6 +804,8 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
     )
     ocf = values.get("operating_cash_flow")
     free_cash_flow = ocf - capex if ocf is not None and capex is not None else None
+    lease_paid = values.get("lease_principal_paid")
+    fcf_after_leases = free_cash_flow - abs(lease_paid) if free_cash_flow is not None and lease_paid is not None else None
     depreciation = values.get("depreciation_amortization")
     if depreciation is None:
         depreciation = sum_known(
@@ -801,6 +832,9 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
         "net_debt": net_debt,
         "invested_capital": invested_capital,
         "roic_pct": pct(nopat, invested_capital),
+        "gross_invested_capital": equity + debt if equity is not None and debt is not None else None,
+        "screening_roic_pct": None,
+        "screening_roic_basis": "average_equity_plus_interest_bearing_debt_cash_retained",
         "gross_margin_pct": pct(values.get("gross_profit"), values.get("revenue")),
         "gross_profit_to_assets_pct": pct(
             values.get("gross_profit"), values.get("assets")
@@ -808,6 +842,8 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
         "roa_pct": pct(net_income, values.get("assets")),
         "capex": capex,
         "free_cash_flow": free_cash_flow,
+        "lease_principal_paid": abs(lease_paid) if lease_paid is not None else None,
+        "free_cash_flow_after_leases": fcf_after_leases,
         "fcf_to_net_income": safe_ratio(free_cash_flow, net_income),
         "ebitda_proxy": ebitda,
         "net_debt_to_ebitda": safe_ratio(net_debt, ebitda),
@@ -843,6 +879,30 @@ def derive_row_metrics(row: dict[str, Any]) -> None:
             else None
         ),
     }
+
+
+def derive_company_metrics(rows: list[dict[str, Any]]) -> None:
+    """Use consecutive opening/closing capital without subtracting unverified cash."""
+    previous = None
+    for row in sorted(rows, key=lambda r: int(r.get("fiscal_year") or 0)):
+        derive_row_metrics(row)
+        metrics = row.get("detail_metrics") or {}
+        old = (previous or {}).get("detail_metrics") or {}
+        current_capital = metrics.get("gross_invested_capital")
+        old_capital = old.get("gross_invested_capital")
+        consecutive = previous is not None and int(row["fiscal_year"]) == int(previous["fiscal_year"]) + 1
+        blocked = bool((row.get("detail_validation") or {}).get("calculation_blocked"))
+        prior_blocked = bool(((previous or {}).get("detail_validation") or {}).get("calculation_blocked"))
+        valid = (consecutive and not blocked and not prior_blocked and not row.get("is_financial")
+                 and current_capital is not None and old_capital is not None
+                 and current_capital > 0 and old_capital > 0)
+        average_capital = (current_capital + old_capital) / 2 if valid else None
+        metrics["screening_invested_capital"] = current_capital
+        metrics["average_screening_invested_capital"] = average_capital
+        metrics["screening_roic_pct"] = pct(metrics.get("nopat"), average_capital)
+        metrics["screening_roic_status"] = "source_mismatch" if blocked or prior_blocked else "financial_not_applicable" if row.get("is_financial") else "ok" if valid else "capital_history_missing"
+        metrics["screen_metrics_version"] = SCREEN_METRICS_VERSION
+        previous = row
 
 
 def _annual_change_pass(
@@ -985,7 +1045,7 @@ def company_screening_features(
 
     roic_values = [
         value
-        for value in (item.get("roic_pct") for item in metrics)
+        for value in (item.get("screening_roic_pct") for item in metrics)
         if value is not None
     ]
     roe_values = [
@@ -1005,11 +1065,13 @@ def company_screening_features(
         for item in metrics
         if item.get("gross_margin_pct") is not None
     ]
-    fcfs = [
-        item.get("free_cash_flow")
-        for item in metrics
-        if item.get("free_cash_flow") is not None
-    ]
+    def usable_fcf(row: dict[str, Any]) -> float | None:
+        if is_financial or (row.get("detail_validation") or {}).get("calculation_blocked"):
+            return None
+        return (row.get("detail_metrics") or {}).get("free_cash_flow_after_leases")
+
+    fcfs = [value for row in detail_rows if (value := usable_fcf(row)) is not None]
+    historical_10y_fcf = None
     normalized_fcf = None
     normalized_fcf_basis = None
     normalized_fcf_years = 0
@@ -1021,13 +1083,11 @@ def company_screening_features(
         and detail_years == list(range(detail_years[0], detail_years[0] + 10))
     )
     if ten_years_consecutive and len(fcfs) == 10:
-        normalized_fcf = statistics.mean(fcfs)
-        normalized_fcf_basis = "10y_average"
-        normalized_fcf_years = 10
-    elif len(detail_rows) >= 3:
+        historical_10y_fcf = statistics.mean(fcfs)
+    if len(detail_rows) >= 3:
         recent_years = detail_years[-3:]
         recent_fcfs = [
-            item.get("free_cash_flow") for item in metrics[-3:]
+            usable_fcf(row) for row in detail_rows[-3:]
         ]
         if (
             recent_years
@@ -1035,7 +1095,7 @@ def company_screening_features(
             and all(value is not None for value in recent_fcfs)
         ):
             normalized_fcf = statistics.mean(recent_fcfs)
-            normalized_fcf_basis = "3y_average_fallback"
+            normalized_fcf_basis = "3y_average_after_leases"
             normalized_fcf_years = 3
     eps_values = [
         item.get("basic_eps")
@@ -1144,6 +1204,7 @@ def company_screening_features(
                 "roe_pct": base_metrics.get("roe_pct"),
                 "roa_pct": base_metrics.get("roa_pct"),
                 "roic_pct": detail_metrics.get("roic_pct"),
+                "screening_roic_pct": detail_metrics.get("screening_roic_pct"),
                 "roce_pct": pct(
                     accounts.get("operating_income"), capital_employed
                 ),
@@ -1169,6 +1230,8 @@ def company_screening_features(
                 )
                 if owner_income is not None and owner_income > 0
                 else None,
+                "fcf_after_leases_to_net_income_pct": pct(usable_fcf(row), owner_income)
+                if owner_income is not None and owner_income > 0 else None,
                 "book_value_per_share": safe_ratio(owner_equity, shares),
                 "share_count_proxy": shares,
                 "share_adjustment_factor": 1,
@@ -1212,6 +1275,7 @@ def company_screening_features(
         "latest": {
             "roe_pct": ((latest or {}).get("metrics") or {}).get("roe_pct"),
             "roic_pct": last_metrics_for_growth.get("roic_pct"),
+            "screening_roic_pct": last_metrics_for_growth.get("screening_roic_pct"),
             "roce_pct": latest_roce,
             "operating_margin_pct": (
                 (latest or {}).get("metrics") or {}
@@ -1222,7 +1286,8 @@ def company_screening_features(
         },
         "averages": {
             "roe_pct": average_metric(roe_values),
-            "roic_pct": average_metric(roic_values),
+            "roic_pct": average_metric([m["roic_pct"] for m in metrics if m.get("roic_pct") is not None]),
+            "screening_roic_pct": average_metric(roic_values),
             "roce_pct": average_metric(roce_values),
             "operating_margin_pct": average_metric(
                 [
@@ -1298,12 +1363,12 @@ def company_screening_features(
             else None
         )
         delta_capital = (
-            new["invested_capital"] - old["invested_capital"]
-            if new.get("invested_capital") is not None
-            and old.get("invested_capital") is not None
+            new["screening_invested_capital"] - old["screening_invested_capital"]
+            if not is_financial and new.get("screening_invested_capital") is not None
+            and old.get("screening_invested_capital") is not None
             else None
         )
-        old_capital = old.get("invested_capital")
+        old_capital = old.get("screening_invested_capital")
         minimum_delta_capital = (
             old_capital * 0.20
             if old_capital is not None and old_capital > 0
@@ -1348,6 +1413,12 @@ def company_screening_features(
     persistence_count = sum(
         value >= persistence_hurdle for value in persistence_values
     )
+    persistence_pass = None
+    if ten_years_consecutive:
+        if persistence_count >= 9:
+            persistence_pass = True
+        elif persistence_count + (10 - len(persistence_values)) < 9:
+            persistence_pass = False
     share_values = [
         (row.get("share_data") or {}).get("issued_shares")
         for row in detail_rows
@@ -1360,11 +1431,7 @@ def company_screening_features(
         else None
     )
     buffett_conditions = {
-        "persistence_9_of_10": (
-            persistence_count >= 9
-            if len(persistence_values) == 10
-            else None
-        ),
+        "persistence_9_of_10": persistence_pass,
         "positive_net_income_all_10y": (
             all(value > 0 for value in net_incomes)
             if len(net_incomes) == 10
@@ -1372,7 +1439,7 @@ def company_screening_features(
         ),
         "gross_margin_sigma_le_5pp": (
             standard_deviation(margins) <= 5
-            if len(margins) == 10
+            if not is_financial and len(margins) == 10
             else None
         ),
         "fcf_conversion_ge_0_8": (
@@ -1383,7 +1450,7 @@ def company_screening_features(
                 (latest["detail_metrics"].get("net_debt") or 0) <= 0
                 or latest["detail_metrics"].get("net_debt_to_ebitda") <= 2
             )
-            if latest
+            if not is_financial and latest
             and latest.get("detail_metrics", {}).get("net_debt") is not None
             and (
                 latest["detail_metrics"].get("net_debt") <= 0
@@ -1439,7 +1506,7 @@ def company_screening_features(
         ),
     }
     market = market or {}
-    latest_fcf = latest_metrics.get("free_cash_flow")
+    latest_fcf = None if is_financial else latest_metrics.get("free_cash_flow")
     market_cap = market.get("market_cap_krw")
     fcf_yield = pct(normalized_fcf, market_cap)
     latest_cash = latest_accounts.get("cash")
@@ -1468,6 +1535,8 @@ def company_screening_features(
                 "net_debt_to_ebitda"
             ),
             "latest_roic_pct": latest_metrics.get("roic_pct"),
+            "latest_screening_roic_pct": latest_metrics.get("screening_roic_pct"),
+            "roic_basis": "average_equity_plus_interest_bearing_debt_cash_retained",
             "latest_roe_pct": latest_primary_metrics.get("roe_pct"),
             "incremental_roic_5y_pct": incremental_roic,
             "incremental_roic_5y_basis": incremental_roic_basis,
@@ -1485,9 +1554,16 @@ def company_screening_features(
             ],
             "valuation": {
                 "latest_annual_fcf": latest_fcf,
+                "latest_annual_fcf_after_leases": usable_fcf(latest) if latest else None,
                 "normalized_annual_fcf": normalized_fcf,
                 "normalized_fcf_basis": normalized_fcf_basis,
                 "normalized_fcf_years": normalized_fcf_years,
+                "historical_10y_average_fcf_after_leases": historical_10y_fcf,
+                "valuation_fcf": normalized_fcf,
+                "valuation_fcf_basis": normalized_fcf_basis,
+                "fcf_applicable": not is_financial,
+                "fcf_period_end": f"{period_end_year}-12-31" if period_end_year else None,
+                "fcf_fiscal_years": detail_years[-3:] if normalized_fcf is not None else [],
                 "current_market_cap_krw": market_cap,
                 "fcf_yield_pct": fcf_yield,
                 "fcf_yield_ge_5pct": (
@@ -1498,9 +1574,9 @@ def company_screening_features(
                 "cash_to_market_cap_le_50pct_or_financial": cash_gate,
                 "cash_ratio_financial_exempt": is_financial,
                 "note": (
-                    "FCF yield uses a 10-year average when complete, otherwise "
-                    "a complete recent 3-year average. Non-financial companies "
-                    "with cash above 50% of market cap fail the excess-cash gate."
+                    "FCF yield uses recent 3-year mean after lease repayments, "
+                    "or verified interim TTM when available; it is not an estimate "
+                    "of sustainable FCF. Financial-company FCF is not applicable."
                 ),
             },
         },
@@ -1574,6 +1650,8 @@ def rebuild_screening_features(
     by_ticker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in panel.get("observations") or []:
         by_ticker[str(row.get("ticker") or "")].append(row)
+    for rows in by_ticker.values():
+        derive_company_metrics(rows)
     features = {
         ticker: company_screening_features(
             rows,
@@ -1642,14 +1720,16 @@ def update_detail_summary(
                 "CFS and OFS fields are never mixed within one calculation basis."
             ),
             "roic": (
-                "NOPAT / (total equity + interest-bearing debt - cash); "
-                "reported effective tax rate is capped to 0-50%, otherwise 24%."
+                "Screening ROIC = NOPAT / consecutive opening-closing average "
+                "of equity + interest-bearing debt including leases. Cash is retained "
+                "because restricted/operating cash is not verified. Legacy cash-adjusted "
+                "ROIC is retained only for diagnostics. Tax rate 0-100%, otherwise 24%."
             ),
             "capex": "absolute PPE purchases + absolute intangible purchases",
-            "free_cash_flow": "operating cash flow - capex",
+            "free_cash_flow": "Raw OCF - capex retained; valuation additionally deducts lease repayments; financials N/A",
             "normalized_fcf_yield": (
-                "10-year average FCF when all ten observations exist; otherwise "
-                "a complete recent 3-year average"
+                "Recent 3-year mean FCF after leases, or verified interim TTM; "
+                "10-year average kept only as a historical comparison"
             ),
             "incremental_roic_guard": (
                 "5-year incremental ROIC is calculated only when the increase in "

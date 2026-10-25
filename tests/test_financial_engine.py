@@ -248,6 +248,7 @@ class FinancialNEngineTest(unittest.TestCase):
                         "metrics": {"roe_pct": value},
                         "detail_metrics": {
                             "roic_pct": value,
+                            "screening_roic_pct": value,
                             "basic_eps": 100 + (year - 2023) * 20,
                             "net_debt": -1,
                         },
@@ -309,7 +310,7 @@ class FinancialNEngineTest(unittest.TestCase):
                 "fiscal_year": year,
                 "is_financial": False,
                 "metrics": {"roe_pct": 11},
-                "detail_metrics": {"roic_pct": 15, "basic_eps": 100},
+                "detail_metrics": {"roic_pct": 15, "screening_roic_pct": 15, "basic_eps": 100},
             }
             for year in range(2023, 2026)
         ]

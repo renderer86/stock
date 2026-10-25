@@ -4,8 +4,8 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 
-ENGINE_VERSION = "0.1.0"
-METHODOLOGY_VERSION = "n-persistence-2026-07-v1"
+ENGINE_VERSION = "0.2.0"
+METHODOLOGY_VERSION = "n-persistence-screens-2026-10-v2"
 
 
 @dataclass(frozen=True)

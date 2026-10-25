@@ -6,6 +6,7 @@ import math
 from typing import Any
 
 from .config import ENGINE_VERSION, METHODOLOGY_VERSION
+from .interim import ttm_cashflow
 
 
 def _utc_now_iso() -> str:
@@ -69,7 +70,7 @@ def _buffett_watchlist_profile(
         value = (
             (row.get("metrics") or {}).get("roe_pct")
             if is_financial
-            else (row.get("detail_metrics") or {}).get("roic_pct")
+            else (row.get("detail_metrics") or {}).get("screening_roic_pct")
         )
         recent_values.append(_number(value))
 
@@ -112,8 +113,14 @@ def _buffett_watchlist_profile(
     )
     supporting_count = sum(value is True for value in conditions.values())
     unknown_support = any(value is None for value in conditions.values())
+    source_blocked = any(
+        ((by_year.get(year) or {}).get("detail_validation") or {}).get("calculation_blocked")
+        for year in range(max(1, latest_year - 9), latest_year + 1)
+    )
 
-    if minimum_status == "fail":
+    if source_blocked:
+        watchlist_status = "pending"
+    elif minimum_status == "fail":
         watchlist_status = "fail"
     elif minimum_status == "pending":
         watchlist_status = "pending"
@@ -137,13 +144,13 @@ def _buffett_watchlist_profile(
         tags.append("10년 연속 흑자")
     if conditions.get("gross_margin_sigma_le_5pp") is True:
         tags.append("안정적인 마진")
-    if conditions.get("fcf_conversion_ge_0_8") is True:
+    if not is_financial and conditions.get("fcf_conversion_ge_0_8") is True:
         tags.append("탁월한 FCF 전환")
-    if latest_net_debt is not None and latest_net_debt <= 0 and (
+    if not is_financial and latest_net_debt is not None and latest_net_debt <= 0 and (
         fcf_yield is not None and fcf_yield >= 5
     ):
         tags.append("순현금·높은 FCF 수익률")
-    elif conditions.get("net_debt_to_ebitda_le_2_or_net_cash") is True:
+    elif not is_financial and conditions.get("net_debt_to_ebitda_le_2_or_net_cash") is True:
         tags.append("튼튼한 재무")
     if conditions.get("shares_not_increased_10y") is True:
         tags.append("주식수 희석 없음")
@@ -151,6 +158,15 @@ def _buffett_watchlist_profile(
         tags.append("뛰어난 자본배분")
 
     risk_tags: list[str] = []
+    if source_blocked:
+        risk_tags.append("재무 원본 불일치 · 검증 대기")
+    latest_op = _number((latest_row.get("detail_accounts") or {}).get("operating_income"))
+    previous_op = _number(((by_year.get(latest_year - 1) or {}).get("detail_accounts") or {}).get("operating_income"))
+    interim_op_yoy = _number(valuation.get("interim_operating_income_yoy_pct"))
+    if interim_op_yoy is not None and interim_op_yoy < -20:
+        risk_tags.append(f"최근 누적 영업이익 {interim_op_yoy:.1f}%")
+    elif latest_op is not None and previous_op is not None and previous_op > 0 and latest_op < previous_op * 0.8:
+        risk_tags.append(f"최근 연간 영업이익 {((latest_op / previous_op) - 1) * 100:.1f}%")
     if cash_gate is False:
         risk_tags.append(
             f"현금 과다 · 시총 대비 {cash_to_market_cap:.1f}%"
@@ -159,6 +175,8 @@ def _buffett_watchlist_profile(
         )
 
     missing_reasons: list[str] = []
+    if source_blocked:
+        missing_reasons.append("financial_source_mismatch")
     if minimum_status == "pending":
         missing_reasons.append("recent_3y_persistence")
     if minimum_status == "pass" and cash_gate is None:
@@ -172,6 +190,7 @@ def _buffett_watchlist_profile(
         "watchlist_eligible": watchlist_status == "pass",
         "minimum_persistence_status": minimum_status,
         "minimum_persistence_metric": metric,
+        "minimum_persistence_label": "ROE" if is_financial else "보수 ROIC",
         "minimum_persistence_hurdle_pct": hurdle,
         "minimum_persistence_years": recent_years,
         "minimum_persistence_values_pct": recent_values,
@@ -202,6 +221,7 @@ class InvestmentScreenBuilder:
         n_estimates: dict[str, Any],
         market_sum: dict[str, Any] | None = None,
         historical_prices: dict[str, Any] | None = None,
+        interim: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         panel_features = panel.get("screening_features") or {}
         n_by_ticker = n_estimates.get("estimates") or {}
@@ -283,6 +303,20 @@ class InvestmentScreenBuilder:
             buffett_conditions = dict(buffett.get("conditions") or {})
             quality_conditions = dict(quality.get("conditions") or {})
             valuation = dict(buffett.get("valuation") or {})
+            is_financial = bool(feature.get("is_financial")) or bool(valuation.get("cash_ratio_financial_exempt"))
+            if is_financial:
+                for key in ("fcf_conversion_ge_0_8", "net_debt_to_ebitda_le_2_or_net_cash", "gross_margin_sigma_le_5pp"):
+                    if key in buffett_conditions:
+                        buffett_conditions[key] = None
+                valuation.update({"fcf_applicable": False, "normalized_annual_fcf": None,
+                                  "valuation_fcf": None, "fcf_yield_pct": None,
+                                  "fcf_yield_ge_5pct": None, "valuation_fcf_basis": "financial_not_applicable"})
+            else:
+                company_rows = observations_by_ticker.get(ticker) or []
+                latest_annual = max(company_rows, key=lambda r: int(r.get("fiscal_year") or 0), default={})
+                overlay = ttm_cashflow(latest_annual, ((interim or {}).get("companies") or {}).get(ticker) or {})
+                if overlay:
+                    valuation.update(overlay)
             market = market_by_ticker.get(ticker) or {}
             current_market_cap_100m = _number(
                 market.get("market_cap_krw_100m")
@@ -295,7 +329,7 @@ class InvestmentScreenBuilder:
             )
             if current_market_cap is not None:
                 normalized_fcf = _number(
-                    valuation.get("normalized_annual_fcf")
+                    valuation.get("valuation_fcf", valuation.get("normalized_annual_fcf"))
                 )
                 latest_cash = _number(valuation.get("latest_cash"))
                 fcf_yield = (
@@ -307,9 +341,6 @@ class InvestmentScreenBuilder:
                     latest_cash / current_market_cap * 100
                     if latest_cash is not None
                     else None
-                )
-                is_financial = bool(
-                    valuation.get("cash_ratio_financial_exempt")
                 )
                 valuation.update(
                     {
@@ -426,6 +457,8 @@ class InvestmentScreenBuilder:
                 buffett_conditions,
                 valuation,
             )
+            if "financial_source_mismatch" in watchlist["missing_reasons"]:
+                business_status = quality_status = "pending"
             metadata = company_metadata.get(ticker) or {}
             results[ticker] = {
                 "ticker": ticker,
@@ -467,6 +500,7 @@ class InvestmentScreenBuilder:
                         business_status == "pass"
                         and valuation_status == "pass"
                         and excess_cash_status == "pass"
+                        and "financial_source_mismatch" not in watchlist["missing_reasons"]
                     ),
                     "excess_cash_status": excess_cash_status,
                     **watchlist,
@@ -481,13 +515,15 @@ class InvestmentScreenBuilder:
                     "gross_margin_sigma_pct_points": buffett.get(
                         "gross_margin_sigma_pct_points"
                     ),
-                    "fcf_conversion_10y": buffett.get(
+                    "fcf_conversion_10y": None if is_financial else buffett.get(
                         "fcf_conversion_10y"
                     ),
-                    "latest_net_debt_to_ebitda": buffett.get(
+                    "latest_net_debt_to_ebitda": None if is_financial else buffett.get(
                         "latest_net_debt_to_ebitda"
                     ),
                     "latest_roic_pct": buffett.get("latest_roic_pct"),
+                    "latest_screening_roic_pct": buffett.get("latest_screening_roic_pct"),
+                    "roic_basis": buffett.get("roic_basis"),
                     "latest_roe_pct": buffett.get("latest_roe_pct"),
                     "incremental_roic_5y_pct": buffett.get(
                         "incremental_roic_5y_pct"
@@ -589,7 +625,7 @@ class InvestmentScreenBuilder:
             for row in results.values()
         )
         return {
-            "schema_version": 1,
+            "schema_version": 2,
             "engine_version": ENGINE_VERSION,
             "methodology_version": METHODOLOGY_VERSION,
             "generated_at_utc": _utc_now_iso(),
@@ -599,6 +635,7 @@ class InvestmentScreenBuilder:
                 "market_crawled_at_utc": (market_sum or {}).get(
                     "crawled_at_utc"
                 ),
+                "interim_updated_at_utc": (interim or {}).get("updated_at_utc"),
             },
             "complete": bool(results) and all(
                 row["buffett"]["business_quality_status"] != "pending"
@@ -611,12 +648,16 @@ class InvestmentScreenBuilder:
                     "as pass."
                 ),
                 "buffett": (
-                    "The interest watchlist requires ROIC >=12% for the latest "
+                    "The interest watchlist requires conservative ROIC >=12% for the latest "
                     "three consecutive fiscal years (ROE >=10% for financials) "
                     "and at least one true condition from the original seven. "
                     "Non-financial companies with cash above 50% of market cap "
                     "are excluded. The legacy strict candidate still requires "
-                    "all seven plus normalized FCF yield >=5%."
+                    "all seven plus FCF yield after leases >=5%. Conservative ROIC "
+                    "retains cash and uses consecutive opening-closing average equity "
+                    "plus debt including leases. FCF uses interim TTM or recent 3-year "
+                    "mean after lease repayments; financial-company FCF is N/A. "
+                    "Material source disagreements block selection."
                 ),
                 "quality": (
                     "All quality conditions must pass, then eligible stocks are "

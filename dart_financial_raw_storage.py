@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from collector_common import atomic_write_json, utc_now_iso
+from stock_codes import normalize_stock_code
 
 
 RAW_SCHEMA_VERSION = 1
@@ -86,8 +87,7 @@ def _load_index(raw_root: Path) -> dict[str, Any]:
 
 
 def _raw_ticker(value: Any) -> str:
-    digits = re.sub(r"\D", "", str(value or ""))
-    return digits[-6:].zfill(6) if digits else ""
+    return normalize_stock_code(value)
 
 
 def bulk_group_tables(group: dict[str, Any]) -> list[dict[str, Any]]:

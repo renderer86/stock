@@ -7,6 +7,7 @@ import re
 import time
 import zipfile
 from collections import Counter, defaultdict
+from functools import lru_cache
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,7 @@ from zoneinfo import ZoneInfo
 import requests
 
 from collector_common import utc_now_iso
+from stock_codes import normalize_stock_code
 from crawler_dart_financial_details import (
     derive_row_metrics,
     load_market_lookup,
@@ -27,6 +29,7 @@ from dart_financial_raw_storage import (
     DEFAULT_RAW_ROOT,
     bulk_group_tables,
     load_bulk_raw_statement,
+    read_gzip_json,
     write_bulk_raw_shards,
 )
 
@@ -162,8 +165,7 @@ def decode_bulk_text(raw: bytes) -> str:
 
 
 def normalize_ticker(value: Any) -> str:
-    digits = re.sub(r"\D", "", str(value or ""))
-    return digits[-6:].zfill(6) if digits else ""
+    return normalize_stock_code(value)
 
 
 def _current_amount_index(header: list[str]) -> int:
@@ -306,6 +308,39 @@ def _clear_bulk_detail(row: dict[str, Any]) -> None:
         row.pop(key, None)
 
 
+@lru_cache(maxsize=12)
+def _cached_api_shard(path: str) -> dict[str, Any]:
+    return read_gzip_json(Path(path))
+
+
+def validate_bulk_accounts(row: dict[str, Any], basis: str, values: dict[str, Any], data_dir: Path = Path("data")) -> dict[str, Any] | None:
+    """Cross-check the same reporting basis; large disagreements block screening."""
+    reference = (row.get("detail_api_raw_refs") or {}).get(basis)
+    expected = None
+    if reference:
+        record = (_cached_api_shard(str(data_dir / reference)).get("records_by_ticker") or {}).get(row["ticker"]) or {}
+        if record.get("response_status") == "000":
+            expected, _ = standardize_accounts(record.get("rows") or [])
+    if expected is None and row.get("detail_source") == "api" and row.get("detail_basis") == basis:
+        expected = row.get("detail_accounts")
+    same_prior_basis = (row.get("detail_validation") or {}).get("basis", row.get("detail_basis")) == basis
+    if expected is None and same_prior_basis:
+        saved = (row.get("detail_validation") or {}).get("mismatches") or {}
+        if saved:
+            expected = {key: mismatch["api_value"] for key, mismatch in saved.items() if mismatch.get("api_value") is not None}
+    if expected is None:
+        return row.get("detail_validation") if same_prior_basis else None
+    overlaps = sorted(set(expected) & set(values))
+    mismatches = {key: {"bulk_value": values[key], "api_value": expected[key]} for key in overlaps if values[key] != expected[key]}
+    critical = {"assets", "equity", "owners_equity", "operating_income", "net_income", "owners_net_income", "operating_cash_flow", "capex_ppe", "capex_intangibles"}
+    material = [key for key in mismatches if key in critical and abs(values[key] - expected[key]) > max(1_000_000, abs(expected[key]) * 0.01)]
+    return {"source": "api", "basis": basis, "overlap_count": len(overlaps),
+            "exact_match_count": len(overlaps) - len(mismatches), "mismatch_count": len(mismatches),
+            "mismatches": mismatches, "material_mismatch_fields": material,
+            "calculation_blocked": bool(material),
+            "selection": "bulk_value_retained_pending_review" if material else "bulk_crosschecked"}
+
+
 def merge_bulk_year(
     observations: list[dict[str, Any]],
     year: int,
@@ -315,6 +350,7 @@ def merge_bulk_year(
     raw_references: dict[str, dict[str, dict[str, str]]] | None = None,
     allowed_codes: set[str] | None = None,
     reset_bulk: bool = False,
+    data_dir: Path = Path("data"),
 ) -> dict[str, int]:
     counts = Counter()
     for row in observations:
@@ -398,6 +434,11 @@ def merge_bulk_year(
             }
             counts["crosschecked_fields"] += len(overlapping_keys)
             counts["crosscheck_mismatches"] += len(mismatch_keys)
+        validation = validate_bulk_accounts(row, selected_basis, bulk_values, data_dir)
+        if validation is not None:
+            row["detail_validation"] = validation
+            if validation.get("calculation_blocked"):
+                counts["source_mismatch_blocked"] += 1
         selected_statement_count = len(available_statements.get(selected_basis, []))
         row["detail_status"] = (
             "complete" if selected_statement_count >= 3 else "bulk_partial"

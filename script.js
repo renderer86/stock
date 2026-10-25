@@ -2841,7 +2841,7 @@ function getPriorityCandidates(stocks) {
       market_label: stock.market_label || screen.market,
       sector: screen.sector || stock.sector || "-",
       buffettRank: ranking.rank || index + 1,
-      recentReturnMetric: buffett.minimum_persistence_metric,
+      recentReturnMetric: buffett.minimum_persistence_label || buffett.minimum_persistence_metric,
       recentReturnAverage: buffett.minimum_persistence_average_pct,
       recentReturnValues: buffett.minimum_persistence_values_pct || [],
       supportingConditionCount: buffett.supporting_condition_count,
@@ -2853,12 +2853,12 @@ function getPriorityCandidates(stocks) {
       grossMarginSigma: buffett.gross_margin_sigma_pct_points,
       fcfConversion: buffett.fcf_conversion_10y,
       netDebtToEbitda: buffett.latest_net_debt_to_ebitda,
-      latestRoic: buffett.latest_roic_pct,
+      latestRoic: buffett.latest_screening_roic_pct,
       latestRoe: buffett.latest_roe_pct,
       incrementalRoic: buffett.incremental_roic_5y_pct,
       payoutRatio: buffett.payout_ratio_pct,
       fcfYield: buffett.valuation?.fcf_yield_pct,
-      fcfYieldBasis: buffett.valuation?.normalized_fcf_basis,
+      fcfYieldBasis: describeFcfBasis(buffett.valuation || {}),
       cashToMarketCap: buffett.valuation?.cash_to_market_cap_pct,
       estimatedNBase: nEstimate.base_years,
       nModel: nEstimate,
@@ -2949,16 +2949,29 @@ function updatePrioritySortHeaders() {
   });
 }
 
+function describeFcfBasis(valuation) {
+  if (valuation.fcf_applicable === false) return "금융업 · 일반 FCF 미적용";
+  const basis = valuation.valuation_fcf_basis;
+  const end = valuation.fcf_period_end || "기준일 미확인";
+  if (basis === "ttm_after_leases") return `${end}까지 최근 12개월 · 리스 상환 차감`;
+  if (basis === "3y_average_after_leases") {
+    const years = valuation.fcf_fiscal_years || [];
+    return `${years.length ? `${years[0]}–${years[years.length - 1]}년` : "최근 3년"} 평균 · 리스 상환 차감`;
+  }
+  return "리스 차감 FCF 이력 부족";
+}
+
 const SCREEN_PENDING_REASON_LABELS = {
   buffett: {
+    financial_source_mismatch: "재무 원본과 API 불일치 · 검증 대기",
     recent_3y_persistence: "최근 3개 연속 사업연도 ROIC·ROE 이력 부족",
     cash_to_market_cap: "현금/시가총액 비율 계산 데이터 부족",
     supporting_buffett_condition: "기존 7개 조건의 강점 판정 데이터 부족",
     persistence_9_of_10: "10년 ROIC·ROE 이력 부족",
     positive_net_income_all_10y: "10년 순이익 이력 부족",
     gross_margin_sigma_le_5pp: "10년 매출총이익률 이력 부족",
-    fcf_conversion_ge_0_8: "FCF 전환율 계산 데이터 부족",
-    net_debt_to_ebitda_le_2_or_net_cash: "순부채·EBITDA 데이터 부족",
+    fcf_conversion_ge_0_8: "리스 차감 FCF 전환율 이력 부족 또는 금융업 미적용",
+    net_debt_to_ebitda_le_2_or_net_cash: "순부채·EBITDA 이력 부족 또는 금융업 미적용",
     shares_not_increased_10y: "10년 발행주식수 이력 부족",
     incremental_roic_ge_15_or_payout_ge_50: "증분 ROIC·주주환원 데이터 부족"
   },
@@ -3224,7 +3237,7 @@ function renderPriorityCandidates(stocks) {
       <td class="buffett-sector-cell">${escapeHtml(stock.sector || "-")}</td>
       <td class="buffett-return-cell" title="${escapeHtml(stock.recentReturnValues.map((value) => formatPercent(value, 1)).join(" · "))}">
         <div>3년 ${escapeHtml(stock.recentReturnMetric || "ROIC")} ${formatPercent(stock.recentReturnAverage, 1)}</div>
-        <div class="table-subtext">최신 ROIC ${formatPercent(stock.latestRoic, 1)} · ROE ${formatPercent(stock.latestRoe, 1)}</div>
+        <div class="table-subtext">최신 보수 ROIC ${formatPercent(stock.latestRoic, 1)} · ROE ${formatPercent(stock.latestRoe, 1)}</div>
       </td>
       <td class="buffett-metric-cell">${formatPercent(stock.grossMarginSigma, 1)}</td>
       <td class="buffett-metric-cell">${stock.fcfConversion === null || stock.fcfConversion === undefined ? "N/A" : formatPercent(stock.fcfConversion * 100, 1)}</td>
@@ -3233,7 +3246,7 @@ function renderPriorityCandidates(stocks) {
       <td class="buffett-metric-cell">${formatPercent(stock.payoutRatio, 1)}</td>
       <td class="buffett-metric-cell buffett-fcf-yield-cell ${metricClass(stock.fcfYield)}">
         <div>${formatPercent(stock.fcfYield, 1)}</div>
-        <div class="table-subtext">${stock.fcfYieldBasis === "10y_average" ? "10년 평균" : stock.fcfYieldBasis === "3y_average_fallback" ? "최근 3년 평균" : "산출 불가"} · 현금/시총 ${formatPercent(stock.cashToMarketCap, 1)}</div>
+        <div class="table-subtext">${escapeHtml(stock.fcfYieldBasis)} · 현금/시총 ${formatPercent(stock.cashToMarketCap, 1)}</div>
       </td>
       <td class="buffett-metric-cell"><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</div></td>
       <td class="buffett-metric-cell">${confidenceLabel(stock.nConfidence)} · ${formatNumber(stock.nConfidenceScore, 0)}</td>
@@ -3462,11 +3475,8 @@ function renderSelectedSummary(stock) {
   const observationLabel = period.observation_count
     ? `${period.observation_count}개 사업연도${period.consecutive ? " 연속" : " · 일부 결측"}`
     : "DART 장기 이력 부족";
-  const fcfBasisLabel = buffettValuation.normalized_fcf_basis === "10y_average"
-    ? "10년 평균 FCF"
-    : buffettValuation.normalized_fcf_basis === "3y_average_fallback"
-    ? "최근 3년 평균 FCF"
-    : "정상 FCF 산출 불가";
+  const fcfBasisLabel = describeFcfBasis(buffettValuation)
+    + (buffettValuation.interim_operating_income_yoy_pct == null ? "" : ` · 최근 누적 영업이익 YoY ${formatPercent(buffettValuation.interim_operating_income_yoy_pct, 1)}`);
   const epsGrowthLabel = cagr.eps_source === "net_income_cagr_split_fallback"
     ? `${periodLabel} · 주식분할 구간은 순이익 CAGR로 보정`
     : cagr.eps_source === "net_income_cagr_share_data_fallback"
@@ -3482,11 +3492,11 @@ function renderSelectedSummary(stock) {
   const annualRows = [
     ["ROE", "roe_pct", (value) => formatPercent(value, 1)],
     ["PBR", "pbr", (value) => `${formatNumber(value, 2)}×`],
-    ["ROIC", "roic_pct", (value) => formatPercent(value, 1)],
+    ["보수 ROIC", "screening_roic_pct", (value) => formatPercent(value, 1)],
     ["ROCE", "roce_pct", (value) => formatPercent(value, 1)],
     ["영업이익률", "operating_margin_pct", (value) => formatPercent(value, 1)],
     ["매출 YoY", "revenue_growth_yoy_pct", (value) => formatPercent(value, 1)],
-    ["FCF / 순이익", "fcf_to_net_income_pct", (value) => formatPercent(value, 0)],
+    ["리스 차감 FCF / 순이익", "fcf_after_leases_to_net_income_pct", (value) => formatPercent(value, 0)],
     ["부채 / 자본", "debt_to_equity_pct", (value) => formatPercent(value, 0)]
   ];
   const annualMatrix = annual.length ? `
@@ -3534,7 +3544,7 @@ function renderSelectedSummary(stock) {
 
     <div class="summary-grid">
       ${summaryCard("ROE", formatPercent(latest.roe_pct, 1), `장기 평균 ${formatPercent(averages.roe_pct, 1)}`)}
-      ${summaryCard("ROIC", formatPercent(latest.roic_pct, 1), `장기 평균 ${formatPercent(averages.roic_pct, 1)}`)}
+      ${summaryCard("보수 ROIC", formatPercent(latest.screening_roic_pct, 1), `현금 미차감 · 평균 투하자본 · 장기 평균 ${formatPercent(averages.screening_roic_pct, 1)}`)}
       ${summaryCard("ROCE", formatPercent(latest.roce_pct, 1), `장기 평균 ${formatPercent(averages.roce_pct, 1)}`)}
       ${summaryCard("영업이익률", formatPercent(latest.operating_margin_pct, 1), `장기 평균 ${formatPercent(averages.operating_margin_pct, 1)}`)}
       ${summaryCard("매출 CAGR", formatPercent(cagr.revenue_pct, 1), periodLabel)}
@@ -3544,7 +3554,7 @@ function renderSelectedSummary(stock) {
       ${summaryCard("현재 PER / PBR", `${formatNumber(valuation.per, 2)}× / ${formatNumber(valuation.pbr, 2)}×`, "현재 시장가격 기준")}
       ${summaryCard("장기 EPS PEG", formatNumber(valuation.peg_eps_cagr_long_term, 2), `현재 PER ÷ 보정 EPS CAGR`)}
       ${summaryCard("피터 린치식 PEG", formatNumber(valuation.lynch_peg_eps_cagr_long_term_plus_dividend, 2), `EPS 성장 + 배당 ${formatPercent(valuation.dividend_yield_pct, 1)}`)}
-      ${summaryCard("이익 / 정상 FCF 수익률", `${formatPercent(valuation.earnings_yield_pct, 1)} / ${formatPercent(buffettValuation.fcf_yield_pct, 1)}`, fcfBasisLabel)}
+      ${summaryCard("이익 / 리스 차감 FCF 수익률", `${formatPercent(valuation.earnings_yield_pct, 1)} / ${formatPercent(buffettValuation.fcf_yield_pct, 1)}`, fcfBasisLabel)}
       ${summaryCard("부채 / 자본", formatPercent(latest.debt_to_equity_pct, 1), "DART 최신 사업연도")}
       ${summaryCard("버핏 스타일 / 퀄리티", `${screenStatusLabel(stock.investmentScreen?.buffett?.watchlist_status)} / ${screenStatusLabel(stock.investmentScreen?.quality?.status)}`, stock.investmentScreen?.quality?.selected_for_basket ? "퀄리티 바스켓 포함" : "현재 판정")}
     </div>
