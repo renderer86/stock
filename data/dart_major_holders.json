@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 380,
-  "crawled_at_utc": "2026-10-23T12:51:49.345232+00:00",
+  "crawled_at_utc": "2026-10-25T13:58:24.251680+00:00",
   "stocks": [
     {
       "code": "0039P0",
@@ -2498,8 +2498,19 @@
       "code": "0015M0",
       "name": "디티에스",
       "market_label": "코스닥",
-      "error": "corp_code_not_found",
-      "has_major_holders": false
+      "corp_code": "00534729",
+      "corp_name": "디티에스",
+      "priority_snapshot": {
+        "recommended_roe_base": 23.06,
+        "pbr": null,
+        "estimated_n_base": 10,
+        "market_implied_n": null,
+        "current_price": 26950
+      },
+      "status": "013",
+      "message": "조회된 데이타가 없습니다.",
+      "has_major_holders": false,
+      "holders": []
     },
     {
       "code": "052400",
