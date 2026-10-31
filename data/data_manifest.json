@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-30T23:48:36.296910+00:00",
+  "generated_at_utc": "2026-10-31T02:50:41.396657+00:00",
   "file_count": 27,
   "files": [
     {
@@ -116,20 +116,20 @@
     },
     {
       "file": "data/market_heatmap.json",
-      "bytes": 1417809,
+      "bytes": 1417424,
       "source": [
         "Naver Finance market cap and sectors",
         "Nasdaq screener and Yahoo Finance snapshot"
       ],
       "count": 3600,
-      "data_date": "2026-10-30T14:27:59.642020+00:00"
+      "data_date": "2026-10-31T02:50:39.605018+00:00"
     },
     {
       "file": "data/market_indices.json",
-      "bytes": 644657,
+      "bytes": 644675,
       "source": "Yahoo Finance Chart + Naver Finance index daily",
       "count": 8,
-      "data_date": "2026-10-30T14:24:10.507324+00:00"
+      "data_date": "2026-10-31T02:37:52.085444+00:00"
     },
     {
       "file": "data/market_sum.json",
@@ -192,10 +192,10 @@
     },
     {
       "file": "data/us_finnhub.json",
-      "bytes": 18357322,
+      "bytes": 18364815,
       "source": "Finnhub API",
       "count": 100,
-      "data_date": "2026-10-30T02:53:17.187320+00:00"
+      "data_date": "2026-10-31T02:50:37.257358+00:00"
     },
     {
       "file": "data/us_finra_short_interest.json",
@@ -206,27 +206,27 @@
     },
     {
       "file": "data/us_finra_short_volume.json",
-      "bytes": 4388715,
+      "bytes": 4435414,
       "source": "FINRA Reg SHO Daily Short Sale Volume",
-      "count": 15250,
-      "data_date": "2026-10-29"
+      "count": 15361,
+      "data_date": "2026-10-30"
     },
     {
       "file": "data/us_market_snapshot.json",
-      "bytes": 8805722,
+      "bytes": 8798819,
       "source": [
         "Nasdaq stock screener",
         "Yahoo Finance Chart"
       ],
-      "count": 6611,
-      "data_date": "2026-10-30T02:43:43.267358+00:00"
+      "count": 6584,
+      "data_date": "2026-10-31T02:38:09.431061+00:00"
     },
     {
       "file": "data/us_sec_filings.json",
-      "bytes": 698312,
+      "bytes": 704674,
       "source": "SEC EDGAR Full-Text Search and company ticker mapping",
       "count": 200,
-      "data_date": "2026-10-30T02:46:04.544481+00:00"
+      "data_date": "2026-10-31T02:42:58.931328+00:00"
     }
   ]
 }
