@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 383,
-  "crawled_at_utc": "2026-11-02T17:28:43.700537+00:00",
+  "crawled_at_utc": "2026-11-03T15:32:22.265587+00:00",
   "stocks": [
     {
       "code": "0039P0",
@@ -15,10 +15,10 @@
       "corp_name": "매드업",
       "priority_snapshot": {
         "recommended_roe_base": 84.39,
-        "pbr": 2.61288,
+        "pbr": 2.64688,
         "estimated_n_base": 10,
         "market_implied_n": 1.1,
-        "current_price": 5450
+        "current_price": 5990
       },
       "status": "000",
       "message": "정상",
@@ -97,10 +97,10 @@
       "corp_name": "씨어스",
       "priority_snapshot": {
         "recommended_roe_base": 72.41,
-        "pbr": 12.4759,
+        "pbr": 12.5873,
         "estimated_n_base": 8,
         "market_implied_n": 5.5,
-        "current_price": 22700
+        "current_price": 21250
       },
       "status": "000",
       "message": "정상",
@@ -135,8 +135,19 @@
       "code": "359410",
       "name": "영광",
       "market_label": "코스닥",
-      "error": "corp_code_not_found",
-      "has_major_holders": false
+      "corp_code": "00579342",
+      "corp_name": "영광",
+      "priority_snapshot": {
+        "recommended_roe_base": 65.42,
+        "pbr": 6.89424,
+        "estimated_n_base": 8,
+        "market_implied_n": 3.2,
+        "current_price": 15370
+      },
+      "status": "013",
+      "message": "조회된 데이타가 없습니다.",
+      "has_major_holders": false,
+      "holders": []
     },
     {
       "code": "443060",
@@ -146,10 +157,10 @@
       "corp_name": "HD현대마린솔루션",
       "priority_snapshot": {
         "recommended_roe_base": 53.14,
-        "pbr": 8.25692,
+        "pbr": 8.45794,
         "estimated_n_base": 10,
-        "market_implied_n": 7.1,
-        "current_price": 168100
+        "market_implied_n": 7.2,
+        "current_price": 172000
       },
       "status": "000",
       "message": "정상",
@@ -157,22 +168,22 @@
       "holders": [
         {
           "holder_name": "HD현대",
-          "report_date": "2026-01-15",
-          "ratio": 55.35,
+          "report_date": "2026-11-03",
+          "ratio": 55.33,
           "raw": {
-            "rcept_no": "20260115000380",
-            "rcept_dt": "2026-01-15",
+            "rcept_no": "20261103000131",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01194689",
             "corp_name": "HD현대마린솔루션",
             "report_tp": "일반",
             "repror": "HD현대",
-            "stkqy": "24,814,750",
-            "stkqy_irds": "-4,479,750",
-            "stkrt": "55.35",
-            "stkrt_irds": "-9.99",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "- 특별관계자 보유주식등의 수 변동\n- 공동보유관계 해지에 따른 특별관계자 변동\n- 특별관계자 보유주식등의 형태 변경"
+            "stkqy": "24,806,000",
+            "stkqy_irds": "-8,750",
+            "stkrt": "55.33",
+            "stkrt_irds": "-0.02",
+            "ctr_stkqy": "2,383,269",
+            "ctr_stkrt": "5.32",
+            "report_resn": "- 특별관계자 변동\n- 특별관계자 주식 수 변동\n- 보고자의 보유주식에 관한 계약 체결(교환사채권 인수계약)"
           }
         },
         {
@@ -197,8 +208,8 @@
         }
       ],
       "top_holder_name": "HD현대",
-      "top_holder_ratio": 55.35,
-      "latest_report_date": "2026-04-01"
+      "top_holder_ratio": 55.33,
+      "latest_report_date": "2026-11-03"
     },
     {
       "code": "278470",
@@ -208,10 +219,10 @@
       "corp_name": "에이피알",
       "priority_snapshot": {
         "recommended_roe_base": 51.88,
-        "pbr": 15.0785,
+        "pbr": 15.2229,
         "estimated_n_base": 10,
         "market_implied_n": 4.3,
-        "current_price": 263500
+        "current_price": 246500
       },
       "status": "000",
       "message": "정상",
@@ -250,10 +261,10 @@
       "corp_name": "에이유브랜즈",
       "priority_snapshot": {
         "recommended_roe_base": 49.4,
-        "pbr": 2.13538,
+        "pbr": 2.14086,
         "estimated_n_base": 10,
         "market_implied_n": 4.7,
-        "current_price": 11610
+        "current_price": 11750
       },
       "status": "000",
       "message": "정상",
@@ -312,10 +323,10 @@
       "corp_name": "알트",
       "priority_snapshot": {
         "recommended_roe_base": 45.49,
-        "pbr": 0.76947,
+        "pbr": 0.77838,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 1482
+        "current_price": 1395
       },
       "status": "000",
       "message": "정상",
@@ -374,10 +385,10 @@
       "corp_name": "인카금융서비스",
       "priority_snapshot": {
         "recommended_roe_base": 40.29,
-        "pbr": 1.93913,
+        "pbr": 1.92286,
         "estimated_n_base": 10,
         "market_implied_n": 1.4,
-        "current_price": 9390
+        "current_price": 9400
       },
       "status": "000",
       "message": "정상",
@@ -385,21 +396,21 @@
       "holders": [
         {
           "holder_name": "최병채",
-          "report_date": "2026-08-04",
-          "ratio": 43.16,
+          "report_date": "2026-11-03",
+          "ratio": 43.61,
           "raw": {
-            "rcept_no": "20260803000489",
-            "rcept_dt": "2026-08-04",
+            "rcept_no": "20261103000359",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01013694",
             "corp_name": "인카금융서비스",
             "report_tp": "일반",
             "repror": "최병채",
-            "stkqy": "21,263,438",
-            "stkqy_irds": "6,430",
-            "stkrt": "43.16",
-            "stkrt_irds": "0.01",
-            "ctr_stkqy": "16,120,636",
-            "ctr_stkrt": "32.72",
+            "stkqy": "21,483,859",
+            "stkqy_irds": "215,421",
+            "stkrt": "43.61",
+            "stkrt_irds": "0.44",
+            "ctr_stkqy": "16,270,351",
+            "ctr_stkrt": "33.03",
             "report_resn": "계약내용변경,보유주식수 변동"
           }
         },
@@ -425,19 +436,19 @@
         },
         {
           "holder_name": "김선식",
-          "report_date": "2026-08-04",
+          "report_date": "2026-11-03",
           "ratio": 5.26,
           "raw": {
-            "rcept_no": "20260804000376",
-            "rcept_dt": "2026-08-04",
+            "rcept_no": "20261103000381",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01013694",
             "corp_name": "인카금융서비스",
             "report_tp": "일반",
             "repror": "김선식",
-            "stkqy": "2,591,054",
-            "stkqy_irds": "19,079",
+            "stkqy": "2,591,072",
+            "stkqy_irds": "18",
             "stkrt": "5.26",
-            "stkrt_irds": "0.04",
+            "stkrt_irds": "0.00",
             "ctr_stkqy": "2,220,000",
             "ctr_stkrt": "4.51",
             "report_resn": "보유주식수 변동, 담보계약 변경"
@@ -465,8 +476,8 @@
         }
       ],
       "top_holder_name": "최병채",
-      "top_holder_ratio": 43.16,
-      "latest_report_date": "2026-09-30"
+      "top_holder_ratio": 43.61,
+      "latest_report_date": "2026-11-03"
     },
     {
       "code": "483650",
@@ -476,10 +487,10 @@
       "corp_name": "달바글로벌",
       "priority_snapshot": {
         "recommended_roe_base": 39.4,
-        "pbr": 7.10195,
+        "pbr": 7.27445,
         "estimated_n_base": 10,
-        "market_implied_n": 4.0,
-        "current_price": 148000
+        "market_implied_n": 4.1,
+        "current_price": 148300
       },
       "status": "000",
       "message": "정상",
@@ -558,10 +569,10 @@
       "corp_name": "제룡전기",
       "priority_snapshot": {
         "recommended_roe_base": 38.37,
-        "pbr": 2.35333,
+        "pbr": 2.51216,
         "estimated_n_base": 8,
-        "market_implied_n": 2.9,
-        "current_price": 38450
+        "market_implied_n": 3.2,
+        "current_price": 36950
       },
       "status": "000",
       "message": "정상",
@@ -640,10 +651,10 @@
       "corp_name": "실리콘투",
       "priority_snapshot": {
         "recommended_roe_base": 38.22,
-        "pbr": 2.64607,
+        "pbr": 2.67932,
         "estimated_n_base": 10,
         "market_implied_n": 1.9,
-        "current_price": 28150
+        "current_price": 27500
       },
       "status": "000",
       "message": "정상",
@@ -682,10 +693,10 @@
       "corp_name": "대한조선",
       "priority_snapshot": {
         "recommended_roe_base": 37.48,
-        "pbr": 1.10403,
+        "pbr": 1.15645,
         "estimated_n_base": 10,
-        "market_implied_n": 0.2,
-        "current_price": 36400
+        "market_implied_n": 0.3,
+        "current_price": 36900
       },
       "status": "000",
       "message": "정상",
@@ -764,10 +775,10 @@
       "corp_name": "레메디",
       "priority_snapshot": {
         "recommended_roe_base": 37.27,
-        "pbr": 7.1678,
+        "pbr": 7.00003,
         "estimated_n_base": 8,
         "market_implied_n": 3.6,
-        "current_price": 12080
+        "current_price": 11350
       },
       "status": "000",
       "message": "정상",
@@ -806,10 +817,10 @@
       "corp_name": "F&F",
       "priority_snapshot": {
         "recommended_roe_base": 36.81,
-        "pbr": 1.14011,
+        "pbr": 1.14739,
         "estimated_n_base": 10,
         "market_implied_n": 0.4,
-        "current_price": 63100
+        "current_price": 63000
       },
       "status": "000",
       "message": "정상",
@@ -888,10 +899,10 @@
       "corp_name": "아이스크림미디어",
       "priority_snapshot": {
         "recommended_roe_base": 36.69,
-        "pbr": 0.9179,
+        "pbr": 0.92481,
         "estimated_n_base": 10,
         "market_implied_n": 0.0,
-        "current_price": 17170
+        "current_price": 16800
       },
       "status": "000",
       "message": "정상",
@@ -930,10 +941,10 @@
       "corp_name": "HPSP",
       "priority_snapshot": {
         "recommended_roe_base": 35.78,
-        "pbr": 11.0568,
+        "pbr": 11.1476,
         "estimated_n_base": 8,
         "market_implied_n": 12.4,
-        "current_price": 43300
+        "current_price": 40450
       },
       "status": "000",
       "message": "정상",
@@ -992,10 +1003,10 @@
       "corp_name": "한미반도체",
       "priority_snapshot": {
         "recommended_roe_base": 35.69,
-        "pbr": 23.2024,
+        "pbr": 24.3454,
         "estimated_n_base": 8,
-        "market_implied_n": 11.4,
-        "current_price": 192100
+        "market_implied_n": 11.7,
+        "current_price": 183300
       },
       "status": "000",
       "message": "정상",
@@ -1034,10 +1045,10 @@
       "corp_name": "액스비스",
       "priority_snapshot": {
         "recommended_roe_base": 35.41,
-        "pbr": 1.8449,
+        "pbr": 1.86692,
         "estimated_n_base": 8,
-        "market_implied_n": 2.6,
-        "current_price": 11000
+        "market_implied_n": 2.7,
+        "current_price": 10180
       },
       "status": "000",
       "message": "정상",
@@ -1076,9 +1087,9 @@
       "corp_name": "감성코퍼레이션",
       "priority_snapshot": {
         "recommended_roe_base": 33.68,
-        "pbr": 2.37962,
+        "pbr": 2.43472,
         "estimated_n_base": 10,
-        "market_implied_n": 2.7,
+        "market_implied_n": 2.8,
         "current_price": 3540
       },
       "status": "000",
@@ -1118,10 +1129,10 @@
       "corp_name": "이수페타시스",
       "priority_snapshot": {
         "recommended_roe_base": 33.25,
-        "pbr": 7.19499,
+        "pbr": 7.5197,
         "estimated_n_base": 10,
-        "market_implied_n": 7.6,
-        "current_price": 88500
+        "market_implied_n": 7.8,
+        "current_price": 81900
       },
       "status": "000",
       "message": "정상",
@@ -1220,10 +1231,10 @@
       "corp_name": "원텍",
       "priority_snapshot": {
         "recommended_roe_base": 33.14,
-        "pbr": 1.89383,
+        "pbr": 1.93423,
         "estimated_n_base": 10,
-        "market_implied_n": 2.3,
-        "current_price": 3820
+        "market_implied_n": 2.4,
+        "current_price": 3720
       },
       "status": "000",
       "message": "정상",
@@ -1262,10 +1273,10 @@
       "corp_name": "다산솔루에타",
       "priority_snapshot": {
         "recommended_roe_base": 33.02,
-        "pbr": 0.38278,
+        "pbr": 0.37354,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 9300
+        "current_price": 9270
       },
       "status": "000",
       "message": "정상",
@@ -1304,9 +1315,9 @@
       "corp_name": "HD현대일렉트릭",
       "priority_snapshot": {
         "recommended_roe_base": 32.67,
-        "pbr": 6.77561,
+        "pbr": 7.12676,
         "estimated_n_base": 10,
-        "market_implied_n": 5.0,
+        "market_implied_n": 5.1,
         "current_price": 446500
       },
       "status": "000",
@@ -1366,10 +1377,10 @@
       "corp_name": "브이티",
       "priority_snapshot": {
         "recommended_roe_base": 31.02,
-        "pbr": 1.31599,
+        "pbr": 1.33827,
         "estimated_n_base": 8,
-        "market_implied_n": 0.8,
-        "current_price": 10190
+        "market_implied_n": 0.9,
+        "current_price": 10110
       },
       "status": "000",
       "message": "정상",
@@ -1408,10 +1419,10 @@
       "corp_name": "아이패밀리에스씨",
       "priority_snapshot": {
         "recommended_roe_base": 30.36,
-        "pbr": 1.52141,
+        "pbr": 1.56011,
         "estimated_n_base": 10,
-        "market_implied_n": 1.6,
-        "current_price": 10510
+        "market_implied_n": 1.7,
+        "current_price": 10520
       },
       "status": "000",
       "message": "정상",
@@ -1470,10 +1481,10 @@
       "corp_name": "삼양식품",
       "priority_snapshot": {
         "recommended_roe_base": 30.17,
-        "pbr": 5.60007,
+        "pbr": 5.79199,
         "estimated_n_base": 10,
-        "market_implied_n": 4.8,
-        "current_price": 1176000
+        "market_implied_n": 4.9,
+        "current_price": 1171000
       },
       "status": "000",
       "message": "정상",
@@ -1532,10 +1543,10 @@
       "corp_name": "산일전기",
       "priority_snapshot": {
         "recommended_roe_base": 30.13,
-        "pbr": 6.7573,
+        "pbr": 7.22253,
         "estimated_n_base": 10,
-        "market_implied_n": 7.4,
-        "current_price": 157300
+        "market_implied_n": 7.7,
+        "current_price": 147500
       },
       "status": "000",
       "message": "정상",
@@ -1594,10 +1605,10 @@
       "corp_name": "한국쉘석유",
       "priority_snapshot": {
         "recommended_roe_base": 30.06,
-        "pbr": 5.47637,
+        "pbr": 5.57152,
         "estimated_n_base": 10,
         "market_implied_n": 5.0,
-        "current_price": 525000
+        "current_price": 520000
       },
       "status": "000",
       "message": "정상",
@@ -1636,10 +1647,10 @@
       "corp_name": "클래시스",
       "priority_snapshot": {
         "recommended_roe_base": 30.0,
-        "pbr": 3.1095,
+        "pbr": 3.1451,
         "estimated_n_base": 10,
         "market_implied_n": 4.3,
-        "current_price": 26500
+        "current_price": 26250
       },
       "status": "000",
       "message": "정상",
@@ -1698,10 +1709,10 @@
       "corp_name": "삼양컴텍",
       "priority_snapshot": {
         "recommended_roe_base": 29.87,
-        "pbr": 1.33741,
+        "pbr": 1.37442,
         "estimated_n_base": 8,
-        "market_implied_n": 1.1,
-        "current_price": 5520
+        "market_implied_n": 1.2,
+        "current_price": 5390
       },
       "status": "000",
       "message": "정상",
@@ -1740,10 +1751,10 @@
       "corp_name": "엠에스바이오",
       "priority_snapshot": {
         "recommended_roe_base": 28.8,
-        "pbr": 6.34453,
+        "pbr": 6.04999,
         "estimated_n_base": 10,
-        "market_implied_n": 7.1,
-        "current_price": 7550
+        "market_implied_n": 6.9,
+        "current_price": 6760
       },
       "status": "000",
       "message": "정상",
@@ -1822,10 +1833,10 @@
       "corp_name": "엠디바이스",
       "priority_snapshot": {
         "recommended_roe_base": 28.73,
-        "pbr": 1.92477,
+        "pbr": 1.95105,
         "estimated_n_base": 10,
-        "market_implied_n": 1.9,
-        "current_price": 9380
+        "market_implied_n": 2.0,
+        "current_price": 9200
       },
       "status": "000",
       "message": "정상",
@@ -1927,7 +1938,7 @@
         "pbr": 1.04513,
         "estimated_n_base": 10,
         "market_implied_n": 0.1,
-        "current_price": 4700
+        "current_price": 4535
       },
       "status": "000",
       "message": "정상",
@@ -1966,10 +1977,10 @@
       "corp_name": "KT밀리의서재",
       "priority_snapshot": {
         "recommended_roe_base": 27.51,
-        "pbr": 0.80875,
+        "pbr": 0.83381,
         "estimated_n_base": 10,
         "market_implied_n": 0.0,
-        "current_price": 8720
+        "current_price": 8700
       },
       "status": "000",
       "message": "정상",
@@ -2008,10 +2019,10 @@
       "corp_name": "이크레더블",
       "priority_snapshot": {
         "recommended_roe_base": 27.41,
-        "pbr": 3.90533,
+        "pbr": 3.92217,
         "estimated_n_base": 10,
         "market_implied_n": 5.0,
-        "current_price": 14040
+        "current_price": 14020
       },
       "status": "000",
       "message": "정상",
@@ -2050,10 +2061,10 @@
       "corp_name": "SOOP",
       "priority_snapshot": {
         "recommended_roe_base": 27.21,
-        "pbr": 0.85493,
+        "pbr": 0.75815,
         "estimated_n_base": 10,
         "market_implied_n": 0.0,
-        "current_price": 32800
+        "current_price": 33150
       },
       "status": "000",
       "message": "정상",
@@ -2112,10 +2123,10 @@
       "corp_name": "아스테라시스",
       "priority_snapshot": {
         "recommended_roe_base": 26.91,
-        "pbr": 4.09012,
+        "pbr": 4.11092,
         "estimated_n_base": 10,
         "market_implied_n": 5.3,
-        "current_price": 4915
+        "current_price": 4920
       },
       "status": "000",
       "message": "정상",
@@ -2154,10 +2165,10 @@
       "corp_name": "와이즈플래닛컴퍼니",
       "priority_snapshot": {
         "recommended_roe_base": 26.84,
-        "pbr": 1.55816,
+        "pbr": 1.62721,
         "estimated_n_base": 10,
-        "market_implied_n": 1.4,
-        "current_price": 7110
+        "market_implied_n": 1.6,
+        "current_price": 6750
       },
       "status": "000",
       "message": "정상",
@@ -2196,10 +2207,10 @@
       "corp_name": "고려신용정보",
       "priority_snapshot": {
         "recommended_roe_base": 26.68,
-        "pbr": 1.91769,
+        "pbr": 1.94188,
         "estimated_n_base": 10,
         "market_implied_n": 2.6,
-        "current_price": 8880
+        "current_price": 8750
       },
       "status": "000",
       "message": "정상",
@@ -2238,10 +2249,10 @@
       "corp_name": "JYP Ent.",
       "priority_snapshot": {
         "recommended_roe_base": 26.66,
-        "pbr": 2.01279,
+        "pbr": 1.93872,
         "estimated_n_base": 10,
-        "market_implied_n": 2.1,
-        "current_price": 37750
+        "market_implied_n": 2.0,
+        "current_price": 37250
       },
       "status": "000",
       "message": "정상",
@@ -2259,10 +2270,10 @@
       "corp_name": "메리츠금융지주",
       "priority_snapshot": {
         "recommended_roe_base": 26.55,
-        "pbr": 1.89391,
+        "pbr": 1.8413,
         "estimated_n_base": 8,
-        "market_implied_n": 2.6,
-        "current_price": 129900
+        "market_implied_n": 2.4,
+        "current_price": 130600
       },
       "status": "000",
       "message": "정상",
@@ -2321,10 +2332,10 @@
       "corp_name": "이지바이오",
       "priority_snapshot": {
         "recommended_roe_base": 25.75,
-        "pbr": 1.3706,
+        "pbr": 1.38363,
         "estimated_n_base": 10,
-        "market_implied_n": 0.8,
-        "current_price": 5290
+        "market_implied_n": 0.9,
+        "current_price": 5150
       },
       "status": "000",
       "message": "정상",
@@ -2363,10 +2374,10 @@
       "corp_name": "피스피스스튜디오",
       "priority_snapshot": {
         "recommended_roe_base": 25.47,
-        "pbr": 0.42314,
+        "pbr": 0.42686,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4030
+        "current_price": 3940
       },
       "status": "000",
       "message": "정상",
@@ -2405,10 +2416,10 @@
       "corp_name": "전진건설로봇",
       "priority_snapshot": {
         "recommended_roe_base": 25.38,
-        "pbr": 3.18257,
+        "pbr": 3.33836,
         "estimated_n_base": 10,
-        "market_implied_n": 6.0,
-        "current_price": 38000
+        "market_implied_n": 6.4,
+        "current_price": 38500
       },
       "status": "000",
       "message": "정상",
@@ -2447,10 +2458,10 @@
       "corp_name": "JW홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 24.4,
-        "pbr": 0.94611,
+        "pbr": 0.92583,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 3910
+        "current_price": 3855
       },
       "status": "000",
       "message": "정상",
@@ -2489,10 +2500,10 @@
       "corp_name": "티앤엘",
       "priority_snapshot": {
         "recommended_roe_base": 24.02,
-        "pbr": 1.68718,
+        "pbr": 1.7156,
         "estimated_n_base": 10,
-        "market_implied_n": 2.3,
-        "current_price": 23950
+        "market_implied_n": 2.4,
+        "current_price": 23900
       },
       "status": "000",
       "message": "정상",
@@ -2531,10 +2542,10 @@
       "corp_name": "인텔리빅스",
       "priority_snapshot": {
         "recommended_roe_base": 23.91,
-        "pbr": 10.7583,
+        "pbr": 7.84313,
         "estimated_n_base": 10,
-        "market_implied_n": 10.0,
-        "current_price": 21700
+        "market_implied_n": 8.3,
+        "current_price": 21300
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -2549,10 +2560,10 @@
       "corp_name": "HD현대마린엔진",
       "priority_snapshot": {
         "recommended_roe_base": 23.26,
-        "pbr": 2.30998,
+        "pbr": 2.6966,
         "estimated_n_base": 8,
-        "market_implied_n": 1.8,
-        "current_price": 41150
+        "market_implied_n": 2.2,
+        "current_price": 40050
       },
       "status": "000",
       "message": "정상",
@@ -2611,10 +2622,10 @@
       "corp_name": "디티에스",
       "priority_snapshot": {
         "recommended_roe_base": 23.06,
-        "pbr": 1.9411,
+        "pbr": 2.51904,
         "estimated_n_base": 10,
-        "market_implied_n": 2.7,
-        "current_price": 20050
+        "market_implied_n": 4.0,
+        "current_price": 16210
       },
       "status": "000",
       "message": "정상",
@@ -2693,10 +2704,10 @@
       "corp_name": "코나아이",
       "priority_snapshot": {
         "recommended_roe_base": 22.86,
-        "pbr": 1.50807,
+        "pbr": 1.54165,
         "estimated_n_base": 10,
-        "market_implied_n": 1.0,
-        "current_price": 20200
+        "market_implied_n": 1.1,
+        "current_price": 19990
       },
       "status": "000",
       "message": "정상",
@@ -2755,10 +2766,10 @@
       "corp_name": "시프트업",
       "priority_snapshot": {
         "recommended_roe_base": 22.71,
-        "pbr": 1.72311,
+        "pbr": 1.73774,
         "estimated_n_base": 10,
         "market_implied_n": 2.1,
-        "current_price": 29700
+        "current_price": 30450
       },
       "status": "000",
       "message": "정상",
@@ -2817,10 +2828,10 @@
       "corp_name": "한국화장품제조",
       "priority_snapshot": {
         "recommended_roe_base": 22.65,
-        "pbr": 1.77085,
+        "pbr": 1.81248,
         "estimated_n_base": 8,
         "market_implied_n": 1.6,
-        "current_price": 12150
+        "current_price": 11820
       },
       "status": "000",
       "message": "정상",
@@ -2859,10 +2870,10 @@
       "corp_name": "백산",
       "priority_snapshot": {
         "recommended_roe_base": 22.35,
-        "pbr": 0.69429,
+        "pbr": 0.72824,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 10050
+        "current_price": 9890
       },
       "status": "000",
       "message": "정상",
@@ -2921,10 +2932,10 @@
       "corp_name": "파크시스템스",
       "priority_snapshot": {
         "recommended_roe_base": 21.98,
-        "pbr": 4.48919,
+        "pbr": 4.75506,
         "estimated_n_base": 10,
-        "market_implied_n": 11.7,
-        "current_price": 233500
+        "market_implied_n": 12.4,
+        "current_price": 225500
       },
       "status": "000",
       "message": "정상",
@@ -2983,10 +2994,10 @@
       "corp_name": "리노공업",
       "priority_snapshot": {
         "recommended_roe_base": 21.97,
-        "pbr": 5.48139,
+        "pbr": 5.56932,
         "estimated_n_base": 10,
-        "market_implied_n": 8.9,
-        "current_price": 57200
+        "market_implied_n": 9.0,
+        "current_price": 54300
       },
       "status": "000",
       "message": "정상",
@@ -3065,10 +3076,10 @@
       "corp_name": "월덱스",
       "priority_snapshot": {
         "recommended_roe_base": 21.7,
-        "pbr": 1.07421,
+        "pbr": 1.08726,
         "estimated_n_base": 8,
-        "market_implied_n": 0.5,
-        "current_price": 25100
+        "market_implied_n": 0.6,
+        "current_price": 24800
       },
       "status": "000",
       "message": "정상",
@@ -3107,10 +3118,10 @@
       "corp_name": "한라IMS",
       "priority_snapshot": {
         "recommended_roe_base": 21.44,
-        "pbr": 1.14363,
+        "pbr": 1.21244,
         "estimated_n_base": 8,
-        "market_implied_n": 0.9,
-        "current_price": 14540
+        "market_implied_n": 1.3,
+        "current_price": 14270
       },
       "status": "000",
       "message": "정상",
@@ -3169,10 +3180,10 @@
       "corp_name": "토탈소프트",
       "priority_snapshot": {
         "recommended_roe_base": 21.27,
-        "pbr": 1.32714,
+        "pbr": 1.30433,
         "estimated_n_base": 10,
         "market_implied_n": 0.8,
-        "current_price": 6290
+        "current_price": 6340
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -3187,10 +3198,10 @@
       "corp_name": "오파스넷",
       "priority_snapshot": {
         "recommended_roe_base": 21.26,
-        "pbr": 1.23028,
+        "pbr": 1.25558,
         "estimated_n_base": 10,
-        "market_implied_n": 0.8,
-        "current_price": 6490
+        "market_implied_n": 0.9,
+        "current_price": 6180
       },
       "status": "000",
       "message": "정상",
@@ -3229,10 +3240,10 @@
       "corp_name": "지엔씨에너지",
       "priority_snapshot": {
         "recommended_roe_base": 21.18,
-        "pbr": 2.11029,
+        "pbr": 2.20291,
         "estimated_n_base": 8,
-        "market_implied_n": 3.3,
-        "current_price": 33200
+        "market_implied_n": 3.6,
+        "current_price": 31600
       },
       "status": "000",
       "message": "정상",
@@ -3257,31 +3268,11 @@
             "ctr_stkrt": "-",
             "report_resn": "장내매도, 자사주 상여금"
           }
-        },
-        {
-          "holder_name": "KB자산운용",
-          "report_date": "2026-08-04",
-          "ratio": 7.21,
-          "raw": {
-            "rcept_no": "20260804000166",
-            "rcept_dt": "2026-08-04",
-            "corp_code": "00626464",
-            "corp_name": "지엔씨에너지",
-            "report_tp": "약식",
-            "repror": "KB자산운용",
-            "stkqy": "1,185,495",
-            "stkqy_irds": "201,762",
-            "stkrt": "7.21",
-            "stkrt_irds": "1.23",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "1%이상 변동"
-          }
         }
       ],
       "top_holder_name": "안병철",
       "top_holder_ratio": 33.52,
-      "latest_report_date": "2026-08-04"
+      "latest_report_date": "2026-02-11"
     },
     {
       "code": "019180",
@@ -3291,10 +3282,10 @@
       "corp_name": "티에이치엔",
       "priority_snapshot": {
         "recommended_roe_base": 21.14,
-        "pbr": 0.29333,
+        "pbr": 0.29766,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 4465
+        "current_price": 4415
       },
       "status": "000",
       "message": "정상",
@@ -3333,10 +3324,10 @@
       "corp_name": "매커스",
       "priority_snapshot": {
         "recommended_roe_base": 21.03,
-        "pbr": 1.67373,
+        "pbr": 1.66075,
         "estimated_n_base": 10,
         "market_implied_n": 2.4,
-        "current_price": 25750
+        "current_price": 25550
       },
       "status": "000",
       "message": "정상",
@@ -3395,10 +3386,10 @@
       "corp_name": "퓨릿",
       "priority_snapshot": {
         "recommended_roe_base": 20.96,
-        "pbr": 1.15353,
+        "pbr": 1.1699,
         "estimated_n_base": 10,
-        "market_implied_n": 0.8,
-        "current_price": 7850
+        "market_implied_n": 0.9,
+        "current_price": 7570
       },
       "status": "000",
       "message": "정상",
@@ -3457,10 +3448,10 @@
       "corp_name": "삐아",
       "priority_snapshot": {
         "recommended_roe_base": 20.93,
-        "pbr": 1.41018,
+        "pbr": 1.41446,
         "estimated_n_base": 6,
-        "market_implied_n": 3.7,
-        "current_price": 6580
+        "market_implied_n": 3.8,
+        "current_price": 6440
       },
       "status": "000",
       "message": "정상",
@@ -3502,7 +3493,7 @@
         "pbr": 1.45544,
         "estimated_n_base": 8,
         "market_implied_n": 2.5,
-        "current_price": 17870
+        "current_price": 16550
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -3520,7 +3511,7 @@
         "pbr": 1.90672,
         "estimated_n_base": 8,
         "market_implied_n": 1.8,
-        "current_price": 25300
+        "current_price": 25100
       },
       "status": "000",
       "message": "정상",
@@ -3579,10 +3570,10 @@
       "corp_name": "DB하이텍",
       "priority_snapshot": {
         "recommended_roe_base": 20.3,
-        "pbr": 1.63545,
+        "pbr": 1.67989,
         "estimated_n_base": 8,
-        "market_implied_n": 4.5,
-        "current_price": 97200
+        "market_implied_n": 4.8,
+        "current_price": 98900
       },
       "status": "000",
       "message": "정상",
@@ -3590,11 +3581,11 @@
       "holders": [
         {
           "holder_name": "DB",
-          "report_date": "2026-09-29",
+          "report_date": "2026-11-03",
           "ratio": 25.03,
           "raw": {
-            "rcept_no": "20260929000501",
-            "rcept_dt": "2026-09-29",
+            "rcept_no": "20261103000157",
+            "rcept_dt": "2026-11-03",
             "corp_code": "00160843",
             "corp_name": "DB하이텍",
             "report_tp": "일반",
@@ -3671,7 +3662,7 @@
       ],
       "top_holder_name": "DB",
       "top_holder_ratio": 25.03,
-      "latest_report_date": "2026-10-07"
+      "latest_report_date": "2026-11-03"
     },
     {
       "code": "034950",
@@ -3681,10 +3672,10 @@
       "corp_name": "한국기업평가",
       "priority_snapshot": {
         "recommended_roe_base": 19.91,
-        "pbr": 3.89662,
+        "pbr": 3.90831,
         "estimated_n_base": 10,
         "market_implied_n": 7.7,
-        "current_price": 100300
+        "current_price": 100600
       },
       "status": "000",
       "message": "정상",
@@ -3723,10 +3714,10 @@
       "corp_name": "미래반도체",
       "priority_snapshot": {
         "recommended_roe_base": 19.83,
-        "pbr": 1.32964,
+        "pbr": 1.37418,
         "estimated_n_base": 6,
-        "market_implied_n": 1.9,
-        "current_price": 14460
+        "market_implied_n": 2.1,
+        "current_price": 13880
       },
       "status": "000",
       "message": "정상",
@@ -3765,10 +3756,10 @@
       "corp_name": "GST",
       "priority_snapshot": {
         "recommended_roe_base": 19.82,
-        "pbr": 2.3109,
+        "pbr": 2.43897,
         "estimated_n_base": 10,
-        "market_implied_n": 5.7,
-        "current_price": 43700
+        "market_implied_n": 6.1,
+        "current_price": 41600
       },
       "status": "000",
       "message": "정상",
@@ -3827,10 +3818,10 @@
       "corp_name": "한텍",
       "priority_snapshot": {
         "recommended_roe_base": 19.67,
-        "pbr": 1.03493,
+        "pbr": 1.08899,
         "estimated_n_base": 8,
-        "market_implied_n": 0.1,
-        "current_price": 17100
+        "market_implied_n": 0.3,
+        "current_price": 16540
       },
       "status": "000",
       "message": "정상",
@@ -3889,10 +3880,10 @@
       "corp_name": "코웨이",
       "priority_snapshot": {
         "recommended_roe_base": 19.57,
-        "pbr": 1.90867,
+        "pbr": 1.92886,
         "estimated_n_base": 10,
         "market_implied_n": 3.5,
-        "current_price": 105800
+        "current_price": 104300
       },
       "status": "000",
       "message": "정상",
@@ -3971,10 +3962,10 @@
       "corp_name": "HB솔루션",
       "priority_snapshot": {
         "recommended_roe_base": 19.5,
-        "pbr": 0.35868,
+        "pbr": 0.37038,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1390
+        "current_price": 1333
       },
       "status": "000",
       "message": "정상",
@@ -4013,10 +4004,10 @@
       "corp_name": "파마리서치",
       "priority_snapshot": {
         "recommended_roe_base": 19.5,
-        "pbr": 3.2532,
+        "pbr": 3.41432,
         "estimated_n_base": 10,
-        "market_implied_n": 4.4,
-        "current_price": 222000
+        "market_implied_n": 4.6,
+        "current_price": 219500
       },
       "status": "000",
       "message": "정상",
@@ -4075,7 +4066,7 @@
       "corp_name": "기도산업",
       "priority_snapshot": {
         "recommended_roe_base": 19.44,
-        "pbr": 0.34686,
+        "pbr": 0.35165,
         "estimated_n_base": 10,
         "market_implied_n": 0.0,
         "current_price": 11000
@@ -4117,10 +4108,10 @@
       "corp_name": "듀켐바이오",
       "priority_snapshot": {
         "recommended_roe_base": 19.36,
-        "pbr": 3.35095,
+        "pbr": 3.33995,
         "estimated_n_base": 6,
-        "market_implied_n": 11.7,
-        "current_price": 6150
+        "market_implied_n": 11.6,
+        "current_price": 6060
       },
       "status": "000",
       "message": "정상",
@@ -4179,10 +4170,10 @@
       "corp_name": "사람인",
       "priority_snapshot": {
         "recommended_roe_base": 19.34,
-        "pbr": 0.62261,
+        "pbr": 0.62995,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 16760
+        "current_price": 16030
       },
       "status": "000",
       "message": "정상",
@@ -4261,10 +4252,10 @@
       "corp_name": "아로마티카",
       "priority_snapshot": {
         "recommended_roe_base": 19.32,
-        "pbr": 2.38612,
+        "pbr": 2.33647,
         "estimated_n_base": 4,
-        "market_implied_n": 6.7,
-        "current_price": 8530
+        "market_implied_n": 6.5,
+        "current_price": 8560
       },
       "status": "000",
       "message": "정상",
@@ -4323,10 +4314,10 @@
       "corp_name": "아이비김영",
       "priority_snapshot": {
         "recommended_roe_base": 19.31,
-        "pbr": 1.59011,
+        "pbr": 1.57581,
         "estimated_n_base": 8,
-        "market_implied_n": 1.2,
-        "current_price": 2220
+        "market_implied_n": 1.1,
+        "current_price": 2175
       },
       "status": "000",
       "message": "정상",
@@ -4365,10 +4356,10 @@
       "corp_name": "효성 ITX",
       "priority_snapshot": {
         "recommended_roe_base": 19.25,
-        "pbr": 1.82338,
+        "pbr": 1.85038,
         "estimated_n_base": 10,
         "market_implied_n": 2.6,
-        "current_price": 11530
+        "current_price": 11520
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -4383,10 +4374,10 @@
       "corp_name": "진양제약",
       "priority_snapshot": {
         "recommended_roe_base": 19.12,
-        "pbr": 0.2968,
+        "pbr": 0.30159,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 3455
+        "current_price": 3410
       },
       "status": "000",
       "message": "정상",
@@ -4445,10 +4436,10 @@
       "corp_name": "메가스터디교육",
       "priority_snapshot": {
         "recommended_roe_base": 19.09,
-        "pbr": 0.78457,
+        "pbr": 0.77946,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 38000
+        "current_price": 38450
       },
       "status": "000",
       "message": "정상",
@@ -4487,10 +4478,10 @@
       "corp_name": "에스앤디",
       "priority_snapshot": {
         "recommended_roe_base": 19.02,
-        "pbr": 1.52461,
+        "pbr": 1.62769,
         "estimated_n_base": 8,
-        "market_implied_n": 1.3,
-        "current_price": 52800
+        "market_implied_n": 1.5,
+        "current_price": 51800
       },
       "status": "000",
       "message": "정상",
@@ -4529,10 +4520,10 @@
       "corp_name": "현대로템",
       "priority_snapshot": {
         "recommended_roe_base": 19.01,
-        "pbr": 2.45107,
+        "pbr": 2.52477,
         "estimated_n_base": 6,
-        "market_implied_n": 2.7,
-        "current_price": 78700
+        "market_implied_n": 2.8,
+        "current_price": 77700
       },
       "status": "000",
       "message": "정상",
@@ -4611,10 +4602,10 @@
       "corp_name": "아이티센엔텍",
       "priority_snapshot": {
         "recommended_roe_base": 18.88,
-        "pbr": 0.55731,
+        "pbr": 0.56407,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 5020
+        "current_price": 4940
       },
       "status": "000",
       "message": "정상",
@@ -4653,10 +4644,10 @@
       "corp_name": "코츠테크놀로지",
       "priority_snapshot": {
         "recommended_roe_base": 18.87,
-        "pbr": 0.75893,
+        "pbr": 0.78144,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 9690
+        "current_price": 9700
       },
       "status": "000",
       "message": "정상",
@@ -4715,10 +4706,10 @@
       "corp_name": "DB손해보험",
       "priority_snapshot": {
         "recommended_roe_base": 18.56,
-        "pbr": 0.80177,
+        "pbr": 0.76227,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 176100
+        "current_price": 175300
       },
       "status": "000",
       "message": "정상",
@@ -4797,10 +4788,10 @@
       "corp_name": "엠게임",
       "priority_snapshot": {
         "recommended_roe_base": 18.44,
-        "pbr": 0.5023,
+        "pbr": 0.54598,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4025
+        "current_price": 4030
       },
       "status": "000",
       "message": "정상",
@@ -4839,10 +4830,10 @@
       "corp_name": "피에스케이홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 18.33,
-        "pbr": 7.45527,
+        "pbr": 7.34292,
         "estimated_n_base": 8,
-        "market_implied_n": 13.7,
-        "current_price": 183900
+        "market_implied_n": 13.5,
+        "current_price": 169700
       },
       "status": "000",
       "message": "정상",
@@ -4881,10 +4872,10 @@
       "corp_name": "코미코",
       "priority_snapshot": {
         "recommended_roe_base": 18.21,
-        "pbr": 3.99234,
+        "pbr": 4.0451,
         "estimated_n_base": 8,
-        "market_implied_n": 8.9,
-        "current_price": 23400
+        "market_implied_n": 9.0,
+        "current_price": 21500
       },
       "status": "000",
       "message": "정상",
@@ -4946,7 +4937,7 @@
         "pbr": 1.0823,
         "estimated_n_base": 8,
         "market_implied_n": 0.3,
-        "current_price": 1415
+        "current_price": 1432
       },
       "status": "000",
       "message": "정상",
@@ -5045,10 +5036,10 @@
       "corp_name": "피에스케이",
       "priority_snapshot": {
         "recommended_roe_base": 18.01,
-        "pbr": 5.39846,
+        "pbr": 5.33251,
         "estimated_n_base": 8,
-        "market_implied_n": 15.6,
-        "current_price": 113600
+        "market_implied_n": 15.5,
+        "current_price": 107200
       },
       "status": "000",
       "message": "정상",
@@ -5147,10 +5138,10 @@
       "corp_name": "LG씨엔에스",
       "priority_snapshot": {
         "recommended_roe_base": 17.98,
-        "pbr": 2.29589,
+        "pbr": 2.48033,
         "estimated_n_base": 10,
-        "market_implied_n": 5.0,
-        "current_price": 78900
+        "market_implied_n": 5.6,
+        "current_price": 74700
       },
       "status": "000",
       "message": "정상",
@@ -5209,10 +5200,10 @@
       "corp_name": "NHN KCP",
       "priority_snapshot": {
         "recommended_roe_base": 17.79,
-        "pbr": 1.42832,
+        "pbr": 1.44032,
         "estimated_n_base": 10,
-        "market_implied_n": 2.0,
-        "current_price": 12150
+        "market_implied_n": 2.1,
+        "current_price": 11840
       },
       "status": "000",
       "message": "정상",
@@ -5251,10 +5242,10 @@
       "corp_name": "마이크로컨텍솔",
       "priority_snapshot": {
         "recommended_roe_base": 17.66,
-        "pbr": 4.78437,
+        "pbr": 4.69039,
         "estimated_n_base": 10,
-        "market_implied_n": 7.7,
-        "current_price": 56100
+        "market_implied_n": 7.5,
+        "current_price": 53100
       },
       "status": "000",
       "message": "정상",
@@ -5293,10 +5284,10 @@
       "corp_name": "동성화인텍",
       "priority_snapshot": {
         "recommended_roe_base": 17.43,
-        "pbr": 1.26737,
+        "pbr": 1.30034,
         "estimated_n_base": 8,
-        "market_implied_n": 0.8,
-        "current_price": 12640
+        "market_implied_n": 0.9,
+        "current_price": 12450
       },
       "status": "000",
       "message": "정상",
@@ -5314,10 +5305,10 @@
       "corp_name": "메쎄이상",
       "priority_snapshot": {
         "recommended_roe_base": 17.34,
-        "pbr": 1.43987,
+        "pbr": 1.44991,
         "estimated_n_base": 8,
         "market_implied_n": 1.5,
-        "current_price": 2945
+        "current_price": 2870
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -5332,10 +5323,10 @@
       "corp_name": "아이디피",
       "priority_snapshot": {
         "recommended_roe_base": 17.33,
-        "pbr": 0.77105,
+        "pbr": 0.78389,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 5090
+        "current_price": 4670
       },
       "status": "000",
       "message": "정상",
@@ -5374,10 +5365,10 @@
       "corp_name": "엠아이텍",
       "priority_snapshot": {
         "recommended_roe_base": 17.32,
-        "pbr": 0.97717,
+        "pbr": 1.02347,
         "estimated_n_base": 10,
-        "market_implied_n": 0.0,
-        "current_price": 4170
+        "market_implied_n": 0.1,
+        "current_price": 4000
       },
       "status": "000",
       "message": "정상",
@@ -5416,10 +5407,10 @@
       "corp_name": "NICE평가정보",
       "priority_snapshot": {
         "recommended_roe_base": 17.31,
-        "pbr": 2.10624,
+        "pbr": 2.07958,
         "estimated_n_base": 10,
-        "market_implied_n": 4.3,
-        "current_price": 17230
+        "market_implied_n": 4.2,
+        "current_price": 17320
       },
       "status": "000",
       "message": "정상",
@@ -5498,10 +5489,10 @@
       "corp_name": "휴메딕스",
       "priority_snapshot": {
         "recommended_roe_base": 17.21,
-        "pbr": 0.80863,
+        "pbr": 0.7997,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 22400
+        "current_price": 22200
       },
       "status": "000",
       "message": "정상",
@@ -5540,10 +5531,10 @@
       "corp_name": "비츠로셀",
       "priority_snapshot": {
         "recommended_roe_base": 17.21,
-        "pbr": 3.00622,
+        "pbr": 3.07511,
         "estimated_n_base": 10,
-        "market_implied_n": 6.5,
-        "current_price": 24550
+        "market_implied_n": 6.7,
+        "current_price": 24500
       },
       "status": "000",
       "message": "정상",
@@ -5582,10 +5573,10 @@
       "corp_name": "영원무역",
       "priority_snapshot": {
         "recommended_roe_base": 17.2,
-        "pbr": 0.65116,
+        "pbr": 0.65022,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 69400
+        "current_price": 68500
       },
       "status": "000",
       "message": "정상",
@@ -5624,10 +5615,10 @@
       "corp_name": "에스엠",
       "priority_snapshot": {
         "recommended_roe_base": 17.2,
-        "pbr": 1.69513,
+        "pbr": 1.72175,
         "estimated_n_base": 6,
-        "market_implied_n": 1.0,
-        "current_price": 77800
+        "market_implied_n": 1.1,
+        "current_price": 76400
       },
       "status": "000",
       "message": "정상",
@@ -5686,10 +5677,10 @@
       "corp_name": "JW중외제약",
       "priority_snapshot": {
         "recommended_roe_base": 17.14,
-        "pbr": 1.35537,
+        "pbr": 1.34948,
         "estimated_n_base": 8,
         "market_implied_n": 1.5,
-        "current_price": 23050
+        "current_price": 22850
       },
       "status": "000",
       "message": "정상",
@@ -5728,10 +5719,10 @@
       "corp_name": "JW생명과학",
       "priority_snapshot": {
         "recommended_roe_base": 16.96,
-        "pbr": 0.71768,
+        "pbr": 0.7286,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 10680
+        "current_price": 10520
       },
       "status": "000",
       "message": "정상",
@@ -5770,10 +5761,10 @@
       "corp_name": "현대엘리베이터",
       "priority_snapshot": {
         "recommended_roe_base": 16.89,
-        "pbr": 2.22451,
+        "pbr": 2.28112,
         "estimated_n_base": 2,
-        "market_implied_n": 3.9,
-        "current_price": 68600
+        "market_implied_n": 4.1,
+        "current_price": 68000
       },
       "status": "000",
       "message": "정상",
@@ -5832,10 +5823,10 @@
       "corp_name": "성호전자",
       "priority_snapshot": {
         "recommended_roe_base": 16.82,
-        "pbr": 4.70046,
+        "pbr": 4.64852,
         "estimated_n_base": 6,
-        "market_implied_n": 3.4,
-        "current_price": 27200
+        "market_implied_n": 3.3,
+        "current_price": 24800
       },
       "status": "000",
       "message": "정상",
@@ -5894,10 +5885,10 @@
       "corp_name": "티씨케이",
       "priority_snapshot": {
         "recommended_roe_base": 16.79,
-        "pbr": 3.92478,
+        "pbr": 3.90045,
         "estimated_n_base": 8,
-        "market_implied_n": 15.0,
-        "current_price": 191700
+        "market_implied_n": 14.9,
+        "current_price": 179500
       },
       "status": "000",
       "message": "정상",
@@ -5976,10 +5967,10 @@
       "corp_name": "서호전기",
       "priority_snapshot": {
         "recommended_roe_base": 16.77,
-        "pbr": 2.1155,
+        "pbr": 2.1417,
         "estimated_n_base": 8,
-        "market_implied_n": 2.8,
-        "current_price": 44950
+        "market_implied_n": 2.9,
+        "current_price": 44850
       },
       "status": "000",
       "message": "정상",
@@ -6038,10 +6029,10 @@
       "corp_name": "기아",
       "priority_snapshot": {
         "recommended_roe_base": 16.75,
-        "pbr": 0.57438,
+        "pbr": 0.57499,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 95700
+        "current_price": 96700
       },
       "status": "000",
       "message": "정상",
@@ -6080,10 +6071,10 @@
       "corp_name": "영원무역홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 16.71,
-        "pbr": 0.60598,
+        "pbr": 0.60349,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 170300
+        "current_price": 174000
       },
       "status": "000",
       "message": "정상",
@@ -6162,10 +6153,10 @@
       "corp_name": "에스텍",
       "priority_snapshot": {
         "recommended_roe_base": 16.64,
-        "pbr": 0.45858,
+        "pbr": 0.46539,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 14380
+        "current_price": 14460
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -6183,7 +6174,7 @@
         "pbr": 1.13089,
         "estimated_n_base": 6,
         "market_implied_n": 1.1,
-        "current_price": 5490
+        "current_price": 5550
       },
       "status": "000",
       "message": "정상",
@@ -6242,10 +6233,10 @@
       "corp_name": "DMS",
       "priority_snapshot": {
         "recommended_roe_base": 16.48,
-        "pbr": 0.37353,
+        "pbr": 0.36941,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 7250
+        "current_price": 6770
       },
       "status": "000",
       "message": "정상",
@@ -6304,10 +6295,10 @@
       "corp_name": "티디에스팜",
       "priority_snapshot": {
         "recommended_roe_base": 16.35,
-        "pbr": 0.53014,
+        "pbr": 0.52779,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 4495
+        "current_price": 4305
       },
       "status": "000",
       "message": "정상",
@@ -6346,10 +6337,10 @@
       "corp_name": "KG모빌리티플랫폼",
       "priority_snapshot": {
         "recommended_roe_base": 16.29,
-        "pbr": 1.45891,
+        "pbr": 1.47234,
         "estimated_n_base": 6,
         "market_implied_n": 1.4,
-        "current_price": 5490
+        "current_price": 5340
       },
       "status": "000",
       "message": "정상",
@@ -6357,31 +6348,31 @@
       "holders": [
         {
           "holder_name": "KG스틸",
-          "report_date": "2026-09-16",
-          "ratio": 52.6,
+          "report_date": "2026-11-03",
+          "ratio": 52.52,
           "raw": {
-            "rcept_no": "20260916000475",
-            "rcept_dt": "2026-09-16",
+            "rcept_no": "20261103000340",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01323032",
             "corp_name": "KG모빌리티플랫폼",
             "report_tp": "일반",
             "repror": "KG스틸",
-            "stkqy": "25,682,810",
-            "stkqy_irds": "40,000",
-            "stkrt": "52.60",
-            "stkrt_irds": "0.08",
+            "stkqy": "25,642,810",
+            "stkqy_irds": "10,000",
+            "stkrt": "52.52",
+            "stkrt_irds": "0.02",
             "ctr_stkqy": "19,225,720",
             "ctr_stkrt": "39.38",
-            "report_resn": "- 특별관계자의 유가증권시장에서의 주식 매매"
+            "report_resn": "- 주식매매계약의 거래종결에 따른 주식의 보유형태 \n   변경(보유에서 소유로의 변경)\n- 특별관계자 추가"
           }
         },
         {
           "holder_name": "케이모빌리티밸류업",
-          "report_date": "2026-09-07",
+          "report_date": "2026-11-03",
           "ratio": 19.69,
           "raw": {
-            "rcept_no": "20260907000253",
-            "rcept_dt": "2026-09-07",
+            "rcept_no": "20261103000383",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01323032",
             "corp_name": "KG모빌리티플랫폼",
             "report_tp": "일반",
@@ -6397,8 +6388,8 @@
         }
       ],
       "top_holder_name": "KG스틸",
-      "top_holder_ratio": 52.6,
-      "latest_report_date": "2026-09-16"
+      "top_holder_ratio": 52.52,
+      "latest_report_date": "2026-11-03"
     },
     {
       "code": "003720",
@@ -6408,10 +6399,10 @@
       "corp_name": "삼영",
       "priority_snapshot": {
         "recommended_roe_base": 16.23,
-        "pbr": 1.71553,
+        "pbr": 1.74991,
         "estimated_n_base": 6,
-        "market_implied_n": 3.2,
-        "current_price": 5120
+        "market_implied_n": 3.3,
+        "current_price": 5080
       },
       "status": "000",
       "message": "정상",
@@ -6450,10 +6441,10 @@
       "corp_name": "현대글로비스",
       "priority_snapshot": {
         "recommended_roe_base": 16.17,
-        "pbr": 1.26563,
+        "pbr": 1.40817,
         "estimated_n_base": 8,
-        "market_implied_n": 1.1,
-        "current_price": 202500
+        "market_implied_n": 1.7,
+        "current_price": 201500
       },
       "status": "000",
       "message": "정상",
@@ -6512,10 +6503,10 @@
       "corp_name": "한선엔지니어링",
       "priority_snapshot": {
         "recommended_roe_base": 16.13,
-        "pbr": 2.30212,
+        "pbr": 2.35132,
         "estimated_n_base": 6,
-        "market_implied_n": 7.1,
-        "current_price": 11780
+        "market_implied_n": 7.3,
+        "current_price": 11250
       },
       "status": "000",
       "message": "정상",
@@ -6557,7 +6548,7 @@
         "pbr": 1.11532,
         "estimated_n_base": 6,
         "market_implied_n": 0.3,
-        "current_price": 2360
+        "current_price": 2310
       },
       "status": "000",
       "message": "정상",
@@ -6636,10 +6627,10 @@
       "corp_name": "대신정보통신",
       "priority_snapshot": {
         "recommended_roe_base": 16.11,
-        "pbr": 0.58465,
+        "pbr": 0.57907,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 3685
+        "current_price": 3675
       },
       "status": "000",
       "message": "정상",
@@ -6678,10 +6669,10 @@
       "corp_name": "멀티캠퍼스",
       "priority_snapshot": {
         "recommended_roe_base": 16.0,
-        "pbr": 0.67514,
+        "pbr": 0.6828,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 26700
+        "current_price": 27150
       },
       "status": "000",
       "message": "정상",
@@ -6720,10 +6711,10 @@
       "corp_name": "우진엔텍",
       "priority_snapshot": {
         "recommended_roe_base": 15.99,
-        "pbr": 1.36434,
+        "pbr": 1.40526,
         "estimated_n_base": 6,
-        "market_implied_n": 3.4,
-        "current_price": 7840
+        "market_implied_n": 3.8,
+        "current_price": 7620
       },
       "status": "000",
       "message": "정상",
@@ -6762,10 +6753,10 @@
       "corp_name": "일지테크",
       "priority_snapshot": {
         "recommended_roe_base": 15.92,
-        "pbr": 0.27793,
+        "pbr": 0.28102,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4555
+        "current_price": 4505
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -6780,10 +6771,10 @@
       "corp_name": "오리엔탈정공",
       "priority_snapshot": {
         "recommended_roe_base": 15.89,
-        "pbr": 1.1773,
+        "pbr": 1.248,
         "estimated_n_base": 4,
-        "market_implied_n": 0.9,
-        "current_price": 3770
+        "market_implied_n": 1.2,
+        "current_price": 3755
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -6801,7 +6792,7 @@
         "pbr": 0.83611,
         "estimated_n_base": 10,
         "market_implied_n": 0.0,
-        "current_price": 5500
+        "current_price": 5710
       },
       "status": "000",
       "message": "정상",
@@ -6819,7 +6810,7 @@
       "corp_name": "DSR제강",
       "priority_snapshot": {
         "recommended_roe_base": 15.85,
-        "pbr": 0.36619,
+        "pbr": 0.37471,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
         "current_price": 5300
@@ -6861,10 +6852,10 @@
       "corp_name": "미원상사",
       "priority_snapshot": {
         "recommended_roe_base": 15.81,
-        "pbr": 1.44225,
+        "pbr": 1.41401,
         "estimated_n_base": 6,
-        "market_implied_n": 4.3,
-        "current_price": 134900
+        "market_implied_n": 4.0,
+        "current_price": 136800
       },
       "status": "000",
       "message": "정상",
@@ -6903,10 +6894,10 @@
       "corp_name": "SK하이닉스",
       "priority_snapshot": {
         "recommended_roe_base": 15.79,
-        "pbr": 3.84284,
+        "pbr": 3.98918,
         "estimated_n_base": 6,
-        "market_implied_n": 3.0,
-        "current_price": 1480000
+        "market_implied_n": 3.1,
+        "current_price": 1414000
       },
       "status": "000",
       "message": "정상",
@@ -6965,10 +6956,10 @@
       "corp_name": "노머스",
       "priority_snapshot": {
         "recommended_roe_base": 15.73,
-        "pbr": 1.01189,
+        "pbr": 1.07397,
         "estimated_n_base": 10,
-        "market_implied_n": 0.1,
-        "current_price": 10790
+        "market_implied_n": 0.4,
+        "current_price": 10580
       },
       "status": "000",
       "message": "정상",
@@ -7027,10 +7018,10 @@
       "corp_name": "코리아에프티",
       "priority_snapshot": {
         "recommended_roe_base": 15.68,
-        "pbr": 0.4737,
+        "pbr": 0.48045,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 4920
+        "current_price": 4845
       },
       "status": "000",
       "message": "정상",
@@ -7069,10 +7060,10 @@
       "corp_name": "영화테크",
       "priority_snapshot": {
         "recommended_roe_base": 15.57,
-        "pbr": 0.53897,
+        "pbr": 0.54814,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 5340
+        "current_price": 5290
       },
       "status": "000",
       "message": "정상",
@@ -7090,10 +7081,10 @@
       "corp_name": "한솔케미칼",
       "priority_snapshot": {
         "recommended_roe_base": 15.57,
-        "pbr": 2.07217,
+        "pbr": 2.08197,
         "estimated_n_base": 8,
-        "market_implied_n": 5.7,
-        "current_price": 213500
+        "market_implied_n": 5.8,
+        "current_price": 205000
       },
       "status": "000",
       "message": "정상",
@@ -7212,10 +7203,10 @@
       "corp_name": "파미셀",
       "priority_snapshot": {
         "recommended_roe_base": 15.55,
-        "pbr": 3.93425,
+        "pbr": 3.9761,
         "estimated_n_base": 6,
         "market_implied_n": 3.5,
-        "current_price": 9580
+        "current_price": 8960
       },
       "status": "000",
       "message": "정상",
@@ -7254,10 +7245,10 @@
       "corp_name": "지니언스",
       "priority_snapshot": {
         "recommended_roe_base": 15.42,
-        "pbr": 3.74413,
+        "pbr": 3.70365,
         "estimated_n_base": 6,
-        "market_implied_n": 16.5,
-        "current_price": 27350
+        "market_implied_n": 16.3,
+        "current_price": 29200
       },
       "status": "000",
       "message": "정상",
@@ -7296,10 +7287,10 @@
       "corp_name": "서희건설",
       "priority_snapshot": {
         "recommended_roe_base": 15.35,
-        "pbr": 0.28598,
+        "pbr": 0.30234,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2015
+        "current_price": 2075
       },
       "status": "000",
       "message": "정상",
@@ -7338,10 +7329,10 @@
       "corp_name": "알테오젠",
       "priority_snapshot": {
         "recommended_roe_base": 15.23,
-        "pbr": 27.6601,
+        "pbr": 27.8563,
         "estimated_n_base": 6,
         "market_implied_n": 10.6,
-        "current_price": 213500
+        "current_price": 215500
       },
       "status": "000",
       "message": "정상",
@@ -7420,10 +7411,10 @@
       "corp_name": "미원화학",
       "priority_snapshot": {
         "recommended_roe_base": 15.22,
-        "pbr": 1.1258,
+        "pbr": 1.11392,
         "estimated_n_base": 8,
-        "market_implied_n": 0.7,
-        "current_price": 11250
+        "market_implied_n": 0.6,
+        "current_price": 11190
       },
       "status": "000",
       "message": "정상",
@@ -7482,10 +7473,10 @@
       "corp_name": "제주반도체",
       "priority_snapshot": {
         "recommended_roe_base": 15.2,
-        "pbr": 4.83128,
+        "pbr": 4.95941,
         "estimated_n_base": 8,
-        "market_implied_n": 10.0,
-        "current_price": 66200
+        "market_implied_n": 10.3,
+        "current_price": 64300
       },
       "status": "000",
       "message": "정상",
@@ -7544,10 +7535,10 @@
       "corp_name": "나이스디앤비",
       "priority_snapshot": {
         "recommended_roe_base": 14.93,
-        "pbr": 0.82974,
+        "pbr": 0.84609,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 6680
+        "current_price": 6840
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -7562,10 +7553,10 @@
       "corp_name": "잉글우드랩",
       "priority_snapshot": {
         "recommended_roe_base": 14.89,
-        "pbr": 0.74023,
+        "pbr": 0.76549,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 6990
+        "current_price": 6890
       },
       "status": "000",
       "message": "정상",
@@ -7604,10 +7595,10 @@
       "corp_name": "삼지전자",
       "priority_snapshot": {
         "recommended_roe_base": 14.84,
-        "pbr": 0.5681,
+        "pbr": 0.57331,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 27350
+        "current_price": 26800
       },
       "status": "000",
       "message": "정상",
@@ -7666,10 +7657,10 @@
       "corp_name": "동남합성",
       "priority_snapshot": {
         "recommended_roe_base": 14.84,
-        "pbr": 1.74286,
+        "pbr": 1.66918,
         "estimated_n_base": 6,
-        "market_implied_n": 4.9,
-        "current_price": 29450
+        "market_implied_n": 4.4,
+        "current_price": 30450
       },
       "status": "000",
       "message": "정상",
@@ -7708,10 +7699,10 @@
       "corp_name": "케이엘넷",
       "priority_snapshot": {
         "recommended_roe_base": 14.74,
-        "pbr": 0.738,
+        "pbr": 0.73353,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2465
+        "current_price": 2440
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -7726,10 +7717,10 @@
       "corp_name": "에스엘",
       "priority_snapshot": {
         "recommended_roe_base": 14.73,
-        "pbr": 0.82377,
+        "pbr": 0.82802,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 48650
+        "current_price": 47700
       },
       "status": "000",
       "message": "정상",
@@ -7788,10 +7779,10 @@
       "corp_name": "한솔아이원스",
       "priority_snapshot": {
         "recommended_roe_base": 14.72,
-        "pbr": 1.2682,
+        "pbr": 1.32151,
         "estimated_n_base": 6,
-        "market_implied_n": 1.5,
-        "current_price": 10400
+        "market_implied_n": 1.8,
+        "current_price": 10000
       },
       "status": "000",
       "message": "정상",
@@ -7823,48 +7814,6 @@
       "latest_report_date": "2026-10-12"
     },
     {
-      "code": "417790",
-      "name": "트루엔",
-      "market_label": "코스닥",
-      "corp_code": "01134216",
-      "corp_name": "트루엔",
-      "priority_snapshot": {
-        "recommended_roe_base": 14.67,
-        "pbr": 0.61402,
-        "estimated_n_base": 8,
-        "market_implied_n": 0.0,
-        "current_price": 6830
-      },
-      "status": "000",
-      "message": "정상",
-      "has_major_holders": true,
-      "holders": [
-        {
-          "holder_name": "안재천",
-          "report_date": "2026-01-27",
-          "ratio": 45.96,
-          "raw": {
-            "rcept_no": "20260127000193",
-            "rcept_dt": "2026-01-27",
-            "corp_code": "01134216",
-            "corp_name": "트루엔",
-            "report_tp": "일반",
-            "repror": "안재천",
-            "stkqy": "4,811,050",
-            "stkqy_irds": "8,400",
-            "stkrt": "45.96",
-            "stkrt_irds": "2.3",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "최대주주의 장내매수\n주식소각에 따른 보유비율 변동\n특별관계자 해소\n의결권공동행사 등에 관한 주주간 협약 기간 종료"
-          }
-        }
-      ],
-      "top_holder_name": "안재천",
-      "top_holder_ratio": 45.96,
-      "latest_report_date": "2026-01-27"
-    },
-    {
       "code": "006620",
       "name": "동구바이오제약",
       "market_label": "코스닥",
@@ -7872,10 +7821,10 @@
       "corp_name": "동구바이오제약",
       "priority_snapshot": {
         "recommended_roe_base": 14.67,
-        "pbr": 0.61845,
+        "pbr": 0.61465,
         "estimated_n_base": 2,
         "market_implied_n": 0.0,
-        "current_price": 3225
+        "current_price": 3300
       },
       "status": "000",
       "message": "정상",
@@ -7907,6 +7856,48 @@
       "latest_report_date": "2026-10-29"
     },
     {
+      "code": "417790",
+      "name": "트루엔",
+      "market_label": "코스닥",
+      "corp_code": "01134216",
+      "corp_name": "트루엔",
+      "priority_snapshot": {
+        "recommended_roe_base": 14.67,
+        "pbr": 0.62775,
+        "estimated_n_base": 8,
+        "market_implied_n": 0.0,
+        "current_price": 6930
+      },
+      "status": "000",
+      "message": "정상",
+      "has_major_holders": true,
+      "holders": [
+        {
+          "holder_name": "안재천",
+          "report_date": "2026-01-27",
+          "ratio": 45.96,
+          "raw": {
+            "rcept_no": "20260127000193",
+            "rcept_dt": "2026-01-27",
+            "corp_code": "01134216",
+            "corp_name": "트루엔",
+            "report_tp": "일반",
+            "repror": "안재천",
+            "stkqy": "4,811,050",
+            "stkqy_irds": "8,400",
+            "stkrt": "45.96",
+            "stkrt_irds": "2.3",
+            "ctr_stkqy": "-",
+            "ctr_stkrt": "-",
+            "report_resn": "최대주주의 장내매수\n주식소각에 따른 보유비율 변동\n특별관계자 해소\n의결권공동행사 등에 관한 주주간 협약 기간 종료"
+          }
+        }
+      ],
+      "top_holder_name": "안재천",
+      "top_holder_ratio": 45.96,
+      "latest_report_date": "2026-01-27"
+    },
+    {
       "code": "284740",
       "name": "쿠쿠홈시스",
       "market_label": "코스피",
@@ -7914,10 +7905,10 @@
       "corp_name": "쿠쿠홈시스",
       "priority_snapshot": {
         "recommended_roe_base": 14.65,
-        "pbr": 0.45327,
+        "pbr": 0.45523,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 23400
+        "current_price": 23550
       },
       "status": "000",
       "message": "정상",
@@ -7976,10 +7967,10 @@
       "corp_name": "인지소프트",
       "priority_snapshot": {
         "recommended_roe_base": 14.6,
-        "pbr": 0.39681,
+        "pbr": 0.391,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 19500
+        "current_price": 19230
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -7994,7 +7985,7 @@
       "corp_name": "젝시믹스",
       "priority_snapshot": {
         "recommended_roe_base": 14.57,
-        "pbr": 0.45455,
+        "pbr": 0.46418,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
         "current_price": 1880
@@ -8036,10 +8027,10 @@
       "corp_name": "세보엠이씨",
       "priority_snapshot": {
         "recommended_roe_base": 14.57,
-        "pbr": 0.64994,
+        "pbr": 0.67786,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 20200
+        "current_price": 19550
       },
       "status": "000",
       "message": "정상",
@@ -8078,10 +8069,10 @@
       "corp_name": "DSC인베스트먼트",
       "priority_snapshot": {
         "recommended_roe_base": 14.53,
-        "pbr": 1.20937,
+        "pbr": 1.22062,
         "estimated_n_base": 6,
-        "market_implied_n": 1.2,
-        "current_price": 6590
+        "market_implied_n": 1.3,
+        "current_price": 6350
       },
       "status": "000",
       "message": "정상",
@@ -8120,10 +8111,10 @@
       "corp_name": "유비쿼스",
       "priority_snapshot": {
         "recommended_roe_base": 14.52,
-        "pbr": 0.71936,
+        "pbr": 0.73004,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 10220
+        "current_price": 10050
       },
       "status": "000",
       "message": "정상",
@@ -8162,10 +8153,10 @@
       "corp_name": "오리온",
       "priority_snapshot": {
         "recommended_roe_base": 14.36,
-        "pbr": 1.11618,
+        "pbr": 1.12396,
         "estimated_n_base": 8,
         "market_implied_n": 1.2,
-        "current_price": 115900
+        "current_price": 116600
       },
       "status": "000",
       "message": "정상",
@@ -8244,10 +8235,10 @@
       "corp_name": "코스메카코리아",
       "priority_snapshot": {
         "recommended_roe_base": 14.33,
-        "pbr": 3.68984,
+        "pbr": 3.77955,
         "estimated_n_base": 6,
-        "market_implied_n": 7.7,
-        "current_price": 97100
+        "market_implied_n": 7.9,
+        "current_price": 95900
       },
       "status": "000",
       "message": "정상",
@@ -8326,10 +8317,10 @@
       "corp_name": "명인제약",
       "priority_snapshot": {
         "recommended_roe_base": 14.24,
-        "pbr": 0.71715,
+        "pbr": 0.71626,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 40000
+        "current_price": 40300
       },
       "status": "000",
       "message": "정상",
@@ -8368,10 +8359,10 @@
       "corp_name": "쏠리드",
       "priority_snapshot": {
         "recommended_roe_base": 14.17,
-        "pbr": 1.26985,
+        "pbr": 1.31777,
         "estimated_n_base": 6,
-        "market_implied_n": 2.5,
-        "current_price": 8300
+        "market_implied_n": 3.0,
+        "current_price": 7930
       },
       "status": "000",
       "message": "정상",
@@ -8410,10 +8401,10 @@
       "corp_name": "국보디자인",
       "priority_snapshot": {
         "recommended_roe_base": 14.12,
-        "pbr": 0.3109,
+        "pbr": 0.31298,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 22500
+        "current_price": 22700
       },
       "status": "000",
       "message": "정상",
@@ -8452,10 +8443,10 @@
       "corp_name": "네오팜",
       "priority_snapshot": {
         "recommended_roe_base": 14.12,
-        "pbr": 1.73123,
+        "pbr": 1.7429,
         "estimated_n_base": 8,
         "market_implied_n": 3.8,
-        "current_price": 22600
+        "current_price": 23300
       },
       "status": "000",
       "message": "정상",
@@ -8514,10 +8505,10 @@
       "corp_name": "에스앤에스텍",
       "priority_snapshot": {
         "recommended_roe_base": 14.12,
-        "pbr": 2.35614,
+        "pbr": 2.40954,
         "estimated_n_base": 6,
-        "market_implied_n": 4.0,
-        "current_price": 38650
+        "market_implied_n": 4.1,
+        "current_price": 37000
       },
       "status": "000",
       "message": "정상",
@@ -8556,10 +8547,10 @@
       "corp_name": "흥국화재",
       "priority_snapshot": {
         "recommended_roe_base": 14.09,
-        "pbr": 0.18127,
+        "pbr": 0.18781,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3200
+        "current_price": 3170
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -8574,10 +8565,10 @@
       "corp_name": "노바텍",
       "priority_snapshot": {
         "recommended_roe_base": 14.05,
-        "pbr": 0.62119,
+        "pbr": 0.63086,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 11260
+        "current_price": 10900
       },
       "status": "000",
       "message": "정상",
@@ -8616,10 +8607,10 @@
       "corp_name": "아이티센씨티에스",
       "priority_snapshot": {
         "recommended_roe_base": 14.04,
-        "pbr": 0.23425,
+        "pbr": 0.24213,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 5060
+        "current_price": 5020
       },
       "status": "000",
       "message": "정상",
@@ -8658,10 +8649,10 @@
       "corp_name": "폰드그룹",
       "priority_snapshot": {
         "recommended_roe_base": 14.04,
-        "pbr": 1.01655,
+        "pbr": 1.02375,
         "estimated_n_base": 8,
         "market_implied_n": 0.1,
-        "current_price": 4255
+        "current_price": 4200
       },
       "status": "000",
       "message": "정상",
@@ -8700,10 +8691,10 @@
       "corp_name": "인바디",
       "priority_snapshot": {
         "recommended_roe_base": 13.96,
-        "pbr": 1.80578,
+        "pbr": 1.79802,
         "estimated_n_base": 8,
-        "market_implied_n": 8.2,
-        "current_price": 46750
+        "market_implied_n": 8.1,
+        "current_price": 47050
       },
       "status": "000",
       "message": "정상",
@@ -8822,10 +8813,10 @@
       "corp_name": "아이티센글로벌",
       "priority_snapshot": {
         "recommended_roe_base": 13.95,
-        "pbr": 2.89267,
+        "pbr": 2.86445,
         "estimated_n_base": 4,
         "market_implied_n": 2.1,
-        "current_price": 20400
+        "current_price": 20150
       },
       "status": "000",
       "message": "정상",
@@ -8864,10 +8855,10 @@
       "corp_name": "스톰테크",
       "priority_snapshot": {
         "recommended_roe_base": 13.93,
-        "pbr": 1.0843,
+        "pbr": 1.08728,
         "estimated_n_base": 6,
         "market_implied_n": 0.8,
-        "current_price": 3650
+        "current_price": 3590
       },
       "status": "000",
       "message": "정상",
@@ -8906,10 +8897,10 @@
       "corp_name": "진양산업",
       "priority_snapshot": {
         "recommended_roe_base": 13.81,
-        "pbr": 1.27512,
+        "pbr": 1.22993,
         "estimated_n_base": 6,
-        "market_implied_n": 2.7,
-        "current_price": 6350
+        "market_implied_n": 2.3,
+        "current_price": 6360
       },
       "status": "000",
       "message": "정상",
@@ -8948,10 +8939,10 @@
       "corp_name": "동양이엔피",
       "priority_snapshot": {
         "recommended_roe_base": 13.77,
-        "pbr": 0.24065,
+        "pbr": 0.24629,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 15270
+        "current_price": 14690
       },
       "status": "000",
       "message": "정상",
@@ -8990,10 +8981,10 @@
       "corp_name": "현대코퍼레이션홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 13.76,
-        "pbr": 0.30191,
+        "pbr": 0.30413,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 12340
+        "current_price": 12270
       },
       "status": "000",
       "message": "정상",
@@ -9032,10 +9023,10 @@
       "corp_name": "키움증권",
       "priority_snapshot": {
         "recommended_roe_base": 13.72,
-        "pbr": 0.7616,
+        "pbr": 0.71303,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 207000
+        "current_price": 199900
       },
       "status": "000",
       "message": "정상",
@@ -9114,10 +9105,10 @@
       "corp_name": "디케이티",
       "priority_snapshot": {
         "recommended_roe_base": 13.7,
-        "pbr": 1.97611,
+        "pbr": 2.13369,
         "estimated_n_base": 4,
-        "market_implied_n": 7.2,
-        "current_price": 25050
+        "market_implied_n": 8.3,
+        "current_price": 23750
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -9132,10 +9123,10 @@
       "corp_name": "바디텍메드",
       "priority_snapshot": {
         "recommended_roe_base": 13.66,
-        "pbr": 0.73749,
+        "pbr": 0.74715,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 8460
+        "current_price": 8380
       },
       "status": "000",
       "message": "정상",
@@ -9174,10 +9165,10 @@
       "corp_name": "세미티에스",
       "priority_snapshot": {
         "recommended_roe_base": 13.6,
-        "pbr": 1.10549,
+        "pbr": 1.13738,
         "estimated_n_base": 6,
-        "market_implied_n": 0.3,
-        "current_price": 2735
+        "market_implied_n": 0.4,
+        "current_price": 2500
       },
       "status": "000",
       "message": "정상",
@@ -9236,10 +9227,10 @@
       "corp_name": "인터플렉스",
       "priority_snapshot": {
         "recommended_roe_base": 13.56,
-        "pbr": 0.40445,
+        "pbr": 0.41307,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 5830
+        "current_price": 5640
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -9254,10 +9245,10 @@
       "corp_name": "한국캐피탈",
       "priority_snapshot": {
         "recommended_roe_base": 13.55,
-        "pbr": 0.2649,
+        "pbr": 0.27027,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 1364
+        "current_price": 1356
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -9272,10 +9263,10 @@
       "corp_name": "제이브이엠",
       "priority_snapshot": {
         "recommended_roe_base": 13.53,
-        "pbr": 1.08644,
+        "pbr": 1.10756,
         "estimated_n_base": 8,
-        "market_implied_n": 0.6,
-        "current_price": 23550
+        "market_implied_n": 0.7,
+        "current_price": 24100
       },
       "status": "000",
       "message": "정상",
@@ -9314,10 +9305,10 @@
       "corp_name": "엠에스씨",
       "priority_snapshot": {
         "recommended_roe_base": 13.51,
-        "pbr": 0.5984,
+        "pbr": 0.61394,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 7050
+        "current_price": 6980
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -9332,10 +9323,10 @@
       "corp_name": "에스팀",
       "priority_snapshot": {
         "recommended_roe_base": 13.47,
-        "pbr": 0.89769,
+        "pbr": 0.89021,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 3000
+        "current_price": 2850
       },
       "status": "000",
       "message": "정상",
@@ -9414,10 +9405,10 @@
       "corp_name": "케이씨텍",
       "priority_snapshot": {
         "recommended_roe_base": 13.44,
-        "pbr": 3.00616,
+        "pbr": 2.99586,
         "estimated_n_base": 6,
-        "market_implied_n": 19.0,
-        "current_price": 87600
+        "market_implied_n": 18.9,
+        "current_price": 79900
       },
       "status": "000",
       "message": "정상",
@@ -9476,10 +9467,10 @@
       "corp_name": "아이쓰리시스템",
       "priority_snapshot": {
         "recommended_roe_base": 13.42,
-        "pbr": 3.02683,
+        "pbr": 3.06208,
         "estimated_n_base": 6,
-        "market_implied_n": 8.9,
-        "current_price": 60200
+        "market_implied_n": 9.0,
+        "current_price": 58600
       },
       "status": "000",
       "message": "정상",
@@ -9518,10 +9509,10 @@
       "corp_name": "유성티엔에스",
       "priority_snapshot": {
         "recommended_roe_base": 13.41,
-        "pbr": 0.22092,
+        "pbr": 0.23635,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4175
+        "current_price": 4265
       },
       "status": "000",
       "message": "정상",
@@ -9560,10 +9551,10 @@
       "corp_name": "제닉",
       "priority_snapshot": {
         "recommended_roe_base": 13.4,
-        "pbr": 2.1698,
+        "pbr": 2.25676,
         "estimated_n_base": 6,
-        "market_implied_n": 1.1,
-        "current_price": 16040
+        "market_implied_n": 1.2,
+        "current_price": 16250
       },
       "status": "000",
       "message": "정상",
@@ -9602,10 +9593,10 @@
       "corp_name": "인피니트헬스케어",
       "priority_snapshot": {
         "recommended_roe_base": 13.34,
-        "pbr": 1.19789,
+        "pbr": 1.21402,
         "estimated_n_base": 4,
-        "market_implied_n": 1.1,
-        "current_price": 11260
+        "market_implied_n": 1.2,
+        "current_price": 11350
       },
       "status": "000",
       "message": "정상",
@@ -9664,10 +9655,10 @@
       "corp_name": "세나테크놀로지",
       "priority_snapshot": {
         "recommended_roe_base": 13.3,
-        "pbr": 0.79801,
+        "pbr": 0.78681,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 28100
+        "current_price": 27400
       },
       "status": "000",
       "message": "정상",
@@ -9706,10 +9697,10 @@
       "corp_name": "크래프톤",
       "priority_snapshot": {
         "recommended_roe_base": 13.29,
-        "pbr": 1.09726,
+        "pbr": 1.09485,
         "estimated_n_base": 6,
-        "market_implied_n": 1.0,
-        "current_price": 182500
+        "market_implied_n": 0.9,
+        "current_price": 193700
       },
       "status": "000",
       "message": "정상",
@@ -9768,10 +9759,10 @@
       "corp_name": "씨앤지하이테크",
       "priority_snapshot": {
         "recommended_roe_base": 13.27,
-        "pbr": 0.78968,
+        "pbr": 0.80079,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 12350
+        "current_price": 12050
       },
       "status": "000",
       "message": "정상",
@@ -9810,10 +9801,10 @@
       "corp_name": "현대이지웰",
       "priority_snapshot": {
         "recommended_roe_base": 13.27,
-        "pbr": 0.85595,
+        "pbr": 0.85398,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 4330
+        "current_price": 4320
       },
       "status": "000",
       "message": "정상",
@@ -9872,10 +9863,10 @@
       "corp_name": "SK스퀘어",
       "priority_snapshot": {
         "recommended_roe_base": 13.26,
-        "pbr": 2.15575,
+        "pbr": 2.28313,
         "estimated_n_base": 6,
-        "market_implied_n": 1.7,
-        "current_price": 959000
+        "market_implied_n": 1.9,
+        "current_price": 911000
       },
       "status": "000",
       "message": "정상",
@@ -9934,10 +9925,10 @@
       "corp_name": "SNT에너지",
       "priority_snapshot": {
         "recommended_roe_base": 13.25,
-        "pbr": 1.11265,
+        "pbr": 1.17186,
         "estimated_n_base": 6,
-        "market_implied_n": 0.3,
-        "current_price": 23550
+        "market_implied_n": 0.5,
+        "current_price": 22950
       },
       "status": "000",
       "message": "정상",
@@ -9976,10 +9967,10 @@
       "corp_name": "휴젤",
       "priority_snapshot": {
         "recommended_roe_base": 13.24,
-        "pbr": 1.8408,
+        "pbr": 1.87356,
         "estimated_n_base": 6,
-        "market_implied_n": 3.9,
-        "current_price": 182900
+        "market_implied_n": 4.0,
+        "current_price": 189700
       },
       "status": "000",
       "message": "정상",
@@ -10038,10 +10029,10 @@
       "corp_name": "티에프이",
       "priority_snapshot": {
         "recommended_roe_base": 13.24,
-        "pbr": 7.1861,
+        "pbr": 6.72222,
         "estimated_n_base": 6,
-        "market_implied_n": 13.6,
-        "current_price": 81900
+        "market_implied_n": 12.9,
+        "current_price": 79100
       },
       "status": "000",
       "message": "정상",
@@ -10069,28 +10060,28 @@
         },
         {
           "holder_name": "미래에셋자산운용",
-          "report_date": "2026-10-23",
-          "ratio": 5.07,
+          "report_date": "2026-11-03",
+          "ratio": 7.58,
           "raw": {
-            "rcept_no": "20261023000454",
-            "rcept_dt": "2026-10-23",
+            "rcept_no": "20261103000304",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01035368",
             "corp_name": "티에프이",
             "report_tp": "약식",
             "repror": "미래에셋자산운용",
-            "stkqy": "625,932",
-            "stkqy_irds": "22,874",
-            "stkrt": "5.07",
-            "stkrt_irds": "0.19",
+            "stkqy": "935,717",
+            "stkqy_irds": "309,785",
+            "stkrt": "7.58",
+            "stkrt_irds": "2.51",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
-            "report_resn": "신규"
+            "report_resn": "지분율 변동"
           }
         }
       ],
       "top_holder_name": "문성주",
       "top_holder_ratio": 61.14,
-      "latest_report_date": "2026-10-23"
+      "latest_report_date": "2026-11-03"
     },
     {
       "code": "356860",
@@ -10100,10 +10091,10 @@
       "corp_name": "티엘비",
       "priority_snapshot": {
         "recommended_roe_base": 13.19,
-        "pbr": 5.43065,
+        "pbr": 5.72499,
         "estimated_n_base": 6,
-        "market_implied_n": 14.9,
-        "current_price": 39000
+        "market_implied_n": 15.6,
+        "current_price": 36800
       },
       "status": "000",
       "message": "정상",
@@ -10142,10 +10133,10 @@
       "corp_name": "대웅",
       "priority_snapshot": {
         "recommended_roe_base": 13.14,
-        "pbr": 0.50697,
+        "pbr": 0.5271,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 15750
+        "current_price": 15890
       },
       "status": "000",
       "message": "정상",
@@ -10184,10 +10175,10 @@
       "corp_name": "한국컴퓨터",
       "priority_snapshot": {
         "recommended_roe_base": 13.07,
-        "pbr": 0.30503,
+        "pbr": 0.30656,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4000
+        "current_price": 3935
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -10202,10 +10193,10 @@
       "corp_name": "한미약품",
       "priority_snapshot": {
         "recommended_roe_base": 13.07,
-        "pbr": 3.75117,
+        "pbr": 3.81896,
         "estimated_n_base": 6,
-        "market_implied_n": 12.5,
-        "current_price": 421500
+        "market_implied_n": 12.7,
+        "current_price": 412500
       },
       "status": "000",
       "message": "정상",
@@ -10264,10 +10255,10 @@
       "corp_name": "동방선기",
       "priority_snapshot": {
         "recommended_roe_base": 13.02,
-        "pbr": 0.62959,
+        "pbr": 0.65148,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2545
+        "current_price": 2500
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -10282,10 +10273,10 @@
       "corp_name": "이노테크",
       "priority_snapshot": {
         "recommended_roe_base": 12.96,
-        "pbr": 1.59139,
+        "pbr": 1.63157,
         "estimated_n_base": 6,
-        "market_implied_n": 2.3,
-        "current_price": 12440
+        "market_implied_n": 2.5,
+        "current_price": 11910
       },
       "status": "000",
       "message": "정상",
@@ -10324,10 +10315,10 @@
       "corp_name": "미원에스씨",
       "priority_snapshot": {
         "recommended_roe_base": 12.92,
-        "pbr": 1.2715,
+        "pbr": 1.2842,
         "estimated_n_base": 6,
         "market_implied_n": 1.6,
-        "current_price": 130200
+        "current_price": 130000
       },
       "status": "000",
       "message": "정상",
@@ -10366,10 +10357,10 @@
       "corp_name": "효성중공업",
       "priority_snapshot": {
         "recommended_roe_base": 12.92,
-        "pbr": 6.51056,
+        "pbr": 7.37792,
         "estimated_n_base": 4,
-        "market_implied_n": 9.0,
-        "current_price": 2028000
+        "market_implied_n": 9.9,
+        "current_price": 1999000
       },
       "status": "000",
       "message": "정상",
@@ -10428,10 +10419,10 @@
       "corp_name": "에스엔시스",
       "priority_snapshot": {
         "recommended_roe_base": 12.85,
-        "pbr": 1.00571,
+        "pbr": 1.04682,
         "estimated_n_base": 6,
-        "market_implied_n": 0.0,
-        "current_price": 19350
+        "market_implied_n": 0.3,
+        "current_price": 18910
       },
       "status": "000",
       "message": "정상",
@@ -10510,10 +10501,10 @@
       "corp_name": "JB금융지주",
       "priority_snapshot": {
         "recommended_roe_base": 12.79,
-        "pbr": 0.792,
+        "pbr": 0.77671,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 25600
+        "current_price": 25350
       },
       "status": "000",
       "message": "정상",
@@ -10612,10 +10603,10 @@
       "corp_name": "시공테크",
       "priority_snapshot": {
         "recommended_roe_base": 12.78,
-        "pbr": 0.33457,
+        "pbr": 0.34525,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 3395
+        "current_price": 3335
       },
       "status": "000",
       "message": "정상",
@@ -10654,10 +10645,10 @@
       "corp_name": "크리에이츠",
       "priority_snapshot": {
         "recommended_roe_base": 12.65,
-        "pbr": 0.99679,
+        "pbr": 0.82533,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 7740
+        "current_price": 6320
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -10672,10 +10663,10 @@
       "corp_name": "한켐",
       "priority_snapshot": {
         "recommended_roe_base": 12.65,
-        "pbr": 1.12802,
+        "pbr": 1.16269,
         "estimated_n_base": 6,
-        "market_implied_n": 1.4,
-        "current_price": 8670
+        "market_implied_n": 1.8,
+        "current_price": 8220
       },
       "status": "000",
       "message": "정상",
@@ -10714,10 +10705,10 @@
       "corp_name": "세경하이테크",
       "priority_snapshot": {
         "recommended_roe_base": 12.64,
-        "pbr": 0.57322,
+        "pbr": 0.57139,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3125
+        "current_price": 3080
       },
       "status": "000",
       "message": "정상",
@@ -10776,10 +10767,10 @@
       "corp_name": "삼성바이오로직스",
       "priority_snapshot": {
         "recommended_roe_base": 12.61,
-        "pbr": 8.29201,
+        "pbr": 7.92955,
         "estimated_n_base": 6,
-        "market_implied_n": 14.8,
-        "current_price": 1433000
+        "market_implied_n": 14.4,
+        "current_price": 1435000
       },
       "status": "000",
       "message": "정상",
@@ -10838,10 +10829,10 @@
       "corp_name": "에프앤가이드",
       "priority_snapshot": {
         "recommended_roe_base": 12.59,
-        "pbr": 2.14456,
+        "pbr": 2.17716,
         "estimated_n_base": 6,
-        "market_implied_n": 5.6,
-        "current_price": 14590
+        "market_implied_n": 5.7,
+        "current_price": 14460
       },
       "status": "000",
       "message": "정상",
@@ -10940,10 +10931,10 @@
       "corp_name": "솔브레인홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 12.51,
-        "pbr": 0.39883,
+        "pbr": 0.41066,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 38000
+        "current_price": 36700
       },
       "status": "000",
       "message": "정상",
@@ -10982,10 +10973,10 @@
       "corp_name": "노바렉스",
       "priority_snapshot": {
         "recommended_roe_base": 12.5,
-        "pbr": 0.57967,
+        "pbr": 0.59158,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 8880
+        "current_price": 8800
       },
       "status": "000",
       "message": "정상",
@@ -11044,10 +11035,10 @@
       "corp_name": "대웅제약",
       "priority_snapshot": {
         "recommended_roe_base": 12.45,
-        "pbr": 1.09338,
+        "pbr": 1.10528,
         "estimated_n_base": 4,
         "market_implied_n": 0.3,
-        "current_price": 101500
+        "current_price": 102600
       },
       "status": "000",
       "message": "정상",
@@ -11106,10 +11097,10 @@
       "corp_name": "티쓰리",
       "priority_snapshot": {
         "recommended_roe_base": 12.43,
-        "pbr": 1.49703,
+        "pbr": 1.49432,
         "estimated_n_base": 6,
         "market_implied_n": 2.1,
-        "current_price": 2765
+        "current_price": 2755
       },
       "status": "000",
       "message": "정상",
@@ -11168,10 +11159,10 @@
       "corp_name": "에스케이바이오팜",
       "priority_snapshot": {
         "recommended_roe_base": 12.42,
-        "pbr": 5.95535,
+        "pbr": 5.94002,
         "estimated_n_base": 6,
         "market_implied_n": 4.8,
-        "current_price": 77700
+        "current_price": 79600
       },
       "status": "000",
       "message": "정상",
@@ -11230,10 +11221,10 @@
       "corp_name": "슈프리마",
       "priority_snapshot": {
         "recommended_roe_base": 12.41,
-        "pbr": 1.05927,
+        "pbr": 1.19269,
         "estimated_n_base": 8,
-        "market_implied_n": 0.4,
-        "current_price": 51700
+        "market_implied_n": 1.4,
+        "current_price": 50600
       },
       "status": "000",
       "message": "정상",
@@ -11298,26 +11289,6 @@
             "ctr_stkrt": "-",
             "report_resn": "주식소각 및 단순추가취득/처분"
           }
-        },
-        {
-          "holder_name": "더제이자산운용",
-          "report_date": "2026-03-11",
-          "ratio": 5.03,
-          "raw": {
-            "rcept_no": "20260311003239",
-            "rcept_dt": "2026-03-11",
-            "corp_code": "01124653",
-            "corp_name": "슈프리마",
-            "report_tp": "약식",
-            "repror": "더제이자산운용",
-            "stkqy": "350,510",
-            "stkqy_irds": "350,510",
-            "stkrt": "5.03",
-            "stkrt_irds": "5.03",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "장내매매(5% 보고)"
-          }
         }
       ],
       "top_holder_name": "이재원",
@@ -11332,10 +11303,10 @@
       "corp_name": "화승코퍼레이션",
       "priority_snapshot": {
         "recommended_roe_base": 12.4,
-        "pbr": 0.36308,
+        "pbr": 0.36153,
         "estimated_n_base": 2,
         "market_implied_n": 0.0,
-        "current_price": 2355
+        "current_price": 2275
       },
       "status": "000",
       "message": "정상",
@@ -11374,10 +11345,10 @@
       "corp_name": "핑거스토리",
       "priority_snapshot": {
         "recommended_roe_base": 12.32,
-        "pbr": 0.38492,
+        "pbr": 0.37104,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 3510
+        "current_price": 3235
       },
       "status": "000",
       "message": "정상",
@@ -11422,26 +11393,6 @@
             "ctr_stkrt": "-",
             "report_resn": "전환사채 인수에 따른 신규보고"
           }
-        },
-        {
-          "holder_name": "시너지아이비투자",
-          "report_date": "2025-11-19",
-          "ratio": 5.4,
-          "raw": {
-            "rcept_no": "20251119000137",
-            "rcept_dt": "2025-11-19",
-            "corp_code": "01584934",
-            "corp_name": "핑거스토리",
-            "report_tp": "약식",
-            "repror": "시너지아이비투자",
-            "stkqy": "1,002,506",
-            "stkqy_irds": "1,002,506",
-            "stkrt": "5.40",
-            "stkrt_irds": "5.40",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "제4회차 전환사채 인수에 따른 신규보고"
-          }
         }
       ],
       "top_holder_name": "문양근",
@@ -11456,10 +11407,10 @@
       "corp_name": "체리부로",
       "priority_snapshot": {
         "recommended_roe_base": 12.29,
-        "pbr": 0.32274,
+        "pbr": 0.33927,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1519
+        "current_price": 1521
       },
       "status": "000",
       "message": "정상",
@@ -11498,10 +11449,10 @@
       "corp_name": "쿠쿠홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 12.27,
-        "pbr": 0.6266,
+        "pbr": 0.6175,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 27200
+        "current_price": 27150
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -11516,10 +11467,10 @@
       "corp_name": "삼성화재해상보험",
       "priority_snapshot": {
         "recommended_roe_base": 12.11,
-        "pbr": 0.7744,
+        "pbr": 0.76499,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 653000
+        "current_price": 654000
       },
       "status": "000",
       "message": "정상",
@@ -11578,10 +11529,10 @@
       "corp_name": "에이티넘인베스트",
       "priority_snapshot": {
         "recommended_roe_base": 12.09,
-        "pbr": 0.39931,
+        "pbr": 0.4107,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 1768
+        "current_price": 1715
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -11596,10 +11547,10 @@
       "corp_name": "엠씨넥스",
       "priority_snapshot": {
         "recommended_roe_base": 12.07,
-        "pbr": 0.71903,
+        "pbr": 0.73121,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 17860
+        "current_price": 17250
       },
       "status": "000",
       "message": "정상",
@@ -11638,10 +11589,10 @@
       "corp_name": "비엠티",
       "priority_snapshot": {
         "recommended_roe_base": 12.04,
-        "pbr": 1.00744,
+        "pbr": 1.04335,
         "estimated_n_base": 6,
-        "market_implied_n": 0.0,
-        "current_price": 15970
+        "market_implied_n": 0.3,
+        "current_price": 15610
       },
       "status": "000",
       "message": "정상",
@@ -11700,10 +11651,10 @@
       "corp_name": "덕산네오룩스",
       "priority_snapshot": {
         "recommended_roe_base": 12.03,
-        "pbr": 1.16757,
+        "pbr": 1.15499,
         "estimated_n_base": 8,
-        "market_implied_n": 1.2,
-        "current_price": 23100
+        "market_implied_n": 1.1,
+        "current_price": 23350
       },
       "status": "000",
       "message": "정상",
@@ -11782,10 +11733,10 @@
       "corp_name": "현대그린푸드",
       "priority_snapshot": {
         "recommended_roe_base": 11.93,
-        "pbr": 0.79414,
+        "pbr": 0.79126,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 19340
+        "current_price": 20900
       },
       "status": "000",
       "message": "정상",
@@ -11824,10 +11775,10 @@
       "corp_name": "한국정보통신",
       "priority_snapshot": {
         "recommended_roe_base": 11.9,
-        "pbr": 0.78945,
+        "pbr": 0.79461,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 7700
+        "current_price": 7630
       },
       "status": "000",
       "message": "정상",
@@ -11866,10 +11817,10 @@
       "corp_name": "세진중공업",
       "priority_snapshot": {
         "recommended_roe_base": 11.88,
-        "pbr": 1.62902,
+        "pbr": 1.72389,
         "estimated_n_base": 4,
-        "market_implied_n": 1.7,
-        "current_price": 7470
+        "market_implied_n": 1.9,
+        "current_price": 7580
       },
       "status": "000",
       "message": "정상",
@@ -11908,10 +11859,10 @@
       "corp_name": "한국금융지주",
       "priority_snapshot": {
         "recommended_roe_base": 11.87,
-        "pbr": 0.64807,
+        "pbr": 0.64339,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 151600
+        "current_price": 147700
       },
       "status": "000",
       "message": "정상",
@@ -11970,10 +11921,10 @@
       "corp_name": "전방",
       "priority_snapshot": {
         "recommended_roe_base": 11.76,
-        "pbr": 0.14782,
+        "pbr": 0.15332,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 30200
+        "current_price": 29650
       },
       "status": "000",
       "message": "정상",
@@ -12012,10 +11963,10 @@
       "corp_name": "대원산업",
       "priority_snapshot": {
         "recommended_roe_base": 11.75,
-        "pbr": 0.32857,
+        "pbr": 0.32696,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 10200
+        "current_price": 10310
       },
       "status": "000",
       "message": "정상",
@@ -12054,10 +12005,10 @@
       "corp_name": "토비스",
       "priority_snapshot": {
         "recommended_roe_base": 11.72,
-        "pbr": 0.54249,
+        "pbr": 0.54299,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 11120
+        "current_price": 10660
       },
       "status": "000",
       "message": "정상",
@@ -12116,10 +12067,10 @@
       "corp_name": "펌텍코리아",
       "priority_snapshot": {
         "recommended_roe_base": 11.7,
-        "pbr": 2.49902,
+        "pbr": 2.5068,
         "estimated_n_base": 8,
-        "market_implied_n": 10.2,
-        "current_price": 64100
+        "market_implied_n": 10.3,
+        "current_price": 63200
       },
       "status": "000",
       "message": "정상",
@@ -12178,10 +12129,10 @@
       "corp_name": "일진전기",
       "priority_snapshot": {
         "recommended_roe_base": 11.64,
-        "pbr": 3.84087,
+        "pbr": 4.14698,
         "estimated_n_base": 6,
-        "market_implied_n": 8.2,
-        "current_price": 57000
+        "market_implied_n": 8.8,
+        "current_price": 54600
       },
       "status": "000",
       "message": "정상",
@@ -12240,10 +12191,10 @@
       "corp_name": "그린리소스",
       "priority_snapshot": {
         "recommended_roe_base": 11.54,
-        "pbr": 0.97941,
+        "pbr": 1.011,
         "estimated_n_base": 4,
-        "market_implied_n": 0.0,
-        "current_price": 5090
+        "market_implied_n": 0.1,
+        "current_price": 5050
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -12258,10 +12209,10 @@
       "corp_name": "디지털대성",
       "priority_snapshot": {
         "recommended_roe_base": 11.5,
-        "pbr": 1.58608,
+        "pbr": 1.59989,
         "estimated_n_base": 6,
         "market_implied_n": 3.0,
-        "current_price": 9250
+        "current_price": 9420
       },
       "status": "000",
       "message": "정상",
@@ -12300,10 +12251,10 @@
       "corp_name": "영림원소프트랩",
       "priority_snapshot": {
         "recommended_roe_base": 11.48,
-        "pbr": 0.59957,
+        "pbr": 0.59572,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4055
+        "current_price": 3850
       },
       "status": "000",
       "message": "정상",
@@ -12342,10 +12293,10 @@
       "corp_name": "SY동아",
       "priority_snapshot": {
         "recommended_roe_base": 11.45,
-        "pbr": 0.36156,
+        "pbr": 0.36385,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4775
+        "current_price": 4770
       },
       "status": "000",
       "message": "정상",
@@ -12384,10 +12335,10 @@
       "corp_name": "프로텍",
       "priority_snapshot": {
         "recommended_roe_base": 11.4,
-        "pbr": 1.37208,
+        "pbr": 1.40604,
         "estimated_n_base": 6,
-        "market_implied_n": 2.1,
-        "current_price": 62000
+        "market_implied_n": 2.3,
+        "current_price": 59200
       },
       "status": "000",
       "message": "정상",
@@ -12446,10 +12397,10 @@
       "corp_name": "한미사이언스",
       "priority_snapshot": {
         "recommended_roe_base": 11.36,
-        "pbr": 2.75211,
+        "pbr": 2.77766,
         "estimated_n_base": 6,
-        "market_implied_n": 10.4,
-        "current_price": 43700
+        "market_implied_n": 10.5,
+        "current_price": 44400
       },
       "status": "000",
       "message": "정상",
@@ -12528,10 +12479,10 @@
       "corp_name": "테스",
       "priority_snapshot": {
         "recommended_roe_base": 11.35,
-        "pbr": 4.26725,
+        "pbr": 4.35377,
         "estimated_n_base": 6,
-        "market_implied_n": 12.3,
-        "current_price": 111100
+        "market_implied_n": 12.5,
+        "current_price": 105400
       },
       "status": "000",
       "message": "정상",
@@ -12630,10 +12581,10 @@
       "corp_name": "케이티앤지",
       "priority_snapshot": {
         "recommended_roe_base": 11.3,
-        "pbr": 2.10503,
+        "pbr": 2.0664,
         "estimated_n_base": 6,
-        "market_implied_n": 8.5,
-        "current_price": 193200
+        "market_implied_n": 8.2,
+        "current_price": 192700
       },
       "status": "000",
       "message": "정상",
@@ -12772,10 +12723,10 @@
       "corp_name": "제룡산업",
       "priority_snapshot": {
         "recommended_roe_base": 11.16,
-        "pbr": 1.20901,
+        "pbr": 1.23919,
         "estimated_n_base": 6,
-        "market_implied_n": 1.3,
-        "current_price": 6120
+        "market_implied_n": 1.5,
+        "current_price": 5970
       },
       "status": "000",
       "message": "정상",
@@ -12814,10 +12765,10 @@
       "corp_name": "윈스테크넷",
       "priority_snapshot": {
         "recommended_roe_base": 11.1,
-        "pbr": 0.65192,
+        "pbr": 0.65949,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 11440
+        "current_price": 12050
       },
       "status": "000",
       "message": "정상",
@@ -12856,10 +12807,10 @@
       "corp_name": "위너스일렉",
       "priority_snapshot": {
         "recommended_roe_base": 11.07,
-        "pbr": 0.95444,
+        "pbr": 0.95268,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 5450
+        "current_price": 5230
       },
       "status": "000",
       "message": "정상",
@@ -12901,7 +12852,7 @@
         "pbr": 0.44089,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4875
+        "current_price": 4855
       },
       "status": "000",
       "message": "정상",
@@ -12940,10 +12891,10 @@
       "corp_name": "하이록코리아",
       "priority_snapshot": {
         "recommended_roe_base": 11.06,
-        "pbr": 0.76939,
+        "pbr": 0.78687,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 31800
+        "current_price": 31150
       },
       "status": "000",
       "message": "정상",
@@ -13042,10 +12993,10 @@
       "corp_name": "HRS",
       "priority_snapshot": {
         "recommended_roe_base": 11.04,
-        "pbr": 0.55896,
+        "pbr": 0.56495,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4720
+        "current_price": 4785
       },
       "status": "000",
       "message": "정상",
@@ -13084,10 +13035,10 @@
       "corp_name": "파이버프로",
       "priority_snapshot": {
         "recommended_roe_base": 11.01,
-        "pbr": 6.38888,
+        "pbr": 6.49959,
         "estimated_n_base": 6,
-        "market_implied_n": 10.2,
-        "current_price": 10020
+        "market_implied_n": 10.4,
+        "current_price": 9540
       },
       "status": "000",
       "message": "정상",
@@ -13166,10 +13117,10 @@
       "corp_name": "안랩",
       "priority_snapshot": {
         "recommended_roe_base": 11.0,
-        "pbr": 2.83975,
+        "pbr": 2.79406,
         "estimated_n_base": 6,
-        "market_implied_n": 8.8,
-        "current_price": 115900
+        "market_implied_n": 8.6,
+        "current_price": 113900
       },
       "status": "000",
       "message": "정상",
@@ -13208,10 +13159,10 @@
       "corp_name": "에스원",
       "priority_snapshot": {
         "recommended_roe_base": 10.9,
-        "pbr": 1.92184,
+        "pbr": 1.8884,
         "estimated_n_base": 8,
-        "market_implied_n": 9.1,
-        "current_price": 96400
+        "market_implied_n": 8.8,
+        "current_price": 97600
       },
       "status": "000",
       "message": "정상",
@@ -13270,10 +13221,10 @@
       "corp_name": "비에이치아이",
       "priority_snapshot": {
         "recommended_roe_base": 10.89,
-        "pbr": 6.31376,
+        "pbr": 6.61259,
         "estimated_n_base": 4,
-        "market_implied_n": 4.4,
-        "current_price": 42950
+        "market_implied_n": 4.5,
+        "current_price": 41250
       },
       "status": "000",
       "message": "정상",
@@ -13332,10 +13283,10 @@
       "corp_name": "디케이앤디",
       "priority_snapshot": {
         "recommended_roe_base": 10.88,
-        "pbr": 0.45898,
+        "pbr": 0.45499,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2875
+        "current_price": 2865
       },
       "status": "000",
       "message": "정상",
@@ -13374,10 +13325,10 @@
       "corp_name": "아셈스",
       "priority_snapshot": {
         "recommended_roe_base": 10.85,
-        "pbr": 0.47124,
+        "pbr": 0.46979,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 3285
+        "current_price": 3330
       },
       "status": "000",
       "message": "정상",
@@ -13416,10 +13367,10 @@
       "corp_name": "삼영무역",
       "priority_snapshot": {
         "recommended_roe_base": 10.84,
-        "pbr": 0.57178,
+        "pbr": 0.56202,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 20150
+        "current_price": 20050
       },
       "status": "000",
       "message": "정상",
@@ -13458,10 +13409,10 @@
       "corp_name": "삼양엔씨켐",
       "priority_snapshot": {
         "recommended_roe_base": 10.82,
-        "pbr": 1.99337,
+        "pbr": 1.96684,
         "estimated_n_base": 6,
-        "market_implied_n": 5.2,
-        "current_price": 11930
+        "market_implied_n": 5.0,
+        "current_price": 11050
       },
       "status": "000",
       "message": "정상",
@@ -13500,10 +13451,10 @@
       "corp_name": "엘리스",
       "priority_snapshot": {
         "recommended_roe_base": 10.8,
-        "pbr": 6.38681,
+        "pbr": 6.34527,
         "estimated_n_base": 4,
-        "market_implied_n": 11.6,
-        "current_price": 60500
+        "market_implied_n": 11.5,
+        "current_price": 57300
       },
       "status": "000",
       "message": "정상",
@@ -13582,10 +13533,10 @@
       "corp_name": "ISC",
       "priority_snapshot": {
         "recommended_roe_base": 10.76,
-        "pbr": 5.65841,
+        "pbr": 5.98164,
         "estimated_n_base": 6,
-        "market_implied_n": 41.0,
-        "current_price": 165300
+        "market_implied_n": 43.5,
+        "current_price": 158900
       },
       "status": "000",
       "message": "정상",
@@ -13664,10 +13615,10 @@
       "corp_name": "서울평가정보",
       "priority_snapshot": {
         "recommended_roe_base": 10.73,
-        "pbr": 1.32176,
+        "pbr": 1.31396,
         "estimated_n_base": 4,
-        "market_implied_n": 1.0,
-        "current_price": 1369
+        "market_implied_n": 0.9,
+        "current_price": 1392
       },
       "status": "000",
       "message": "정상",
@@ -13706,10 +13657,10 @@
       "corp_name": "미창석유공업",
       "priority_snapshot": {
         "recommended_roe_base": 10.7,
-        "pbr": 0.30457,
+        "pbr": 0.30378,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 115600
+        "current_price": 116500
       },
       "status": "000",
       "message": "정상",
@@ -13768,10 +13719,10 @@
       "corp_name": "우원개발",
       "priority_snapshot": {
         "recommended_roe_base": 10.65,
-        "pbr": 0.2718,
+        "pbr": 0.28252,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2495
+        "current_price": 2485
       },
       "status": "000",
       "message": "정상",
@@ -13810,10 +13761,10 @@
       "corp_name": "에이치엘지노믹스",
       "priority_snapshot": {
         "recommended_roe_base": 10.65,
-        "pbr": 0.50268,
+        "pbr": 0.51274,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 7090
+        "current_price": 6850
       },
       "status": "000",
       "message": "정상",
@@ -13852,10 +13803,10 @@
       "corp_name": "티에스이",
       "priority_snapshot": {
         "recommended_roe_base": 10.65,
-        "pbr": 5.18155,
+        "pbr": 5.21656,
         "estimated_n_base": 4,
-        "market_implied_n": 39.4,
-        "current_price": 224500
+        "market_implied_n": 39.7,
+        "current_price": 207000
       },
       "status": "000",
       "message": "정상",
@@ -13934,10 +13885,10 @@
       "corp_name": "케이씨에스",
       "priority_snapshot": {
         "recommended_roe_base": 10.63,
-        "pbr": 5.78163,
+        "pbr": 5.7882,
         "estimated_n_base": 4,
-        "market_implied_n": 23.3,
-        "current_price": 8860
+        "market_implied_n": 23.4,
+        "current_price": 8530
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -13952,10 +13903,10 @@
       "corp_name": "LS에코에너지",
       "priority_snapshot": {
         "recommended_roe_base": 10.49,
-        "pbr": 5.96806,
+        "pbr": 5.96196,
         "estimated_n_base": 4,
         "market_implied_n": 10.1,
-        "current_price": 49200
+        "current_price": 46450
       },
       "status": "000",
       "message": "정상",
@@ -14056,10 +14007,10 @@
       "corp_name": "에프엔에스테크",
       "priority_snapshot": {
         "recommended_roe_base": 10.4,
-        "pbr": 1.13067,
+        "pbr": 1.15625,
         "estimated_n_base": 4,
-        "market_implied_n": 1.2,
-        "current_price": 13300
+        "market_implied_n": 1.5,
+        "current_price": 12560
       },
       "status": "000",
       "message": "정상",
@@ -14098,10 +14049,10 @@
       "corp_name": "삼성증권",
       "priority_snapshot": {
         "recommended_roe_base": 10.35,
-        "pbr": 0.82943,
+        "pbr": 0.83459,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 81300
+        "current_price": 79700
       },
       "status": "000",
       "message": "정상",
@@ -14160,10 +14111,10 @@
       "corp_name": "케이씨피드",
       "priority_snapshot": {
         "recommended_roe_base": 10.33,
-        "pbr": 0.41023,
+        "pbr": 0.41311,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2170
+        "current_price": 2230
       },
       "status": "000",
       "message": "정상",
@@ -14202,10 +14153,10 @@
       "corp_name": "현대에이치티",
       "priority_snapshot": {
         "recommended_roe_base": 10.29,
-        "pbr": 0.56303,
+        "pbr": 0.58608,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 7590
+        "current_price": 7510
       },
       "status": "000",
       "message": "정상",
@@ -14244,10 +14195,10 @@
       "corp_name": "동국제약",
       "priority_snapshot": {
         "recommended_roe_base": 10.29,
-        "pbr": 1.51853,
+        "pbr": 1.53148,
         "estimated_n_base": 6,
-        "market_implied_n": 5.2,
-        "current_price": 23650
+        "market_implied_n": 5.3,
+        "current_price": 24150
       },
       "status": "000",
       "message": "정상",
@@ -14286,10 +14237,10 @@
       "corp_name": "삼성전자",
       "priority_snapshot": {
         "recommended_roe_base": 10.28,
-        "pbr": 2.6147,
+        "pbr": 2.66119,
         "estimated_n_base": 6,
-        "market_implied_n": 14.4,
-        "current_price": 230000
+        "market_implied_n": 14.8,
+        "current_price": 222000
       },
       "status": "000",
       "message": "정상",
@@ -14328,10 +14279,10 @@
       "corp_name": "체시스",
       "priority_snapshot": {
         "recommended_roe_base": 10.22,
-        "pbr": 0.50296,
+        "pbr": 0.5224,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 4050
+        "current_price": 4355
       },
       "status": "000",
       "message": "정상",
@@ -14370,10 +14321,10 @@
       "corp_name": "디아이티",
       "priority_snapshot": {
         "recommended_roe_base": 10.15,
-        "pbr": 0.98196,
+        "pbr": 1.00856,
         "estimated_n_base": 4,
-        "market_implied_n": 0.0,
-        "current_price": 14060
+        "market_implied_n": 0.1,
+        "current_price": 13480
       },
       "status": "000",
       "message": "정상",
@@ -14432,10 +14383,10 @@
       "corp_name": "일승",
       "priority_snapshot": {
         "recommended_roe_base": 10.15,
-        "pbr": 1.6647,
+        "pbr": 1.79275,
         "estimated_n_base": 6,
-        "market_implied_n": 2.7,
-        "current_price": 3125
+        "market_implied_n": 3.2,
+        "current_price": 3100
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -14450,10 +14401,10 @@
       "corp_name": "유아이엘",
       "priority_snapshot": {
         "recommended_roe_base": 10.0,
-        "pbr": 0.54076,
+        "pbr": 0.53782,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3680
+        "current_price": 3640
       },
       "status": "000",
       "message": "정상",
@@ -14492,7 +14443,7 @@
       "corp_name": "바이오에프디엔씨",
       "priority_snapshot": {
         "recommended_roe_base": 10.0,
-        "pbr": 1.06891,
+        "pbr": 1.07359,
         "estimated_n_base": 8,
         "market_implied_n": 0.8,
         "current_price": 9130
@@ -14534,10 +14485,10 @@
       "corp_name": "아바코",
       "priority_snapshot": {
         "recommended_roe_base": 9.91,
-        "pbr": 0.79447,
+        "pbr": 0.79923,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 11840
+        "current_price": 11550
       },
       "status": "000",
       "message": "정상",
@@ -14576,10 +14527,10 @@
       "corp_name": "에이블씨엔씨",
       "priority_snapshot": {
         "recommended_roe_base": 9.75,
-        "pbr": 2.9631,
+        "pbr": 2.99077,
         "estimated_n_base": 4,
-        "market_implied_n": 8.2,
-        "current_price": 9660
+        "market_implied_n": 8.3,
+        "current_price": 9320
       },
       "status": "000",
       "message": "정상",
@@ -14638,10 +14589,10 @@
       "corp_name": "진로발효",
       "priority_snapshot": {
         "recommended_roe_base": 9.66,
-        "pbr": 1.2069,
+        "pbr": 1.20986,
         "estimated_n_base": 6,
         "market_implied_n": 1.3,
-        "current_price": 16350
+        "current_price": 16220
       },
       "status": "000",
       "message": "정상",
@@ -14680,10 +14631,10 @@
       "corp_name": "코세스",
       "priority_snapshot": {
         "recommended_roe_base": 9.63,
-        "pbr": 5.87133,
+        "pbr": 5.82797,
         "estimated_n_base": 4,
         "market_implied_n": 11.4,
-        "current_price": 33500
+        "current_price": 30350
       },
       "status": "000",
       "message": "정상",
@@ -14722,10 +14673,10 @@
       "corp_name": "엠플러스",
       "priority_snapshot": {
         "recommended_roe_base": 9.62,
-        "pbr": 0.88121,
+        "pbr": 0.9007,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 8770
+        "current_price": 8470
       },
       "status": "000",
       "message": "정상",
@@ -14784,10 +14735,10 @@
       "corp_name": "비트컴퓨터",
       "priority_snapshot": {
         "recommended_roe_base": 9.56,
-        "pbr": 0.76228,
+        "pbr": 0.77223,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3870
+        "current_price": 3850
       },
       "status": "000",
       "message": "정상",
@@ -14826,10 +14777,10 @@
       "corp_name": "지투파워",
       "priority_snapshot": {
         "recommended_roe_base": 9.48,
-        "pbr": 3.20446,
+        "pbr": 3.30183,
         "estimated_n_base": 4,
-        "market_implied_n": 11.0,
-        "current_price": 7500
+        "market_implied_n": 11.4,
+        "current_price": 7470
       },
       "status": "000",
       "message": "정상",
@@ -14868,10 +14819,10 @@
       "corp_name": "태광",
       "priority_snapshot": {
         "recommended_roe_base": 9.41,
-        "pbr": 0.94692,
+        "pbr": 1.07414,
         "estimated_n_base": 6,
-        "market_implied_n": 0.0,
-        "current_price": 30000
+        "market_implied_n": 0.7,
+        "current_price": 27650
       },
       "status": "000",
       "message": "정상",
@@ -14950,10 +14901,10 @@
       "corp_name": "선익시스템",
       "priority_snapshot": {
         "recommended_roe_base": 9.32,
-        "pbr": 4.35969,
+        "pbr": 4.2507,
         "estimated_n_base": 4,
         "market_implied_n": 1.5,
-        "current_price": 77900
+        "current_price": 71800
       },
       "status": "000",
       "message": "정상",
@@ -15012,10 +14963,10 @@
       "corp_name": "KTis",
       "priority_snapshot": {
         "recommended_roe_base": 9.29,
-        "pbr": 0.30677,
+        "pbr": 0.30614,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 2445
+        "current_price": 2455
       },
       "status": "000",
       "message": "정상",
@@ -15054,10 +15005,10 @@
       "corp_name": "HB테크놀러지",
       "priority_snapshot": {
         "recommended_roe_base": 9.26,
-        "pbr": 0.51877,
+        "pbr": 0.52363,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1843
+        "current_price": 1806
       },
       "status": "000",
       "message": "정상",
@@ -15096,10 +15047,10 @@
       "corp_name": "아이크래프트",
       "priority_snapshot": {
         "recommended_roe_base": 9.13,
-        "pbr": 1.89557,
+        "pbr": 1.86636,
         "estimated_n_base": 4,
-        "market_implied_n": 2.3,
-        "current_price": 6420
+        "market_implied_n": 2.2,
+        "current_price": 6220
       },
       "status": "000",
       "message": "정상",
@@ -15138,10 +15089,10 @@
       "corp_name": "프로티아",
       "priority_snapshot": {
         "recommended_roe_base": 9.02,
-        "pbr": 2.12767,
+        "pbr": 2.0986,
         "estimated_n_base": 6,
-        "market_implied_n": 5.2,
-        "current_price": 3645
+        "market_implied_n": 5.1,
+        "current_price": 3560
       },
       "status": "000",
       "message": "정상",
@@ -15180,10 +15131,10 @@
       "corp_name": "캐프",
       "priority_snapshot": {
         "recommended_roe_base": 9.01,
-        "pbr": 0.27846,
+        "pbr": 0.28942,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1977
+        "current_price": 1931
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -15198,10 +15149,10 @@
       "corp_name": "YG PLUS",
       "priority_snapshot": {
         "recommended_roe_base": 8.98,
-        "pbr": 0.90252,
+        "pbr": 0.9237,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2850
+        "current_price": 2835
       },
       "status": "000",
       "message": "정상",
@@ -15240,10 +15191,10 @@
       "corp_name": "한화손해보험",
       "priority_snapshot": {
         "recommended_roe_base": 8.96,
-        "pbr": 0.30948,
+        "pbr": 0.30849,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 6260
+        "current_price": 6340
       },
       "status": "000",
       "message": "정상",
@@ -15302,10 +15253,10 @@
       "corp_name": "한화엔진",
       "priority_snapshot": {
         "recommended_roe_base": 8.95,
-        "pbr": 3.77487,
+        "pbr": 4.12154,
         "estimated_n_base": 4,
-        "market_implied_n": 3.5,
-        "current_price": 32300
+        "market_implied_n": 3.9,
+        "current_price": 31300
       },
       "status": "000",
       "message": "정상",
@@ -15364,10 +15315,10 @@
       "corp_name": "하나투어",
       "priority_snapshot": {
         "recommended_roe_base": 8.75,
-        "pbr": 2.8277,
+        "pbr": 2.85855,
         "estimated_n_base": 4,
-        "market_implied_n": 5.5,
-        "current_price": 28000
+        "market_implied_n": 5.6,
+        "current_price": 28500
       },
       "status": "000",
       "message": "정상",
@@ -15406,10 +15357,10 @@
       "corp_name": "케이씨씨",
       "priority_snapshot": {
         "recommended_roe_base": 8.72,
-        "pbr": 0.26001,
+        "pbr": 0.26969,
         "estimated_n_base": 2,
         "market_implied_n": 0.0,
-        "current_price": 403000
+        "current_price": 408500
       },
       "status": "000",
       "message": "정상",
@@ -15468,10 +15419,10 @@
       "corp_name": "효성",
       "priority_snapshot": {
         "recommended_roe_base": 8.64,
-        "pbr": 0.73624,
+        "pbr": 0.78098,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 125500
+        "current_price": 130000
       },
       "status": "000",
       "message": "정상",
@@ -15550,10 +15501,10 @@
       "corp_name": "로지시스",
       "priority_snapshot": {
         "recommended_roe_base": 8.57,
-        "pbr": 0.90701,
+        "pbr": 0.91595,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 2045
+        "current_price": 2070
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -15568,10 +15519,10 @@
       "corp_name": "이상네트웍스",
       "priority_snapshot": {
         "recommended_roe_base": 8.55,
-        "pbr": 0.41983,
+        "pbr": 0.41796,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 6720
+        "current_price": 6690
       },
       "status": "000",
       "message": "정상",
@@ -15610,10 +15561,10 @@
       "corp_name": "NC",
       "priority_snapshot": {
         "recommended_roe_base": 8.52,
-        "pbr": 1.10828,
+        "pbr": 1.09178,
         "estimated_n_base": 6,
-        "market_implied_n": 1.0,
-        "current_price": 199100
+        "market_implied_n": 0.9,
+        "current_price": 197000
       },
       "status": "000",
       "message": "정상",
@@ -15712,10 +15663,10 @@
       "corp_name": "한전기술",
       "priority_snapshot": {
         "recommended_roe_base": 8.5,
-        "pbr": 5.53922,
+        "pbr": 5.7382,
         "estimated_n_base": 4,
-        "market_implied_n": 19.0,
-        "current_price": 89300
+        "market_implied_n": 19.6,
+        "current_price": 85200
       },
       "status": "000",
       "message": "정상",
@@ -15774,10 +15725,10 @@
       "corp_name": "SGA솔루션즈",
       "priority_snapshot": {
         "recommended_roe_base": 8.48,
-        "pbr": 1.43679,
+        "pbr": 1.86643,
         "estimated_n_base": 4,
-        "market_implied_n": 0.6,
-        "current_price": 3345
+        "market_implied_n": 1.1,
+        "current_price": 3010
       },
       "status": "000",
       "message": "정상",
@@ -15856,10 +15807,10 @@
       "corp_name": "선진",
       "priority_snapshot": {
         "recommended_roe_base": 8.41,
-        "pbr": 0.37699,
+        "pbr": 0.38571,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 10180
+        "current_price": 10160
       },
       "status": "000",
       "message": "정상",
@@ -15898,10 +15849,10 @@
       "corp_name": "제일연마",
       "priority_snapshot": {
         "recommended_roe_base": 8.31,
-        "pbr": 0.53184,
+        "pbr": 0.52573,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 8950
+        "current_price": 8980
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -15916,10 +15867,10 @@
       "corp_name": "케이티알파",
       "priority_snapshot": {
         "recommended_roe_base": 8.3,
-        "pbr": 0.74585,
+        "pbr": 0.75215,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4800
+        "current_price": 4785
       },
       "status": "000",
       "message": "정상",
@@ -15958,10 +15909,10 @@
       "corp_name": "삼정펄프",
       "priority_snapshot": {
         "recommended_roe_base": 8.21,
-        "pbr": 0.2304,
+        "pbr": 0.23261,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 26250
+        "current_price": 26200
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -15976,10 +15927,10 @@
       "corp_name": "한국공항",
       "priority_snapshot": {
         "recommended_roe_base": 8.19,
-        "pbr": 0.61421,
+        "pbr": 0.61707,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 88700
+        "current_price": 88800
       },
       "status": "000",
       "message": "정상",
@@ -16018,10 +15969,10 @@
       "corp_name": "브이엠",
       "priority_snapshot": {
         "recommended_roe_base": 8.19,
-        "pbr": 4.19546,
+        "pbr": 4.26709,
         "estimated_n_base": 6,
-        "market_implied_n": 10.3,
-        "current_price": 42200
+        "market_implied_n": 10.5,
+        "current_price": 39550
       },
       "status": "000",
       "message": "정상",
@@ -16100,10 +16051,10 @@
       "corp_name": "오스테오닉",
       "priority_snapshot": {
         "recommended_roe_base": 8.15,
-        "pbr": 1.13224,
+        "pbr": 1.1406,
         "estimated_n_base": 6,
         "market_implied_n": 1.1,
-        "current_price": 4040
+        "current_price": 4055
       },
       "status": "000",
       "message": "정상",
@@ -16162,10 +16113,10 @@
       "corp_name": "NH투자증권",
       "priority_snapshot": {
         "recommended_roe_base": 8.08,
-        "pbr": 0.8578,
+        "pbr": 0.86315,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 24350
+        "current_price": 24000
       },
       "status": "000",
       "message": "정상",
@@ -16224,10 +16175,10 @@
       "corp_name": "액토즈소프트",
       "priority_snapshot": {
         "recommended_roe_base": 8.02,
-        "pbr": 0.1696,
+        "pbr": 0.17145,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 4625
+        "current_price": 4900
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -16242,10 +16193,10 @@
       "corp_name": "더블유게임즈",
       "priority_snapshot": {
         "recommended_roe_base": 7.96,
-        "pbr": 0.7965,
+        "pbr": 0.78779,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 54400
+        "current_price": 54700
       },
       "status": "000",
       "message": "정상",
@@ -16304,10 +16255,10 @@
       "corp_name": "스톤브릿지벤처스",
       "priority_snapshot": {
         "recommended_roe_base": 7.9,
-        "pbr": 0.74886,
+        "pbr": 0.73692,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 4410
+        "current_price": 4385
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -16322,10 +16273,10 @@
       "corp_name": "셀바이오휴먼텍",
       "priority_snapshot": {
         "recommended_roe_base": 7.79,
-        "pbr": 0.81961,
+        "pbr": 0.8532,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 6290
+        "current_price": 6190
       },
       "status": "000",
       "message": "정상",
@@ -16364,10 +16315,10 @@
       "corp_name": "한양증권",
       "priority_snapshot": {
         "recommended_roe_base": 7.73,
-        "pbr": 0.36691,
+        "pbr": 0.36769,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 18710
+        "current_price": 18840
       },
       "status": "000",
       "message": "정상",
@@ -16406,10 +16357,10 @@
       "corp_name": "GC메디아이",
       "priority_snapshot": {
         "recommended_roe_base": 7.67,
-        "pbr": 1.00462,
+        "pbr": 1.08313,
         "estimated_n_base": 4,
-        "market_implied_n": 0.0,
-        "current_price": 3035
+        "market_implied_n": 0.2,
+        "current_price": 2990
       },
       "status": "000",
       "message": "정상",
@@ -16448,10 +16399,10 @@
       "corp_name": "동우팜투테이블",
       "priority_snapshot": {
         "recommended_roe_base": 7.62,
-        "pbr": 0.18631,
+        "pbr": 0.18953,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1886
+        "current_price": 1860
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -16466,10 +16417,10 @@
       "corp_name": "디바이스",
       "priority_snapshot": {
         "recommended_roe_base": 7.52,
-        "pbr": 0.77713,
+        "pbr": 0.82575,
         "estimated_n_base": 8,
         "market_implied_n": 0.0,
-        "current_price": 10760
+        "current_price": 10350
       },
       "status": "000",
       "message": "정상",
@@ -16528,10 +16479,10 @@
       "corp_name": "미래에셋증권",
       "priority_snapshot": {
         "recommended_roe_base": 7.4,
-        "pbr": 0.91368,
+        "pbr": 0.90293,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 25350
+        "current_price": 24450
       },
       "status": "000",
       "message": "정상",
@@ -16590,10 +16541,10 @@
       "corp_name": "HD한국조선해양",
       "priority_snapshot": {
         "recommended_roe_base": 7.25,
-        "pbr": 1.10388,
+        "pbr": 1.18733,
         "estimated_n_base": 4,
-        "market_implied_n": 0.4,
-        "current_price": 248500
+        "market_implied_n": 0.8,
+        "current_price": 258000
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -16611,7 +16562,7 @@
         "pbr": 2.40447,
         "estimated_n_base": 6,
         "market_implied_n": 15.3,
-        "current_price": 72600
+        "current_price": 71400
       },
       "status": "000",
       "message": "정상",
@@ -16670,10 +16621,10 @@
       "corp_name": "웹케시",
       "priority_snapshot": {
         "recommended_roe_base": 6.95,
-        "pbr": 0.7426,
+        "pbr": 0.74481,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 6850
+        "current_price": 6600
       },
       "status": "000",
       "message": "정상",
@@ -16732,10 +16683,10 @@
       "corp_name": "LB인베스트먼트",
       "priority_snapshot": {
         "recommended_roe_base": 6.94,
-        "pbr": 0.6848,
+        "pbr": 0.68662,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3770
+        "current_price": 3710
       },
       "status": "000",
       "message": "정상",
@@ -16774,10 +16725,10 @@
       "corp_name": "디와이피엔에프",
       "priority_snapshot": {
         "recommended_roe_base": 6.89,
-        "pbr": 0.36991,
+        "pbr": 0.36736,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 5770
+        "current_price": 5730
       },
       "status": "000",
       "message": "정상",
@@ -16836,10 +16787,10 @@
       "corp_name": "HD현대에너지솔루션",
       "priority_snapshot": {
         "recommended_roe_base": 6.78,
-        "pbr": 1.76142,
+        "pbr": 1.93946,
         "estimated_n_base": 4,
-        "market_implied_n": 7.4,
-        "current_price": 81700
+        "market_implied_n": 9.0,
+        "current_price": 82000
       },
       "status": "000",
       "message": "정상",
@@ -16878,10 +16829,10 @@
       "corp_name": "세명전기",
       "priority_snapshot": {
         "recommended_roe_base": 6.5,
-        "pbr": 0.95294,
+        "pbr": 0.98524,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 6130
+        "current_price": 5900
       },
       "status": "000",
       "message": "정상",
@@ -16899,10 +16850,10 @@
       "corp_name": "SB성보",
       "priority_snapshot": {
         "recommended_roe_base": 6.47,
-        "pbr": 0.28271,
+        "pbr": 0.28079,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 2200
+        "current_price": 2185
       },
       "status": "000",
       "message": "정상",
@@ -16961,10 +16912,10 @@
       "corp_name": "솔본",
       "priority_snapshot": {
         "recommended_roe_base": 6.46,
-        "pbr": 0.5591,
+        "pbr": 0.56871,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 5030
+        "current_price": 5050
       },
       "status": "000",
       "message": "정상",
@@ -17003,10 +16954,10 @@
       "corp_name": "평화홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": 6.45,
-        "pbr": 0.3211,
+        "pbr": 0.32562,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3300
+        "current_price": 3290
       },
       "status": "000",
       "message": "정상",
@@ -17045,10 +16996,10 @@
       "corp_name": "한국카본",
       "priority_snapshot": {
         "recommended_roe_base": 6.42,
-        "pbr": 1.16404,
+        "pbr": 1.22543,
         "estimated_n_base": 6,
-        "market_implied_n": 0.6,
-        "current_price": 16100
+        "market_implied_n": 0.9,
+        "current_price": 16020
       },
       "status": "000",
       "message": "정상",
@@ -17107,10 +17058,10 @@
       "corp_name": "아이컴포넌트",
       "priority_snapshot": {
         "recommended_roe_base": 6.32,
-        "pbr": 0.76937,
+        "pbr": 0.80153,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 6180
+        "current_price": 6340
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -17125,10 +17076,10 @@
       "corp_name": "오성첨단소재",
       "priority_snapshot": {
         "recommended_roe_base": 6.23,
-        "pbr": 0.15334,
+        "pbr": 0.15463,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 7270
+        "current_price": 7320
       },
       "status": "000",
       "message": "정상",
@@ -17187,10 +17138,10 @@
       "corp_name": "휴네시온",
       "priority_snapshot": {
         "recommended_roe_base": 6.22,
-        "pbr": 0.44746,
+        "pbr": 0.45122,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 2365
+        "current_price": 2500
       },
       "status": "000",
       "message": "정상",
@@ -17229,10 +17180,10 @@
       "corp_name": "GKL",
       "priority_snapshot": {
         "recommended_roe_base": 6.03,
-        "pbr": 1.09425,
+        "pbr": 1.12844,
         "estimated_n_base": 4,
-        "market_implied_n": 0.9,
-        "current_price": 8220
+        "market_implied_n": 1.2,
+        "current_price": 8160
       },
       "status": "000",
       "message": "정상",
@@ -17271,10 +17222,10 @@
       "corp_name": "엠앤씨솔루션",
       "priority_snapshot": {
         "recommended_roe_base": 5.57,
-        "pbr": 1.94369,
+        "pbr": 2.04161,
         "estimated_n_base": 6,
-        "market_implied_n": 2.3,
-        "current_price": 13950
+        "market_implied_n": 2.5,
+        "current_price": 13000
       },
       "status": "000",
       "message": "정상",
@@ -17313,10 +17264,10 @@
       "corp_name": "베뉴지",
       "priority_snapshot": {
         "recommended_roe_base": 5.24,
-        "pbr": 0.22545,
+        "pbr": 0.22885,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3725
+        "current_price": 3550
       },
       "status": "000",
       "message": "정상",
@@ -17375,10 +17326,10 @@
       "corp_name": "PS일렉트로닉스",
       "priority_snapshot": {
         "recommended_roe_base": 4.9,
-        "pbr": 2.16677,
+        "pbr": 2.11797,
         "estimated_n_base": 4,
-        "market_implied_n": 5.2,
-        "current_price": 6610
+        "market_implied_n": 5.1,
+        "current_price": 6850
       },
       "status": "000",
       "message": "정상",
@@ -17417,10 +17368,10 @@
       "corp_name": "보성파워텍",
       "priority_snapshot": {
         "recommended_roe_base": 4.86,
-        "pbr": 2.05081,
+        "pbr": 2.12479,
         "estimated_n_base": 4,
-        "market_implied_n": 3.4,
-        "current_price": 5180
+        "market_implied_n": 3.6,
+        "current_price": 4940
       },
       "status": "000",
       "message": "정상",
@@ -17459,10 +17410,10 @@
       "corp_name": "에스코넥",
       "priority_snapshot": {
         "recommended_roe_base": 4.55,
-        "pbr": 0.26469,
+        "pbr": 0.26777,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1455
+        "current_price": 1475
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -17477,10 +17428,10 @@
       "corp_name": "쿠콘",
       "priority_snapshot": {
         "recommended_roe_base": 4.2,
-        "pbr": 1.25156,
+        "pbr": 1.25689,
         "estimated_n_base": 6,
         "market_implied_n": 1.6,
-        "current_price": 23350
+        "current_price": 22950
       },
       "status": "000",
       "message": "정상",
@@ -17559,10 +17510,10 @@
       "corp_name": "카페24",
       "priority_snapshot": {
         "recommended_roe_base": 4.03,
-        "pbr": 1.48034,
+        "pbr": 1.48214,
         "estimated_n_base": 4,
         "market_implied_n": 2.3,
-        "current_price": 16580
+        "current_price": 16770
       },
       "status": "000",
       "message": "정상",
@@ -17601,7 +17552,7 @@
       "corp_name": "오킨스전자",
       "priority_snapshot": {
         "recommended_roe_base": 3.52,
-        "pbr": 7.14729,
+        "pbr": 7.13262,
         "estimated_n_base": 4,
         "market_implied_n": 12.9,
         "current_price": 24400
@@ -17683,10 +17634,10 @@
       "corp_name": "엔에프씨",
       "priority_snapshot": {
         "recommended_roe_base": 3.3,
-        "pbr": 1.67832,
+        "pbr": 1.69335,
         "estimated_n_base": 8,
-        "market_implied_n": 3.0,
-        "current_price": 6780
+        "market_implied_n": 3.1,
+        "current_price": 6700
       },
       "status": "000",
       "message": "정상",
@@ -17725,10 +17676,10 @@
       "corp_name": "성우전자",
       "priority_snapshot": {
         "recommended_roe_base": 3.15,
-        "pbr": 0.28297,
+        "pbr": 0.28231,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2200
+        "current_price": 2155
       },
       "status": "000",
       "message": "정상",
@@ -17787,10 +17738,10 @@
       "corp_name": "나래나노텍",
       "priority_snapshot": {
         "recommended_roe_base": 2.77,
-        "pbr": 0.53255,
+        "pbr": 0.53729,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 7090
+        "current_price": 6560
       },
       "status": "000",
       "message": "정상",
@@ -17829,10 +17780,10 @@
       "corp_name": "RF머트리얼즈",
       "priority_snapshot": {
         "recommended_roe_base": 2.73,
-        "pbr": 6.87057,
+        "pbr": 6.73524,
         "estimated_n_base": 6,
-        "market_implied_n": 20.2,
-        "current_price": 32650
+        "market_implied_n": 19.9,
+        "current_price": 29050
       },
       "status": "000",
       "message": "정상",
@@ -17911,10 +17862,10 @@
       "corp_name": "글로벌텍스프리",
       "priority_snapshot": {
         "recommended_roe_base": 2.39,
-        "pbr": 2.3613,
+        "pbr": 2.42108,
         "estimated_n_base": 4,
-        "market_implied_n": 2.8,
-        "current_price": 5680
+        "market_implied_n": 2.9,
+        "current_price": 5880
       },
       "status": "000",
       "message": "정상",
@@ -17942,19 +17893,19 @@
         },
         {
           "holder_name": "MiriCapitalManagementLLC",
-          "report_date": "2026-09-08",
-          "ratio": 8.43,
+          "report_date": "2026-11-03",
+          "ratio": 9.68,
           "raw": {
-            "rcept_no": "20260908000146",
-            "rcept_dt": "2026-09-08",
+            "rcept_no": "20261103000062",
+            "rcept_dt": "2026-11-03",
             "corp_code": "01042711",
             "corp_name": "글로벌텍스프리",
             "report_tp": "약식",
             "repror": "MiriCapitalManagementLLC",
-            "stkqy": "5,922,169",
-            "stkqy_irds": "1,824,000",
-            "stkrt": "8.43",
-            "stkrt_irds": "2.60",
+            "stkqy": "6,800,969",
+            "stkqy_irds": "878,800",
+            "stkrt": "9.68",
+            "stkrt_irds": "1.25",
             "ctr_stkqy": "-",
             "ctr_stkrt": "-",
             "report_resn": "일반투자목적으로 장내에서 발행회사 주식 매수"
@@ -18003,7 +17954,7 @@
       ],
       "top_holder_name": "지티에프홀딩스",
       "top_holder_ratio": 24.58,
-      "latest_report_date": "2026-09-08"
+      "latest_report_date": "2026-11-03"
     },
     {
       "code": "088130",
@@ -18013,10 +17964,10 @@
       "corp_name": "동아엘텍",
       "priority_snapshot": {
         "recommended_roe_base": 2.26,
-        "pbr": 0.45888,
+        "pbr": 0.45532,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 5130
+        "current_price": 4985
       },
       "status": "000",
       "message": "정상",
@@ -18055,10 +18006,10 @@
       "corp_name": "우리기술투자",
       "priority_snapshot": {
         "recommended_roe_base": 2.14,
-        "pbr": 0.42424,
+        "pbr": 0.42834,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 4725
+        "current_price": 4530
       },
       "status": "000",
       "message": "정상",
@@ -18097,10 +18048,10 @@
       "corp_name": "씨아이테크",
       "priority_snapshot": {
         "recommended_roe_base": 1.31,
-        "pbr": 0.39349,
+        "pbr": 0.39631,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 6770
+        "current_price": 6950
       },
       "status": "000",
       "message": "정상",
@@ -18179,10 +18130,10 @@
       "corp_name": "더핑크퐁컴퍼니",
       "priority_snapshot": {
         "recommended_roe_base": 1.1,
-        "pbr": 0.81557,
+        "pbr": 0.83299,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 12200
+        "current_price": 12710
       },
       "status": "000",
       "message": "정상",
@@ -18241,10 +18192,10 @@
       "corp_name": "엔투텍",
       "priority_snapshot": {
         "recommended_roe_base": 0.75,
-        "pbr": 0.30149,
+        "pbr": 0.30074,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1217
+        "current_price": 1159
       },
       "status": "000",
       "message": "정상",
@@ -18323,10 +18274,10 @@
       "corp_name": "서전기전",
       "priority_snapshot": {
         "recommended_roe_base": 0.7,
-        "pbr": 1.13214,
+        "pbr": 1.14958,
         "estimated_n_base": 4,
-        "market_implied_n": 0.5,
-        "current_price": 3945
+        "market_implied_n": 0.6,
+        "current_price": 3825
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -18341,10 +18292,10 @@
       "corp_name": "한빛소프트",
       "priority_snapshot": {
         "recommended_roe_base": -0.52,
-        "pbr": 1.19528,
+        "pbr": 1.18708,
         "estimated_n_base": 4,
-        "market_implied_n": 0.4,
-        "current_price": 1014
+        "market_implied_n": 0.3,
+        "current_price": 1009
       },
       "status": "000",
       "message": "정상",
@@ -18383,10 +18334,10 @@
       "corp_name": "이지케어텍",
       "priority_snapshot": {
         "recommended_roe_base": -1.06,
-        "pbr": 1.8287,
+        "pbr": 1.83769,
         "estimated_n_base": 4,
-        "market_implied_n": 4.2,
-        "current_price": 6280
+        "market_implied_n": 4.3,
+        "current_price": 5950
       },
       "status": "000",
       "message": "정상",
@@ -18425,10 +18376,10 @@
       "corp_name": "소프트캠프",
       "priority_snapshot": {
         "recommended_roe_base": -1.54,
-        "pbr": 1.811,
+        "pbr": 1.79113,
         "estimated_n_base": 4,
         "market_implied_n": 1.8,
-        "current_price": 6260
+        "current_price": 6500
       },
       "status": "000",
       "message": "정상",
@@ -18467,7 +18418,7 @@
       "corp_name": "예림당",
       "priority_snapshot": {
         "recommended_roe_base": -2.26,
-        "pbr": 0.22621,
+        "pbr": 0.22838,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
         "current_price": 2645
@@ -18509,10 +18460,10 @@
       "corp_name": "네오위즈홀딩스",
       "priority_snapshot": {
         "recommended_roe_base": -2.4,
-        "pbr": 0.29755,
+        "pbr": 0.29875,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 17400
+        "current_price": 17390
       },
       "status": "000",
       "message": "정상",
@@ -18551,10 +18502,10 @@
       "corp_name": "씨에스베어링",
       "priority_snapshot": {
         "recommended_roe_base": -2.97,
-        "pbr": 0.90832,
+        "pbr": 0.96532,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 3980
+        "current_price": 3950
       },
       "status": "000",
       "message": "정상",
@@ -18593,10 +18544,10 @@
       "corp_name": "아이앤씨",
       "priority_snapshot": {
         "recommended_roe_base": -4.22,
-        "pbr": 2.83371,
+        "pbr": 2.95439,
         "estimated_n_base": 4,
-        "market_implied_n": 9.5,
-        "current_price": 6600
+        "market_implied_n": 10.1,
+        "current_price": 6570
       },
       "status": "000",
       "message": "정상",
@@ -18635,10 +18586,10 @@
       "corp_name": "유니온",
       "priority_snapshot": {
         "recommended_roe_base": -4.3,
-        "pbr": 0.2688,
+        "pbr": 0.27092,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 2620
+        "current_price": 2510
       },
       "status": "000",
       "message": "정상",
@@ -18697,10 +18648,10 @@
       "corp_name": "오스코텍",
       "priority_snapshot": {
         "recommended_roe_base": -4.9,
-        "pbr": 6.45861,
+        "pbr": 6.27256,
         "estimated_n_base": 4,
-        "market_implied_n": 6.0,
-        "current_price": 35400
+        "market_implied_n": 5.9,
+        "current_price": 35250
       },
       "status": "000",
       "message": "정상",
@@ -18779,10 +18730,10 @@
       "corp_name": "유바이오로직스",
       "priority_snapshot": {
         "recommended_roe_base": -6.33,
-        "pbr": 1.54242,
+        "pbr": 1.58033,
         "estimated_n_base": 6,
-        "market_implied_n": 1.3,
-        "current_price": 7910
+        "market_implied_n": 1.4,
+        "current_price": 8010
       },
       "status": "000",
       "message": "정상",
@@ -18821,10 +18772,10 @@
       "corp_name": "JW신약",
       "priority_snapshot": {
         "recommended_roe_base": -7.66,
-        "pbr": 3.04485,
+        "pbr": 3.09971,
         "estimated_n_base": 2,
-        "market_implied_n": 2.2,
-        "current_price": 2260
+        "market_implied_n": 2.3,
+        "current_price": 2210
       },
       "status": "000",
       "message": "정상",
@@ -18863,10 +18814,10 @@
       "corp_name": "키네마스터",
       "priority_snapshot": {
         "recommended_roe_base": -8.67,
-        "pbr": 0.82333,
+        "pbr": 0.82843,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1781
+        "current_price": 1754
       },
       "status": "000",
       "message": "정상",
@@ -18905,10 +18856,10 @@
       "corp_name": "디모아",
       "priority_snapshot": {
         "recommended_roe_base": -9.81,
-        "pbr": 0.25415,
+        "pbr": 0.25745,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 2355
+        "current_price": 2350
       },
       "status": "000",
       "message": "정상",
@@ -18967,10 +18918,10 @@
       "corp_name": "온코닉테라퓨틱스",
       "priority_snapshot": {
         "recommended_roe_base": -9.95,
-        "pbr": 6.41054,
+        "pbr": 6.55877,
         "estimated_n_base": 4,
-        "market_implied_n": 8.8,
-        "current_price": 12360
+        "market_implied_n": 9.0,
+        "current_price": 11860
       },
       "status": "000",
       "message": "정상",
@@ -19009,10 +18960,10 @@
       "corp_name": "에이치브이엠",
       "priority_snapshot": {
         "recommended_roe_base": -10.07,
-        "pbr": 5.11659,
+        "pbr": 5.06508,
         "estimated_n_base": 6,
-        "market_implied_n": 13.9,
-        "current_price": 59900
+        "market_implied_n": 13.8,
+        "current_price": 54600
       },
       "status": "000",
       "message": "정상",
@@ -19111,10 +19062,10 @@
       "corp_name": "대산F&B",
       "priority_snapshot": {
         "recommended_roe_base": -11.11,
-        "pbr": 0.68736,
+        "pbr": 0.63334,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 1124
+        "current_price": 1191
       },
       "status": "000",
       "message": "정상",
@@ -19173,10 +19124,10 @@
       "corp_name": "다원넥스뷰",
       "priority_snapshot": {
         "recommended_roe_base": -11.5,
-        "pbr": 4.74477,
+        "pbr": 4.70301,
         "estimated_n_base": 6,
-        "market_implied_n": 9.1,
-        "current_price": 12320
+        "market_implied_n": 9.0,
+        "current_price": 11690
       },
       "status": "000",
       "message": "정상",
@@ -19235,10 +19186,10 @@
       "corp_name": "나이벡",
       "priority_snapshot": {
         "recommended_roe_base": -12.86,
-        "pbr": 3.22922,
+        "pbr": 3.18655,
         "estimated_n_base": 4,
-        "market_implied_n": 15.7,
-        "current_price": 13500
+        "market_implied_n": 15.4,
+        "current_price": 13270
       },
       "status": "013",
       "message": "조회된 데이타가 없습니다.",
@@ -19253,10 +19204,10 @@
       "corp_name": "엣지파운드리",
       "priority_snapshot": {
         "recommended_roe_base": -13.64,
-        "pbr": 0.16738,
+        "pbr": 0.16712,
         "estimated_n_base": 2,
         "market_implied_n": 0.0,
-        "current_price": 1330
+        "current_price": 1316
       },
       "status": "000",
       "message": "정상",
@@ -19375,10 +19326,10 @@
       "corp_name": "삼성제약",
       "priority_snapshot": {
         "recommended_roe_base": -13.64,
-        "pbr": 1.56692,
+        "pbr": 1.59557,
         "estimated_n_base": 2,
-        "market_implied_n": 6.0,
-        "current_price": 1227
+        "market_implied_n": 6.3,
+        "current_price": 1232
       },
       "status": "000",
       "message": "정상",
@@ -19417,10 +19368,10 @@
       "corp_name": "케어랩스",
       "priority_snapshot": {
         "recommended_roe_base": -15.45,
-        "pbr": 0.57547,
+        "pbr": 0.5807,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 2020
+        "current_price": 1945
       },
       "status": "000",
       "message": "정상",
@@ -19459,10 +19410,10 @@
       "corp_name": "플리토",
       "priority_snapshot": {
         "recommended_roe_base": -16.75,
-        "pbr": 7.64371,
+        "pbr": 7.85147,
         "estimated_n_base": 4,
-        "market_implied_n": 4.8,
-        "current_price": 9170
+        "market_implied_n": 4.9,
+        "current_price": 8820
       },
       "status": "000",
       "message": "정상",
@@ -19522,10 +19473,10 @@
       "corp_name": "HLB제넥스",
       "priority_snapshot": {
         "recommended_roe_base": -17.26,
-        "pbr": 1.42669,
+        "pbr": 1.47807,
         "estimated_n_base": 4,
         "market_implied_n": 0.4,
-        "current_price": 2465
+        "current_price": 2425
       },
       "status": "000",
       "message": "정상",
@@ -19584,10 +19535,10 @@
       "corp_name": "일월지엠엘",
       "priority_snapshot": {
         "recommended_roe_base": -17.55,
-        "pbr": 1.03966,
+        "pbr": 1.03464,
         "estimated_n_base": 2,
         "market_implied_n": 0.2,
-        "current_price": 2075
+        "current_price": 2065
       },
       "status": "000",
       "message": "정상",
@@ -19626,10 +19577,10 @@
       "corp_name": "영우디에스피",
       "priority_snapshot": {
         "recommended_roe_base": -20.21,
-        "pbr": 1.19649,
+        "pbr": 1.17437,
         "estimated_n_base": 4,
-        "market_implied_n": 0.7,
-        "current_price": 900
+        "market_implied_n": 0.6,
+        "current_price": 997
       },
       "status": "000",
       "message": "정상",
@@ -19708,10 +19659,10 @@
       "corp_name": "베셀",
       "priority_snapshot": {
         "recommended_roe_base": -26.91,
-        "pbr": 0.20323,
+        "pbr": 0.20679,
         "estimated_n_base": 4,
         "market_implied_n": 0.0,
-        "current_price": 815
+        "current_price": 809
       },
       "status": "000",
       "message": "정상",
@@ -19790,10 +19741,10 @@
       "corp_name": "SAMG엔터",
       "priority_snapshot": {
         "recommended_roe_base": -55.73,
-        "pbr": 1.67202,
+        "pbr": 1.71156,
         "estimated_n_base": 6,
-        "market_implied_n": 0.7,
-        "current_price": 15240
+        "market_implied_n": 0.8,
+        "current_price": 14830
       },
       "status": "000",
       "message": "정상",
@@ -19832,10 +19783,10 @@
       "corp_name": "진코스텍",
       "priority_snapshot": {
         "recommended_roe_base": -56.75,
-        "pbr": 0.87626,
+        "pbr": 0.99417,
         "estimated_n_base": 6,
         "market_implied_n": 0.0,
-        "current_price": 10460
+        "current_price": 10130
       },
       "status": "000",
       "message": "정상",
@@ -19874,10 +19825,10 @@
       "corp_name": "효성화학",
       "priority_snapshot": {
         "recommended_roe_base": -89.19,
-        "pbr": 0.24908,
+        "pbr": 0.19846,
         "estimated_n_base": 2,
         "market_implied_n": 0.0,
-        "current_price": 37750
+        "current_price": 36200
       },
       "status": "000",
       "message": "정상",
