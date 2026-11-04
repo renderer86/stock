@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-04T12:09:35.151228+00:00",
+  "generated_at_utc": "2026-11-04T15:51:10.415053+00:00",
   "file_count": 27,
   "files": [
     {
@@ -11,20 +11,20 @@
     },
     {
       "file": "data/dart_disclosures.json",
-      "bytes": 811223,
+      "bytes": 784998,
       "source": "OpenDART disclosure list API",
-      "count": 2382,
-      "data_date": "2026-11-03T15:32:34.171250+00:00"
+      "count": 2302,
+      "data_date": "2026-11-04T15:46:33.819426+00:00"
     },
     {
       "file": "data/dart_event_details.json",
-      "bytes": 45549,
+      "bytes": 45010,
       "source": [
         "OpenDART document.xml",
         "OpenDART DS005 major event APIs"
       ],
       "count": null,
-      "data_date": "2026-11-03T15:35:49.142251+00:00"
+      "data_date": "2026-11-04T15:49:43.900481+00:00"
     },
     {
       "file": "data/dart_financial_interim.json",
@@ -42,20 +42,20 @@
     },
     {
       "file": "data/dart_insider_trades.json",
-      "bytes": 428358,
+      "bytes": 427951,
       "source": [
         "OpenDART elestock.json",
         "OpenDART document.xml"
       ],
-      "count": 274,
-      "data_date": "2026-11-03T15:35:49.142329+00:00"
+      "count": 275,
+      "data_date": "2026-11-04T15:49:43.900587+00:00"
     },
     {
       "file": "data/dart_major_holders.json",
-      "bytes": 616446,
+      "bytes": 615757,
       "source": "OpenDART majorstock.json",
       "count": 383,
-      "data_date": "2026-11-03T15:32:22.265587+00:00"
+      "data_date": "2026-11-04T15:46:23.042160+00:00"
     },
     {
       "file": "data/financial_n_estimates.json",
@@ -69,7 +69,7 @@
       "bytes": 375459,
       "source": "FnGuide CompanyInfo/getRtoAccumulate",
       "count": 383,
-      "data_date": "2026-11-03T15:29:43.689010+00:00"
+      "data_date": "2026-11-04T15:43:49.220372+00:00"
     },
     {
       "file": "data/investment_screens.json",
@@ -99,10 +99,10 @@
     },
     {
       "file": "data/krx_openapi.json",
-      "bytes": 38877,
+      "bytes": 39111,
       "source": "KRX Data Marketplace Open API",
       "count": null,
-      "data_date": "2026-11-03T15:23:35.844307+00:00",
+      "data_date": "2026-11-04T15:37:38.024646+00:00",
       "dataset_status": {
         "kospi_stocks": "not_authorized",
         "kosdaq_stocks": "not_authorized",
@@ -116,24 +116,24 @@
     },
     {
       "file": "data/market_heatmap.json",
-      "bytes": 1417436,
+      "bytes": 1416701,
       "source": [
         "Naver Finance market cap and sectors",
         "Nasdaq screener and Yahoo Finance snapshot"
       ],
       "count": 3600,
-      "data_date": "2026-11-04T03:15:35.730607+00:00"
+      "data_date": "2026-11-04T15:41:02.616901+00:00"
     },
     {
       "file": "data/market_indices.json",
-      "bytes": 644428,
+      "bytes": 644661,
       "source": "Yahoo Finance Chart + Naver Finance index daily",
       "count": 8,
-      "data_date": "2026-11-04T03:04:51.302312+00:00"
+      "data_date": "2026-11-04T15:37:34.822760+00:00"
     },
     {
       "file": "data/market_sum.json",
-      "bytes": 4205738,
+      "bytes": 4204037,
       "source": [
         "https://stock.naver.com/api/domestic/market/stock/default?marketType=KOSPI",
         "https://stock.naver.com/api/domestic/market/stock/default?marketType=KOSDAQ",
@@ -141,11 +141,11 @@
         "https://m.stock.naver.com/api/stocks/marketValue/KOSDAQ"
       ],
       "count": 4312,
-      "data_date": "2026-11-03T15:25:41.383034+00:00"
+      "data_date": "2026-11-04T15:39:44.693831+00:00"
     },
     {
       "file": "data/market_sum_by_roe.json",
-      "bytes": 4205760,
+      "bytes": 4204059,
       "source": [
         "https://stock.naver.com/api/domestic/market/stock/default?marketType=KOSPI",
         "https://stock.naver.com/api/domestic/market/stock/default?marketType=KOSDAQ",
@@ -153,21 +153,21 @@
         "https://m.stock.naver.com/api/stocks/marketValue/KOSDAQ"
       ],
       "count": 4312,
-      "data_date": "2026-11-03T15:25:41.383034+00:00"
+      "data_date": "2026-11-04T15:39:44.693831+00:00"
     },
     {
       "file": "data/naver_etf_brands.json",
-      "bytes": 23910,
+      "bytes": 23755,
       "source": "Naver Finance ETF",
       "count": null,
-      "data_date": "2026-11-03T15:23:31Z"
+      "data_date": "2026-11-04T15:37:33Z"
     },
     {
       "file": "data/naver_news.json",
-      "bytes": 255080,
+      "bytes": 321958,
       "source": "NAVER Search API / news",
-      "count": 330,
-      "data_date": "2026-11-04T12:09:33.433826+00:00"
+      "count": 420,
+      "data_date": "2026-11-04T15:50:08.397802+00:00"
     },
     {
       "file": "data/naver_year_end_prices.json",
