@@ -1,6 +1,6 @@
 {
   "source": "NAVER Search API / news",
-  "crawled_at_utc": "2026-11-06T15:56:28.338406+00:00",
+  "crawled_at_utc": "2026-11-06T21:30:40.103298+00:00",
   "category_labels": {
     "semiconductor": "반도체",
     "it": "IT",
@@ -67,22 +67,1103 @@
     "battery": 40,
     "bio": 40
   },
-  "count": 341,
-  "thumbnail_count": 57,
+  "count": 350,
+  "thumbnail_count": 58,
   "items": [
     {
-      "title": "[미국 특징주] 엔비디아, 동남아 AI 칩 '위치 추적' 강화…밀수 차단 칼...",
-      "description": "자사 칩이 불법적으로 중국 기업에 흘러 들어가는 것을 막기 위한 노력이 부족하다는 비판이 이어지자, 반도체 밀수를 억제하기 위한 전략적 조치에 나섰다고 블룸버그통신이 6일(현지시간) 보도했다. 블룸버그가 사안에...",
-      "link": "https://www.newspim.com/news/view/20261107000003",
-      "naver_link": "https://www.newspim.com/news/view/20261107000003",
-      "published_at": "Sat, 07 Nov 2026 00:50:00 +0900",
+      "title": "코스닥 '털썩'…주성엔지니어링·에코프로비엠 등 주가 '주루룩'",
+      "description": "바이오와 이차전지, 반도체 관련 주요 종목들이 동반 약세를 보이며 지수 하락 흐름이 두드러졌다. 6일 코스닥은 전 거래일보다 34.14포인트(5.03%) 내린 644.27에 정규장 거래를 마쳤다. 지수는 654.43에 출발해...",
+      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624269",
+      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624269",
+      "published_at": "Sat, 07 Nov 2026 06:26:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kosdaq"
+      ],
+      "queries": [
+        "반도체",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624269_429039_3025_v150.jpg"
+    },
+    {
+      "title": "전기차 시대의 병목…광물보다 정련이 문제다",
+      "description": "박정환 문화전문기자 = '광물은 어떻게 무기가 되는가'는 전기차와 반도체를 움직이는 핵심광물이 국가 간... 반도체 생산에 쓰이는 갈륨과 게르마늄, 형석 같은 자원까지 살펴야 공급망의 전체 구조를 볼 수 있다. 리튬과...",
+      "link": "https://www.news1.kr/life-culture/book/6344872",
+      "naver_link": "https://n.news.naver.com/mnews/article/421/0009275575?sid=103",
+      "published_at": "Sat, 07 Nov 2026 06:25:00 +0900",
       "categories": [
         "semiconductor"
       ],
       "queries": [
         "반도체"
       ],
-      "thumbnail_url": "https://img.newspim.com/news/2026/11/07/2611071249231020_t1.jpg"
+      "thumbnail_url": "https://imgnews.pstatic.net/image/421/2026/11/07/0009275575_001_20261107062511263.jpg?type=w800"
+    },
+    {
+      "title": "뉴욕증시, AI 기술주 폭락 후 저가 매수세…나스닥 1.1%↑",
+      "description": "전날 AI 산업에 대한 규제 강화 우려로 기술주가 폭락한 이후 반도체주를 중심으로 저가 매수세가 유입됐습니다. 엔비디아와 AMD, 마이크론 등 주요 반도체주가 일제히 오르면서 상승세를 주도했습니다.",
+      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706559&ref=A",
+      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289238?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:24:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "'블루' 충격에 이틀간 11% 급락…'5천피' 턱걸이",
+      "description": "AI 산업에 대한 규제 강화 우려로 반도체 주가 직격탄을 맞으면서, 이틀 새 11% 급락한 코스피는 5천 선을... 특히 주요 반도체 회사들 주가를 모은 필라델피아 반도체 지수는 12% 넘게 폭락하면서, 우리 반도체와 AI 관련...",
+      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008834862&plink=ORI&cooper=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/055/0001401303?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:23:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시",
+        "코스피"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/055/2026/11/07/0001401303_001_20261107062407752.jpg?type=w800"
+    },
+    {
+      "title": "[뉴욕증시] 반도체주 저가 매수세 유입…나스닥 1.09% 상승",
+      "description": "전날 AI 산업에 대한 규제 강화 우려로 반도체와 대형 기술주를 중심으로 매도세가 확산했지만, 낙폭이... AI 산업을 둘러싼 규제 강화 가능성이 부각되면서 투자심리가 위축됐지만, 주가 하락 폭이 컸던 반도체 종목을...",
+      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502019",
+      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502019",
+      "published_at": "Sat, 07 Nov 2026 06:22:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.pinpointnews.co.kr/news/thumbnail/202611/502019_487110_1959_v150.jpg"
+    },
+    {
+      "title": "뉴욕증시, AI주 저가 매수에 혼조 마감…나스닥 1.09%↑",
+      "description": "전날 폭락을 이끌었던 반도체주가 반등을 주도했다. 필라델피아 반도체 지수는 4.21% 올랐고, 엔비디아는 2.78%, AMD와 샌디스크도 11.04%, 3.55% 반등했다. 전날 17% 급락했던 마이크론은 5.12% 올랐다. 그러나 주간으로는...",
+      "link": "https://www.newspim.com/news/view/20261107000019",
+      "naver_link": "https://www.newspim.com/news/view/20261107000019",
+      "published_at": "Sat, 07 Nov 2026 06:21:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://img.newspim.com/news/2026/11/07/2611070618477030_962_tc.jpg"
+    },
+    {
+      "title": "10월 일자리 '깜짝' 증가…뉴욕 증시는 반등 성공",
+      "description": "반도체 주를 중심으로 저가 매수세가 몰린 것인데요. 다만, 미국 고용시장 지표가 긍정적으로 나오면서 금리... 엔비디아를 비롯해 낙폭이 컸던 반도체 주를 중심으로 저가 매수세가 몰리면서 지수를 끌어올렸습니다. [조...",
+      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008834865&plink=ORI&cooper=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/055/0001401302?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:21:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us_rates"
+      ],
+      "queries": [
+        "반도체",
+        "미국 국채 금리 연준"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/055/2026/11/07/0001401302_001_20261107062211654.jpg?type=w800"
+    },
+    {
+      "title": "\"돈만 쏟아붓고 회수 막막\" 빅테크 경고등…\"위기론 과장\" 반론도[AI 블...",
+      "description": "글로벌 빅테크 기업들이 인공지능(AI) 데이터센터와 반도체 확보에 천문학적인 자금을 쏟아붓고 있다. 하지만 막대한 투자금을 과연 언제, 얼마나 회수할 수 있을지를 두고 회의론이 커지면서 시험대에 올랐다. 미국...",
+      "link": "https://www.newsis.com/view/NISX20261106_0003858073",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307480?sid=105",
+      "published_at": "Sat, 07 Nov 2026 06:20:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/003/2026/11/07/NISI20260930_0001625238_web_20260930033830_20261107062012687.jpg?type=w800"
+    },
+    {
+      "title": "[뉴욕증시-1보] '블루 쓰나미' 여파 속 저가 매수 모색…혼조 마감",
+      "description": "인공지능(AI) 산업을 겨냥한 규제 우려로 전날 기술주가 대거 급락한 이후 AI 및 반도체 관련주 위주로... 43포인트(1.09%) 반등한 24,579.42에 장을 마쳤다. 필라델피아 반도체지수는 4.21% 반등한 9,390.25에 마감했다.",
+      "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443577",
+      "naver_link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443577",
+      "published_at": "Sat, 07 Nov 2026 06:18:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ],
+      "thumbnail_url": "https://news.einfomax.co.kr/image/logo/snslogo_20231006045256.png"
+    },
+    {
+      "title": "뉴욕증시, AI 기술주 폭락 후 저가 매수세…나스닥 1.1%↑",
+      "description": "73을 기록했다. 전날 AI 산업에 대한 규제 강화 우려로 기술주가 폭락한 이후 반도체주를 중심으로 저가 매수세가 유입됐다. 엔비디아와 AMD, 마이크론 등 주요 반도체주가 일제히 오르면서 상승세를 주도했다.",
+      "link": "https://www.yna.co.kr/view/AKR20261107008500072?input=1195m",
+      "naver_link": "https://n.news.naver.com/mnews/article/001/0016427594?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:15:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/001/2026/11/07/AKR20261107008500072_01_i_P4_20261107061609881.jpg?type=w800"
+    },
+    {
+      "title": "반도체주 중심으로 낙폭 만회… 나스닥 1.09% 상승, 다우는 약세 지속",
+      "description": "인공지능(AI) 산업을 둘러싼 투자 불확실성과 데이터센터 건설 규제 우려가 시장을 압박했지만, 반도체... 반도체 업종의 흐름을 보여주는 필라델피아 반도체지수는 379.11포인트(4.21%) 오른 9,390.25로 집계됐다. 이날...",
+      "link": "https://www.jemin.com/news/articleView.html?idxno=846370",
+      "naver_link": "https://www.jemin.com/news/articleView.html?idxno=846370",
+      "published_at": "Sat, 07 Nov 2026 06:14:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.jemin.com/news/thumbnail/202611/846370_433995_1239_v150.jpg"
+    },
+    {
+      "title": "뉴욕 증시 전날 폭락 소폭 만회",
+      "description": "미 뉴욕증시는 6일(현지시각) 반도체주 저가 매수세에 힘입어 나스닥 종합지수가 1.09% 반등했으며 스탠다드앤드푸어스(S&P) 500 지수는 0.3% 올랐고 다우존스 산업평균지수는 0.5% 하락 마감했다. 민주당이 하원과 상원...",
+      "link": "https://www.newsis.com/view/NISX20261107_0003858720",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307479?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:13:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://img1.newsis.com/2026/10/10/NISI20261010_0002259626_web.jpg"
+    },
+    {
+      "title": "\"한국은 엄청나다\"...태극기에 테슬라, 머스크 韓시장 1위 홍보",
+      "description": "지난 2월에는 엑스 계정에 한국 반도체 인력을 모집하는 채용 게시글을 올리고 태극기 이모티콘과 함께 \"만약 당신이 한국에 거주하고 있고 칩 디자인, 패브리케이션(팹), 인공지능(AI) 소프트웨어 분야에서 일하고...",
+      "link": "https://www.ikbc.co.kr/article/view/kbc202611070002",
+      "naver_link": "https://n.news.naver.com/mnews/article/660/0000120785?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:13:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "\"美 데이터센터 멈춰 설 때\"…韓 기회 잡을까[AI 블루쇼크②]",
+      "description": "한국은 삼성전자와 SK하이닉스의 고대역폭메모리(HBM) 등 세계 최고 수준의 반도체 생산 능력을 갖췄다.... 글로벌 AI 데이터센터 투자와 수요가 국내로 유입되면 반도체와 서버, 전력기기, 냉각설비, 건설 등 연관...",
+      "link": "https://www.newsis.com/view/NISX20261106_0003857975",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307477?sid=105",
+      "published_at": "Sat, 07 Nov 2026 06:10:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "반도체 ‘블루웨이브 쇼크’…대미투자 불확실성도↑",
+      "description": "역대급 호황을 누리고 있는 국내 반도체 기업들에 어떤 변수가 생긴 건지, 이재희 기자가 짚어봤습니다.... 트럼프 행정부의 미국 내 반도체 공장 건설 요구는 여전한데 세금 감면, 중국 공장 장비 반입 등 미국 투자로...",
+      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706551&ref=A",
+      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289230?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:09:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "증시 급락에 개미 비명…코스피 하락 어디까지?",
+      "description": "연이틀 급락에 개인 투자자 혼란도 커지고 있습니다. 특히 주가가 큰 폭으로 떨어지면 강제매매가 늘어 주가 하락 속도를 더 키울 수 있는데요. 정부도 이런 주식 청산으로 인한 변동성을 막기 위해 긴급 대응에...",
+      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706550&ref=A",
+      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289229?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:09:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/056/2026/11/07/0012289229_001_20261107061738817.jpg?type=w800"
+    },
+    {
+      "title": "AI주 급락에 월가 헤지펀드도 휘청…상반기 수익률 줄줄이 반납",
+      "description": "미국 뉴욕증시에서 인공지능(AI) 관련주를 중심으로 매도세가 확산하면서 월가 대형 헤지펀드들이 직격탄을 맞고 있다. 올해 상반기 두 자릿수 수익률을 기록하며 승승장구했던 펀드들이 최근 주가 급락으로 수익을...",
+      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502016",
+      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502016",
+      "published_at": "Sat, 07 Nov 2026 06:08:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.pinpointnews.co.kr/news/thumbnail/202611/502016_487107_625_v150.jpg"
+    },
+    {
+      "title": "미 선거 충격에 ‘검은 금요일’…9달 전으로 돌아간 코스피",
+      "description": "삼성전자와 SK하이닉스, 반도체 투톱의 낙폭이 컸습니다. 석혜원 기자입니다. [리포트] 코스피는 개장과... 데이터센터 건설이 지연될 거란 전망이 반도체 종목을 덮쳤기 때문입니다. [김동원/KB증권 리서치센터장...",
+      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706549&ref=A",
+      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289228?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:07:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "코스피"
+      ],
+      "thumbnail_url": "http://news.kbs.co.kr/data/news/title_image/newsmp4/newsplaza_p1/2026/11/07/40_8706549.jpg"
+    },
+    {
+      "title": "[속보] 뉴욕증시 혼조…나스닥, AI株 저가 매수에 1% 반등",
+      "description": "기술주 중심의 나스닥지수는 전일 급락으로 조정장에 진입했다는 평가를 받았으나 반도체주를 중심으로... 그는 이어 “상대적으로 소수의 기술주와 반도체주가 시장에서 차지하는 비중이 지나치게 커진 상황에서...",
+      "link": "https://www.edaily.co.kr/News/Read?newsId=01472726645643424&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+      "naver_link": "https://n.news.naver.com/mnews/article/018/0006405421?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:06:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://image.edaily.co.kr/images/Photo/files/NP/S/2026/11/PS26110700073.jpg"
+    },
+    {
+      "title": "[증권 Pick] 이번주 상장 소식 모아보기",
+      "description": "라이센스뉴스 = 김재용 기자 | 한국투자신탁운용은 글로벌 메모리 반도체 기업과 국내 채권에 함께 투자하는 'ACE 글로벌메모리반도체TOP3채권혼합액티브' ETF를 신규 상장했다. 이 상품은 마이크론·삼성전자...",
+      "link": "https://www.lcnews.co.kr/news/articleView.html?idxno=211003",
+      "naver_link": "https://www.lcnews.co.kr/news/articleView.html?idxno=211003",
+      "published_at": "Sat, 07 Nov 2026 06:06:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "오욕의 디지털 허상[IT 칼럼]",
+      "description": "이들 파동의 신호는 자기 매체나 반도체에 기록될 수도 있고, 전선을 타고 먼 곳을 갈 수도 있다. 시청각은 중요해서라기보다 ‘복붙’이 편해서 욕망을 충족하는 매체가 될 수 있었던 것일지도 모른다. 11월에 한 학술지에...",
+      "link": "https://weekly.khan.co.kr/article/202611070600061",
+      "naver_link": "https://n.news.naver.com/mnews/article/033/0000053212?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:05:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "美 소비자심리 예상 웃돌아…물가 부담 여전하고 AI 거품 우려도 확산",
+      "description": "미국 증시의 움직임이 소비자들의 경제 심리에 직접적인 영향을 미치고 있다는 점도 주목된다. 주식시장 상승기에 자산 효과를 누렸던 투자자들이 최근 변동성 확대를 경험하면서 소비와 투자에 대한 기대를 낮추고...",
+      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502015",
+      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502015",
+      "published_at": "Sat, 07 Nov 2026 06:04:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.pinpointnews.co.kr/news/thumbnail/202611/502015_487106_310_v150.jpg"
+    },
+    {
+      "title": "새 스팩 쏟아지는데… 짝 못 찾은 5곳, 이달 줄줄이 ‘상장폐지’ 수순",
+      "description": "국내 대형 증권사 관계자는 “반도체 호황으로 성장률 지표는 잘 나오지만 나머지 실물 경기는 좋지 않다”며 “스팩이 인수할 만한 마땅한 매물이 없는 경우가 많고, IPO 기준선을 통과할 만큼 좋은 기업도 많지...",
+      "link": "https://biz.chosun.com/stock/stock_general/2026/11/07/IFM7HUYYTVC3LAA2KYTG2XDCAY/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+      "naver_link": "https://n.news.naver.com/mnews/article/366/0001203196?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kosdaq"
+      ],
+      "queries": [
+        "반도체",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/366/2026/11/07/0001203196_001_20261107060219032.jpg?type=w800"
+    },
+    {
+      "title": "[인터뷰] 부천 공장에 1조4000억원 투자한 美 온세미… 하산 엘 코우리 ...",
+      "description": "“한국, 기술·제조·대규모 생산 갖춘 반도체 생태계” “부천 공장, SiC 공급 규모·품질·안정성 확보에... 전력반도체 수요가 늘어나는 가운데 생산 규모와 품질, 안정적인 공급 능력을 갖추는 데 중요한 거점이다.”...",
+      "link": "https://biz.chosun.com/it-science/ict/2026/11/07/UH7DZYCBINC3PPLWI2UIYLG6CA/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+      "naver_link": "https://n.news.naver.com/mnews/article/366/0001203195?sid=105",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "美 '블루 쓰나미'에 데이터센터 규제 공포…韓美 AI주 동반 폭락",
+      "description": "미국 반도체주가 무더기로 폭락한 데 이어 국내 증시에서는 서킷브레이커까지 발동됐다. 다만 이미 승인된... 특히 필라델피아 반도체지수는 12.25% 급락하며 2020년 3월 이후 최대 낙폭을 기록했다. 엔비디아(-9.26%) AMD(-17....",
+      "link": "https://news.mtn.co.kr/article/2026110615562060272",
+      "naver_link": "https://news.mtn.co.kr/article/2026110615562060272",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "코스피"
+      ],
+      "thumbnail_url": "https://files.mtn.co.kr/article-asset/2026/11/06/8c648408-580a-497a-a793-2f7a7e6ec07a.jpg"
+    },
+    {
+      "title": "美 중간선거 이후 환율 한 주 새 22원↑…빗나간 '달러 약세' 예상",
+      "description": "외국인 주식 매도대금 송금과 수입업체 결제 등 달러를 사려는 수요가 많았지만, 반도체 수출기업들이... 이 여파로 5일(현지시간) 뉴욕증시에서 나스닥지수는 5.52%, 필라델피아 반도체지수는 12.25% 급락했다....",
+      "link": "https://news.mtn.co.kr/article/2026110617333396901",
+      "naver_link": "https://news.mtn.co.kr/article/2026110617333396901",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "코스피"
+      ],
+      "thumbnail_url": "https://files.mtn.co.kr/article-asset/2026/11/06/7341af63-5c56-40b8-9378-38d89d261c91.jpg"
+    },
+    {
+      "title": "[브라보 문화 이슈] “25세 연하와 결혼” 70세 손영권 前삼성전자 사장...",
+      "description": "이번 결혼으로 주목받은 손영권 전 사장은 글로벌 반도체·정보기술(IT) 산업에서 오랜 경력을 쌓아온... 현재는 삼성 반도체 자문위원회 의장과 하만 인터내셔널 이사회 의장을 맡고 있다. 손 전 사장은 일 외적으로도...",
+      "link": "https://bravo.etoday.co.kr/view/atc_view/20436",
+      "naver_link": "https://bravo.etoday.co.kr/view/atc_view/20436",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "it"
+      ],
+      "queries": [
+        "반도체",
+        "IT 산업"
+      ],
+      "thumbnail_url": "https://img.etoday.co.kr/pto_db/2026/11/20261106095231_2413238_1170_1560.jpg"
+    },
+    {
+      "title": "AI가 부른 메모리 대란…저가 미니PC도 가격 인상 직격탄",
+      "description": "특히 고대역폭메모리(HBM)와 서버용 D램 수요가 빠르게 늘면서 반도체 업체들이 AI용 고부가가치 메모리... 반도체 생산시설 확충과 공정 전환에 상당한 시간과 투자가 필요한 만큼 AI 산업의 성장 속도를 메모리...",
+      "link": "https://www.asiatime.co.kr/article/20261106500265",
+      "naver_link": "https://www.asiatime.co.kr/article/20261106500265",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "'오를 때'와 '내려올 때'…이재명표 코스피 5000의 달라진 의미",
+      "description": "52%, 필라델피아 반도체지수는 12.25% 급락했다. 그 여파로 국내 증시에서도 삼성전자가 6.35%, SK하이닉스가 10.44% 하락하는 등 그동안 지수 상승을 주도했던 반도체 대형주에 매도세가 집중됐다. 그럼에도 코스피...",
+      "link": "https://www.suwonilbo.kr/view.html?id=L2611070541174177",
+      "naver_link": "https://www.suwonilbo.kr/view.html?id=L2611070541174177",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi",
+        "korea_flow"
+      ],
+      "queries": [
+        "반도체",
+        "코스피",
+        "외국인 기관 순매수 증시"
+      ],
+      "thumbnail_url": "https://www.suwonilbo.kr/img/write/p26751058c137999a2d8243c4eb01149ebbf91d6b.jpg"
+    },
+    {
+      "title": "\"증시는 흔들릴 때 연금계좌 매도는 위험...꾸준한 적립식으로\"[증권맨...",
+      "description": "그리고 남은 30~40%는 반도체나 인공지능(AI)처럼 구조적 성장이 예상되는 메가트렌드 중심의 ‘위성 자산’으로 구성해 초과 성과를 노려보는 방식이다. 단단한 핵심 자산이 하락장의 충격을 온몸으로 받아내는 동안...",
+      "link": "https://www.edaily.co.kr/News/Read?newsId=01443206645643424&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+      "naver_link": "https://n.news.naver.com/mnews/article/018/0006405415?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "코스피"
+      ],
+      "thumbnail_url": "https://image.edaily.co.kr/images/Photo/files/NP/S/2026/11/PS26110700053.jpg"
+    },
+    {
+      "title": "'AIDC 규제' 美민주당 양원 장악 …삼성·SK 실제 영향은 얼마나",
+      "description": "미국 빅테크의 AI 인프라 투자가 삼성전자와 SK하이닉스의 메모리 사업을 뒷받침해 온 만큼 반도체 수요... 미국 정부가 확정한 반도체지원법 보조금 상한은 47억 4500만달러다. AI 반도체용 첨단 공정의 현지 생산 기반을...",
+      "link": "https://www.nocutnews.co.kr/news/6603433?utm_source=naver&utm_medium=article&utm_campaign=20261107060107",
+      "naver_link": "https://n.news.naver.com/mnews/article/079/0004207439?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "고수익 사업에 사활…불황 속 돌파구 찾는 건설사들",
+      "description": "반도체 등 하이테크 공사와 해외 건축 프로젝트의 공정이 본격화하면서 매출과 이익이 동반 성장했다. 현대건설은 매출은 6조2406억원으로 20.3% 감소했지만 영업이익은 2217억원으로 114.2% 증가했다. 3분기 누적...",
+      "link": "https://www.nocutnews.co.kr/news/6603516?utm_source=naver&utm_medium=article&utm_campaign=20261107060107",
+      "naver_link": "https://n.news.naver.com/mnews/article/079/0004207440?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:02:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "“술자리 옆 中 여성과 무슨 사이냐”…젠슨 황, 美의회 '소환장' 받았다",
+      "description": "중국의 첨단 반도체 기술 접근 가능성을 둘러싼 미국 정치권의 경계심이 커지면서 엔비디아에 대한 압박도... (AI) 반도체 관련 정보를 중국에 넘겼다는 의혹을 보도하면서 불거졌다. 월스트리트저널(WSJ)도 최소 3개국...",
+      "link": "https://www.etnews.com/20261107000003",
+      "naver_link": "https://n.news.naver.com/mnews/article/030/0003483156?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "“신규 데이터센터 건설 중단하자”… AI株 흔든 美 민주당 당선인들의...",
+      "description": "미국 뉴욕증시에서 기술주 중심의 나스닥지수는 5일 하루에만 5.52% 급락하는 등 반도체를 비롯한 AI 관련주가... 데이터센터 개발에 차질이 빚어질 경우 인프라 기업과 발전·전력장비 업체, 반도체 제조사, 클라우드...",
+      "link": "https://biz.chosun.com/international/international_general/2026/11/07/XPEKSRLRGBGR7EGDMZFNPINIC4/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+      "naver_link": "https://n.news.naver.com/mnews/article/366/0001203189?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "semiconductor",
+        "us"
+      ],
+      "queries": [
+        "반도체",
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://biz.chosun.com/resizer/v2/VNNX5GCOGNNELCQMB5QA65UISI.jpg?auth=49c60e37a09e5a4347ec31b7f1af0db699b6105bebe21451a23ea3f10b298d8c&width=1200&height=630&smart=true"
+    },
+    {
+      "title": "국민성장펀드 투자받은 中企, 알고보니 엔비디아 최고 파트너",
+      "description": "국민성장펀드는 인공지능(AI)·반도체·바이오 등 첨단전략산업 육성을 목적으로 조성된 정책 펀드다. 전환가액은 주당 8106원이며 만기는 5년이다. 인수계약은 10일이며 납입은 16일 예정이다. 투자자의 조기상환청구권...",
+      "link": "https://www.sedaily.com/article/20111250?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/011/0004679661?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kosdaq"
+      ],
+      "queries": [
+        "반도체",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://wimg.sedaily.com/news/cms/2026/11/06/news-p.v1.20261106.edcb5badb18b4d018ce800c4724650ca_Z1.png"
+    },
+    {
+      "title": "코스피 급락에도 1만 간다고?...증권가 전망 살펴보니",
+      "description": "다만, 이후 서버·메모리 발주가 줄거나 반도체 기업의 2027~2028년 이익 전망이 낮아지면 이번 급락이 과도했다는 증권가의 판단도 달라질 수 있다. [알림] 본 기사는 해당 증권사의 분석보고서를 토대로 정보 제공...",
+      "link": "http://www.joseilbo.com/news/news_read.php?uid=579153&class=53&grp=",
+      "naver_link": "https://n.news.naver.com/mnews/article/123/0002393568?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "semiconductor",
+        "kospi"
+      ],
+      "queries": [
+        "반도체",
+        "코스피"
+      ],
+      "thumbnail_url": "https://www.joseilbo.com/gisa_img/17939424711793942471_yjh0621.png"
+    },
+    {
+      "title": "[알쓸신기] 선 없이 전기를 넘겨준다… 스마트폰 무선 충전의 전자기 유...",
+      "description": "코일에서 뿜어져 나오는 강한 자기장이 스마트폰 내부의 민감한 메인보드 반도체나 카메라 센서를 망가뜨리지 않도록, 자기장을 오직 상대편 코일 방향으로만 집중시키고 기기 안쪽으로는 침투하지 못하게 막아주는...",
+      "link": "https://www.ddaily.co.kr/page/view/2026110615160797924",
+      "naver_link": "https://n.news.naver.com/mnews/article/138/0002247629?sid=105",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "병목을 틀어쥐면 수퍼 甲이 된다[박찬희의 경영전략]",
+      "description": "1980년대 일본의 반도체 패권은 미일 반도체협정으로 끝났고, 우리 반도체는 그 틈에서 성장했다. 온 세상이 석유를 써도 지역안보를 장악한 미국이 석유거래를 달러로만 허용하면서 제국패권의 수단이 됐다. 제국은...",
+      "link": "https://magazine.hankyung.com/business/article/202611020591b",
+      "naver_link": "https://n.news.naver.com/mnews/article/050/0000112946?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "\"현금 들고 기다려라\"…코스피 5000선 아래로 떨어지자 재조명된 경고",
+      "description": "코스피가 6일 5000선 아래로 급락하면서 국내 증시의 추가 하락을 경고해온 김영익 한양대 미래인재교육원... 코스피는 이날 개장 직후 낙폭을 키우며 3분 만에 8% 이상 급락했다. 이에 서킷브레이커가 발동됐고, 지수는...",
+      "link": "https://www.fnnews.com/news/202611061920528587",
+      "naver_link": "https://n.news.naver.com/mnews/article/014/0005600739?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:01:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "https://image.fnnews.com/resource/media/image/2026/11/06/202611061700593171_e.jpg"
+    },
+    {
+      "title": "[AI 블루쇼크①]데이터센터 규제 우려에 나스닥 급락…AI 거품 터지나",
+      "description": "한국 반도체와 전력·인프라 산업에 가져올 기회와 과제를 3회 기획시리즈로 짚어본다. 미국 중간선거에서... 특히 AI·반도체 관련 종목에 매도세가 집중됐다. 마이크론테크놀로지, AMD, 샌디스크, 네비우스 등이 10% 넘게...",
+      "link": "https://www.newsis.com/view/NISX20261106_0003858191",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307458?sid=104",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "결국 깨진 삼성전자 '20만원'…증권가 \"역사적 저평가 구간\"[종목현미경...",
+      "description": "규제가 구체화하면 향후 2~3년간 빅테크의 설비투자 계획이 수정되고, 서버와 메모리 반도체의 공급 일정도 늦어질 수 있다. 다만 유진투자증권은 AI 투자 급감이나 미국 경기의 심각한 둔화 우려는 과도하다고...",
+      "link": "https://www.news1.kr/finance/general-stock/6346043",
+      "naver_link": "https://n.news.naver.com/mnews/article/421/0009275564?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "美 민주당 승리에 반도체 비상…데이터센터 제동",
+      "description": "글로벌 반도체와 AI 공급망에도 불확실성이 확산하고 있다. 이번 선거로 차질을 빚게 된 데이터센터 규모는... 데이터센터 착공 지연은 하드웨어 공급망, 특히 메모리 반도체 산업에 직접적인 타격을 가하고 있다....",
+      "link": "https://it.chosun.com/news/articleView.html?idxno=3000000000453",
+      "naver_link": "https://it.chosun.com/news/articleView.html?idxno=3000000000453",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "\"대체 뭘 샀길래?\"…증시 11% 폭락에도 51% 수익 낸 투자왕",
+      "description": "민주당이 선거 전부터 AI 데이터센터 건설을 규제하겠다고 밝히면서 반도체 기업들의 데이터센터에 칩... 그동안 인도 시장은 다른 아시아 신흥국보다 반도체 등 AI 기술주 비중이 낮아 부진했지만 오히려 최근...",
+      "link": "https://www.mt.co.kr/stock/2026/11/07/2026110616454251445",
+      "naver_link": "https://n.news.naver.com/mnews/article/008/0005437884?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "semiconductor",
+        "battery"
+      ],
+      "queries": [
+        "반도체",
+        "2차전지 주식"
+      ]
+    },
+    {
+      "title": "[알쓸다정] 반도체 호황 세금 162조원, 왜 기금으로 쌓아두나",
+      "description": "그런데 반도체 호황으로 법인세·소득세가 최근 10년 추세선을 웃돌아 걷히면서 생긴 '추가세수분'과 초과세수, 세계잉여금을 모아 정부가 별도 기금을 만들었다. 기금은 특정 목적을 위해 여러 해에 걸쳐 쌓고 쓰는...",
+      "link": "https://www.gokorea.kr/news/articleView.html?idxno=884289",
+      "naver_link": "https://www.gokorea.kr/news/articleView.html?idxno=884289",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "semiconductor"
+      ],
+      "queries": [
+        "반도체"
+      ]
+    },
+    {
+      "title": "관세쇼크 땐 폭풍매수 국민연금, 블루쓰나미 땐 힘 못쓴 까닭",
+      "description": "코스피가 지난 6일 장중 5000선 아래까지 밀리면서 연기금 역할론이 다시 도마에 올랐다. 올해 초 미국... 지난해 3~4월 미국 관세 충격으로 코스피 2500선이 무너졌을 때와는 다른 흐름이다. 연기금은 2024년 12월 3일...",
+      "link": "https://www.joongang.co.kr/article/25476555",
+      "naver_link": "https://n.news.naver.com/mnews/article/025/0003563456?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202611/07/12b499cc-c737-4e9a-8ed5-7621c084691e.jpg"
+    },
+    {
+      "title": "1300원대 초반 바라보던 원·달러…'AI 리스크'에 다시 오르나",
+      "description": "뉴욕 증시에 이어 국내 증시에서도 코스피 5000선이 9개월 만에 깨졌다. 전날 코스피는 6.02% 하락한 5059.69에 장을 마쳤는데 외국인들의 대규모 매도세가 지수 하락을 주도했다. 외국인들은 2조7690억원을 순매도한 반면...",
+      "link": "https://www.newsis.com/view/NISX20261106_0003858378",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307470?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "kospi",
+        "korea_flow"
+      ],
+      "queries": [
+        "코스피",
+        "외국인 기관 순매수 증시"
+      ],
+      "thumbnail_url": "https://img1.newsis.com/2026/11/06/NISI20261106_0021521473_web.jpg"
+    },
+    {
+      "title": "‘입동’보다 먼저 온 주식시장 한파, 예금 4%라는데 갈아타야 하나요?...",
+      "description": "지난 6월22일 9114.55(종가)까지 치솟았던 코스피 지수는 전날 장중 5000선 아래까지 떨어졌습니다. 30만원을... 성급한 대응은 금물 미국 중간 선거를 기점으로 코스피는 이틀간 11% 가량 급락했습니다. 투자자라면 공포감을...",
+      "link": "https://www.khan.co.kr/article/202611070600121",
+      "naver_link": "https://n.news.naver.com/mnews/article/032/0003481196?sid=101",
+      "published_at": "Sat, 07 Nov 2026 06:00:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/032/2026/11/07/0003481196_001_20261107060107464.jpg?type=w800"
+    },
+    {
+      "title": "美증시 급락에 헤지펀드 '백기'...상반기 두자릿수 수익률이 연 누적 마...",
+      "description": "5일(현지시간) 미국 뉴욕증권거래소(NYSE) 전광판 [UPI=연합뉴스] 미국 뉴욕증시를 덮친 인공지능(AI) 관련주 급락에 월가 대형 헤지펀드들마저 휘청이고 있습니다. 한때 두 자릿수 수익률을 자랑하던 펀드들이 잇따라...",
+      "link": "https://biz.sbs.co.kr/article_hub/20000344897?division=NAVER",
+      "naver_link": "https://n.news.naver.com/mnews/article/374/0000542273?sid=104",
+      "published_at": "Sat, 07 Nov 2026 05:59:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://img.biz.sbs.co.kr/upload/2026/11/07/9Vq1793998700698-850.jpg"
+    },
+    {
+      "title": "백악관 \"데이터센터 건설 계획 차질 없어…중간선거에도 성장 지속\"",
+      "description": "해싯 위원장은 전날 기술주 중심의 미국 증시 급락에 대해서도 민주당의 중간선거 승리에 따른 정책 불확실성이 영향을 미쳤다고 분석했다. 그는 \"새로운 다수당이 데이터센터 문제에 개입해 상황을 복잡하게 만들 수...",
+      "link": "https://www.newsis.com/view/NISX20261107_0003858718",
+      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307456?sid=104",
+      "published_at": "Sat, 07 Nov 2026 05:48:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://img1.newsis.com/2025/12/05/NISI20251205_0000837236_web.jpg"
+    },
+    {
+      "title": "[주간 코스닥 기관] 에코프로·나노신소재·에코프로비엠 집중 매수",
+      "description": "기관투자자들이 지난주 코스닥시장에서 에코프로와 나노신소재, 에코프로비엠 등 2차전지 관련주를... 7일 한국거래소에 따르면 기관은 지난 2일부터 6일까지 코스닥시장에서 에코프로를 가장 많이 순매수했다....",
+      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502011",
+      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502011",
+      "published_at": "Sat, 07 Nov 2026 05:48:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ],
+      "thumbnail_url": "https://cdn.pinpointnews.co.kr/news/thumbnail/202611/502011_487102_4657_v150.jpg"
+    },
+    {
+      "title": "[주간 코스닥 외국인] 반도체 장비주 집중 매수…2차전지·로봇주는 매...",
+      "description": "사진=연합뉴스 외국인 투자자들이 지난주 코스닥시장에서 반도체 장비와 부품 관련 종목을 집중적으로... 7일 한국거래소에 따르면 외국인은 지난 2일부터 6일까지 코스닥시장에서 테스, 두산테스나, 티씨케이 등을 순매수...",
+      "link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502010",
+      "naver_link": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=502010",
+      "published_at": "Sat, 07 Nov 2026 05:46:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ],
+      "thumbnail_url": "https://cdn.pinpointnews.co.kr/news/thumbnail/202611/502010_487101_4450_v150.jpg"
+    },
+    {
+      "title": "엔비디아, 급락 충격 딛고 반등 시도… AI 반도체 투자심리 다시 살아나...",
+      "description": "로이터통신에 따르면 이날 미국 증시에서는 주요 기술주가 회복세를 보였으며, 엔비디아를 비롯한 반도체 기업들이 상승 흐름에 힘을 보탰다. AMD와 인텔, 브로드컴, 마이크론 등 주요 업체들도 투자자들의 관심을...",
+      "link": "https://www.jemin.com/news/articleView.html?idxno=846364",
+      "naver_link": "https://www.jemin.com/news/articleView.html?idxno=846364",
+      "published_at": "Sat, 07 Nov 2026 05:36:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.jemin.com/news/thumbnail/202611/846364_433990_356_v150.jpg"
+    },
+    {
+      "title": "차가운 공모 시장 뚫은 바이오의 집념…레제라, 최대 2.7억 달러 IPO 닻 ...",
+      "description": "상황에서도 바이오 업계를 향한 투자 심리가 유효하게 작용하고 있음을 보여준다고 평가했다. 공모가... 글로벌 제약사 글락소스미스클라인(GSK)는 이번 공모에서 최대 2500만 달러(약 340억 원) 규모의 주식을...",
+      "link": "https://www.g-enews.com/view.php?ud=202611070519113999fda4f5ab74_1",
+      "naver_link": "https://www.g-enews.com/view.php?ud=202611070519113999fda4f5ab74_1",
+      "published_at": "Sat, 07 Nov 2026 05:32:00 +0900",
+      "categories": [
+        "bio"
+      ],
+      "queries": [
+        "바이오 주식"
+      ]
+    },
+    {
+      "title": "美 기술주 급반등 속...달러화 '강세', 엔화환율 '상승'",
+      "description": "또한 미국 나스닥 선물지수 급등에 이어 미국증시에서 반도체주를 중심으로 주가가 급반등하면서 미국 증시에 대한 우려도 완화됐다. 투자자들의 위험 회피성 엔화 매수의 기세가 주춤해졌다는 풀이가 나온다....",
+      "link": "http://www.choicenews.co.kr/news/articleView.html?idxno=172978",
+      "naver_link": "http://www.choicenews.co.kr/news/articleView.html?idxno=172978",
+      "published_at": "Sat, 07 Nov 2026 05:30:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://cdn.choicenews.co.kr/news/thumbnail/202611/172978_132634_2930_v150.jpg"
+    },
+    {
+      "title": "1.5조 수주 잔고 씨앤엠, 로봇·AI 신사업으로 둔화된 수익성 돌파",
+      "description": "45년 차 모터 전문 제조업체 씨앤엠(C&M)이 코스닥 입성을 앞두고 겪는 잔인한 패러독스(paradox)다. 외형... 이번 코스닥 상장을 통해 씨앤엠은 총 295만주를 전량 신주로 발행하며 공모 가판대에 올린다. 희망 공모가...",
+      "link": "https://www.goodkyung.com/news/articleView.html?idxno=293219",
+      "naver_link": "https://www.goodkyung.com/news/articleView.html?idxno=293219",
+      "published_at": "Sat, 07 Nov 2026 05:28:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ],
+      "thumbnail_url": "https://cdn.goodkyung.com/news/thumbnail/202611/293219_267571_269_v150.jpg"
+    },
+    {
+      "title": "[박근종 칼럼] 미국 '블루 쓰나미'에 주가 폭락, 반도체 일극 경제에 대...",
+      "description": "코스피(KOSPI)는 지난 11월 6일 개장 3분 만에 8% 이상 폭락하며 '서킷 브레이커(Circuit breakers │ 주식매매... 종가 기준으로는 전 거래일 대비 6.02% 하락한 5,059.69를 기록하며 간신히 5,000선을 지켰으나, 코스피 시가총액의...",
+      "link": "https://www.mhns.co.kr/news/articleView.html?idxno=768053",
+      "naver_link": "https://www.mhns.co.kr/news/articleView.html?idxno=768053",
+      "published_at": "Sat, 07 Nov 2026 05:24:00 +0900",
+      "categories": [
+        "kospi",
+        "bio"
+      ],
+      "queries": [
+        "코스피",
+        "바이오 주식"
+      ],
+      "thumbnail_url": "https://www.mhns.co.kr/image/logo/snslogo_20251204040314.jpg"
+    },
+    {
+      "title": "생활고에 거리로 나온 유럽 청년들…유럽발 한파 한국 증시 덮치나[코스...",
+      "description": "교육예산 삭감과 치솟는 생활비 등에 반발한 유럽 청년들이 거리로 쏟아져 나왔다. 지난 10월 31일(현지시간) 독일에서는 청년단체 주도로 30여개 도시에서 시위가 열렸다. 일부 지역에선 경찰을 향한 화염병 투척과...",
+      "link": "https://magazine.hankyung.com/business/article/202611056815b",
+      "naver_link": "https://n.news.naver.com/mnews/article/050/0000112945?sid=101",
+      "published_at": "Sat, 07 Nov 2026 05:21:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "60달러냐 140달러냐…증시 반등 가를 중동의 향방[코스피 반등 조건은④...",
+      "description": "국제유가가 중동 정세에 따라 롤러코스터를 타고 있다. 지난 10월 30일 중동 갈등이 격화할 것이라는 우려에 배럴당 117.64달러까지 치솟았던 브렌트유는 이달 2일 미국과 이란의 협상 기대가 커지면서 하루 만에 7.63...",
+      "link": "https://magazine.hankyung.com/business/article/202611046262b",
+      "naver_link": "https://n.news.naver.com/mnews/article/050/0000112944?sid=101",
+      "published_at": "Sat, 07 Nov 2026 05:19:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "선거 뒤에도 주도주는 반도체일까[코스피 반등 조건은③]",
+      "description": "미국 중간선거에서 민주당이 승리하면서 인공지능(AI) 산업에도 정책 변화의 바람이 불고 있다. 데이터센터 건설과 전력 사용에 대한 규제를 강화할 수 있다는 전망에 AI 인프라 관련 업종의 셈법도 복잡해졌다....",
+      "link": "https://magazine.hankyung.com/business/article/202611057553b",
+      "naver_link": "https://n.news.naver.com/mnews/article/050/0000112943?sid=101",
+      "published_at": "Sat, 07 Nov 2026 05:12:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "시장에 피가 낭자하고 공포가 만연하다…AI, 개미 무덤될까",
+      "description": "미국 증시의 기술주 폭락이 국내 증시에 고스란히 전달되면서 변동성이 커지자 정부도 대책 마련에 나섰다. 재정경제부는 지난 5일에 이어 이틀간 오전 서울 종로구 정부서울청사에서 이형일 부총리 겸 재경부 장관...",
+      "link": "https://www.nocutnews.co.kr/news/6603461?utm_source=naver&utm_medium=article&utm_campaign=20261107050109",
+      "naver_link": "https://n.news.naver.com/mnews/article/079/0004207431?sid=101",
+      "published_at": "Sat, 07 Nov 2026 05:02:00 +0900",
+      "categories": [
+        "us",
+        "kospi"
+      ],
+      "queries": [
+        "미국 증시",
+        "코스피"
+      ],
+      "thumbnail_url": "https://file2.nocutnews.co.kr/newsroom/image/2026/11/06/202611061745531924_0.jpg"
+    },
+    {
+      "title": "5000피 깨졌는데 또 샀다…삼전·닉스 9조 베팅한 개미 ‘비명’ [숫자 ...",
+      "description": "◆美 반도체지수 12.25% 폭락…민주당 승리 뒤 규제 우려 확산 국내 반도체주 급락은 미국 증시 급락의 영향을 받았다. 지난 5일(현지시간) 뉴욕증시에서 나스닥종합지수는 5.52% 내린 2만4315.00, 필라델피아...",
+      "link": "https://www.segye.com/newsView/20261107501144?OutUrl=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/022/0004173169?sid=101",
+      "published_at": "Sat, 07 Nov 2026 05:02:00 +0900",
+      "categories": [
+        "us",
+        "kospi",
+        "korea_flow"
+      ],
+      "queries": [
+        "미국 증시",
+        "코스피",
+        "외국인 기관 순매수 증시"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/022/2026/11/07/20261107501147_20261107053007001.png?type=w800"
+    },
+    {
+      "title": "트럼프, SI 지원 약속...민주당은 규제 계획",
+      "description": "5일 미국 증시에서는 AI 관련 기업들의 주가가 큰 폭으로 하락했습니다. 연방 또는 주 정부 차원에서 새로운 규제가 도입될 수 있다는 투자자들의 우려 때문입니다. 텍사스와 오하이오, 조지아를 포함한 몇몇 주의 지사...",
+      "link": "https://www.voakorea.com/a/trump-si-110626/8219781.html",
+      "naver_link": "https://www.voakorea.com/a/trump-si-110626/8219781.html",
+      "published_at": "Sat, 07 Nov 2026 04:47:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://gdb.voanews.com/e714b4c2-f949-4448-14f0-08df13de54d1_w1200_h630.jpg"
+    },
+    {
+      "title": "[오늘의 1면 사진] 코스피 장중 5000 붕괴",
+      "description": "6일 서울 중구 하나은행 딜링룸에 코스피가 장중 4,900선으로 폭락한 시황이 표시돼 있다. 이날 코스피는 324.11포인트(6.02%) 급락해 5,059.69에 거래를 마쳤다. 나스닥 종합과 스탠더드앤드푸어스(S&P)500 지수가...",
+      "link": "https://www.hankookilbo.com/news/article/A2026110621200005504?did=NA",
+      "naver_link": "https://n.news.naver.com/mnews/article/469/0000964165?sid=101",
+      "published_at": "Sat, 07 Nov 2026 04:30:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "미국 증시 폭락 뒤에 지나 히노호사(Gina Hinojosa)가 있다? [이석우의 글...",
+      "description": "\"미국 증시 폭락 뒤에는 지나 히노호사(Gina Hinojosa)가 있다?\" 도널드 트럼프 미국 대통령이 지난 5일(현지시간) 뉴욕증시가 일제히 폭락한 것을 야당인 민주당 탓으로 돌리면서, 지나 히노호사란 이름이 전면에 떠올랐다....",
+      "link": "https://www.fnnews.com/news/202611061530145558",
+      "naver_link": "https://n.news.naver.com/mnews/article/014/0005600727?sid=104",
+      "published_at": "Sat, 07 Nov 2026 04:29:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/014/2026/11/07/0005600727_001_20261107042913104.JPG?type=w800"
+    },
+    {
+      "title": "美 국채가, 뜨거운 고용에 하락…금리인상 가능성 반영",
+      "description": "미국 10년물 국채금리 일중 추이[출처 : 연합인포맥스] 미국 10월 비농업 고용 지표가 예상치를 대폭 웃돈... 보고서가 연준이 강조해온 경제의 강세를 다시 한번 확인해주고 12월 금리 인상 가능성을 사실상...",
+      "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443573",
+      "naver_link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443573",
+      "published_at": "Sat, 07 Nov 2026 03:12:00 +0900",
+      "categories": [
+        "us_rates"
+      ],
+      "queries": [
+        "미국 국채 금리 연준"
+      ]
+    },
+    {
+      "title": "엔비디아 살까, 말까…앤트로픽 IPO 고비 넘겨야[박신영의 개장전 요것...",
+      "description": "S&P500 시총 2조9000억달러 증발…역대 최대 미국 뉴욕증시가 5일(현지시간) 인공지능(AI) 관련주를 중심으로 폭락하면서 사상 최대 규모의 시가총액이 증발했습니다. S&P500지수 편입 기업들의 시가총액은 이날 하루 약...",
+      "link": "https://www.hankyung.com/article/202611071864i",
+      "naver_link": "https://n.news.naver.com/mnews/article/015/0005351344?sid=104",
+      "published_at": "Sat, 07 Nov 2026 03:04:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "지아이이노베이션 기술이전 지연 속 '임상 2상' 돌파구 될까",
+      "description": "지난 6일 코스닥시장에서 지아이이노베이션은 전일 대비 100원(1.46%) 하락한 6760원에 거래를 마쳤다. 52주 최고가 2만950원과 비교하면 67.7% 낮은 수준이다. 전날에는 GI-102 병용 임상 첫 투약 소식이 발표되면서 10.29...",
+      "link": "https://www.medicaltimes.com/Main/News/NewsView.html?ID=1171679&ref=naverpc",
+      "naver_link": "https://www.medicaltimes.com/Main/News/NewsView.html?ID=1171679&ref=naverpc",
+      "published_at": "Sat, 07 Nov 2026 02:30:00 +0900",
+      "categories": [
+        "kosdaq"
+      ],
+      "queries": [
+        "코스닥"
+      ],
+      "thumbnail_url": "https://pds.medicaltimes.com/Thumnail/20261106/1793954309.jpg"
+    },
+    {
+      "title": "트럼프 \"SI(초지능)는 황금…유치 원하는 주들과 협력\"",
+      "description": "미국 뉴욕 증시는 지난 5일 민주당의 중간선거 승리에 따른 AI 데이터센터 규제 강화 우려 등이 부각되면서 반도체와 AI 관련주를 중심으로 급락 마감했다. 이번 선거에서는 텍사스와 오하이오, 조지아 등에서...",
+      "link": "https://www.newspim.com/news/view/20261107000010",
+      "naver_link": "https://www.newspim.com/news/view/20261107000010",
+      "published_at": "Sat, 07 Nov 2026 02:29:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "미국 증시 급락에 헤지펀드도 10여년만에 최대 포지션 축소",
+      "description": "미국 뉴욕증시를 덮친 인공지능(AI) 관련주 급락에 월가 대형 헤지펀드들마저 휘청이고 있습니다. 한때 두 자릿수 수익률을 자랑하던 펀드들이 잇따라 손실로 돌아서면서 투자 포지션을 대거 정리하고 인력 감축에...",
+      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706508&ref=A",
+      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289204?sid=104",
+      "published_at": "Sat, 07 Nov 2026 01:50:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "데이터센터 규제 공포…5000피 턱걸이",
+      "description": "6일 한국거래소에 따르면 코스피는 전날보다 324.11포인트(6.02%) 내린 5059.69에 마감했다. 개장 직후 8.78% 내린 4911.28까지 급락하면서 서킷브레이커와 매도 사이드카가 연달아 발동됐지만, 이후 소폭 상승했다. 코스피가...",
+      "link": "https://www.joongang.co.kr/article/25476538",
+      "naver_link": "https://n.news.naver.com/mnews/article/353/0000057182?sid=102",
+      "published_at": "Sat, 07 Nov 2026 01:46:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/353/2026/11/07/0000057182_001_20261107014610572.jpg?type=w800"
+    },
+    {
+      "title": "5.5% 급락한 나스닥, 하루새 3400조원 증발",
+      "description": "한국 등 아시아 주식 시장을 덮친 ‘검은 금요일’ 충격은 미국 뉴욕증시에서 시작됐다. 미국 중간선거에서 민주당이 압승하면서 인공지능(AI) 데이터센터 건설 규제가 강화될 것이란 우려에 미국 반도체주가...",
+      "link": "https://www.donga.com/news/Economy/article/all/20261106/134982634/2",
+      "naver_link": "https://n.news.naver.com/mnews/article/020/0003760760?sid=101",
+      "published_at": "Sat, 07 Nov 2026 01:45:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "개장 3분만에 서킷브레이커… 이틀간 삼전 13%-하이닉스 17% 빠져",
+      "description": "전날 5%대 급락한 코스피가 6일에도 개장 직후 8% 넘게 급락하며 5,000 선 아래로 떨어지자 개인투자자들은... 주가지수 급락에 코스피와 코스닥에서는 잇따라 매도 사이드카가 발동됐다. 외국인이 이날 코스피에서...",
+      "link": "https://www.donga.com/news/Economy/article/all/20261107/134982636/2",
+      "naver_link": "https://n.news.naver.com/mnews/article/020/0003760759?sid=101",
+      "published_at": "Sat, 07 Nov 2026 01:45:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/020/2026/11/07/0003760759_001_20261107062908689.jpg?type=w800"
+    },
+    {
+      "title": "퍼렇게 질린 코스피, 장중 ‘오천피’ 깨졌다",
+      "description": "미국 중간선거에서 민주당이 상·하원을 모두 장악한 ‘블루 쓰나미’ 충격이 이어지면서 6일 코스피가... 이날 코스피는 전날보다 6.02% 하락한 5,059.69에 거래를 마쳤다. 장중 한때 8% 넘게 하락해 4,911.28까지 밀리면서...",
+      "link": "https://www.donga.com/news/Economy/article/all/20261107/134982654/2",
+      "naver_link": "https://n.news.naver.com/mnews/article/020/0003760755?sid=101",
+      "published_at": "Sat, 07 Nov 2026 01:44:00 +0900",
+      "categories": [
+        "kospi",
+        "kosdaq"
+      ],
+      "queries": [
+        "코스피",
+        "코스닥"
+      ],
+      "thumbnail_url": "https://imgnews.pstatic.net/image/020/2026/11/07/0003760755_001_20261107014457454.jpg?type=w800"
+    },
+    {
+      "title": "[사설] AI발 시장 급락, 대비에 빈틈 없어야",
+      "description": "6일 코스피지수(5059.69)는 전날보다 6% 넘게 폭락했다. 개장 직후 서킷브레이커 등 거래중단 조치가 잇따라 발동되며 장중 5000선이 붕괴됐다. 이날 새벽 미국 기술주 중심의 나스닥 종합지수가 2020년 3월 코로나19 팬데믹...",
+      "link": "https://www.kmib.co.kr/article/20261106500499",
+      "naver_link": "https://n.news.naver.com/mnews/article/005/0001883569?sid=110",
+      "published_at": "Sat, 07 Nov 2026 01:32:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
+    },
+    {
+      "title": "美증시 급락에 헤지펀드도 '백기'…10여년만에 최대 포지션 축소",
+      "description": "AI주 급락에 수익률 곤두박질…일부 펀드 인력 감축·투자 전략 변경 주식투자 펀드 40% 이상 수익률 보합·마이너스…\"매니저 안아주라\" 농담도 임수정 특파원 = 미국 뉴욕증시를 덮친 인공지능(AI) 관련주 급락에 월가...",
+      "link": "https://www.yna.co.kr/view/AKR20261107001700072?input=1195m",
+      "naver_link": "https://n.news.naver.com/mnews/article/001/0016427548?sid=104",
+      "published_at": "Sat, 07 Nov 2026 01:14:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "리플(XRP), 시총 상위 중 낙폭 1위…1.2달러 무너지며 10조 원 증발",
+      "description": "AI 규제 우려로 미국 증시가 밀리자 위험 회피 심리가 번졌고, 레버리지 포지션 청산이 연쇄적으로 이어졌다. 가격은 1.3달러 안팎에서 1.18달러까지 밀리며 1.2달러대 초반 지지선도 무너졌다.11월 6일(현지시간)...",
+      "link": "http://coinreaders.com/268189",
+      "naver_link": "http://coinreaders.com/268189",
+      "published_at": "Sat, 07 Nov 2026 01:12:00 +0900",
+      "categories": [
+        "us"
+      ],
+      "queries": [
+        "미국 증시"
+      ]
     },
     {
       "title": "미래운용 \"美 '블루웨이브'에 투자 지형 변화…수혜 ETF 5종 주목해야\"",
@@ -97,40 +1178,35 @@
       "queries": [
         "미국 증시",
         "2차전지 주식"
-      ],
-      "thumbnail_url": "https://cdn.apnews.kr/news/thumbnail/202611/3052898_86755_4614_v150.jpg"
+      ]
     },
     {
-      "title": "[시사천국] '6년 차' 대통령 향한 냉엄한 평가...트럼프 남은 2년은?",
-      "description": "부정적으로 보니까 어 그러면 반도체 그럼 이거 꺾이겠네? 이렇게 돼 가지고 이제 여파가 지금 AI 이렇게 돼... 빅테크나 반도체나 이런 이 영역에 대해서 일반 유권자들 국민들이 느끼는 정서가 굉장히 다릅니다. 미국은요....",
-      "link": "https://news.cpbc.co.kr/article/1176867?division=NAVER",
-      "naver_link": "https://news.cpbc.co.kr/article/1176867?division=NAVER",
-      "published_at": "Sat, 07 Nov 2026 00:42:00 +0900",
+      "title": "\"심장이 아파요\" 개미들 비명‥외인은 또 매도",
+      "description": "◀ 앵커 ▶ 코스피 5천선은 겨우 지켰지만 이틀 연속 폭락에 개미 투자자들의 속은 타들어가고 있습니다.... 코스피 변동성 지수는 하루 만에 12% 증가한 65를 기록하며 석 달 만에 60선을 넘겼습니다. 레버리지 상품을...",
+      "link": "https://imnews.imbc.com/replay/2026/nw2500/article/6863842_36989.html",
+      "naver_link": "https://n.news.naver.com/mnews/article/214/0001534063?sid=101",
+      "published_at": "Sat, 07 Nov 2026 00:46:00 +0900",
       "categories": [
-        "semiconductor",
         "kospi"
       ],
       "queries": [
-        "반도체",
         "코스피"
-      ],
-      "thumbnail_url": "https://img.cpbc.co.kr/newsimg/upload/2026/11/06/4gn1793973910718.jpg"
+      ]
     },
     {
-      "title": "아이렌($IREN) 22.30% 상승, 6일 장중 전 거래일 종가 기준",
-      "description": "AI·반도체 관련주도 일부 상승했다. 한국시간 6일 오후 11시 41분 기준 엔비디아(NVIDIA, $NVDA)는 193.55달러(약 26만2032원)로 6.58% 올랐고, 램리서치(Lam Research, $LRCX)는 오후 11시 1분 장전 거래에서 13.12...",
-      "link": "https://www.tokenpost.kr/news/market/434173",
-      "naver_link": "https://www.tokenpost.kr/news/market/434173",
-      "published_at": "Sat, 07 Nov 2026 00:42:00 +0900",
+      "title": "뉴욕발 'AI 규제' 공포 세계 증시 덮쳤다",
+      "description": "급락은 밤사이 미국 뉴욕증시에서 시작됐습니다. 전날 반도체주에 머물렀던 하락세가 시장 전반으로 번지며 3대 지수가 모두 큰 폭으로 내렸습니다. 마이크론과 AMD가 17% 떨어졌고, 필라델피아 반도체지수는 12% 하락해...",
+      "link": "https://imnews.imbc.com/replay/2026/nw2500/article/6863841_36989.html",
+      "naver_link": "https://n.news.naver.com/mnews/article/214/0001534062?sid=101",
+      "published_at": "Sat, 07 Nov 2026 00:45:00 +0900",
       "categories": [
-        "semiconductor",
-        "us"
+        "us",
+        "kospi"
       ],
       "queries": [
-        "반도체",
-        "미국 증시"
-      ],
-      "thumbnail_url": "https://f1.tokenpost.kr/2026/11/g2gv0pr59q_th_1600x900.webp"
+        "미국 증시",
+        "코스피"
+      ]
     },
     {
       "title": "리플 시가총액 60억달러 감소…실제 자금 유출과는 달라",
@@ -143,8 +1219,33 @@
       ],
       "queries": [
         "미국 증시"
+      ]
+    },
+    {
+      "title": "아이렌($IREN) 22.30% 상승, 6일 장중 전 거래일 종가 기준",
+      "description": "아이렌(IREN, $IREN)이 6일(현지시간) 미국 증시 개장 뒤 전 거래일 종가보다 22.30% 오른 22.05달러(약 2만9852원)에 거래됐다. 비트코인(BTC) 채굴과 AI 클라우드 사업을 운영하는 회사의 주가는 하루 전 하락...",
+      "link": "https://www.tokenpost.kr/news/market/434173",
+      "naver_link": "https://www.tokenpost.kr/news/market/434173",
+      "published_at": "Sat, 07 Nov 2026 00:42:00 +0900",
+      "categories": [
+        "us"
       ],
-      "thumbnail_url": "https://f1.tokenpost.kr/2026/11/m9dbs7lm2k_th_1600x900.webp"
+      "queries": [
+        "미국 증시"
+      ]
+    },
+    {
+      "title": "[시사천국] '6년 차' 대통령 향한 냉엄한 평가...트럼프 남은 2년은?",
+      "description": "5천 코스피가. 그런데 지금 그 내용인즉슨 쉽게 얘기를 하면은 데이터 센터를 지금 트럼프 행정부가 여러 군데서 지금 짓는 거를 추진을 해 왔는데 이번에 민주당에서는 이게 너무 친환경적이지 않고 전기 많이 먹고...",
+      "link": "https://news.cpbc.co.kr/article/1176867?division=NAVER",
+      "naver_link": "https://news.cpbc.co.kr/article/1176867?division=NAVER",
+      "published_at": "Sat, 07 Nov 2026 00:42:00 +0900",
+      "categories": [
+        "kospi"
+      ],
+      "queries": [
+        "코스피"
+      ]
     },
     {
       "title": "코스피, AI 쇼크… 장중 5000 붕괴",
@@ -159,22 +1260,7 @@
       "queries": [
         "코스피",
         "외국인 기관 순매수 증시"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/023/2026/11/07/0004008310_001_20261107004106160.jpg?type=w800"
-    },
-    {
-      "title": "나스닥, 1%대 상승 출발…저가 매수세 유입",
-      "description": "기술주와 반도체주가 폭락했다. 전날 나스닥 종합지수는 5.52%, S&P500지수는 4.36%, 다우존스30산업평균지수는 3.44% 하락하며 마감했다. 이날은 급락했던 AI 관련주와 반도체주가 반등을 주도했다. 엔비디아는 7...",
-      "link": "https://www.dt.co.kr/article/12093632?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/029/0003057589?sid=104",
-      "published_at": "Sat, 07 Nov 2026 00:40:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://wimg.dt.co.kr/news/cms/2026/11/07/rcv.YNA.20261106.PRU20261106154801009_R.jpg"
+      ]
     },
     {
       "title": "27개 증시 약세장 분류…미국 S&P500·나스닥은 기준 미달",
@@ -187,8 +1273,7 @@
       ],
       "queries": [
         "코스피"
-      ],
-      "thumbnail_url": "https://f1.tokenpost.kr/2026/11/trtc1hs0h4_th_1600x900.webp"
+      ]
     },
     {
       "title": "野 장외투쟁… 오늘 광화문, 9일 청와대로",
@@ -201,40 +1286,33 @@
       ],
       "queries": [
         "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/023/2026/11/07/0004008304_001_20261107004013606.jpg?type=w800"
-    },
-    {
-      "title": "‘블루 쓰나미’에 무너진 나스닥… 하루새 시총 3355조원, 사상 최대 증...",
-      "description": "필라델피아 반도체지수 12% 추락 삼전닉스 한달간 25% 넘게 떨어져 개인 투자자들 “전국민이 우울증” 3줄 요약 ㆍ나스닥 시가총액 약 3355조원 증발 사상 최대 ㆍ개인 삼성전자 5조8323억원 순매수 속 26% 하락 ㆍ반도체...",
-      "link": "https://www.chosun.com/economy/stock-finance/2026/11/07/K34VNEVPFJGWZFZLITH34OS7SA/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
-      "naver_link": "https://n.news.naver.com/mnews/article/023/0004008303?sid=101",
-      "published_at": "Sat, 07 Nov 2026 00:39:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/023/2026/11/07/0004008303_001_20261107003922093.jpg?type=w800"
+      ]
     },
     {
       "title": "‘AI의 심장’ 데이터센터 막힐라… 반도체·인프라株 줄줄이 패닉셀",
-      "description": "AI 데이터센터의 핵심 공급망인 HBM·메모리 반도체와 반도체 장비, 전력 기기, 원전 관련주에 투자가 집중되어온 한국 증시가 받는 충격은 컸다. 미국 데이터센터에 대한 모라토리엄(일시 중단)은 국내 반도체 기업과 AI...",
+      "description": "미국 데이터센터에 대한 모라토리엄(일시 중단)은 국내 반도체 기업과 AI 인프라 기업에 대한 패닉셀(공포 매도)을 불러왔고, 코스피는 이틀째 폭락했다. ◇美, 주민 대부분 데이터센터 반대 AI 산업에서 데이터센터는...",
       "link": "https://www.chosun.com/economy/tech_it/2026/11/07/SK7S57NEBJHDNODQT7OV36BZ4Y/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
       "naver_link": "https://n.news.naver.com/mnews/article/023/0004008301?sid=105",
       "published_at": "Sat, 07 Nov 2026 00:39:00 +0900",
       "categories": [
-        "semiconductor",
         "kospi"
       ],
       "queries": [
-        "반도체",
         "코스피"
+      ]
+    },
+    {
+      "title": "‘블루 쓰나미’에 무너진 나스닥… 하루새 시총 3355조원, 사상 최대 증...",
+      "description": "코스피는 장중 9개월 만에 5000선이 붕괴되기도 했다. 정치권, 증권사들이 부추긴 ‘AI 장밋빛 전망’에... 개인이 같은 기간 1조2199억원어치 사들인 ‘KODEX 레버리지’는 코스피200 지수 하루 등락률의 두 배를 따라가는...",
+      "link": "https://www.chosun.com/economy/stock-finance/2026/11/07/K34VNEVPFJGWZFZLITH34OS7SA/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
+      "naver_link": "https://n.news.naver.com/mnews/article/023/0004008303?sid=101",
+      "published_at": "Sat, 07 Nov 2026 00:39:00 +0900",
+      "categories": [
+        "kospi"
       ],
-      "thumbnail_url": "https://www.chosun.com/resizer/v2/EK6B3VQWGVCXPCAF2SF5PZ2V2A.jpg?auth=f985d433b17c8f1c2f7cd275ebf2d5652161091a5aef4bd69ca09b9fc64574f7&width=1200&height=630&focal=1569,936"
+      "queries": [
+        "코스피"
+      ]
     },
     {
       "title": "여 \"초광역특구 신속 추진\" vs 야 \"미래대응기금 백지화\"",
@@ -243,56 +1321,11 @@
       "naver_link": "https://www.natv.go.kr/natv/news/newsView.do?newsId=514501",
       "published_at": "Sat, 07 Nov 2026 00:38:00 +0900",
       "categories": [
-        "semiconductor",
         "kospi"
       ],
       "queries": [
-        "반도체",
         "코스피"
-      ],
-      "thumbnail_url": "https://www.natv.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000568097&fileSn=0"
-    },
-    {
-      "title": "좀비기업 느는데… 기업 살리는 ‘워크아웃법’ 연말에 끝나",
-      "description": "석병훈 이화여대 교수는 “반도체 등 일부 대기업에 성장의 성과가 집중되면서 경영난을 겪는 중소기업이 늘어나고 있다”며 “기촉법을 반복해서 연장하기보다 상시화해 안정적으로 운영할 필요가 있다”고 했다.",
-      "link": "https://www.chosun.com/economy/economy_general/2026/11/07/P66DWYFHEBBXFDD72HGD2GK3LU/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
-      "naver_link": "https://n.news.naver.com/mnews/article/023/0004008287?sid=101",
-      "published_at": "Sat, 07 Nov 2026 00:37:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://www.chosun.com/resizer/v2/IRA23NLHBLDWUDZBAMOTLD5AFQ.jpg?auth=66b164e9953a1ff7a6a1ee60bcf652f6f7e5725e02f0f791eb57d5baf55460ee&width=1200&height=630&smart=true"
-    },
-    {
-      "title": "나스닥 장중 2%…엔비디아 한때 7.3% 올라",
-      "description": "PANews는 같은 바이낸스 시세에서 S&P500은 1.1%, 필라델피아 반도체지수는 6.8%, AMD($AMD)는 13%, 샌디스크(SanDisk, $SNDK)는 12% 상승했다고 전했다. 엔비디아는 전날 9.3% 하락한 뒤 반등했다고 PANews는...",
-      "link": "https://www.tokenpost.kr/news/breaking/434168",
-      "naver_link": "https://www.tokenpost.kr/news/breaking/434168",
-      "published_at": "Sat, 07 Nov 2026 00:36:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://f1.tokenpost.kr/2026/11/301jlaxmo5_th_1600x900.webp"
-    },
-    {
-      "title": "10초마다 마주치는 조각…도시 전체가 ‘지붕 없는 갤러리’",
-      "description": "작업실은 약간 과장하자면 반도체 생산 공장처럼 깨끗하다. 함께 일하는 작업자들의 건강을 위해 늘 청결함을 유지한다고 한다. 왜 밀라노나 로마 같은 대도시 대신 이 작은 마을을 택했나요? 곧바로 답이 돌아왔다....",
-      "link": "https://www.joongang.co.kr/article/25476505",
-      "naver_link": "https://n.news.naver.com/mnews/article/353/0000057152?sid=110",
-      "published_at": "Sat, 07 Nov 2026 00:35:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://pds.joongang.co.kr/news/component/joongang_sunday/202611/07/6e1d2e1e-ce83-4ebb-9447-2b33425b0db6.jpg"
+      ]
     },
     {
       "title": "[사설] ‘검은 금요일’ 된 증시…정치적 부양의 값비싼 비용",
@@ -318,54 +1351,33 @@
       ],
       "queries": [
         "코스피"
-      ],
-      "thumbnail_url": "https://assets.joongang.co.kr/images/share/ja-opengraph-img.png"
-    },
-    {
-      "title": "[에디터 프리즘] 추격의 끝, 선도의 위기",
-      "description": "그런데 10여 년이 흘러 생성형 인공지능(AI) 시대가 열리자 HBM은 없어서 못 파는 핵심 반도체가 됐다.... 미국에서 반도체 설계와 제조 기술을 배우고, 일본에서 자동차 엔진과 생산 기술을 익혔다. 유럽에서는 선박 설계와...",
-      "link": "https://www.joongang.co.kr/article/25476499",
-      "naver_link": "https://n.news.naver.com/mnews/article/353/0000057148?sid=110",
-      "published_at": "Sat, 07 Nov 2026 00:31:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/353/2026/11/07/0000057148_001_20261107003109766.jpg?type=w800"
-    },
-    {
-      "title": "코스피 급락 5059선…삼전닉스·삼성전기·LG엔솔 등 하락",
-      "description": "삼성전자와 SK하이닉스 등 반도체 대형주가 동반 하락한 가운데 시가총액 상위 10개 종목이 모두 약세를 기록했다. 특히 SK하이닉스와 SK스퀘어가 7% 안팎의 하락률을 나타내며 지수 하락 흐름에 영향을...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624268",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624268",
-      "published_at": "Sat, 07 Nov 2026 00:30:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624268_429038_2829_v150.jpg"
+      ]
     },
     {
       "title": "블랙록 IBIT, 5거래일 연속 10억 4,000만 달러 이탈…나스닥 5.5% 급락 여...",
-      "description": "S&P500은 약 4% 하락했고 다우지수는 1,600포인트 넘게 빠졌다.반도체주가 급락을 이끌었다. 필라델피아 반도체지수는 약 11% 하락했고 엔비디아와 브로드컴은 각각 9% 안팎, 퀄컴도 약 9% 내렸다. 테슬라는 약 11...",
+      "description": "청산액 가운데 9억 달러 가까이가 미국 증시 개장 후 약 4시간 사이에 쏟아졌다.주식시장과 연동된 암호화폐 관련 종목도 흔들렸다. 스트래티지와 코인베이스, 서클은 각각 10% 넘게 내렸다. 비트코인 채굴...",
       "link": "https://www.wikitree.co.kr/articles/1172576",
       "naver_link": "https://www.wikitree.co.kr/articles/1172576",
       "published_at": "Sat, 07 Nov 2026 00:30:00 +0900",
       "categories": [
-        "semiconductor",
         "us"
       ],
       "queries": [
-        "반도체",
         "미국 증시"
+      ]
+    },
+    {
+      "title": "코스피 급락 5059선…삼전닉스·삼성전기·LG엔솔 등 하락",
+      "description": "코스피가 6% 넘게 급락하며 5050선까지 밀려났다. 삼성전자와 SK하이닉스 등 반도체 대형주가 동반... 6일 코스피는 전 거래일보다 324.11포인트(6.02%) 내린 5059.69에 정규장 거래를 마쳤다. 지수는 5263.26에...",
+      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624268",
+      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624268",
+      "published_at": "Sat, 07 Nov 2026 00:30:00 +0900",
+      "categories": [
+        "kospi"
       ],
-      "thumbnail_url": "https://cdnweb01.wikitree.co.kr/webdata/editor/202611/07/img_20261107001301_3b89af03.jpeg"
+      "queries": [
+        "코스피"
+      ]
     },
     {
       "title": "[속보]리플 1.19달러 저조, 에버노스 3.30% 상승…XRP 관련주 변수",
@@ -378,39 +1390,22 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624277_429042_5713_v150.jpg"
-    },
-    {
-      "title": "달러-원, 뉴욕장서 1,350원 후반대 거래",
-      "description": "미국 중간선거에서 압승한 민주당의 데이터센터 규제 가능성에 간밤 미국 시장에서 필라델피아 반도체 지수가 12% 넘게 폭락했다. 위험회피심리가 달러인덱스에 상승 압박을 가했고 외국인은 통화선물시장에서...",
-      "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443565",
-      "naver_link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443565",
-      "published_at": "Sat, 07 Nov 2026 00:24:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
       ]
     },
     {
       "title": "[사설] 주가 폭락하자 '반대매매 규칙' 바꾼 정부…시장왜곡 아닌가",
-      "description": "반도체주 비중이 절대적인 한국 증시가 미국 선거의 후폭풍을 정면에서 받는 모양새다. 대책이 필요하지만, 시장을 부양하려는 ‘응급 처방’은 곤란하다. 국내 증시의 신용거래융자 규모는 29조원에 육박한다....",
+      "description": "인공지능(AI) 데이터센터 규제 우려로 전날 미국 증시가 급락하자 한국 일본 대만 등 아시아 증시도 동반 폭락했다. 코스피지수는 개장 3분 만에 8% 넘게 하락하며 5000선이 무너져 서킷브레이커와 매도 사이드카가 잇달아...",
       "link": "https://www.hankyung.com/article/2026110616051",
       "naver_link": "https://n.news.naver.com/mnews/article/015/0005351337?sid=110",
       "published_at": "Sat, 07 Nov 2026 00:17:00 +0900",
       "categories": [
-        "semiconductor",
         "us",
         "kospi"
       ],
       "queries": [
-        "반도체",
         "미국 증시",
         "코스피"
-      ],
-      "thumbnail_url": "https://static.hankyung.com/img/logo/logo-news-sns.png?v=20201130"
+      ]
     },
     {
       "title": "HLB 주가 약세, 장중 강세 보였지만…새주 증시 흐름 주목, 대외 상황 등...",
@@ -423,22 +1418,7 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624170_428980_3537_v150.jpg"
-    },
-    {
-      "title": "[증시 폭락] AI 투자 둔화 우려에 국고채 금리 하락…코스피 6% 급락",
-      "description": "코스피 6% 급락하며 9개월 만에 5,000선 붕괴 [출처: 금융투자협회, 연합인포맥스] 미국 중간선거 이후... 국내에서도 코스피 지수는 6% 이상 하락해 5,059.69에 거래를 마쳤으며, 장중 5,000선 아래로...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624255",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624255",
-      "published_at": "Sat, 07 Nov 2026 00:16:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/mn_624255_20261106220054_1_v150.jpg"
+      ]
     },
     {
       "title": "두산에너빌리티 주가 급락…향방 주말 이후에도 주목",
@@ -451,8 +1431,20 @@
       ],
       "queries": [
         "코스피"
+      ]
+    },
+    {
+      "title": "[증시 폭락] AI 투자 둔화 우려에 국고채 금리 하락…코스피 6% 급락",
+      "description": "코스피 6% 급락하며 9개월 만에 5,000선 붕괴 [출처: 금융투자협회, 연합인포맥스] 미국 중간선거 이후... 국내에서도 코스피 지수는 6% 이상 하락해 5,059.69에 거래를 마쳤으며, 장중 5,000선 아래로...",
+      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624255",
+      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624255",
+      "published_at": "Sat, 07 Nov 2026 00:16:00 +0900",
+      "categories": [
+        "kospi"
       ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624133_428955_441_v150.jpg"
+      "queries": [
+        "코스피"
+      ]
     },
     {
       "title": "한국형 공포지수 64.74 급등…3개월 만에 최고 수준",
@@ -470,78 +1462,17 @@
       ]
     },
     {
-      "title": "솔라나(SOL) 6.5% 하락, 200일선 88.93달러 턱밑까지 밀렸다",
-      "description": "이어 뉴욕증시 개장 직후 반도체·AI 종목이 급락해 시가총액 1조 달러(약 1,361조 원) 이상이 증발했고... 나스닥 종합지수가 4.3% 떨어지며 조정 국면에 들어가고 필라델피아 반도체지수가 11% 폭락하는 동안...",
-      "link": "http://coinreaders.com/268180",
-      "naver_link": "http://coinreaders.com/268180",
-      "published_at": "Sat, 07 Nov 2026 00:12:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "단일 레버리지와 닮은 테마형 ETF?…보완 뾰족수도 없어",
-      "description": "가능성 ▲반도체 등 특정 테마 자금 집중에 따른 시장 왜곡 가능성 등의 우려가 있다고 짚었다. 이찬진... 실제로 지난 6월 테마형 전체 순자산총액의 약 65%가 반도체 및 인공지능(AI) 테마에 해당했다. 특정 테마, 특히...",
-      "link": "https://www.dailian.co.kr/news/view/1711951/?sc=Naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/119/0003152387?sid=101",
-      "published_at": "Sat, 07 Nov 2026 00:11:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
       "title": "[사설] 4개월새 시총 3270조 증발, ‘증시의 정치화’가 부른 참사",
-      "description": "미국 민주당이 데이터센터 건설을 규제할 것이란 우려에 반도체주들이 일제히 폭락했다. 문제는 주가... 청와대와 삼성·SK가 8월 민주당 전당대회를 앞두고 호남 반도체 투자를 공동 발표한 6월 말부터 반도체 주가가...",
+      "description": "어제 코스피가 개장 3분 만에 8% 넘게 폭락해 거래가 정지되는 서킷 브레이커가 발동됐다. 장중 4900선까지... 코스피는 지난 6월 22일 사상 최고치(9114.55)를 기록한 뒤 4개월여 만에 5059.69로 44% 폭락했다. 같은 기간...",
       "link": "https://www.chosun.com/opinion/editorial/2026/11/07/L5MCDPRGRZFPZNYV4QEDY7LESI/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
       "naver_link": "https://n.news.naver.com/mnews/article/023/0004008233?sid=110",
       "published_at": "Sat, 07 Nov 2026 00:11:00 +0900",
       "categories": [
-        "semiconductor",
         "kospi"
       ],
       "queries": [
-        "반도체",
         "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/023/2026/11/07/0004008233_001_20261107001109343.JPG?type=w800"
-    },
-    {
-      "title": "[최정봉의 호모 인베스티쿠스] 정치의 중심 장치가 된 숫자",
-      "description": "월가의 AI 수익성 의구심에 미국 반도체주가 먼저 꺾였고, 그 충격이 두 대형주를 거쳐 코스피로 건너왔다. 여기에 중간선거로 양원을 쥔 민주당이 AI 산업 속도 조절에 무게를 싣는다는 변수도 얹혔다. AI 3대 강국부터...",
-      "link": "https://www.hankyung.com/article/2026110615641",
-      "naver_link": "https://n.news.naver.com/mnews/article/015/0005351333?sid=110",
-      "published_at": "Sat, 07 Nov 2026 00:10:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/015/2026/11/07/0005351333_001_20261107001017429.jpg?type=w800"
-    },
-    {
-      "title": "[사설] 美 데이터센터 규제발 반도체 쇼크, 냉정한 진단과 대책을",
-      "description": "5일(현지시간) 미 기술주 중심 나스닥지수가 5% 넘게 급락했고, 6일 국내 증시도 반도체 대표주인 '삼전닉스... 증시를 덮친 건 AI 데이터센터 규제 강화가 메모리반도체 수요 급감으로 이어질 수 있다는 공포감이다. 민주당...",
-      "link": "https://www.hankookilbo.com/news/article/A2026110614420003265?did=NA",
-      "naver_link": "https://n.news.naver.com/mnews/article/469/0000964150?sid=110",
-      "published_at": "Sat, 07 Nov 2026 00:10:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/469/2026/11/07/0000964150_001_20261107001016799.jpg?type=w800"
+      ]
     },
     {
       "title": "금(금값, 금시세) 약세, 18K 14K 백금 등 가격은?…주식시장 불확실성 국...",
@@ -556,8 +1487,7 @@
       "queries": [
         "미국 증시",
         "미국 국채 금리 연준"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624113_428942_1230_v150.jpg"
+      ]
     },
     {
       "title": "플렌티넷 모아진 LG유플러스 가입자 20만 돌파",
@@ -574,244 +1504,29 @@
       "thumbnail_url": "https://imgnews.pstatic.net/image/030/2026/11/07/0003483154_001_20261107000811486.png?type=w800"
     },
     {
-      "title": "나스닥100 5일 6.4% 하락…ING, 데이터센터 대출 매각 추진",
-      "description": "당일 나스닥100이 장중 6.24%까지 하락하고 AI·반도체주에 매도세가 집중된 흐름도 앞서 보도됐다. 이번 보도에는 손실에 따른 펀드 감축 경고와 데이터센터 대출 매각 추진 소식이 추가로 담겼다. 투자자들은...",
-      "link": "https://www.tokenpost.kr/news/market/434150",
-      "naver_link": "https://www.tokenpost.kr/news/market/434150",
-      "published_at": "Sat, 07 Nov 2026 00:06:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "\"9년 동안 주식하면서 이런 적은 처음\" 올림픽 金 영웅의 충격 고백...26...",
-      "description": "그는 6일 자신의 SNS에 \"며칠 전 반도체 관련 주식에 레버리지를 최대한 활용해 투자한 탓에 주식을 시작한 지 9년 만에 오늘 가장 큰 손실을 보고 있다\"고 털어놨다. 이어 자신이 이용하는 증권사에서 받은 경고...",
-      "link": "https://www.sportalkorea.com/news/articleView.html?idxno=2025052909553681063",
-      "naver_link": "https://m.sports.naver.com/general/article/139/0002255660",
-      "published_at": "Sat, 07 Nov 2026 00:06:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
       "title": "[속보] 뉴욕증시, 블루쓰나미 충격 완화 조짐?…AMD 12%·마이크론 9% 급...",
-      "description": "미국 뉴욕증시가 6일(한국시간) 오후 반도체와 인공지능(AI) 관련 종목을 중심으로 강한 반등세를... 전날 미국 기술주 급락 과정에서 큰 폭의 하락을 기록했던 마이크론이 다시 상승세로 돌아서면서 반도체...",
+      "description": "나스닥이 상승하는 동안 다우지수와 러셀2000지수가 하락하고 있다는 점은 미국 증시의 회복세가 아직 고르게 확산되지 않았음을 보여준다. 특히 반도체 종목들이 7~12%대 상승률을 기록하고 있음에도...",
       "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624276",
       "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624276",
       "published_at": "Sat, 07 Nov 2026 00:06:00 +0900",
       "categories": [
-        "semiconductor",
         "us"
       ],
       "queries": [
-        "반도체",
         "미국 증시"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624276_429041_5112_v150.jpg"
-    },
-    {
-      "title": "AI 패권 지키려던 미국인데…뜻밖에 웃게 된 중국?",
-      "description": "일시적인 조치에 그치거나 기업들이 규제가 덜한 다른 주로 건설 계획을 옮길 가능성도 있다. 중국 역시 첨단 AI 반도체 확보에 어려움을 겪고 있어 미국과의 기술 격차를 단기간에 좁히기 쉽지 않다는 평가도 나온다.",
-      "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202611060133&t=NN",
-      "naver_link": "https://n.news.naver.com/mnews/article/215/0001271971?sid=104",
-      "published_at": "Sat, 07 Nov 2026 00:05:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "테슬라, 10월 수입차 등록 9,165대…점유율 29.5% 기록",
-      "description": "또한 지난 2월에는 태극기 이모티콘과 함께 테슬라코리아의 반도체 인력 채용 공고를 공유하며, 한국 내 칩 디자인, 팹, 인공지능(AI) 소프트웨어 분야 인재 모집을 알린 바 있다.",
-      "link": "https://www.gukjenews.com/news/articleView.html?idxno=3744856",
-      "naver_link": "https://www.gukjenews.com/news/articleView.html?idxno=3744856",
-      "published_at": "Sat, 07 Nov 2026 00:04:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
       ]
     },
     {
       "title": "美블루 쓰나미, AI ‘저승사자’ 될까? …‘공포’ 대신 ‘공부’해야 ...",
-      "description": "반도체 등 AI 생태계를 구성하는 기업들의 증시 비중도 높다. 미국 가계는 주식 비중이 크다. 주가가... 반도체도 전력도 용수도 모두 부족했다. 부족한 걸 얻으려면 비싼 값으로 사야 한다.돈을 많이 써야 한다. 이른바...",
+      "description": "미국 증시에서 가장 큰 비중을 갖는다. 반도체 등 AI 생태계를 구성하는 기업들의 증시 비중도 높다. 미국 가계는 주식 비중이 크다. 주가가 하락하면 소비가 위축돼 경제에 치명적이다. 물가 만큼이나 민감한 지표다....",
       "link": "https://biz.heraldcorp.com/article/10929042?ref=naver",
       "naver_link": "https://n.news.naver.com/mnews/article/016/0002720143?sid=110",
       "published_at": "Sat, 07 Nov 2026 00:02:00 +0900",
       "categories": [
-        "semiconductor",
-        "us",
-        "kospi"
+        "us"
       ],
       "queries": [
-        "반도체",
-        "미국 증시",
-        "코스피"
-      ],
-      "thumbnail_url": "https://wimg.heraldcorp.com/news/cms/2026/11/06/news-p.v1.20261106.36ffb623171347b0bbad8df5fc5ce0ac_P1.png"
-    },
-    {
-      "title": "[사설] 코스피 장중 5000 붕괴…‘반도체 쏠림’ 넘을 성장 전략 서둘러...",
-      "description": "코스피는 장 초반 반도체주 중심으로 8% 넘게 폭락하며 개장 3분 만에 서킷브레이커가 발동됐다. 장중 4911.... 앞서 뉴욕 증시의 나스닥 지수는 5.5% 급락하고 필라델피아반도체 지수는 무려 12.3% 폭락했다. 증시 폭락에 원...",
-      "link": "https://www.sedaily.com/article/20111343?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/011/0004679652?sid=110",
-      "published_at": "Sat, 07 Nov 2026 00:02:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/011/2026/11/07/0004679652_001_20261107000215167.jpg?type=w800"
-    },
-    {
-      "title": "KB증권 \"삼전닉스, 바닥 찍고 곧 W자 반등\" 그래서 목표주가 얼마?",
-      "description": "반등의 핵심 동력으로는 메모리 반도체 가격 상승과 AI 수요 확대가 꼽힌다. KB증권은 \"내년 범용 D램과... 한편 삼성전자는 반도체 업황 개선 기대와 함께 스마트폰 시장에서도 선두 자리를 지켰다. 글로벌...",
-      "link": "https://www.theguru.co.kr/news/article.html?no=109256",
-      "naver_link": "https://www.theguru.co.kr/news/article.html?no=109256",
-      "published_at": "Sat, 07 Nov 2026 00:02:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ]
-    },
-    {
-      "title": "[주간사모펀드] LG화학 이어 카리플렉스까지…글랜우드PE, 우량 자산 잇...",
-      "description": "크레센도는 반도체, 전기·전자, 기업 간 거래(B2B) 소프트웨어 등 정부 육성 차세대 기술 섹터에서 500억~5000억원 규모의 강소기업 바이아웃에 주력하고 있다. 글로벌 결제 플랫폼 페이팔의 공동창업자 피터 틸 회장이...",
-      "link": "https://news.tf.co.kr/read/economy/2385862.htm",
-      "naver_link": "https://n.news.naver.com/mnews/article/629/0000549643?sid=101",
-      "published_at": "Sat, 07 Nov 2026 00:01:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "\"코스피 저점 가까워지고 있다\"…65년차 투자 거장이 주목한 반등 신호",
-      "description": "삼성전자와 SK하이닉스 등 국내 반도체주에 대해서도 \"아직 실제로 경고 신호가 나타난 것은 없다\"며 \"현재 코스피는 저점에 가까워지고 있다\"고 진단했다. 그러면서 \"내년 3월 중순에도 또 하나의 매수 기회가 나타날 수...",
-      "link": "https://www.newsis.com/view/NISX20261106_0003857962",
-      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307404?sid=101",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ]
-    },
-    {
-      "title": "[증시 프리즘] \"기술주 급락·글로벌 악재 연쇄 충격\"…코스피 5000선 위...",
-      "description": "반도체 양대 산맥인 삼성전자와 SK하이닉스는 AI 반도체 수요 피크아웃 우려와 글로벌 반도체 지수 폭락의 영향으로 장중 큰 폭의 하락세를 나타내며 지수 하향 이탈을 주도했다. 자동차 대표주인 현대차와 기아 역시...",
-      "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93351",
-      "naver_link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93351",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ]
-    },
-    {
-      "title": "[김대호 진단] 미래대응기금 vs 미래파멸기금",
-      "description": "반도체 호황으로 2027년 국세수입은 584조4천억 원, 올해 본예산보다 194조2천억 원 늘어날 전망이다. 정부는... 국가채무비율이 48.3%로 낮아진다는 설명도 빚을 갚아서가 아니라 반도체 가격 상승으로 명목 GDP가 커진 분모...",
-      "link": "https://www.g-enews.com/view.php?ud=202611040828272654906806b77b_1",
-      "naver_link": "https://www.g-enews.com/view.php?ud=202611040828272654906806b77b_1",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "[블루웨이브 쇼크] \"이틀간 13%·18% 추풍낙엽\"…삼성전자·SK하이닉스 1...",
-      "description": "실제로 간밤 뉴욕증시에서 필라델피아 반도체 지수는 12% 넘게 급락했으며, SK하이닉스 미국주식예탁증서(ADR) 역시 13% 하락했다. 외국인 투자자들은 이날 코스피 시장에서 SK하이닉스를 1조9천240억원어치 순매도해...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624252",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624252",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi"
-      ],
-      "queries": [
-        "반도체",
-        "코스피"
-      ]
-    },
-    {
-      "title": "국고채 금리 내렸지만 AI 투자 둔화는 미확인…다음 변수는 미국 예산 ...",
-      "description": "반도체주는 매도가 이어지며 6일 코스피는 개장 3분여 만에 8% 넘게 하락해 주식 매매를 일시 중단하는... 신한투자증권은 AI 설비투자의 중심에 있는 한국 반도체 업종의 둔화 우려가 주가 급락과 채권 매수로...",
-      "link": "https://www.junggi.co.kr/news/articleView.html?idxno=38409",
-      "naver_link": "https://www.junggi.co.kr/news/articleView.html?idxno=38409",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor",
-        "us",
-        "kospi",
-        "us_rates"
-      ],
-      "queries": [
-        "반도체",
-        "미국 증시",
-        "코스피",
-        "미국 국채 금리 연준"
-      ],
-      "thumbnail_url": "https://cdn.junggi.co.kr/news/photo/202611/38409_45351_4721.jpg"
-    },
-    {
-      "title": "[심층분석] 외국인·기관 쏟아낸 매물 폭탄…개인 홀로 사들였으나 낙폭...",
-      "description": "미 국채 금리 변동성 확대와 글로벌 IT 업황에 대한 불확실성 여파로 외국인은 반도체 및 대형 기술주를... 코스피 시장의 순매도 상위 종목에는 삼성전자와 SK하이닉스 등 반도체 대장주가 최상단에 이름을 올렸다. 이어...",
-      "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93350",
-      "naver_link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93350",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor",
-        "kospi",
-        "kosdaq",
-        "korea_flow"
-      ],
-      "queries": [
-        "반도체",
-        "코스피",
-        "코스닥",
-        "외국인 기관 순매수 증시"
-      ],
-      "thumbnail_url": "https://cdn.thefairnews.co.kr/news/thumbnail/202611/93350_140120_3750_v150.jpg"
-    },
-    {
-      "title": "\"AI 다음 주도주는 없다…돈은 결국 '피지컬 AI'로 이동할 것\"",
-      "description": "실제로 2025년 시장을 주도한 것이 그래픽처리장치(GPU)였다면, 2026년 상반기는 메모리 반도체가 주도주 역할을 담당해 왔다. 그러나 정 연구원은 메모리 반도체 중심의 흐름이 계속 이어지기보다는 향후 소비자들과...",
-      "link": "https://www.newsis.com/view/NISX20261106_0003857895",
-      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307403?sid=101",
-      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
+        "미국 증시"
       ]
     },
     {
@@ -825,21 +1540,38 @@
       ],
       "queries": [
         "미국 증시"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624275_429040_4420_v150.jpg"
+      ]
     },
     {
-      "title": "[더페어 돋보기] \"5000선 이탈 악재속 수급 불균형\"…코스피 변동성 확대...",
-      "description": "코스피가 5,000선을 돌파한 이후 글로벌 경기 변동성과 외국인 매도 폭탄이 겹치면서 극심한 지수 흔들림을 겪고 있다. 증권가에서는 5,000선 진입 이후 이어진 급격한 지수 조정이 단기 급등에 따른 차익 실현 욕구와...",
-      "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93352",
-      "naver_link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93352",
+      "title": "국고채 금리 내렸지만 AI 투자 둔화는 미확인…다음 변수는 미국 예산 ...",
+      "description": "키움증권은 규제 범위와 실제 투자 지연, AI 수요 감소가 모두 확인되지 않았다며 5일 미국 증시의 AI주 급락에 투매 성격이 짙다고 분석했다. 필라델피아반도체지수는 이날 12% 넘게 급락했다. 앞서 4일에는 현금이...",
+      "link": "https://www.junggi.co.kr/news/articleView.html?idxno=38409",
+      "naver_link": "https://www.junggi.co.kr/news/articleView.html?idxno=38409",
       "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
       "categories": [
-        "kospi"
+        "us",
+        "us_rates"
       ],
       "queries": [
-        "코스피"
+        "미국 증시",
+        "미국 국채 금리 연준"
       ]
+    },
+    {
+      "title": "[심층분석] 외국인·기관 쏟아낸 매물 폭탄…개인 홀로 사들였으나 낙폭...",
+      "description": "코스닥 시장 역시 수급 불균형이 극에 달하는 흐름을 보였다. 외국인은 바이오 및 제약, 2차전지 소재주를 중심으로 폭넓은 매도세를 이어갔다. 개인은 지수 하락에 맞서 순매수를 기록하며 저가 매수에 나섰지만 제약...",
+      "link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93350",
+      "naver_link": "https://www.thefairnews.co.kr/news/articleView.html?idxno=93350",
+      "published_at": "Sat, 07 Nov 2026 00:00:00 +0900",
+      "categories": [
+        "kosdaq",
+        "korea_flow"
+      ],
+      "queries": [
+        "코스닥",
+        "외국인 기관 순매수 증시"
+      ],
+      "thumbnail_url": "https://cdn.thefairnews.co.kr/news/thumbnail/202611/93350_140120_3750_v150.jpg"
     },
     {
       "title": "랩지노믹스, 상폐 위기 탈출까지 16거래일…1000원선 유지 관건",
@@ -852,116 +1584,32 @@
       ],
       "queries": [
         "코스닥"
-      ],
-      "thumbnail_url": "https://image.edaily.co.kr/images/Photo/files/NP/S/2026/11/PS26110602075.314x.0.jpeg"
+      ]
     },
     {
       "title": "뉴욕증시, 혼조 출발… 급락했던 기술주 반등",
-      "description": "이날은 급락했던 AI 관련주와 반도체주가 반등을 주도했다. 엔비디아는 7%, 샌디스크는 12%, 마이크론테크놀로지는 9% 수준의 상승폭을 기록했다. 다만 이날 고용시장이 예상보다 견조한 것으로 나타나...",
+      "description": "미국 뉴욕증시가 혼조 출발했다. 인공지능(AI) 데이터센터 규제 우려로 약세를 보였던 기술주 중심으로는 저가 매수세가 몰리는 모습이다. 6일(현지 시각) 오전 9시 35분 기준 뉴욕증권거래소(NYSE)에서...",
       "link": "https://biz.chosun.com/international/international_economy/2026/11/06/HAS6IL3Q3JDDZOCN5BVEBA3DMY/?utm_source=naver&utm_medium=original&utm_campaign=biz",
       "naver_link": "https://n.news.naver.com/mnews/article/366/0001203181?sid=104",
       "published_at": "Fri, 06 Nov 2026 23:56:00 +0900",
       "categories": [
-        "semiconductor",
         "us"
       ],
       "queries": [
-        "반도체",
         "미국 증시"
-      ],
-      "thumbnail_url": "https://biz.chosun.com/resizer/v2/GUYWCNBSGU4DOMTBGQYTAYJZHE.jpg?auth=6730e314a800eb54193a3b50489f99dc20a8d5cef1bae161530a7d11264dd2e6&width=1200&height=630&smart=true"
-    },
-    {
-      "title": "미 달러화 강세…기술주 반등에 미 국채 금리와 동반 상승",
-      "description": "필라델피아 반도체 지수는 데이터센터 규제 강화를 내세운 민주당이 중간선거에서 압승하자 전날에만 12.25% 폭락한 바 있다. 신종 코로나바이러스 감염증(코로나19) 사태 이후 최대 낙폭이다 맵프레 자산운용의...",
-      "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443564",
-      "naver_link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443564",
-      "published_at": "Fri, 06 Nov 2026 23:56:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
       ]
     },
     {
       "title": "미국증시 나스닥 1.65% 반등·다우 하락…엔비디아 6.56% 급등, 고용 호...",
-      "description": "미국증시가 전날 인공지능(AI) 관련주 폭락 이후 반도체주를 중심으로 반등했지만, 예상보다 강한... 특히 반도체 3배 레버리지 ETF가 급등하면서 전날 급락에 따른 손실 회복 여부와 시장 변동성에 관심이 쏠렸다....",
+      "description": "미국증시가 전날 인공지능(AI) 관련주 폭락 이후 반도체주를 중심으로 반등했지만, 예상보다 강한 고용지표가 금리 인상 우려를 자극하면서 장초반 혼조세를 나타냈다. 엔비디아가 6% 넘게 상승하고 나스닥이 1%대...",
       "link": "https://www.topstarnews.net/news/articleView.html?idxno=16270404",
       "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16270404",
       "published_at": "Fri, 06 Nov 2026 23:48:00 +0900",
       "categories": [
-        "semiconductor",
-        "us"
-      ],
-      "queries": [
-        "반도체",
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "KTX 구미역 정차·신공항 철도망 반영…민주당, 구미 현안 해결 협력",
-      "description": "또 새마을운동중앙회 및 연수원 구미 이전과 반도체 팹(Fab·반도체 생산시설) 투자 유치 등 지역 산업 기반 확충과 미래 성장동력 확보를 위한 협력 방안도 모색했다. 특히 주요 사업의 국가계획 반영과 정부 차원의 지원을...",
-      "link": "https://www.kyongbuk.co.kr/news/articleView.html?idxno=4089916",
-      "naver_link": "https://www.kyongbuk.co.kr/news/articleView.html?idxno=4089916",
-      "published_at": "Fri, 06 Nov 2026 23:46:00 +0900",
-      "categories": [
-        "semiconductor"
-      ],
-      "queries": [
-        "반도체"
-      ]
-    },
-    {
-      "title": "뉴욕증시, 'AI 쇼크' 하루 만에 반등 시도…저가 매수에 나스닥 1.2%↑",
-      "description": "자산운용사 퀼터의 스튜어트 클라크 포트폴리오 매니저는 \"소수의 기술주와 반도체주가 미국 증시에서 차지하는 비중이 지나치게 커졌다\"며 \"이들 종목의 약세가 나스닥과 S&P500지수의 급락으로 빠르게 이어지고...",
-      "link": "https://www.newsis.com/view/NISX20261106_0003858701",
-      "naver_link": "https://n.news.naver.com/mnews/article/003/0014307395?sid=104",
-      "published_at": "Fri, 06 Nov 2026 23:42:00 +0900",
-      "categories": [
         "us"
       ],
       "queries": [
         "미국 증시"
-      ]
-    },
-    {
-      "title": "[뉴욕개장] 나스닥 1.23%↑…반도체주 AI 규제 우려 딛고 반등",
-      "description": "미국 뉴욕증시가 6일(현지시간) 혼조세로 출발했다. 로이터 통신에 따르면, 다우존스30산업평균지수는 이날 전장보다 486.37포인트(0.94%) 하락한 5만 1036.69에 거래를 시작했다. 스탠더드앤드푸어스(S&P)...",
-      "link": "https://www.news1.kr/world/usa-canada/6346248",
-      "naver_link": "https://n.news.naver.com/mnews/article/421/0009275498?sid=104",
-      "published_at": "Fri, 06 Nov 2026 23:41:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "[사설]더 잦아질 美 ‘블루웨이브’ 발작… 더 거세질 ‘앵그리덕’ 폭...",
-      "description": "인공지능(AI) 과속 투자에 부정적인 민주당이 압승한, 이른바 ‘블루웨이브(blue wave)’ 여파로 반도체 주가가 폭락하고 코스피가 장중 5,000 선이 무너지는 등 세계 증시가 급락했다. 이런 가운데 도널드 트럼프 미...",
-      "link": "https://www.donga.com/news/Opinion/article/all/20261106/134982414/2",
-      "naver_link": "https://n.news.naver.com/mnews/article/020/0003760712?sid=110",
-      "published_at": "Fri, 06 Nov 2026 23:31:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "증시 불안에 당정 긴급 회동…“시장 안정 총력”",
-      "description": "미국 중간선거 이후 인공지능(AI) 규제 우려에 코스피가 급락하자 민주당과 정부가 긴급 회동했다. 당정은 필요에 따라 추가 대책을 마련하는 등 시장 안정에 총력을 기울이겠다는 방침이다. 더불어민주당은 6일 오후...",
-      "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202611060157&t=NN",
-      "naver_link": "https://n.news.naver.com/mnews/article/215/0001271969?sid=100",
-      "published_at": "Fri, 06 Nov 2026 23:31:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
     },
     {
@@ -978,260 +1626,59 @@
       ]
     },
     {
-      "title": "트럼프 “초지능은 황금, 100% 지지“…민주당 AI 규제론 견제",
-      "description": "트럼프 대통령의 이 같은 발언은 미 중간선거에서 민주당이 압승한 뒤 AI 규제 강화 우려로 미국 증시가 급락한 직후 나왔다. 특히 이날 나스닥 지수는 19개월 만에 최악의 수준인 5.5% 가까이 급락했다. 나스닥100...",
-      "link": "https://www.joongang.co.kr/article/25476468",
-      "naver_link": "https://n.news.naver.com/mnews/article/025/0003563440?sid=104",
-      "published_at": "Fri, 06 Nov 2026 23:20:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "AI 관련 9개사 내부자, 5~10월 주식 73억9000만달러 처분",
-      "description": "국내 코스피는 11월 6일 장중 8.52% 하락해 오전 9시 3분께 1단계 서킷브레이커가 발동됐고 거래가 20분간 중단됐다. 코스피는 이후 낙폭을 줄여 11월 6일 전 거래일보다 6.02% 내린 5059.69에 마감했다. 장중...",
-      "link": "https://www.tokenpost.kr/news/market/434120",
-      "naver_link": "https://www.tokenpost.kr/news/market/434120",
-      "published_at": "Fri, 06 Nov 2026 23:12:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "비트코인(BTC), 7만 6,000달러 붕괴...네 시간 만에 1,400억달러 증발",
-      "description": "비트코인이 이 지지 구간을 지키지 못하면, 특히 미국 증시가 지금 상태에 머문다면 매도가 빨라질 수 있다. [기사 핵심 요약] -비트코인은 11월 5일 7만 6,000달러 지지선이 무너져 7만 5,900달러 안팎까지...",
-      "link": "http://coinreaders.com/268172",
-      "naver_link": "http://coinreaders.com/268172",
-      "published_at": "Fri, 06 Nov 2026 23:02:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "증시 급락에 개미 비명…코스피 하락 어디까지?",
-      "description": "연이틀 급락에 개인 투자자 혼란도 커지고 있습니다. 특히 주가가 큰 폭으로 떨어지면 강제매매가 늘어 주가 하락 속도를 더 키울 수 있는데요. 정부도 이런 주식 청산으로 인한 변동성을 막기 위해 긴급 대응에...",
-      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706470&ref=A",
-      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289182?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:58:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "미 선거 충격에 ‘검은 금요일’…9달 전으로 돌아간 코스피",
-      "description": "오늘 코스피는 장중 한때 5천 선 아래로 떨어지면서 9달 전 수준으로 돌아가기도 했습니다. 삼성전자와 SK하이닉스, 반도체 투톱의 낙폭이 컸습니다. 석혜원 기자입니다. [리포트] 코스피는 개장과 동시에 수직...",
-      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706469&ref=A",
-      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289181?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:57:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
       "title": "SK하이닉스 거래대금 66%·삼성전자 33% 증가…외국인 순매도 축소",
-      "description": "96% 집중 -코스피 장중 8.78% 급락…반도체 대형주 거래량 급증 -외국인 두 종목 2조17억원 순매도…기관 8천70억원 순매수 6일 코스피가 장중 8% 넘게 폭락한 가운데 삼성전자와 SK하이닉스의 거래대금이...",
+      "description": "코스닥도 5.03% 떨어진 644.27에 거래를 마쳤다. 삼성전자와 SK하이닉스는 장 초반 급락 이후 낙폭을... 23위 엘리스는 1천477억원으로 코스닥 종목 가운데 높은 거래대금을 기록했다. 정규장 주가는 18.91...",
       "link": "http://www.kjdaily.com/article.php?aid=1793972903691484276",
       "naver_link": "http://www.kjdaily.com/article.php?aid=1793972903691484276",
       "published_at": "Fri, 06 Nov 2026 22:56:00 +0900",
       "categories": [
-        "kospi",
         "kosdaq",
         "korea_flow"
       ],
       "queries": [
-        "코스피",
         "코스닥",
         "외국인 기관 순매수 증시"
       ]
     },
     {
-      "title": "삼전·하닉 폭락에 ‘웃은 사람들’ 따로 있었다…“제발 본전만” 주주...",
-      "description": "허재환 유진투자증권 연구원은 “오늘 코스피가 장중 4911까지 떨어지며 고점 대비 46% 하락한 것은 과도하다”면서도 “국내 증시의 인공지능(AI) 의존도가 아직 높은 만큼 주식 자체보다는 AI 익스포저...",
-      "link": "https://www.sedaily.com/article/20111384?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/011/0004679641?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:43:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
       "title": "[속보] 미국 10월 실업률 4.1%·비농업 고용 16만5000명 증가…뉴욕증시...",
-      "description": "특히 5일(현지시간) 뉴욕증시가 급락한 데 이어 고용시장 관련 수치까지 공개되면서 향후 미국 증시와 국내 증시의 움직임에도 이목이 집중되고 있다. 한국시간으로 11월 6일 미국 노동통계국(BLS)에 따르면 미국의...",
+      "description": "6일 장중 코스피와 코스닥이 동반 급락한 가운데 미국 고용지표를 둘러싼 해석이 주말 이후 국내 증시의 방향성에 어떤 변수로 작용할지 관심이 모아진다. 한편 시장의 시선은 고용지표 이후 예정된 미국 물가 관련...",
       "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624009",
       "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624009",
       "published_at": "Fri, 06 Nov 2026 22:32:00 +0900",
       "categories": [
-        "us",
-        "kospi",
         "kosdaq"
       ],
       "queries": [
-        "미국 증시",
-        "코스피",
         "코스닥"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/624009_428846_3345_v150.jpg"
-    },
-    {
-      "title": "5천피 겨우 지켰는데 \"그래도 1만피 간다\"…글로벌 큰손이 꼽은 4가지 이...",
-      "description": "6일 코스피가 6% 넘게 급락해 5,000선을 '턱걸이'하며 마감한 가운데 글로벌 투자은행(IB) 노무라가 목표치... 노무라는 이날 '다음 단계로 진입하는 한국 증시 개혁' 이라는 제목의 한국증시 전략 리포트를 내고 코스피...",
-      "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202611060125&t=NN",
-      "naver_link": "https://n.news.naver.com/mnews/article/215/0001271967?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:20:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
       ]
     },
     {
       "title": "뉴욕증시 프리뷰, 美 나스닥 선물 반등…AI주 폭락 하루 만에 반도체주...",
-      "description": "미국 캘리포니아주 산타클래라에 있는 엔비디아 본사 [사진=블룸버그통신] ◆ 전날 美 증시 시총 3조달러 증발…나스닥 조정장 진입·아시아 증시 급락 미국 증시의 급락 여파는 아시아 시장으로도 확산했다. 이날...",
+      "description": "코스닥지수도 5.03% 내린 644.27에 마감했다. 장 초반에는 코스피지수가 8% 넘게 폭락하면서 서킷브레이커가 발동돼 거래가 20분간 중단되기도 했다. 외국인 투자자들이 약 2조8000억원어치의 주식을 순매도하며 지수...",
       "link": "https://www.newspim.com/news/view/20261106001264",
       "naver_link": "https://www.newspim.com/news/view/20261106001264",
       "published_at": "Fri, 06 Nov 2026 22:16:00 +0900",
       "categories": [
-        "us",
-        "kospi",
         "kosdaq",
         "us_rates"
       ],
       "queries": [
-        "미국 증시",
-        "코스피",
         "코스닥",
         "미국 국채 금리 연준"
-      ],
-      "thumbnail_url": "https://img.newspim.com/news/2021/08/06/2108060453436330_272_tc.jpg"
-    },
-    {
-      "title": "[뉴욕증시 마감] 필라델피아 반도체지수 6년 만에 최대 낙폭…엔비디아...",
-      "description": "재판매 및 DB 금지] 미국 증시에서 기술주를 중심으로 시가총액이 하루 만에 대규모로 감소한 현상이 나타났다. 월스트리트저널(WSJ)은 이날 나스닥 지수에 포함된 종목들의 시가총액이 약 2조5천억달러(3천400조원)...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624094",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624094",
-      "published_at": "Fri, 06 Nov 2026 22:16:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "비트코인(BTC) 7만 5,700달러 지지선 지킬까…기술주 급락에 롱 청산",
-      "description": "시가총액 1위 비트코인의 하락은 미국 증시 급락과 같은 시기에 나타났다. 코인마켓캡 AI 분석에 따르면 같은 기간 미국 S&P 500 지수는 4.4%, 나스닥은 5.5% 떨어졌다.미국 기술주 매도에 따른 위험회피 심리가 이번...",
-      "link": "http://coinreaders.com/268161",
-      "naver_link": "http://coinreaders.com/268161",
-      "published_at": "Fri, 06 Nov 2026 22:12:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "비트코인(BTC) 현물 ETF 순유입 전환…IBIT만 2,735억 원 유출",
-      "description": "5일 ETF 자금 현황은 미국 증시 마감 이후 집계돼 다음 날 아침 펀드별 데이터가 공개된다.*면책 조항: 이 기사는 투자 참고용으로 이를 근거로 한 투자 손실에 대해 책임을 지지 않습니다. 해당 내용은 정보 제공의...",
-      "link": "http://coinreaders.com/268149",
-      "naver_link": "http://coinreaders.com/268149",
-      "published_at": "Fri, 06 Nov 2026 22:12:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "비트코인, 나스닥 5.5% 급락에 7주 만에 최저로 추락…12억 6천만 달러 ...",
-      "description": "비트코인보다 알트코인 쪽 낙폭이 더 컸다.증시 충격과 한국 코스피, 시장이 보는... 금요일 코스피는 개장 직후 8% 넘게 떨어져 서킷브레이커(거래 일시 중단)가 발동했고 20분간 거래가 멈췄다. 낙폭을 줄여 6...",
-      "link": "https://www.wikitree.co.kr/articles/1172562",
-      "naver_link": "https://www.wikitree.co.kr/articles/1172562",
-      "published_at": "Fri, 06 Nov 2026 22:10:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "3개월 전 \"코스피5000 깨질 수도, 현금 가져라\"…예언 적중한 전문가",
-      "description": "9월 들어 증시가 잠시 반등했을 때도 김 교수는 “미국 증시가 과대평가 영역에 들어섰다”면서 “인공지능(AI) 투자 거품이 발생했다”고 지적했다. 이후 글로벌 증시에서는 AI 투자 수익성과 지속성에 대한 의문이...",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=07685046645643096&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006405395?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:08:00 +0900",
-      "categories": [
-        "us",
-        "kospi"
-      ],
-      "queries": [
-        "미국 증시",
-        "코스피"
       ]
     },
     {
       "title": "美 중간선거가 부른 'AI 규제 공포'…한국증시 덮친 반도체 쇼크",
-      "description": "미국 증시에서는 빅테크 기업들이 강세를 보였지만 엔비디아와 마이크론, 샌디스크 등 주요 반도체주가 일제히 하락했다. 미국 중간선거에서 민주당이 상·하원을 장악하면서 데이터센터 건설과 인허가 규제가 강화될...",
+      "description": "코스피와 코스닥에서 동시에 매도 사이드카가 발동되는 등 시장이 급격히 얼어붙자 정부는 반대매매를... 코스피는 오전 10시16분, 코스닥은 오후 2시30분께 각각 매도 사이드카가 발동됐다. 삼성전자와 SK하이닉스도 각각...",
       "link": "https://www.dongponews.net/news/articleView.html?idxno=61518",
       "naver_link": "https://www.dongponews.net/news/articleView.html?idxno=61518",
       "published_at": "Fri, 06 Nov 2026 22:06:00 +0900",
       "categories": [
-        "us",
-        "kospi",
         "kosdaq"
       ],
       "queries": [
-        "미국 증시",
-        "코스피",
         "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.dongponews.net/news/thumbnail/202611/61518_218561_556_v150.jpg"
-    },
-    {
-      "title": "'20만전자' 무너지자…삼성전자 노태문, '3000주' 6억3000만원 규모 추가...",
-      "description": "코스피는 전 거래일 대비 6.02% 급락한 5059.69에 마감했다. 장중에는 5000선이 무너지면서 주식 거래를 일시 중단하는 서킷브레이커까지 발동됐다. 시장에서는 미국 중간선거 이후 인공지능(AI) 데이터센터 투자와...",
-      "link": "https://www.etnews.com/20261106000363",
-      "naver_link": "https://n.news.naver.com/mnews/article/030/0003483149?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:05:00 +0900",
-      "categories": [
-        "kospi"
-      ],
-      "queries": [
-        "코스피"
-      ]
-    },
-    {
-      "title": "민주당 승리에 반도체 호황은 끝?…“글로벌 투자경쟁 꺾이지 않을 것”",
-      "description": "한지영 키움증권 연구원 역시 “아직 구체적인 규제 범위, 실제 지연 여부, AI 수요 감소도 확인되지 않았다는 점을 감안하면 미국 증시에서의 AI주 폭락은 과매도 이상이라고 생각한다”라고 말했다.",
-      "link": "https://www.busan.com/view/busan/view.php?code=2026110616231040366",
-      "naver_link": "https://n.news.naver.com/mnews/article/082/0001406059?sid=101",
-      "published_at": "Fri, 06 Nov 2026 22:03:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
@@ -1245,8 +1692,7 @@
       ],
       "queries": [
         "코스닥"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/mn_624242_20261106213416_1_v150.jpg"
+      ]
     },
     {
       "title": "'미 AI 쇼크'에 코스피, 5천 선 턱걸이...반도체주 급락",
@@ -1259,78 +1705,33 @@
       ],
       "queries": [
         "코스닥"
-      ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/052/2026/11/06/202611062152534567_t_20261106215425193.jpg?type=w800"
-    },
-    {
-      "title": "美민주 압승에 亞洲 증시 ‘AI 패닉’…日 6만선·대만 4만선 붕괴",
-      "description": "일본 증시의 급락은 전날 미국 증시에서 촉발된 AI·반도체주 매도세가 고스란히 옮겨붙은 탓이다. 반도체 제조장비 업체 도쿄일렉트론과 어드반테스트, 메모리 반도체 업체 키옥시아 등 AI 인프라 관련주가...",
-      "link": "https://www.dailian.co.kr/news/view/1712012/?sc=Naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/119/0003152381?sid=104",
-      "published_at": "Fri, 06 Nov 2026 21:46:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
       "title": "[코스피 5000선 사수] 코스피 6%대 급락 속 5,000선 턱걸이…이틀간 11% ...",
-      "description": "이날 국내 증시는 미국 뉴욕 증시에서 민주당의 압승에 따른 AI 데이터센터 규제 우려로 기술주 중심의 매도세가 번진 영향에 크게 하락했다. 마이크로소프트의 네오클라우드 프로젝트 재검토 소식까지...",
+      "description": "코스피와 코스닥 시장 모두에서 매도 사이드카가 이틀 연속 발동됐다. 코스피는 개장과 동시에 2.24... 코스닥 역시 3.53% 내린 654.43으로 출발해 장 초반 7.26% 급락한 629.17까지 떨어졌으며, 오전 9시 6분 매도...",
       "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624244",
       "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624244",
       "published_at": "Fri, 06 Nov 2026 21:44:00 +0900",
       "categories": [
-        "us",
         "kosdaq",
         "korea_flow"
       ],
       "queries": [
-        "미국 증시",
         "코스닥",
         "외국인 기관 순매수 증시"
-      ],
-      "thumbnail_url": "https://www.cbci.co.kr/news/thumbnail/202611/mn_624244_20261106213939_1_v150.jpg"
-    },
-    {
-      "title": "트럼프 \"초지능은 황금. 100% 지지\"…민주發 AI 규제론 견제",
-      "description": "전날 미국 뉴욕증시는 여당인 민주당의 중간선거 압승에 따른 AI 규제 우려가 확산하면서 폭락 마감했다. 특히 나스닥 지수는 19개월 만에 최악의 수준인 5.5% 가까이 급락하며 조정장에 진입했다. 엔비디아, 브로드컴...",
-      "link": "https://www.news1.kr/world/usa-canada/6346229",
-      "naver_link": "https://n.news.naver.com/mnews/article/421/0009275473?sid=104",
-      "published_at": "Fri, 06 Nov 2026 21:43:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "[반도체지수 폭락] 엔비디아 하루 만에 606조원 증발…데이터센터 규제...",
-      "description": "재판매 및 DB 금지] 미국 증시에서 반도체와 인공지능(AI) 관련 기업들의 주가가 최근 6년 7개월 만에 가장 큰 폭으로 하락했다. 필라델피아 반도체지수(SOX)는 5일(현지시간) 9,011.14로 마감하며 전장 대비 12.2...",
-      "link": "https://www.cbci.co.kr/news/articleView.html?idxno=624099",
-      "naver_link": "https://www.cbci.co.kr/news/articleView.html?idxno=624099",
-      "published_at": "Fri, 06 Nov 2026 21:40:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
       "title": "연기금, 코스피 급락에 1.4조 ‘줍줍’…5천피 방어할까[투자360]",
-      "description": "서상영 미래에셋증권 상무는 “미국 증시에서 반도체를 중심으로 레버리지 축소와 옵션 헤지성 매도가 확대된만큼 한국에서도 외국인의 현·선물 동반 매도가 이어질 경우 지수 하락폭이 주가로 확대될 수 있다”...",
+      "description": "실제 지난 4일엔 연기금의 매수세가 증시 하락을 방어하는 데 힘을 보탰다. 이날 코스피는 장중 5800선을 넘어섰다가 외국인의 대규모 매도세에 5421.72까지 급락했다. 이후 연기금을 중심으로 기관의 매수세가...",
       "link": "https://biz.heraldcorp.com/article/10928733?ref=naver",
       "naver_link": "https://n.news.naver.com/mnews/article/016/0002720130?sid=101",
       "published_at": "Fri, 06 Nov 2026 21:40:00 +0900",
       "categories": [
-        "us",
         "korea_flow"
       ],
       "queries": [
-        "미국 증시",
         "외국인 기관 순매수 증시"
       ]
     },
@@ -1347,21 +1748,18 @@
       "queries": [
         "코스닥",
         "외국인 기관 순매수 증시"
-      ],
-      "thumbnail_url": "https://www.kbsm.net/data/newsThumb/1793968127ADD_thumb780.jpg"
+      ]
     },
     {
       "title": "[미국 뉴욕증시 전망] 나스닥 5.5% 폭락 후 반등 시도…엔비디아·마이크...",
-      "description": "미국 뉴욕증시가 인공지능(AI)·반도체주 폭락 이후 기술주 중심의 반등을 시도하고 있다. 5일(현지시간) 나스닥지수가 5.5% 급락하고 필라델피아 반도체지수가 12% 넘게 무너졌지만, 6일 개장 전 나스닥100 선물이...",
+      "description": "◯ 미국 국채금리·국제유가도 변수 미국 10년물 국채금리는 5일 4.835% 수준을 나타냈다. 최근 중동 정세에 따른 국제유가 상승과 물가 압력이 연준의 통화정책에 부담을 주는 상황이다. 국제유가가 다시 상승하면 에너지...",
       "link": "https://www.topstarnews.net/news/articleView.html?idxno=16270318",
       "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16270318",
       "published_at": "Fri, 06 Nov 2026 21:36:00 +0900",
       "categories": [
-        "us",
         "us_rates"
       ],
       "queries": [
-        "미국 증시",
         "미국 국채 금리 연준"
       ]
     },
@@ -1376,8 +1774,7 @@
       ],
       "queries": [
         "코스닥"
-      ],
-      "thumbnail_url": "https://cdn.econonews.co.kr/news/thumbnail/202611/446841_376833_332_v150.jpg"
+      ]
     },
     {
       "title": "코스닥, 5%대 낙폭에 650선 밑으로...주성엔지니어링, 이오테크닉스 등...",
@@ -1419,83 +1816,16 @@
       ]
     },
     {
-      "title": "한국 콕 집어 \"공장 안 지으면 300% 관세\"…트럼프 '화풀이'에 기업들 '...",
-      "description": "[리포트] 중간선거 이후 미국 증시가 급락하자 트럼프 대통령은 민주당을 탓했습니다. 민주당을 비하하는 '더모크랫'이라는 신조어 표현까지 썼습니다. 그러면서 선거 패배의 원인 중 하나로 꼽히는 관세정책은 물러서지...",
-      "link": "https://news.tvchosun.com/site/data/html_dir/2026/11/06/2026110690266.html",
-      "naver_link": "https://n.news.naver.com/mnews/article/448/0000649533?sid=101",
-      "published_at": "Fri, 06 Nov 2026 21:24:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
       "title": "한국 코스피 급락한 날…美 장전서 엔비디아·마이크론 '반등'",
-      "description": "미국 증시 개장을 앞두고 기술주 비중이 큰 나스닥100 쪽이 상대적으로 강했다. 개별 종목을 보면 엔비디아가 장전 거래에서 3.6% 상승했다. 삼성전자·SK하이닉스와 같은 메모리 반도체 업체인 마이크론을...",
+      "description": "코스피와 코스닥 지수와 삼성전자, SK하이닉스 주가가 표시돼 있다. 이날 코스피는 전 거래일 대비 324.11포인트(6.02%) 내린 5,059.69로, 코스닥은 34.14포인트(5.03%) 내린 644.27로 마감했다. (사진=연합뉴스) 로이터에...",
       "link": "https://www.edaily.co.kr/News/Read?newsId=07462006645643096&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
       "naver_link": "https://n.news.naver.com/mnews/article/018/0006405386?sid=101",
       "published_at": "Fri, 06 Nov 2026 21:24:00 +0900",
       "categories": [
-        "us",
         "kosdaq"
       ],
       "queries": [
-        "미국 증시",
         "코스닥"
-      ]
-    },
-    {
-      "title": "젠슨 황도 못 피한 'AI 쇼크'…亞 증시 '와르르'",
-      "description": "앞서 마감한 미국 뉴욕증시 3대 지수도 일제히 급락했습니다. 반도체와 AI주 중심으로 충격이 컸는데, 하루 새 자산 수십조 원이 증발하면서, 젠슨 황 엔비디아 CEO의 세계 부호 순위가 밀려날 정도였습니다. 아시아...",
-      "link": "https://news.tvchosun.com/site/data/html_dir/2026/11/06/2026110690260.html",
-      "naver_link": "https://n.news.naver.com/mnews/article/448/0000649530?sid=104",
-      "published_at": "Fri, 06 Nov 2026 21:18:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "엔비디아($NVDA) 4.11% 상승…반도체주 장전 동반 반등",
-      "description": "엔비디아(NVIDIA, $NVDA)가 6일 미국 증시 개장 전 거래에서 4.11% 상승했다. 전날 정규장에서 9.26% 하락한 뒤 반등했고, 다른 반도체주도 프리마켓에서 올랐다. 로이터(Reuters)는 6일 오후 6시 14분(한국시간)...",
-      "link": "https://www.tokenpost.kr/news/market/434061",
-      "naver_link": "https://www.tokenpost.kr/news/market/434061",
-      "published_at": "Fri, 06 Nov 2026 21:16:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "이더리움 8.5% 급락…현물 ETF, 하루 만에 순유입서 9,990만 달러 순유출...",
-      "description": "중간선거 직후 반등했던 가상자산 시장이 미국 증시 급락과 함께 다시 위험 회피로 돌아선 하루였다.토큰포스트에 따르면 이더리움은 8.5% 하락한 2,220달러를 기록해 비트코인(BTC)보다 낙폭이 컸다. 미국 현물...",
-      "link": "https://www.wikitree.co.kr/articles/1172557",
-      "naver_link": "https://www.wikitree.co.kr/articles/1172557",
-      "published_at": "Fri, 06 Nov 2026 21:10:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
-      ]
-    },
-    {
-      "title": "AI 규제 공포에 뉴욕 증시 폭락…트럼프 “멍청한 민주당 탓”",
-      "description": "어제는 웃었던 미국 증시도 오늘 폭락했습니다. 인공지능 규제가 더 크게 부각되며 낙폭이 지난해 4월 이후 가장 컸습니다. 트럼프 대통령은 멍청한 민주당을 찍은 유권자 탓이라고 했습니다. 보도에 김지숙 기자입니다....",
-      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706285&ref=A",
-      "naver_link": "https://n.news.naver.com/mnews/article/056/0012289035?sid=104",
-      "published_at": "Fri, 06 Nov 2026 21:07:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
@@ -1526,16 +1856,14 @@
     },
     {
       "title": "코스피 6% 급락, 5천선 턱걸이 미국발 AI 쇼크에 아시아 증시 휘청",
-      "description": "홍콩 항셍지수는 1.27, 중국 상하이종합지수는 1.10, 커촹반(과학창업판) STAR50지수는 2.60 각각 하락했다.앞서 미국 증시도 큰 폭으로 하락했다. 기술주 중심의 나스닥종합지수는 전장 대비 1,421.52포인트(5.52) 내린...",
+      "description": "코스피는 장중 4,911.28까지 떨어지면서 지난 2월 이후 9개월 만에 5천선을 내주기도 했다.코스닥은 전장 대비 34.14포인트(5.03) 하락한 644.27로 마감했다. 지난해 4월 9일 이후 가장 낮은 수치다. 코스닥 역시 장 초반...",
       "link": "https://vop.co.kr/A00001697498.html",
       "naver_link": "https://vop.co.kr/A00001697498.html",
       "published_at": "Fri, 06 Nov 2026 20:56:00 +0900",
       "categories": [
-        "us",
         "kosdaq"
       ],
       "queries": [
-        "미국 증시",
         "코스닥"
       ]
     },
@@ -1550,19 +1878,6 @@
       ],
       "queries": [
         "코스닥"
-      ]
-    },
-    {
-      "title": "\"바닥 밑에 지하실이\" 이틀 새 '-11%'…\"추매냐 손절이냐\" 개미들 패닉",
-      "description": "이준영 유진투자증권 연구원은 \"(미국증시는) 민주당의 상·하원 장악(블루웨이브)에 데이터센터 규제 강화 우려가 확산하며 전일 안도 랠리를 되돌렸다. 텍사스·조지아 등 민주당 승리 지역의 신규 프로젝트 중단...",
-      "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202611060116&t=NN",
-      "naver_link": "https://n.news.naver.com/mnews/article/215/0001271960?sid=101",
-      "published_at": "Fri, 06 Nov 2026 20:46:00 +0900",
-      "categories": [
-        "us"
-      ],
-      "queries": [
-        "미국 증시"
       ]
     },
     {
@@ -1724,138 +2039,41 @@
       ]
     },
     {
-      "title": "깨끗한나라, 깨끗한나라우 투자경고종목 지정 가능성으로 1일간 투자주...",
-      "description": "유가증권시장과 코스닥시장 전체 상장종목 중 시가총액 순위가 100위 이내에 들지 않는 경우를 모두 충족해야 한다. 단기급등 요건은 판단일 종가가 5일 전날 종가보다 60% 이상 상승하고, 판단일 종가가 최근 15일 종가...",
-      "link": "https://www.topstarnews.net/news/articleView.html?idxno=16270264",
-      "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16270264",
-      "published_at": "Fri, 06 Nov 2026 20:10:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "디케이티, 투자경고종목 해제 후 11월 9일 하루 투자주의종목 지정",
-      "description": "유가증권시장과 코스닥시장 전체 상장종목 중 시가총액 순위가 100위 이내에 해당하지 않을 것 등이다. 투자경고종목 재지정 여부를 처음으로 판단하는 날은 해제일의 익일인 2026년 11월 10일이다. 이날 위 재지정...",
-      "link": "https://www.topstarnews.net/news/articleView.html?idxno=16270263",
-      "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16270263",
-      "published_at": "Fri, 06 Nov 2026 20:10:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "동양, 동양2우B 투자경고종목 지정 가능성…한국거래소 투자주의 예고",
-      "description": "넷째, 판단일 전일(T-1)을 기준으로 유가증권시장과 코스닥시장 전체 상장종목 중 시가총액 순위가 100위 이내에 해당하지 않아야 한다. 투자경고종목 지정요건을 처음으로 판단하는 날은 2026년 11월 9일이다. 그날...",
-      "link": "https://www.topstarnews.net/news/articleView.html?idxno=16270269",
-      "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16270269",
-      "published_at": "Fri, 06 Nov 2026 20:10:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "코스피, 기술주 투매에 5000선 턱걸이 마감",
-      "description": "이날 코스닥은 전장보다 34.14포인트(5.03%) 내린 644.27로 장을 종료했다. 코스닥시장에서 개인이 1213억원, 외국인이 906억원 순매도했고 기관은 2069억원 사들였다. 시총 상위주 가운데 에코프로비엠(-7.69...",
+      "description": "유가증권시장에서 외국인이 2조6964억원 팔아치웠다. 개인은 5267억원, 기관은 1조7081억원 순매수했다.... 국내증시는 간밤 미국 뉴욕 증시에서 AI 데이터센터 규제 우려 등에 반도체 등 기술주 '투매...",
       "link": "https://www.betanews.net/article/view/beta202611060117",
       "naver_link": "https://www.betanews.net/article/view/beta202611060117",
       "published_at": "Fri, 06 Nov 2026 19:58:00 +0900",
       "categories": [
-        "kosdaq",
         "korea_flow"
       ],
       "queries": [
-        "코스닥",
         "외국인 기관 순매수 증시"
       ]
     },
     {
-      "title": "씨씨에스, 최대주주·경영권 변경 계약으로 상장적격성 심사 사유 추가",
-      "description": "거래소는 코스닥시장상장규정 제56조 제1항 제9호 가목과 같은 규정 시행세칙 제61조 제1항 제6호에 따라 씨씨에스충북방송에 대한 상장적격성 실질심사 사유가 추가된 것이라고 안내했다.",
-      "link": "https://www.topstarnews.net/news/articleView.html?idxno=16270255",
-      "naver_link": "https://www.topstarnews.net/news/articleView.html?idxno=16270255",
-      "published_at": "Fri, 06 Nov 2026 19:54:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "옵토닉스, 일반청약 경쟁률 1343대 1 기록… 증거금 4조 4330억원 집계",
-      "description": "옵토닉스가 코스닥 상장에 한 걸음 더 다가서며 기업가치 제고에 나선다. 옵토닉스는 \"일반투자자 대상... 17일 코스닥 시장에 최종 입성해 주주가치 극대화를 지속 추진해 나갈 방침이다. 이영우 옵토닉스...",
-      "link": "https://www.thedailypost.kr/news/articleView.html?idxno=116724",
-      "naver_link": "https://www.thedailypost.kr/news/articleView.html?idxno=116724",
-      "published_at": "Fri, 06 Nov 2026 19:42:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "[주식마감] '호반그룹·조원태 지분 경쟁' 한진칼우 상한가… 에코캡, 깨...",
-      "description": "이날 코스닥에선 윙스풋, 파이온엑스, 에코캡, 대호특수강우, 아이지넷이 상한가에 이름을 올렸다.... 통해 코스닥 시장에 상장했다. 또한 백화점과 패션 아울렛, 이커머스 등 다양한 유통 채널을 확보하고 있으며...",
+      "description": "주식마감 6일 한진칼우, 동양2우B, 덕성우, 깨끗한나라우, 윙스풋, 파이온엑스, 에코캡, 대호특수강우... 이날 코스닥 시장 거래 상위종목 30위는 에스와이, 엠에스바이오, 에코캡, 래블업, 대동금속, 엔젠바이오...",
       "link": "https://www.ggilbo.com/news/articleView.html?idxno=1191558",
       "naver_link": "https://www.ggilbo.com/news/articleView.html?idxno=1191558",
       "published_at": "Fri, 06 Nov 2026 19:40:00 +0900",
       "categories": [
-        "kosdaq",
         "bio"
       ],
       "queries": [
-        "코스닥",
         "바이오 주식"
       ]
     },
     {
-      "title": "우리투자증권, 공모채 시장 첫발…수요 확보차 금리밴드 늘려",
-      "description": "주식자본시장(ECM)의 경우 우리투자제1호기업인수목적(SPAC·스팩)은 이달 말 기관투자자 수요예측을 앞두고 있고, 자율주행 소프트웨어 기업인 라이드플럭스도 코스닥을 상장 추진 중이다. 앞서 우리투자증권은...",
-      "link": "https://dealsite.co.kr/articles/172138",
-      "naver_link": "https://dealsite.co.kr/articles/172138",
-      "published_at": "Fri, 06 Nov 2026 19:36:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
-      "title": "ETF도 시총 100조가 사라졌다…400조 아래로",
-      "description": "KODEX 코스닥150레버리지(9411억원)는 2위, KODEX 반도체레버리지(2572억원)는 9위에 올랐다. KODEX SK하이닉스단일종목레버리지(1148억원) 역시 개인이 1148억원 사들이며 16위를 차지했다. 이 기간 이들 레버리지...",
-      "link": "https://view.asiae.co.kr/article/2026110615595423997",
-      "naver_link": "https://n.news.naver.com/mnews/article/277/0005839337?sid=101",
-      "published_at": "Fri, 06 Nov 2026 19:30:00 +0900",
-      "categories": [
-        "kosdaq"
-      ],
-      "queries": [
-        "코스닥"
-      ]
-    },
-    {
       "title": "코스피, 이틀 만에 11% 폭락…국내 증시야말로 '블루 쓰나미'",
-      "description": "코스닥 지수는 전 거래일보다 34.14포인트(5.03%) 급락한 644.27로 마감, 지난해 4월 9일(643.39) 이후 최저치를 기록했다. 코스닥 지수는 이틀 연속 5%대의 하락세를 기록, 총 70.68포인트(9.89%) 급락했다. 코스닥...",
+      "description": "이후 기관의 매수세가 유입되면서 간신히 5,000대에 거래를 마칠 수 있었다. 이날 기관은 1조 7041억원... 4640억원 매수 우위를 보였다. 개인도 6010억원 순매수했다. 반면 외국인은 2조 7690억원 순매도했다....",
       "link": "https://www.thepublic.kr/news/articleView.html?idxno=325502",
       "naver_link": "https://www.thepublic.kr/news/articleView.html?idxno=325502",
       "published_at": "Fri, 06 Nov 2026 19:26:00 +0900",
       "categories": [
-        "kosdaq",
         "korea_flow"
       ],
       "queries": [
-        "코스닥",
         "외국인 기관 순매수 증시"
       ]
     },
@@ -2388,6 +2606,19 @@
       ]
     },
     {
+      "title": "[증시 오늘] 코스피 6% 급락…5000선 턱걸이",
+      "description": "빅터뉴스 이재영 기자 간밤 미국 증시에서 반도체주가 급락한 데다, 미국 중간선거 이후 인공지능... KRX 잠정치로 기관이 2031억원어치를 순매수했고, 외국인은 1083억원, 개인은 1015억원을 각각...",
+      "link": "https://www.bigtanews.co.kr/article/view/big202611060013",
+      "naver_link": "https://www.bigtanews.co.kr/article/view/big202611060013",
+      "published_at": "Fri, 06 Nov 2026 17:12:00 +0900",
+      "categories": [
+        "korea_flow"
+      ],
+      "queries": [
+        "외국인 기관 순매수 증시"
+      ]
+    },
+    {
       "title": "오늘의 프리미엄9 콘텐츠 다이제스트(11월 6일)",
       "description": "삼성전자와 SK하이닉스가 각각 6.35%, 10.44% 하락한 가운데 미국 AI 인프라 투자 전망과 외국인 매도세의 진정 여부가 증시 안정의 핵심 변수로 부상했다. 원문 링크 \"코스피 5000 안팎 등락…지수 투자자는 분할매수 구간...",
       "link": "https://www.hankyung.com/article/202611061355i",
@@ -2400,19 +2631,6 @@
       "queries": [
         "외국인 기관 순매수 증시",
         "2차전지 주식"
-      ]
-    },
-    {
-      "title": "[증시 오늘] 코스피 6% 급락…5000선 턱걸이",
-      "description": "빅터뉴스 이재영 기자 간밤 미국 증시에서 반도체주가 급락한 데다, 미국 중간선거 이후 인공지능... KRX 잠정치로 기관이 2031억원어치를 순매수했고, 외국인은 1083억원, 개인은 1015억원을 각각...",
-      "link": "https://www.bigtanews.co.kr/article/view/big202611060013",
-      "naver_link": "https://www.bigtanews.co.kr/article/view/big202611060013",
-      "published_at": "Fri, 06 Nov 2026 17:12:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
       ]
     },
     {
@@ -2442,45 +2660,6 @@
         "IT 산업"
       ],
       "thumbnail_url": "https://cdn.news2day.co.kr/data2/content/image/2026/11/06/.cache/512/20261106500161.png"
-    },
-    {
-      "title": "외국인 2조7690억원 매도에 코스피 6.02% 하락…반도체주 동반 급락",
-      "description": "미국 증시의 기술주 급락이 국내 시장에도 영향을 미쳤다. 연합뉴스는 미국 민주당의 선거 압승에... 코스닥시장에서는 외국인과 개인이 각각 1014억원, 1105억원을 순매도했다. 기관은 2057억원을 순매수했다....",
-      "link": "http://www.kdfnews.com/news/articleView.html?idxno=190574",
-      "naver_link": "http://www.kdfnews.com/news/articleView.html?idxno=190574",
-      "published_at": "Fri, 06 Nov 2026 17:06:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "코스피 6% 급락해 5000선 턱걸이…코스닥도 5% 하락",
-      "description": "외국인은 유가증권시장에서 2조7686억원을 순매도하며 6거래일 연속 매도 우위를 이어갔다. 반면 개인과 기관은 각각 1조7000억원, 6045억원가량을 순매수했다. 장 후반 기관의 매수세가 유입되면서 낙폭은 일부...",
-      "link": "https://www.newsinside.kr/news/articleView.html?idxno=5041945",
-      "naver_link": "https://www.newsinside.kr/news/articleView.html?idxno=5041945",
-      "published_at": "Fri, 06 Nov 2026 17:06:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
-    },
-    {
-      "title": "코스피, 6% 급락 마감…9달 만에 장중 5천 선 아래로",
-      "description": "간밤 미국 증시가 폭락하며 우리 증시도 충격을 받았습니다. 개장하자마자 8%대 급락하며 5천 선 아래로... 개인과 기관이 순매수에 나섰지만, 외국인의 강한 매도세가 주가를 끌어내렸습니다. 시가총액 상위종목은...",
-      "link": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8706111&ref=A",
-      "naver_link": "https://n.news.naver.com/mnews/article/056/0012288904?sid=101",
-      "published_at": "Fri, 06 Nov 2026 17:06:00 +0900",
-      "categories": [
-        "korea_flow"
-      ],
-      "queries": [
-        "외국인 기관 순매수 증시"
-      ]
     },
     {
       "title": "아리바이오홀딩스 강보합…3745원에 거래 515만주",
@@ -2602,10 +2781,10 @@
       ]
     },
     {
-      "title": "[OBS 뉴스초대석] 인구 300만 인천 사령탑 박찬대가 꿈꾸는 미래는",
-      "description": "미래의 산업 제도를 바꾸기 위한 A, B, C 플러스 E로 표현되고 있는 AI, 바이오, 그다음에 콘텐츠 그리고... 취임 100일 기조연설에서는 인천 리레이팅 주식 용어인데요. 이거 저평가 우량주가 다시 좋은 평가를 받아야 되겠다....",
-      "link": "https://www.obsnews.co.kr/news/articleView.html?idxno=1542894",
-      "naver_link": "https://www.obsnews.co.kr/news/articleView.html?idxno=1542894",
+      "title": "'블루웨이브 쓰나미,' 증시 강타... 코스피, 장중 '5천피' 붕괴ㆍ이틀간...",
+      "description": "전날에는 현대차, 셀트리온, 에이피알 등 자동차와 제약·바이오, 화장품으로의 순환매 흐름이 보였지만... 한지영 키움증권 연구원은 \"중간선거 이후 주식시장에서는 AI 성장 내러티브가 크게 후퇴되고 있는...",
+      "link": "https://www.getnews.co.kr/news/articleView.html?idxno=886313",
+      "naver_link": "https://www.getnews.co.kr/news/articleView.html?idxno=886313",
       "published_at": "Fri, 06 Nov 2026 16:36:00 +0900",
       "categories": [
         "bio"
@@ -2615,10 +2794,10 @@
       ]
     },
     {
-      "title": "'블루웨이브 쓰나미,' 증시 강타... 코스피, 장중 '5천피' 붕괴ㆍ이틀간...",
-      "description": "전날에는 현대차, 셀트리온, 에이피알 등 자동차와 제약·바이오, 화장품으로의 순환매 흐름이 보였지만... 한지영 키움증권 연구원은 \"중간선거 이후 주식시장에서는 AI 성장 내러티브가 크게 후퇴되고 있는...",
-      "link": "https://www.getnews.co.kr/news/articleView.html?idxno=886313",
-      "naver_link": "https://www.getnews.co.kr/news/articleView.html?idxno=886313",
+      "title": "[OBS 뉴스초대석] 인구 300만 인천 사령탑 박찬대가 꿈꾸는 미래는",
+      "description": "미래의 산업 제도를 바꾸기 위한 A, B, C 플러스 E로 표현되고 있는 AI, 바이오, 그다음에 콘텐츠 그리고... 취임 100일 기조연설에서는 인천 리레이팅 주식 용어인데요. 이거 저평가 우량주가 다시 좋은 평가를 받아야 되겠다....",
+      "link": "https://www.obsnews.co.kr/news/articleView.html?idxno=1542894",
+      "naver_link": "https://www.obsnews.co.kr/news/articleView.html?idxno=1542894",
       "published_at": "Fri, 06 Nov 2026 16:36:00 +0900",
       "categories": [
         "bio"
@@ -2654,10 +2833,10 @@
       ]
     },
     {
-      "title": "'검은 금요일' 코스피, 5000선 턱걸이...외인 2.7조 매도",
-      "description": "이에 따라 주식 매매거래가 20분간 중단됐다. 거래 재개 이후에도 하락세가 이어지면서 오전... 삼성바이오로직스는 0.26% 내리는 데 그쳐 상대적으로 낙폭이 작았다. 코스닥도 5% 넘게 하락했다. 지수는 전...",
-      "link": "http://www.issuenbiz.com/news/articleView.html?idxno=81344",
-      "naver_link": "http://www.issuenbiz.com/news/articleView.html?idxno=81344",
+      "title": "코스피, 외국인 2.8조 매도에 6.02% 폭락…5000선 사수",
+      "description": "28까지 떨어졌고, 오전 9시 3분께 1단계 서킷브레이커가 발동돼 주식 매매거래가 일시 중단됐다. 전날... 47%), 삼성바이오로직스(-1.12%), 삼성전기(-8.58%), 현대차(-5.62%), KB금융(-3.89%), 셀트리온(-3.02%) 등이 약세를...",
+      "link": "https://www.mediapen.com/news/view/1135825",
+      "naver_link": "https://www.mediapen.com/news/view/1135825",
       "published_at": "Fri, 06 Nov 2026 16:28:00 +0900",
       "categories": [
         "bio"
@@ -2667,10 +2846,10 @@
       ]
     },
     {
-      "title": "코스피, 외국인 2.8조 매도에 6.02% 폭락…5000선 사수",
-      "description": "28까지 떨어졌고, 오전 9시 3분께 1단계 서킷브레이커가 발동돼 주식 매매거래가 일시 중단됐다. 전날... 47%), 삼성바이오로직스(-1.12%), 삼성전기(-8.58%), 현대차(-5.62%), KB금융(-3.89%), 셀트리온(-3.02%) 등이 약세를...",
-      "link": "https://www.mediapen.com/news/view/1135825",
-      "naver_link": "https://www.mediapen.com/news/view/1135825",
+      "title": "'검은 금요일' 코스피, 5000선 턱걸이...외인 2.7조 매도",
+      "description": "이에 따라 주식 매매거래가 20분간 중단됐다. 거래 재개 이후에도 하락세가 이어지면서 오전... 삼성바이오로직스는 0.26% 내리는 데 그쳐 상대적으로 낙폭이 작았다. 코스닥도 5% 넘게 하락했다. 지수는 전...",
+      "link": "http://www.issuenbiz.com/news/articleView.html?idxno=81344",
+      "naver_link": "http://www.issuenbiz.com/news/articleView.html?idxno=81344",
       "published_at": "Fri, 06 Nov 2026 16:28:00 +0900",
       "categories": [
         "bio"
@@ -2771,10 +2950,10 @@
       ]
     },
     {
-      "title": "공포로 번진 AI 규제 우려…5000선 '턱걸이' 사수",
-      "description": "김민규 KB증권 주식 투자전략가는 \"규제가 있을 것 같은데, 어느 정도일지 모른다는 불안이 기술주의... 이 밖에 삼성전자우(005935), SK스퀘어(402340), LG에너지솔루션(373220), 삼성바이오로직스(207940), 삼성전기(009150)...",
-      "link": "http://www.newstomato.com/ReadNews.aspx?no=1319571&inflow=N",
-      "naver_link": "http://www.newstomato.com/ReadNews.aspx?no=1319571&inflow=N",
+      "title": "“도대체 바닥이 어딜까?”…코스피 5000선 겨우 지켰다 [투자360]",
+      "description": "삼성전자우(-6.3%), SK스퀘어(-10.51%), LG에너지솔루션(-2.46%), 삼성바이오로직스(-0.26%), 삼성전기(-7.84... 한지영 키움증권 연구원은 “중간선거 이후 주식시장에서는 AI 성장 내러티브가 크게 후퇴되고 있는 가운데...",
+      "link": "https://biz.heraldcorp.com/article/10928770?ref=naver",
+      "naver_link": "https://n.news.naver.com/mnews/article/016/0002720046?sid=101",
       "published_at": "Fri, 06 Nov 2026 16:04:00 +0900",
       "categories": [
         "bio"
@@ -2784,10 +2963,10 @@
       ]
     },
     {
-      "title": "“도대체 바닥이 어딜까?”…코스피 5000선 겨우 지켰다 [투자360]",
-      "description": "삼성전자우(-6.3%), SK스퀘어(-10.51%), LG에너지솔루션(-2.46%), 삼성바이오로직스(-0.26%), 삼성전기(-7.84... 한지영 키움증권 연구원은 “중간선거 이후 주식시장에서는 AI 성장 내러티브가 크게 후퇴되고 있는 가운데...",
-      "link": "https://biz.heraldcorp.com/article/10928770?ref=naver",
-      "naver_link": "https://n.news.naver.com/mnews/article/016/0002720046?sid=101",
+      "title": "공포로 번진 AI 규제 우려…5000선 '턱걸이' 사수",
+      "description": "김민규 KB증권 주식 투자전략가는 \"규제가 있을 것 같은데, 어느 정도일지 모른다는 불안이 기술주의... 이 밖에 삼성전자우(005935), SK스퀘어(402340), LG에너지솔루션(373220), 삼성바이오로직스(207940), 삼성전기(009150)...",
+      "link": "http://www.newstomato.com/ReadNews.aspx?no=1319571&inflow=N",
+      "naver_link": "http://www.newstomato.com/ReadNews.aspx?no=1319571&inflow=N",
       "published_at": "Fri, 06 Nov 2026 16:04:00 +0900",
       "categories": [
         "bio"
@@ -2815,32 +2994,6 @@
       "link": "https://www.news2day.co.kr/article/20261106500276",
       "naver_link": "https://www.news2day.co.kr/article/20261106500276",
       "published_at": "Fri, 06 Nov 2026 15:58:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "씨이랩, 국민성장펀드 등에서 100억 원 조달…AI 데이터센터 사업 키운...",
-      "description": "전환사채는 처음에는 빚(사채) 형태로 돈을 빌리되, 투자자가 나중에 정해진 가격으로 회사 주식으로 바꿀... 국민성장펀드는 AI, 반도체, 바이오 등 첨단전략산업을 키우기 위해 조성된 정책펀드로, 씨이랩은 이...",
-      "link": "https://platum.kr/archives/297977",
-      "naver_link": "https://platum.kr/archives/297977",
-      "published_at": "Fri, 06 Nov 2026 15:56:00 +0900",
-      "categories": [
-        "bio"
-      ],
-      "queries": [
-        "바이오 주식"
-      ]
-    },
-    {
-      "title": "“연봉 한꺼번에 날아갈 판”…삼전닉스 급락에 개미들 ‘패닉’",
-      "description": "한지영 키움증권 애널리스트는 “지금 국내 주식시장은 이익, 평가가치 등 전통적인 펀더멘털(기초여건)... 건설·운송, 금리 부담 완화에 따른 바이오 등과 같은 업종으로 수급 분산이 나올 수 있다”고 분석했다.",
-      "link": "https://www.mk.co.kr/article/12200509",
-      "naver_link": "https://n.news.naver.com/mnews/article/024/0000109440?sid=101",
-      "published_at": "Fri, 06 Nov 2026 15:56:00 +0900",
       "categories": [
         "bio"
       ],
@@ -3527,19 +3680,6 @@
       ]
     },
     {
-      "title": "[금/유가] 사흘 급락했던 유가, 유조선 공격에 급반등…금값 약 2주 만에...",
-      "description": "달러·국채 금리 약세에 금값 상승 국제 금값이 달러화와 미국 국채 수익률 약세에 힘입어 2주여 만에 최고 수준으로 상승했다. 국제유가 하락으로 인플레이션 우려가 완화된 가운데 투자자들은 연방준비제도(Fed·연준)...",
-      "link": "https://www.newspim.com/news/view/20261106000028",
-      "naver_link": "https://www.newspim.com/news/view/20261106000028",
-      "published_at": "Fri, 06 Nov 2026 05:34:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
       "title": "AI 거품 경계감, 신용시장으로 확산…국채금리 하락에 담긴 성장 우려",
       "description": "최근 5주 동안 미국 국채금리가 약 50bp, 즉 0.5%포인트 하락한 움직임도 단순한 반도체주 불안 이상의 신호라고... 국채시장은 지속적인 인플레이션보다 성장 둔화 위험을 더 크게 반영하고 있으며, 이는 연준의 금리 인상...",
       "link": "https://www.tokenpost.kr/news/cryptocurrency/433585",
@@ -3553,11 +3693,11 @@
       ]
     },
     {
-      "title": "[뉴욕 금가격] 美 AI 규제 우려 기술주 투매 속 1% 상승",
-      "description": "안전선호 분위기가 번지면서 미국 국채금리는 일제히 하락하고 있다. 달러화 가치도 약세다. 글로벌... 금리 선물시장에 반영된 미국 연방준비제도(연준ㆍFed)의 내달 금리 동결 가능성은 전장 10% 후반대에서 거의...",
-      "link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443337",
-      "naver_link": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443337",
-      "published_at": "Fri, 06 Nov 2026 04:58:00 +0900",
+      "title": "[금/유가] 사흘 급락했던 유가, 유조선 공격에 급반등…금값 약 2주 만에...",
+      "description": "달러·국채 금리 약세에 금값 상승 국제 금값이 달러화와 미국 국채 수익률 약세에 힘입어 2주여 만에 최고 수준으로 상승했다. 국제유가 하락으로 인플레이션 우려가 완화된 가운데 투자자들은 연방준비제도(Fed·연준)...",
+      "link": "https://www.newspim.com/news/view/20261106000028",
+      "naver_link": "https://www.newspim.com/news/view/20261106000028",
+      "published_at": "Fri, 06 Nov 2026 05:34:00 +0900",
       "categories": [
         "us_rates"
       ],
@@ -3579,19 +3719,6 @@
       ]
     },
     {
-      "title": "미국 물가 3.6%…해맥, 잦고 작은 금리 조정 선호",
-      "description": "연준은 10월 28일 기준금리 목표 범위를 연 3.75~4.00%로 동결했다. 결정은 찬성 10표, 반대 2표로 통과됐다. 해맥과 리사 쿡(Lisa Cook) 연준 이사는 0.25%포인트 인상을 선호해 반대표를 던졌다. 미국 상무부 경제분석국(BEA)이...",
-      "link": "https://www.tokenpost.kr/news/economy/433378",
-      "naver_link": "https://www.tokenpost.kr/news/economy/433378",
-      "published_at": "Fri, 06 Nov 2026 00:20:00 +0900",
-      "categories": [
-        "us_rates"
-      ],
-      "queries": [
-        "미국 국채 금리 연준"
-      ]
-    },
-    {
       "title": "서울대 간 최태원 “美 선거 하나에 증시 요동…롤러코스터 장세 계속될...",
       "description": "AI 혁명이 가져올 변화도 반도체나 정보기술(IT) 산업에 그치지 않을 것으로 내다봤다. AI를 중심으로 여러 산업에서 혁신이 동시에 일어나고 서로 영향을 주면서 세계 경제의 구조 자체가 바뀔 수 있다는 것이다. 최...",
       "link": "https://www.mk.co.kr/article/12198971",
@@ -3603,7 +3730,7 @@
       "queries": [
         "IT 산업"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/009/2026/11/05/0005759808_001_20261105205607746.jpg?type=w800"
+      "thumbnail_url": "https://pimg.mk.co.kr/news/cms/202611/05/news-p.v1.20261105.4a44b8fd8f494b12bbbea132ffd67738_R.jpg"
     },
     {
       "title": "[대구 속 동네이야기] 수성구 고산2동 \"첨단산업·문화예술 어우러진 미...",
@@ -3631,7 +3758,7 @@
       "queries": [
         "IT 산업"
       ],
-      "thumbnail_url": "https://cdn.newstown.co.kr/news/thumbnail/202611/720964_677147_2316_v150.jpg"
+      "thumbnail_url": "http://www.newstown.co.kr/news/thumbnail/202611/720964_677147_2316_v150.jpg"
     },
     {
       "title": "[미국 중간선거②] 美 AI산업 '제동' 걸리나… 韓 반도체 촉각",
@@ -3698,7 +3825,7 @@
       "queries": [
         "IT 산업"
       ],
-      "thumbnail_url": "https://imgnews.pstatic.net/image/008/2026/11/05/0005437329_001_20261105174414086.jpg?type=w800"
+      "thumbnail_url": "https://thumb.mt.co.kr/cdn-cgi/image/w=1200,h=800,fit=cover,bg=white,f=auto,quality=high,sharpen=2,g=face/21/2026/11/2026110517360170660_1.jpg"
     },
     {
       "title": "[채권마감] 국고3년-기준금리차 9개월래 최저 ‘미·이란 전쟁 직전으로...",
@@ -3856,8 +3983,7 @@
       ],
       "queries": [
         "IT 산업"
-      ],
-      "thumbnail_url": "https://cphoto.asiae.co.kr/listimglink/1/2026110515431488543_1793860994.jpg"
+      ]
     },
     {
       "title": "[노란봉투법 7개월 ③] 법 만든 국회, 현장 혼선 풀어야",
@@ -4172,10 +4298,10 @@
       ]
     },
     {
-      "title": "美 선거 끝났지만 시장은 아직 긴장…정부 “변동성 확대시 신속 대응”",
-      "description": "회의에는 신현송 한국은행 총재, 이억원 금융위원회 위원장, 이찬진 금융감독원 원장이 참석했다.... 국고채 금리는 정부의 국고채 발행물량 축소 효과가 이어지는 가운데 국제유가 급락의 영향이 더해져 하락했다. 이날...",
-      "link": "http://www.joseilbo.com/news/news_read.php?uid=579008&class=18&grp=",
-      "naver_link": "https://n.news.naver.com/mnews/article/123/0002393427?sid=101",
+      "title": "美 중간선거 '블루웨이브'…정부, AI 규제·관세정책 예의주시",
+      "description": "회의에는 신현송 한국은행 총재와 이억원 금융위원장, 이찬진 금융감독원장이 참석했다. 참석자들은 미국... 국고채 금리는 정부의 발행 물량 축소 효과가 지속되는 가운데 국제유가 급락 등의 영향으로 하락했다....",
+      "link": "https://www.edaily.co.kr/News/Read?newsId=05116806645642768&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+      "naver_link": "https://n.news.naver.com/mnews/article/018/0006404234?sid=101",
       "published_at": "Thu, 05 Nov 2026 14:31:00 +0900",
       "categories": [
         "korea_rates"
@@ -4185,10 +4311,10 @@
       ]
     },
     {
-      "title": "美 중간선거 '블루웨이브'…정부, AI 규제·관세정책 예의주시",
-      "description": "회의에는 신현송 한국은행 총재와 이억원 금융위원장, 이찬진 금융감독원장이 참석했다. 참석자들은 미국... 국고채 금리는 정부의 발행 물량 축소 효과가 지속되는 가운데 국제유가 급락 등의 영향으로 하락했다....",
-      "link": "https://www.edaily.co.kr/News/Read?newsId=05116806645642768&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
-      "naver_link": "https://n.news.naver.com/mnews/article/018/0006404234?sid=101",
+      "title": "美 선거 끝났지만 시장은 아직 긴장…정부 “변동성 확대시 신속 대응”",
+      "description": "회의에는 신현송 한국은행 총재, 이억원 금융위원회 위원장, 이찬진 금융감독원 원장이 참석했다.... 국고채 금리는 정부의 국고채 발행물량 축소 효과가 이어지는 가운데 국제유가 급락의 영향이 더해져 하락했다. 이날...",
+      "link": "http://www.joseilbo.com/news/news_read.php?uid=579008&class=18&grp=",
+      "naver_link": "https://n.news.naver.com/mnews/article/123/0002393427?sid=101",
       "published_at": "Thu, 05 Nov 2026 14:31:00 +0900",
       "categories": [
         "korea_rates"
@@ -4398,19 +4524,6 @@
       "link": "http://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202611050042&t=NN",
       "naver_link": "https://n.news.naver.com/mnews/article/215/0001271736?sid=101",
       "published_at": "Thu, 05 Nov 2026 10:42:00 +0900",
-      "categories": [
-        "battery"
-      ],
-      "queries": [
-        "2차전지 주식"
-      ]
-    },
-    {
-      "title": "[쩐의 승부사] 삼성전자·SK하이닉스 흔들리는데…\"AI 거품 붕괴 단정 일...",
-      "description": "연말 투자전략으로는 반도체에 집중됐던 시장에서 상대적으로 소외됐던 2차전지와 태양광 등으로 시선을 넓힐 것을 제안했다. 다만 \"주식만 투자자산이라고 생각하지 말고 채권과 현금도 하나의 종목으로 봐야 한다\"며...",
-      "link": "https://www.kyongbuk.co.kr/news/articleView.html?idxno=4089738",
-      "naver_link": "https://www.kyongbuk.co.kr/news/articleView.html?idxno=4089738",
-      "published_at": "Thu, 05 Nov 2026 10:24:00 +0900",
       "categories": [
         "battery"
       ],
@@ -4658,19 +4771,6 @@
       "link": "https://www.slist.kr/news/articleView.html?idxno=778777",
       "naver_link": "https://www.slist.kr/news/articleView.html?idxno=778777",
       "published_at": "Wed, 04 Nov 2026 08:22:00 +0900",
-      "categories": [
-        "it"
-      ],
-      "queries": [
-        "IT 산업"
-      ]
-    },
-    {
-      "title": "[수요광장] 국토균형발전, 경기도의 역할을 다시 묻다",
-      "description": "道, 반도체·IT 등 산업 핵심… 획일적 분산 지방에도 부적절 규제 대상 아닌 ‘핵심 파트너’ 적절한 권한·재원 보장 필요 경기도민의 44%는 필자처럼 지방 출생자라고 한다. ‘5극 3특 체제’로 대변되는 국토균형발전...",
-      "link": "https://www.kyeongin.com/article/1774008",
-      "naver_link": "https://www.kyeongin.com/article/1774008",
-      "published_at": "Tue, 03 Nov 2026 19:00:00 +0900",
       "categories": [
         "it"
       ],
