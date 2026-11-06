@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-05T23:39:21.374117+00:00",
+  "generated_at_utc": "2026-11-06T03:42:19.317262+00:00",
   "file_count": 27,
   "files": [
     {
@@ -116,20 +116,20 @@
     },
     {
       "file": "data/market_heatmap.json",
-      "bytes": 1416995,
+      "bytes": 1416838,
       "source": [
         "Naver Finance market cap and sectors",
         "Nasdaq screener and Yahoo Finance snapshot"
       ],
       "count": 3600,
-      "data_date": "2026-11-05T03:46:04.005794+00:00"
+      "data_date": "2026-11-06T03:42:17.939525+00:00"
     },
     {
       "file": "data/market_indices.json",
-      "bytes": 644644,
+      "bytes": 644669,
       "source": "Yahoo Finance Chart + Naver Finance index daily",
       "count": 8,
-      "data_date": "2026-11-05T03:35:45.066216+00:00"
+      "data_date": "2026-11-06T03:30:11.645692+00:00"
     },
     {
       "file": "data/market_sum.json",
@@ -185,17 +185,17 @@
     },
     {
       "file": "data/treasury_yields.json",
-      "bytes": 7477,
+      "bytes": 7479,
       "source": null,
       "count": null,
-      "data_date": "2026-11-05T03:35:44Z"
+      "data_date": "2026-11-06T03:30:11Z"
     },
     {
       "file": "data/us_finnhub.json",
-      "bytes": 18446393,
+      "bytes": 18389171,
       "source": "Finnhub API",
       "count": 100,
-      "data_date": "2026-11-05T03:46:01.674713+00:00"
+      "data_date": "2026-11-06T03:42:15.727846+00:00"
     },
     {
       "file": "data/us_finra_short_interest.json",
@@ -206,27 +206,27 @@
     },
     {
       "file": "data/us_finra_short_volume.json",
-      "bytes": 4407334,
+      "bytes": 4473921,
       "source": "FINRA Reg SHO Daily Short Sale Volume",
-      "count": 15260,
-      "data_date": "2026-11-04"
+      "count": 15437,
+      "data_date": "2026-11-05"
     },
     {
       "file": "data/us_market_snapshot.json",
-      "bytes": 8760547,
+      "bytes": 8768041,
       "source": [
         "Nasdaq stock screener",
         "Yahoo Finance Chart"
       ],
-      "count": 6554,
-      "data_date": "2026-11-05T03:36:00.665455+00:00"
+      "count": 6583,
+      "data_date": "2026-11-06T03:30:27.112478+00:00"
     },
     {
       "file": "data/us_sec_filings.json",
-      "bytes": 726954,
+      "bytes": 763019,
       "source": "SEC EDGAR Full-Text Search and company ticker mapping",
       "count": 200,
-      "data_date": "2026-11-05T03:38:49.553735+00:00"
+      "data_date": "2026-11-06T03:34:32.027898+00:00"
     }
   ]
 }
