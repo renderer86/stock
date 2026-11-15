@@ -5,7 +5,7 @@
   "min_roa": 7.0,
   "financial_roa_exempt": true,
   "count": 383,
-  "crawled_at_utc": "2026-11-13T15:41:12.563688+00:00",
+  "crawled_at_utc": "2026-11-15T08:02:14.187249+00:00",
   "stocks": [
     {
       "code": "0039P0",
@@ -15684,26 +15684,6 @@
       "has_major_holders": true,
       "holders": [
         {
-          "holder_name": "김택진",
-          "report_date": "2024-11-14",
-          "ratio": 11.99,
-          "raw": {
-            "rcept_no": "20241114002480",
-            "rcept_dt": "2024-11-14",
-            "corp_code": "00261443",
-            "corp_name": "NC",
-            "report_tp": "일반",
-            "repror": "김택진",
-            "stkqy": "2,632,578",
-            "stkqy_irds": "1,090",
-            "stkrt": "11.99",
-            "stkrt_irds": "0.00",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "특별관계자 추가에 따른 변동 보고"
-          }
-        },
-        {
           "holder_name": "국민연금공단",
           "report_date": "2026-10-02",
           "ratio": 10.24,
@@ -15764,8 +15744,8 @@
           }
         }
       ],
-      "top_holder_name": "김택진",
-      "top_holder_ratio": 11.99,
+      "top_holder_name": "국민연금공단",
+      "top_holder_ratio": 10.24,
       "latest_report_date": "2026-10-02"
     },
     {
@@ -18062,34 +18042,10 @@
         "market_implied_n": 0.0,
         "current_price": 5340
       },
-      "status": "000",
-      "message": "정상",
-      "has_major_holders": true,
-      "holders": [
-        {
-          "holder_name": "박재규",
-          "report_date": "2024-11-14",
-          "ratio": 37.74,
-          "raw": {
-            "rcept_no": "20241114002903",
-            "rcept_dt": "2024-11-14",
-            "corp_code": "00489243",
-            "corp_name": "동아엘텍",
-            "report_tp": "일반",
-            "repror": "박재규",
-            "stkqy": "6,598,888",
-            "stkqy_irds": "3,299,444",
-            "stkrt": "37.74",
-            "stkrt_irds": "6.80",
-            "ctr_stkqy": "-",
-            "ctr_stkrt": "-",
-            "report_resn": "무상증자로 인한 신주취득"
-          }
-        }
-      ],
-      "top_holder_name": "박재규",
-      "top_holder_ratio": 37.74,
-      "latest_report_date": "2024-11-14"
+      "status": "013",
+      "message": "조회된 데이타가 없습니다.",
+      "has_major_holders": false,
+      "holders": []
     },
     {
       "code": "041190",
