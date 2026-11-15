@@ -9,7 +9,6 @@ const MARKET_INDICES_URL = "./data/market_indices.json";
 const MARKET_HEATMAP_URL = "./data/market_heatmap.json";
 const PORTFOLIO_URL = "./data/portfolio.json";
 const PORTFOLIO_STORAGE_KEY = "value-dashboard-portfolio-v2";
-const STOCK_REPORT_STORAGE_KEY = "value-dashboard-stock-reports-v1";
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -23,6 +22,10 @@ const AI_BRIEFING_URL = "./data/ai_market_briefing.json";
 const SEC_FILINGS_URL = "./data/us_sec_filings.json";
 const FINNHUB_URL = "./data/us_finnhub.json";
 const DATA_MANIFEST_URL = "./data/data_manifest.json";
+const PUBLISHED_REPORTS = {
+  "pharmaresearch-2026-11-15": { company: "파마리서치", title: "내수 둔화의 빈자리, 해외 성장으로 채울 수 있을까" },
+  "lncbio-2026-11-15": { company: "엘앤씨바이오", title: "리투오의 성장, 증설 이후의 수익성을 확인할 때" }
+};
 const MARKET_IMPLIED_DISCOUNT_PCT = 10;
 const MARKET_IMPLIED_ROE_GUARD_PP = 2;
 const WATCHLIST_STOCKS = [
@@ -5168,7 +5171,8 @@ function bindSiteModes() {
 
   function syncLocation() {
     const route = location.hash.slice(1);
-    const showReport = route === "reports";
+    const reportSlug = route.startsWith("reports/") ? route.slice("reports/".length) : null;
+    const showReport = route === "reports" || Object.hasOwn(PUBLISHED_REPORTS, reportSlug);
     const wasReport = !reportMain.hidden;
     if (showReport !== wasReport) {
       if (showReport && document.body.classList.contains("market-map-modal-open")) {
@@ -5187,9 +5191,11 @@ function bindSiteModes() {
       window.scrollTo(0, 0);
     }
     if (showReport) {
+      document.dispatchEvent(new CustomEvent("report-mode-open", { detail: { slug: reportSlug } }));
       return;
     }
 
+    document.title = "최재혁 방식 가치평가";
     switchWorkspace(route || "priority", false);
     if (!analysisStarted) {
       analysisStarted = true;
@@ -5212,110 +5218,67 @@ function bindSiteModes() {
   syncLocation();
 }
 
-function bindReportEditor() {
-  const form = document.getElementById("report-editor");
-  const heading = document.getElementById("report-editor-title");
-  const status = document.getElementById("report-status");
-  const list = document.getElementById("report-list");
-  const listMessage = document.getElementById("report-library-message");
-  let reports = [];
-  let currentReport = null;
-  let savedValues;
+function bindPublishedReports() {
+  const viewer = document.getElementById("report-viewer");
+  const content = document.getElementById("report-content");
+  const buttons = document.querySelectorAll("[data-published-report]");
+  const requests = new Map();
+  let selectedSlug = Object.keys(PUBLISHED_REPORTS)[0];
+  let renderedSlug = null;
 
-  function readReports() {
-    const entries = JSON.parse(localStorage.getItem(STOCK_REPORT_STORAGE_KEY) ?? "[]");
-    if (!Array.isArray(entries) || entries.some((entry) => typeof entry?.id !== "string")) {
-      throw new Error("Invalid stock report data");
+  function loadPublication(slug = selectedSlug) {
+    if (!Object.hasOwn(PUBLISHED_REPORTS, slug)) return;
+    selectedSlug = slug;
+    const publication = PUBLISHED_REPORTS[slug];
+    viewer.setAttribute("aria-label", `${publication.company} 리포트`);
+    document.title = `${publication.company} 리포트 | 최재혁 방식 가치평가`;
+    document.getElementById("report-mode-link").hash = `reports/${slug}`;
+    buttons.forEach((button) => {
+      if (button.dataset.publishedReport === slug) button.setAttribute("aria-current", "true");
+      else button.removeAttribute("aria-current");
+    });
+    if (renderedSlug === slug) return;
+    renderedSlug = null;
+    content.innerHTML = '<p class="report-loading" role="status">리포트를 불러오는 중입니다.</p>';
+    if (!requests.has(slug)) {
+      requests.set(slug, fetch(`./assets/reports/${slug}.html?v=20261115`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Report HTTP ${response.status}`);
+        return response.text();
+      }));
     }
-    return entries;
+    return requests.get(slug)
+      .then((html) => {
+        if (selectedSlug !== slug) return;
+        // Versioned, same-origin publications maintained with the site.
+        content.innerHTML = html;
+        renderedSlug = slug;
+      })
+      .catch(() => {
+        requests.delete(slug);
+        if (selectedSlug !== slug) return;
+        content.innerHTML = '<div class="report-loading"><p role="status">리포트를 불러오지 못했습니다.</p><button class="report-button" type="button" data-report-retry>다시 불러오기</button></div>';
+      });
   }
 
-  function renderList() {
-    listMessage.textContent = reports.length ? "" : "저장한 리포트가 없습니다.";
-    list.innerHTML = reports.map((report) => `
-      <li>
-        <button type="button" data-report-id="${escapeHtml(report.id)}"${report.id === currentReport?.id ? ' aria-current="true"' : ""}>
-          <span>${escapeHtml(report.stockName)}${report.opinion ? ` · ${escapeHtml(report.opinion)}` : ""}</span>
-          <strong>${escapeHtml(report.title)}</strong>
-          <time datetime="${escapeHtml(report.updatedAt)}">${escapeHtml(formatCompactDate(report.updatedAt))}</time>
-        </button>
-      </li>
-    `).join("");
-  }
-
-  function openReport(report) {
-    currentReport = report;
-    for (const field of form.elements) {
-      if (field.name) {
-        field.value = report?.[field.name] ?? "";
-      }
+  document.addEventListener("report-mode-open", (event) => loadPublication(event.detail.slug || selectedSlug));
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    const slug = button.dataset.publishedReport;
+    const nextHash = `#reports/${slug}`;
+    if (location.hash === nextHash) loadPublication(slug);
+    else location.hash = nextHash;
+    viewer.scrollIntoView({ block: "start", behavior: "auto" });
+  }));
+  viewer.addEventListener("click", (event) => {
+    const jump = event.target.closest("[data-report-jump]");
+    if (jump) {
+      const target = document.getElementById(jump.dataset.reportJump);
+      target?.focus({ preventScroll: true });
+      target?.scrollIntoView({ block: "start", behavior: "auto" });
     }
-    savedValues = JSON.stringify([...new FormData(form)]);
-    heading.textContent = report ? "리포트 수정" : "리포트 작성";
-    status.textContent = "";
-    renderList();
-  }
-
-  function selectReport(report) {
-    if (report?.id === currentReport?.id && report?.updatedAt === currentReport?.updatedAt) {
-      form.elements.stockName.focus();
-      return;
-    }
-    const hasChanges = savedValues !== JSON.stringify([...new FormData(form)]);
-    if (hasChanges && !window.confirm("저장하지 않은 변경사항이 있습니다. 현재 편집을 닫을까요?")) {
-      return;
-    }
-    openReport(report);
-    form.elements.stockName.focus();
-  }
-
-  document.getElementById("new-report").addEventListener("click", () => selectReport(null));
-  list.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-report-id]");
-    if (button) {
-      selectReport(reports.find((report) => report.id === button.dataset.reportId));
-    }
+    if (event.target.closest("[data-report-print]")) window.print();
+    if (event.target.closest("[data-report-retry]")) loadPublication();
   });
-  form.addEventListener("input", () => { status.textContent = ""; });
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const values = Object.fromEntries([...new FormData(form)].map(([field, value]) => [field, value.trim()]));
-    if (!values.stockName || !values.title) {
-      status.textContent = "종목명과 리포트 제목을 입력하세요.";
-      form.elements[values.stockName ? "title" : "stockName"].focus();
-      return;
-    }
-
-    try {
-      const latestReports = readReports();
-      if (currentReport && !latestReports.some((entry) => entry.id === currentReport.id && entry.updatedAt === currentReport.updatedAt)) {
-        reports = latestReports;
-        renderList();
-        status.textContent = "다른 탭에서 리포트가 변경되었습니다. 내용을 복사한 뒤 목록에서 다시 열어주세요.";
-        return;
-      }
-      const report = {
-        ...values,
-        id: currentReport?.id ?? crypto.randomUUID(),
-        updatedAt: new Date().toISOString()
-      };
-      const updated = [report, ...latestReports.filter((entry) => entry.id !== report.id)];
-      localStorage.setItem(STOCK_REPORT_STORAGE_KEY, JSON.stringify(updated));
-      reports = updated;
-      openReport(report);
-      status.textContent = "리포트를 저장했습니다.";
-    } catch {
-      status.textContent = "리포트를 저장하지 못했습니다. 브라우저의 저장 공간과 설정을 확인하세요.";
-    }
-  });
-
-  try {
-    reports = readReports();
-    openReport(reports[0] ?? null);
-  } catch {
-    openReport(null);
-    listMessage.textContent = "저장한 리포트를 불러오지 못했습니다.";
-  }
 }
 
 bindFeatureControls();
@@ -5326,5 +5289,5 @@ bindMarketMap();
 bindPortfolioBoard();
 bindScreenPendingModal();
 initResponsiveTables();
-bindReportEditor();
+bindPublishedReports();
 bindSiteModes();

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261115-reports">
+  <link rel="stylesheet" href="style.css?v=20261115-research-report">
 </head>
 <body>
   <a class="skip-link" href="#dashboard-main">본문으로 이동</a>
@@ -821,55 +821,36 @@
     <main id="report-main" class="report-main" aria-labelledby="report-title" tabindex="-1" hidden>
       <header class="report-heading">
         <h2 id="report-title">주식 리포트</h2>
-        <p>종목별 투자 판단과 근거를 정리하세요. 작성한 리포트는 이 브라우저에 저장됩니다.</p>
+        <p>기업의 성장과 가치를 깊이 살펴보는 투자 리포트입니다.</p>
       </header>
 
       <div class="report-layout">
         <aside class="panel report-library" aria-labelledby="report-library-title">
           <div class="report-library-head">
-            <h3 id="report-library-title">내 리포트</h3>
-            <button id="new-report" class="report-button" type="button">+ 새 리포트</button>
+            <h3 id="report-library-title">리포트 목록</h3>
           </div>
-          <p id="report-library-message">저장한 리포트가 없습니다.</p>
-          <ul id="report-list" class="report-list" aria-label="저장한 리포트"></ul>
+          <ul class="report-list report-publications" aria-label="공개 리포트">
+            <li>
+              <button type="button" data-published-report="pharmaresearch-2026-11-15" aria-current="true">
+                <span>파마리서치 · 214450</span>
+                <strong>내수 둔화의 빈자리, 해외 성장으로 채울 수 있을까</strong>
+                <span>장문 샘플 · 2026.11.15 기준</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-published-report="lncbio-2026-11-15">
+                <span>엘앤씨바이오 · 290650</span>
+                <strong>리투오의 성장, 증설 이후의 수익성을 확인할 때</strong>
+                <span>장문 샘플 · 2026.11.15 기준</span>
+              </button>
+            </li>
+          </ul>
         </aside>
 
-        <form id="report-editor" class="panel report-editor" aria-labelledby="report-editor-title">
-          <h3 id="report-editor-title">리포트 작성</h3>
-          <div class="report-fields">
-            <label>종목명
-              <input name="stockName" type="text" placeholder="예: 삼성전자" maxlength="60" required>
-            </label>
-            <label>종목코드
-              <input name="stockCode" type="text" placeholder="예: 005930" maxlength="20" autocapitalize="characters">
-            </label>
-            <label>투자 의견
-              <select name="opinion">
-                <option value="">선택</option>
-                <option>매수</option>
-                <option>보유</option>
-                <option>관망</option>
-                <option>매도</option>
-              </select>
-            </label>
-          </div>
-          <label>리포트 제목
-            <input name="title" type="text" placeholder="이번 분석의 핵심을 제목으로 적어보세요." maxlength="120" required>
-          </label>
-          <label>한 줄 요약
-            <textarea name="summary" rows="2" placeholder="이 종목을 지금 보는 이유는 무엇인가요?"></textarea>
-          </label>
-          <label>투자 근거
-            <textarea name="thesis" rows="4" placeholder="실적 전망, 경쟁력, 적정 주가 등 판단에 사용한 근거를 적어보세요."></textarea>
-          </label>
-          <label>리스크·확인할 점
-            <textarea name="risks" rows="3" placeholder="투자 판단이 달라질 조건과 다음에 확인할 지표를 적어보세요."></textarea>
-          </label>
-          <div class="report-actions">
-            <button class="report-button report-save" type="submit">리포트 저장</button>
-            <p id="report-status" role="status"></p>
-          </div>
-        </form>
+        <section id="report-viewer" class="report-viewer" aria-label="파마리서치 샘플 리포트">
+          <div id="report-content"></div>
+        </section>
+
       </div>
     </main>
 
@@ -947,6 +928,6 @@
     </button>
   </aside>
 
-  <script src="script.js?v=20261115-reports"></script>
+  <script src="script.js?v=20261115-research-report"></script>
 </body>
 </html>
