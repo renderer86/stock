@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261025-watchlist-v2">
+  <link rel="stylesheet" href="style.css?v=20261115-reports">
 </head>
 <body>
   <a class="skip-link" href="#dashboard-main">본문으로 이동</a>
@@ -15,10 +15,16 @@
     <header class="topbar">
       <div>
         <p class="eyebrow">Value Framework Dashboard</p>
-        <h1>최재혁 방식 가치평가</h1>
+        <div class="site-title-row">
+          <h1>최재혁 방식 가치평가</h1>
+          <nav class="site-modes" aria-label="사이트 모드">
+            <a id="analysis-mode-link" href="#priority" aria-current="page">종합 분석</a>
+            <a id="report-mode-link" href="#reports">주식 리포트</a>
+          </nav>
+        </div>
         <p class="intro">수익성의 지속성과 기업가치를 함께 살펴보는 투자 연구실</p>
       </div>
-      <form id="stock-search-form" class="header-search" role="search">
+      <form id="stock-search-form" class="header-search" role="search" data-analysis-only>
         <label class="sr-only" for="stock-search-input">국내 종목명 또는 코드 검색</label>
         <div class="header-search-field">
           <input id="stock-search-input" type="search" list="stock-search-options" placeholder="국내 종목명 · 코드 검색" autocomplete="off" aria-describedby="stock-search-status">
@@ -27,13 +33,13 @@
         <datalist id="stock-search-options"></datalist>
         <span id="stock-search-status" class="search-status" role="status"></span>
       </form>
-      <div class="topbar-meta">
+      <div class="topbar-meta" data-analysis-only>
         <span class="meta-label">마지막 갱신</span>
         <strong id="last-updated-value">Loading</strong>
       </div>
     </header>
 
-    <nav class="workspace-tabs" aria-label="대시보드 기능">
+    <nav class="workspace-tabs" aria-label="대시보드 기능" data-analysis-only>
       <button class="workspace-tab is-active" type="button" data-workspace="priority" aria-current="page">주시해야 될 종목</button>
       <button class="workspace-tab" type="button" data-workspace="valuation">가치평가</button>
       <button class="workspace-tab" type="button" data-workspace="screens">버핏·퀄리티</button>
@@ -46,7 +52,7 @@
       <button class="workspace-tab" type="button" data-workspace="data">데이터 상태</button>
     </nav>
 
-    <section class="market-overview" aria-labelledby="market-overview-title">
+    <section class="market-overview" aria-labelledby="market-overview-title" data-analysis-only>
       <div class="market-overview-head">
         <div>
           <p class="section-kicker">Market snapshot</p>
@@ -79,7 +85,7 @@
       </div>
     </section>
 
-    <main id="dashboard-main" class="dashboard-layout" tabindex="-1">
+    <main id="dashboard-main" class="dashboard-layout" tabindex="-1" data-analysis-only>
       <div id="workspace-priority" class="workspace-view is-active" data-workspace-view="priority">
         <div class="workspace-intro">
           <div><p class="section-kicker">Watchlist</p><h2>주시해야 될 종목</h2><p>관심 종목의 투자 아이디어를 확인하고, 매출 CAGR · ROIC · PER · PBR을 비교하세요.</p></div>
@@ -812,6 +818,61 @@
       </div>
     </main>
 
+    <main id="report-main" class="report-main" aria-labelledby="report-title" tabindex="-1" hidden>
+      <header class="report-heading">
+        <h2 id="report-title">주식 리포트</h2>
+        <p>종목별 투자 판단과 근거를 정리하세요. 작성한 리포트는 이 브라우저에 저장됩니다.</p>
+      </header>
+
+      <div class="report-layout">
+        <aside class="panel report-library" aria-labelledby="report-library-title">
+          <div class="report-library-head">
+            <h3 id="report-library-title">내 리포트</h3>
+            <button id="new-report" class="report-button" type="button">+ 새 리포트</button>
+          </div>
+          <p id="report-library-message">저장한 리포트가 없습니다.</p>
+          <ul id="report-list" class="report-list" aria-label="저장한 리포트"></ul>
+        </aside>
+
+        <form id="report-editor" class="panel report-editor" aria-labelledby="report-editor-title">
+          <h3 id="report-editor-title">리포트 작성</h3>
+          <div class="report-fields">
+            <label>종목명
+              <input name="stockName" type="text" placeholder="예: 삼성전자" maxlength="60" required>
+            </label>
+            <label>종목코드
+              <input name="stockCode" type="text" placeholder="예: 005930" maxlength="20" autocapitalize="characters">
+            </label>
+            <label>투자 의견
+              <select name="opinion">
+                <option value="">선택</option>
+                <option>매수</option>
+                <option>보유</option>
+                <option>관망</option>
+                <option>매도</option>
+              </select>
+            </label>
+          </div>
+          <label>리포트 제목
+            <input name="title" type="text" placeholder="이번 분석의 핵심을 제목으로 적어보세요." maxlength="120" required>
+          </label>
+          <label>한 줄 요약
+            <textarea name="summary" rows="2" placeholder="이 종목을 지금 보는 이유는 무엇인가요?"></textarea>
+          </label>
+          <label>투자 근거
+            <textarea name="thesis" rows="4" placeholder="실적 전망, 경쟁력, 적정 주가 등 판단에 사용한 근거를 적어보세요."></textarea>
+          </label>
+          <label>리스크·확인할 점
+            <textarea name="risks" rows="3" placeholder="투자 판단이 달라질 조건과 다음에 확인할 지표를 적어보세요."></textarea>
+          </label>
+          <div class="report-actions">
+            <button class="report-button report-save" type="submit">리포트 저장</button>
+            <p id="report-status" role="status"></p>
+          </div>
+        </form>
+      </div>
+    </main>
+
   </div>
 
   <div
@@ -873,7 +934,7 @@
     ></aside>
   </div>
 
-  <aside id="etf-ticker-dock" class="etf-ticker-dock" aria-label="KoAct·TIMEFOLIO 액티브 ETF 시세">
+  <aside id="etf-ticker-dock" class="etf-ticker-dock" aria-label="KoAct·TIMEFOLIO 액티브 ETF 시세" data-analysis-only>
     <span class="etf-dock-label">액티브 ETF</span>
     <div class="rate-ticker-viewport">
       <div id="active-etf-ticker-track" class="rate-ticker-track is-static">
@@ -886,6 +947,6 @@
     </button>
   </aside>
 
-  <script src="script.js?v=20261025-watchlist-v2"></script>
+  <script src="script.js?v=20261115-reports"></script>
 </body>
 </html>

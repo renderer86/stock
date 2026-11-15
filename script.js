@@ -9,6 +9,7 @@ const MARKET_INDICES_URL = "./data/market_indices.json";
 const MARKET_HEATMAP_URL = "./data/market_heatmap.json";
 const PORTFOLIO_URL = "./data/portfolio.json";
 const PORTFOLIO_STORAGE_KEY = "value-dashboard-portfolio-v2";
+const STOCK_REPORT_STORAGE_KEY = "value-dashboard-stock-reports-v1";
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -4189,6 +4190,7 @@ function switchWorkspace(name, updateHash = true) {
     return;
   }
   state.activeWorkspace = name;
+  document.getElementById("analysis-mode-link").hash = name;
   document.querySelectorAll("[data-workspace-view]").forEach((view) => {
     view.classList.toggle("is-active", view === target);
   });
@@ -5156,6 +5158,166 @@ function initResponsiveTables() {
   });
 }
 
+function bindSiteModes() {
+  const analysisLink = document.getElementById("analysis-mode-link");
+  const reportLink = document.getElementById("report-mode-link");
+  const reportMain = document.getElementById("report-main");
+  const analysisOnly = document.querySelectorAll("[data-analysis-only]");
+  const skipLink = document.querySelector(".skip-link");
+  let analysisStarted = false;
+
+  function syncLocation() {
+    const route = location.hash.slice(1);
+    const showReport = route === "reports";
+    const wasReport = !reportMain.hidden;
+    if (showReport !== wasReport) {
+      if (showReport && document.body.classList.contains("market-map-modal-open")) {
+        closeMarketMapModal({ render: false });
+        closePortfolioModal();
+        closeScreenPendingModal({ returnFocus: false });
+        reportLink.focus({ preventScroll: true });
+      }
+      reportMain.hidden = !showReport;
+      analysisOnly.forEach((element) => { element.hidden = showReport; });
+      document.body.classList.toggle("report-mode", showReport);
+      const [active, inactive] = showReport ? [reportLink, analysisLink] : [analysisLink, reportLink];
+      active.setAttribute("aria-current", "page");
+      inactive.removeAttribute("aria-current");
+      skipLink.hash = showReport ? reportMain.id : "dashboard-main";
+      window.scrollTo(0, 0);
+    }
+    if (showReport) {
+      return;
+    }
+
+    switchWorkspace(route || "priority", false);
+    if (!analysisStarted) {
+      analysisStarted = true;
+      loadTreasuryTicker();
+      loadEtfBrandTickers();
+      loadMarketOverview();
+      loadTodayNews();
+      loadMarketMap();
+      loadPortfolio();
+      renderWatchlist();
+      loadStocks();
+    }
+  }
+
+  skipLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById(skipLink.hash.slice(1)).focus();
+  });
+  window.addEventListener("hashchange", syncLocation);
+  syncLocation();
+}
+
+function bindReportEditor() {
+  const form = document.getElementById("report-editor");
+  const heading = document.getElementById("report-editor-title");
+  const status = document.getElementById("report-status");
+  const list = document.getElementById("report-list");
+  const listMessage = document.getElementById("report-library-message");
+  let reports = [];
+  let currentReport = null;
+  let savedValues;
+
+  function readReports() {
+    const entries = JSON.parse(localStorage.getItem(STOCK_REPORT_STORAGE_KEY) ?? "[]");
+    if (!Array.isArray(entries) || entries.some((entry) => typeof entry?.id !== "string")) {
+      throw new Error("Invalid stock report data");
+    }
+    return entries;
+  }
+
+  function renderList() {
+    listMessage.textContent = reports.length ? "" : "저장한 리포트가 없습니다.";
+    list.innerHTML = reports.map((report) => `
+      <li>
+        <button type="button" data-report-id="${escapeHtml(report.id)}"${report.id === currentReport?.id ? ' aria-current="true"' : ""}>
+          <span>${escapeHtml(report.stockName)}${report.opinion ? ` · ${escapeHtml(report.opinion)}` : ""}</span>
+          <strong>${escapeHtml(report.title)}</strong>
+          <time datetime="${escapeHtml(report.updatedAt)}">${escapeHtml(formatCompactDate(report.updatedAt))}</time>
+        </button>
+      </li>
+    `).join("");
+  }
+
+  function openReport(report) {
+    currentReport = report;
+    for (const field of form.elements) {
+      if (field.name) {
+        field.value = report?.[field.name] ?? "";
+      }
+    }
+    savedValues = JSON.stringify([...new FormData(form)]);
+    heading.textContent = report ? "리포트 수정" : "리포트 작성";
+    status.textContent = "";
+    renderList();
+  }
+
+  function selectReport(report) {
+    if (report?.id === currentReport?.id && report?.updatedAt === currentReport?.updatedAt) {
+      form.elements.stockName.focus();
+      return;
+    }
+    const hasChanges = savedValues !== JSON.stringify([...new FormData(form)]);
+    if (hasChanges && !window.confirm("저장하지 않은 변경사항이 있습니다. 현재 편집을 닫을까요?")) {
+      return;
+    }
+    openReport(report);
+    form.elements.stockName.focus();
+  }
+
+  document.getElementById("new-report").addEventListener("click", () => selectReport(null));
+  list.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-report-id]");
+    if (button) {
+      selectReport(reports.find((report) => report.id === button.dataset.reportId));
+    }
+  });
+  form.addEventListener("input", () => { status.textContent = ""; });
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const values = Object.fromEntries([...new FormData(form)].map(([field, value]) => [field, value.trim()]));
+    if (!values.stockName || !values.title) {
+      status.textContent = "종목명과 리포트 제목을 입력하세요.";
+      form.elements[values.stockName ? "title" : "stockName"].focus();
+      return;
+    }
+
+    try {
+      const latestReports = readReports();
+      if (currentReport && !latestReports.some((entry) => entry.id === currentReport.id && entry.updatedAt === currentReport.updatedAt)) {
+        reports = latestReports;
+        renderList();
+        status.textContent = "다른 탭에서 리포트가 변경되었습니다. 내용을 복사한 뒤 목록에서 다시 열어주세요.";
+        return;
+      }
+      const report = {
+        ...values,
+        id: currentReport?.id ?? crypto.randomUUID(),
+        updatedAt: new Date().toISOString()
+      };
+      const updated = [report, ...latestReports.filter((entry) => entry.id !== report.id)];
+      localStorage.setItem(STOCK_REPORT_STORAGE_KEY, JSON.stringify(updated));
+      reports = updated;
+      openReport(report);
+      status.textContent = "리포트를 저장했습니다.";
+    } catch {
+      status.textContent = "리포트를 저장하지 못했습니다. 브라우저의 저장 공간과 설정을 확인하세요.";
+    }
+  });
+
+  try {
+    reports = readReports();
+    openReport(reports[0] ?? null);
+  } catch {
+    openReport(null);
+    listMessage.textContent = "저장한 리포트를 불러오지 못했습니다.";
+  }
+}
+
 bindFeatureControls();
 bindEtfTickerDock();
 bindMarketOverview();
@@ -5164,16 +5326,5 @@ bindMarketMap();
 bindPortfolioBoard();
 bindScreenPendingModal();
 initResponsiveTables();
-const initialWorkspace = location.hash.replace("#", "");
-if (document.querySelector(`[data-workspace-view="${CSS.escape(initialWorkspace)}"]`)) {
-  switchWorkspace(initialWorkspace, false);
-}
-window.addEventListener("hashchange", () => switchWorkspace(location.hash.slice(1), false));
-loadTreasuryTicker();
-loadEtfBrandTickers();
-loadMarketOverview();
-loadTodayNews();
-loadMarketMap();
-loadPortfolio();
-renderWatchlist();
-loadStocks();
+bindReportEditor();
+bindSiteModes();
