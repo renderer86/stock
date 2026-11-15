@@ -83,3 +83,15 @@ Action에서 자동으로 샤드 형식으로 변환된다.
 계산된다. 정확한 주당배당금이 10년 전체에 필요한 별도 연구에서는
 `legacy-api-details`를 사용한다. API 보완 응답 역시 가공 전 행 전체가 원본
 조각에 보존된다.
+
+## 이자부채 주석 보완
+
+자동 화면 갱신에서 코스맥스와 LF의 최신 두 사업연도를 대상으로 OpenDART XBRL
+주석을 조회한다. 확인된 접수번호는 `data/dart_debt_notes.json`에서 재사용한다.
+같은 연결 기준의 자산·부채·자본총계가 패널과 일치하고 주석의 구성 항목이 공시
+합계와 대사되면, 원래 재무제표에 결측인 차입금·사채·리스부채를 계산에 사용한다.
+공시 정정으로 접수번호가 바뀌면 새 주석을 확인한다.
+
+수동 수집은 `python crawler_dart_debt_notes.py --codes 093050,192820 --years 2`로
+실행한다. `python rebuild_financial_metrics.py`와 `python build_investment_screens.py`가
+캐시를 패널과 대시보드에 반영한다.

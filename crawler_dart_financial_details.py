@@ -15,6 +15,7 @@ from zoneinfo import ZoneInfo
 import requests
 
 from collector_common import USER_AGENT, request_json, utc_now_iso
+from crawler_dart_debt_notes import debt_note_accounts
 from dart_financial_storage import load_financial_panel, save_financial_panel
 from dart_financial_raw_storage import ApiRawAccumulator, DEFAULT_RAW_ROOT
 from env_loader import load_env_file
@@ -752,6 +753,9 @@ def parse_dividend_report(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 def derive_row_metrics(row: dict[str, Any]) -> None:
     values = row.get("detail_accounts") or {}
+    supplemental = debt_note_accounts(row, row.get("debt_note"))
+    if supplemental:
+        values = {**values, **supplemental}
     if not values:
         row.pop("detail_metrics", None)
         return

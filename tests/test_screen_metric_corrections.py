@@ -5,8 +5,10 @@ import tempfile
 from datetime import date
 from pathlib import Path
 from unittest.mock import patch
+from xml.etree import ElementTree
 
 from collector_common import atomic_write_json
+from crawler_dart_debt_notes import AnnualFacts, COMPONENTS, row_identity, sync_debt_notes
 
 from crawler_dart_financial_bulk import calculation_rows_from_raw_groups, validate_bulk_accounts
 from crawler_dart_financial_details import company_screening_features, derive_company_metrics, standardize_accounts
@@ -17,6 +19,65 @@ from stock_codes import normalize_stock_code
 
 
 class ScreenMetricCorrectionTests(unittest.TestCase):
+    def test_debt_note_adds_only_verified_components_and_keeps_leases_single_counted(self):
+        accounts = {
+            "assets": 1000, "equity": 400, "liabilities": 600, "cash": 50,
+            "operating_income": 75, "lease_liabilities_total": 30, "short_term_borrowings": 50,
+        }
+        row = {
+            "ticker": "192820", "corp_code": "01009789", "fiscal_year": 2025,
+            "receipt_number": "20260318000694", "detail_basis": "CFS", "statement_basis": "CFS",
+            "report_code": "11011", "currency": "KRW", "detail_status": "complete",
+            "detail_accounts": accounts.copy(),
+        }
+        note = {
+            **row_identity(row),
+            "anchors": {key: accounts[key] for key in ("assets", "equity", "liabilities")},
+            "accounts": dict(zip(COMPONENTS, (50, 20, 80, 0, 5, 10, 20))),
+        }
+        panel = {"observations": [row]}
+        notes = {row["receipt_number"]: note}
+        self.assertTrue(sync_debt_notes(panel, notes))
+        self.assertFalse(sync_debt_notes(panel, notes))
+        derive_company_metrics([row])
+        self.assertEqual(row["detail_accounts"], accounts)
+        self.assertEqual(row["detail_metrics"]["interest_bearing_debt"], 185)
+
+        row["detail_accounts"]["short_term_borrowings"] = 51
+        derive_company_metrics([row])
+        self.assertEqual(row["detail_metrics"]["interest_bearing_debt"], 81)
+        self.assertTrue(sync_debt_notes(panel, notes))
+        self.assertNotIn("debt_note", row)
+
+        row["detail_accounts"]["short_term_borrowings"] = 50
+        row["receipt_number"] = "20260401000100"
+        self.assertFalse(sync_debt_notes(panel, notes))
+        self.assertNotIn("debt_note", row)
+
+    def test_xbrl_note_facts_match_consolidated_period_and_currency(self):
+        root = ElementTree.fromstring('''
+            <xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:d="http://xbrl.org/2006/xbrldi">
+              <unit id="won"><measure>iso4217:KRW</measure></unit>
+              <context id="annual"><entity><segment>
+                <d:explicitMember dimension="ConsolidatedAndSeparateFinancialStatementsAxis">ConsolidatedMember</d:explicitMember>
+              </segment></entity><period><instant>2025-12-31</instant></period></context>
+              <context id="separate"><entity><segment>
+                <d:explicitMember dimension="ConsolidatedAndSeparateFinancialStatementsAxis">SeparateMember</d:explicitMember>
+              </segment></entity><period><instant>2025-12-31</instant></period></context>
+              <context id="prior"><entity><segment>
+                <d:explicitMember dimension="ConsolidatedAndSeparateFinancialStatementsAxis">ConsolidatedMember</d:explicitMember>
+              </segment></entity><period><instant>2024-12-31</instant></period></context>
+              <Equity contextRef="annual" unitRef="won">100</Equity>
+              <Equity contextRef="annual" unitRef="foreign">200</Equity>
+              <Equity contextRef="separate" unitRef="won">300</Equity>
+              <Equity contextRef="prior" unitRef="won">400</Equity>
+            </xbrl>''')
+        self.assertEqual(AnnualFacts(root, "2025-12-31").require("Equity"), 100)
+        conflicting = ElementTree.SubElement(root, "{http://www.xbrl.org/2003/instance}Equity", {"contextRef": "annual", "unitRef": "won"})
+        conflicting.text = "500"
+        with self.assertRaisesRegex(ValueError, "Conflicting XBRL amounts"):
+            AnnualFacts(root, "2025-12-31").require("Equity")
+
     def test_atomic_json_retries_transient_windows_file_lock(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "data.json"

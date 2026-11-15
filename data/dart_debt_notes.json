@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "source": "OpenDART XBRL annual debt notes",
+  "count": 4,
+  "filings": {
+    "20250318000532": {
+      "ticker": "093050",
+      "corp_code": "00593032",
+      "fiscal_year": 2024,
+      "receipt_number": "20250318000532",
+      "detail_basis": "CFS",
+      "currency": "KRW",
+      "period_end": "2024-12-31",
+      "source": "OpenDART fnlttXbrl.xml",
+      "anchors": {
+        "assets": 2914966723645,
+        "equity": 1772778738357,
+        "liabilities": 1142187985288
+      },
+      "accounts": {
+        "short_term_borrowings": 180609000000,
+        "current_portion_long_term_debt": 6075000000,
+        "long_term_borrowings": 351211000000,
+        "current_bonds": 39962000000,
+        "bonds": 159537000000,
+        "lease_liabilities_current": 30192000000,
+        "lease_liabilities_noncurrent": 62212000000
+      },
+      "current_convertible_bonds": 0
+    },
+    "20250416000526": {
+      "ticker": "192820",
+      "corp_code": "01009789",
+      "fiscal_year": 2024,
+      "receipt_number": "20250416000526",
+      "detail_basis": "CFS",
+      "currency": "KRW",
+      "period_end": "2024-12-31",
+      "source": "OpenDART fnlttXbrl.xml",
+      "anchors": {
+        "assets": 1933713489313,
+        "equity": 508810486465,
+        "liabilities": 1424903002848
+      },
+      "accounts": {
+        "short_term_borrowings": 464413126042,
+        "current_portion_long_term_debt": 17550562301,
+        "long_term_borrowings": 148996656069,
+        "current_bonds": 27500000000,
+        "bonds": 38650506000,
+        "lease_liabilities_current": 16986535030,
+        "lease_liabilities_noncurrent": 35164067523
+      },
+      "current_convertible_bonds": 0
+    },
+    "20260318000694": {
+      "ticker": "192820",
+      "corp_code": "01009789",
+      "fiscal_year": 2025,
+      "receipt_number": "20260318000694",
+      "detail_basis": "CFS",
+      "currency": "KRW",
+      "period_end": "2025-12-31",
+      "source": "OpenDART fnlttXbrl.xml",
+      "anchors": {
+        "assets": 2125418400005,
+        "equity": 612343808452,
+        "liabilities": 1513074591553
+      },
+      "accounts": {
+        "short_term_borrowings": 499333334730,
+        "current_portion_long_term_debt": 43398106235,
+        "long_term_borrowings": 174693299820,
+        "current_bonds": 131940560657,
+        "bonds": 20000000000,
+        "lease_liabilities_current": 18255815471,
+        "lease_liabilities_noncurrent": 28419925455
+      },
+      "current_convertible_bonds": 91374776657
+    },
+    "20260601001924": {
+      "ticker": "093050",
+      "corp_code": "00593032",
+      "fiscal_year": 2025,
+      "receipt_number": "20260601001924",
+      "detail_basis": "CFS",
+      "currency": "KRW",
+      "period_end": "2025-12-31",
+      "source": "OpenDART fnlttXbrl.xml",
+      "anchors": {
+        "assets": 3026661178694,
+        "equity": 1846793949430,
+        "liabilities": 1179867229264
+      },
+      "accounts": {
+        "short_term_borrowings": 111744000000,
+        "current_portion_long_term_debt": 167830000000,
+        "long_term_borrowings": 378447000000,
+        "current_bonds": 89875000000,
+        "bonds": 49901000000,
+        "lease_liabilities_current": 26785000000,
+        "lease_liabilities_noncurrent": 45214000000
+      },
+      "current_convertible_bonds": 0
+    }
+  }
+}

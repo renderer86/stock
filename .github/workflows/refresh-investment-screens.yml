@@ -55,6 +55,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python -u crawler_dart_debt_notes.py
           python -u rebuild_financial_metrics.py
           python -u crawler_naver_year_end_prices.py
           python -u estimate_financial_n.py --config config/financial_n_engine.json
@@ -78,6 +79,9 @@ jobs:
             data/data_manifest.json
           if [[ -f data/dart_financial_interim.json ]]; then
             git add data/dart_financial_interim.json
+          fi
+          if [[ -f data/dart_debt_notes.json ]]; then
+            git add data/dart_debt_notes.json
           fi
 
           if git diff --cached --quiet; then
