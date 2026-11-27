@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ScheduledProfilesTests(unittest.TestCase):
-    def collectors(self, profile: str) -> dict[str, list[str]]:
-        command = scheduled_update.PROFILE_COMMANDS[profile]
+    def collectors(self, profile: str, extra=()) -> dict[str, list[str]]:
+        command = [*scheduled_update.PROFILE_COMMANDS[profile], *extra]
         self.assertEqual(command[0], "run_all.py")
         collected = {}
 
@@ -46,7 +46,7 @@ class ScheduledProfilesTests(unittest.TestCase):
     def test_korean_close_runs_domestic_collectors_without_us_collectors(self):
         scripts = self.collectors("market-close")
         for script in (
-            "crawler_naver_market_sum.py", "crawler_fnguide_roe_history.py",
+            "crawler_naver_market_sum.py", "build_valuation_metrics.py",
             "crawler_dart_disclosures.py", "crawler_krx_flow_short.py",
             "crawler_naver_etf_brands.py", "crawler_dart_event_details.py",
         ):
@@ -59,6 +59,14 @@ class ScheduledProfilesTests(unittest.TestCase):
             self.assertNotIn(script, scripts)
         self.assertEqual(scripts["crawler_market_indices.py"], ["--market-scope", "korea"])
         self.assertEqual(scripts["crawler_market_heatmap.py"], ["--market-scope", "korea"])
+        self.assertNotIn("crawler_fnguide_roe_history.py", scripts)
+        order = list(scripts)
+        self.assertLess(order.index("crawler_naver_market_sum.py"), order.index("build_valuation_metrics.py"))
+        self.assertLess(order.index("build_valuation_metrics.py"), order.index("crawler_dart_major_holders.py"))
+
+    def test_legacy_fnguide_history_requires_explicit_opt_in(self):
+        scripts = self.collectors("market-close", ["--include-fnguide-history"])
+        self.assertIn("crawler_fnguide_roe_history.py", scripts)
 
     def test_us_close_does_not_refresh_korean_stocks_or_disclosures(self):
         scripts = self.collectors("us-open")

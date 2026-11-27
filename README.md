@@ -106,7 +106,7 @@ cd C:\stock
 6. Finnhub 상위 100종목 기업지표·추천·EPS 서프라이즈
 7. KRX Open API 주식·ETF·지수·국채 일별 데이터
 8. KRX 로그인 기반 코스피·코스닥 투자자 수급·공매도
-9. 네이버 금융 국내 시총·재무지표와 FnGuide 과거 ROE
+9. 네이버 코스피·코스닥 전 종목 시세·상장주식수와 DART 재무 기반 가치평가 재계산
 10. OpenDART 지분, 최근 전체 공시와 자사주·배당·수주·CB·임원매수 상세
 11. NAVER 검색 뉴스와 Gemini 시장 브리핑
 
@@ -117,7 +117,7 @@ cd C:\stock
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py
 ```
 
-OpenDART를 제외하고 국채 금리, 네이버, FnGuide만 실행:
+OpenDART 공시·지분 API를 제외하고 실행 (저장된 DART 재무로 가치평가는 재계산):
 
 ```powershell
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --skip-dart
@@ -130,7 +130,7 @@ JSON을 먼저 커밋·배포하고 텔레그램에는 실패 알림을 보냅�
 각 단계가 30초 이상 실행되면 `[RUNNING]` 생존 로그가 표시됩니다. 특히 네이버 국내
 시세 수집은 코스피·코스닥, 필드 묶음, 페이지 진행률과 누적 경과 시간을 5페이지마다
 출력하므로 GitHub Actions에서 진행 여부를 바로 확인할 수 있습니다. 네이버 시세 다음에도
-FnGuide, OpenDART, 뉴스·AI 브리핑, manifest 작업이 이어지므로 전체 실행의 마지막 단계는
+저장된 DART 재무 기반 가치평가, OpenDART 공시, 뉴스·AI 브리핑, manifest 작업이 이어지므로 전체 실행의 마지막 단계는
 아닙니다.
 OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, 임원·주요주주 지분변동의
 3단계로 나누어 처리 건수·결과 건수·오류 수·경과 시간을 출력합니다.
@@ -138,11 +138,11 @@ OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, �
 ### 통합 실행 옵션
 
 ```powershell
-# FnGuide에서 현재 ROE 15% 이상 종목만 수집
-& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --fnguide-min-roe 15
+# 보조 FnGuide 이력이 별도로 필요한 경우에만 수집
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --include-fnguide-history --fnguide-min-roe 15
 
 # 테스트를 위해 FnGuide와 OpenDART 대상을 각각 10개로 제한
-& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --fnguide-limit 10 --dart-limit 10
+& "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --include-fnguide-history --fnguide-limit 10 --dart-limit 10
 
 # OpenDART 우선 검토 후보만 수집
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" run_all.py --dart-scope priority
@@ -173,7 +173,8 @@ OpenDART 상세 단계도 배당·수주 원문, 자사주·CB 구조화 API, �
 - `--sec-limit`: SEC 공시를 확인할 미국 상위 종목 수, 기본 200
 - `--etf-brands`: ETF 티커로 수집할 브랜드 목록, 기본 `KoAct TIME`
 - `--rates-lookback-days`: 금리의 최근 유효값을 찾을 조회 기간, 기본 21일
-- `--fnguide-min-roe`: FnGuide 대상의 최소 현재 ROE, 음수이면 필터 해제
+- `--include-fnguide-history`: 보조 FnGuide 이력 수집을 명시적으로 실행. 기본 일일 수집과 가치평가는 DART 재무를 사용
+- `--fnguide-min-roe`: 보조 FnGuide 수집을 실행할 때 대상의 최소 현재 ROE, 음수이면 필터 해제
 - `--min-roa`: FnGuide/OpenDART 대상의 최소 현재 ROA, 기본 7, 음수이면 필터 해제
 - `--no-financial-roa-exempt`: 은행·증권·보험 등 금융업 이름 키워드도 ROA 필터 적용
 - `--fnguide-limit`: FnGuide 대상 수 제한, `0`이면 제한 없음
@@ -276,9 +277,11 @@ http://localhost:8000
 & "C:\Users\rende\AppData\Local\Programs\Python\Python313\python.exe" telegram_notify.py --status success
 ```
 
-FnGuide는 기본적으로 `data/market_sum.json`에서 현재 ROE가 10% 이상인 종목을 수집합니다. 공개 재무비율 페이지에 보이는 기간에 따라 최근 연간 결산과 최신 중간기 데이터가 함께 포함될 수 있습니다.
+네이버 시세는 ROE·ROA 제한 없이 코스피·코스닥 전 종목을 수집합니다. 가치평가의 ROE·ROA·EPS·BPS 및 보조 재무값은 저장된 DART 공시로 계산하고, 주가·시가총액·상장주식수는 네이버 전 종목 시세로 매일 갱신합니다. ROE 10% 기준선은 화면 표시 필터입니다.
 
-OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니다. `data/dart_major_holders.json`이 없어도 대시보드는 해당 공시 항목을 비운 상태로 동작합니다.
+FnGuide 과거 ROE는 보조 자료가 필요할 때 `--include-fnguide-history`로만 수집하며 가치평가 입력에는 사용하지 않습니다.
+
+OpenDART 지분 보조 API의 기본 대상은 네이버 ROE가 10% 이상인 종목이며, 전 종목 재무제표 수집·가치평가 범위와는 별도입니다. `data/dart_major_holders.json`이 없어도 대시보드는 해당 공시 항목을 비운 상태로 동작합니다.
 
 공시 상세는 미르의 방식처럼 최근 7일 코스피·코스닥 전체 공시를 먼저 수집한 뒤
 필요한 보고서만 추가 조회합니다. 배당·수주는 공시 원문 표준 양식을 파싱하고,
@@ -290,7 +293,7 @@ OpenDART 크롤러의 기본 범위는 현재 ROE가 10% 이상인 종목입니�
 
 ## 현재 대시보드 동작
 
-- `data/market_sum_by_roe.json`을 읽고 기본적으로 ROE 10% 이상 종목을 표시합니다.
+- `data/market_sum.json`의 전 종목 시세와 `data/valuation_metrics.json`의 DART 재무를 연결하고, 기본적으로 DART 실적 ROE 10% 이상 종목을 표시합니다.
 - 주시 종목 위에서 한국·미국 국채 금리, KoAct ETF, TIME ETF가 각각 한 줄 티커로 흐릅니다.
 - 국채 금리는 같은 만기에서 한국과 미국이 연이어 보이도록 배치되며, ETF는 상승 빨강·하락 파랑으로 표시됩니다.
 - 거래정지 추정 종목은 흐리게 표시하고 `거래정지` 배지를 붙입니다.

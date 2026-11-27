@@ -41,6 +41,10 @@ python crawler_dart_financial_interim.py --year 2026 --quarter 3 --bulk-mode ski
 # 특정 종목만 수집하거나 반기 자료를 별도로 보관
 python crawler_dart_financial_interim.py --year 2026 --quarter 2 --codes 005930,000660
 
+# 과거 분기 ZIP을 기간별 파일로 반영하고 최신 3분기 파일은 유지
+python crawler_dart_financial_interim.py --year 2026 --quarter 1 --bulk-only --output data/dart_financial_interim_2026_q1.json
+python crawler_dart_financial_interim.py --year 2026 --quarter 2 --bulk-only --output data/dart_financial_interim_2026_h1.json
+
 # API 보완이 끝난 데이터로 화면 재계산
 python build_investment_screens.py
 python build_data_manifest.py
@@ -72,6 +76,7 @@ Ctrl+C 중단 시 저장한다. 한도 초과 직전 연결 조회만 끝났다�
 ## 저장 구조와 자동 실행
 
 - `data/dart_financial_interim.json`: 최신 계산용 기업별 재무·현금흐름과 수집 범위
+- `data/dart_financial_interim_2026_q1.json`, `data/dart_financial_interim_2026_h1.json`: 2026년 1분기·반기 ZIP 계산용 자료. 부족한 계정은 기간별 진행 파일에서 확인한다.
 - `data/dart_financial_interim_progress/{연도}_{보고서코드}.json`: 기간별 상태·누락 사유·마지막 실행 한도
 - `data/dart_financial_raw/{연도}/bulk/{보고서코드}_{BS|PL|CF|CE}_{CFS|OFS}_{첫자리}.json.gz`: 분기 ZIP 원본
 - `data/dart_financial_raw/{연도}/api/interim_{보고서코드}_{CFS|OFS}_{첫자리}.json.gz`: API 원본

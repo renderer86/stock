@@ -29,7 +29,7 @@ EXTRA_SPECS = {
         "aliases": {"중단영업이익손실", "중단영업당기순이익손실", "중단영업순이익손실", "중단영업이익"}},
 }
 SPECS = {key: ACCOUNT_SPECS[key] for key in
-         ("assets", "equity", "owners_equity", "net_income", "owners_net_income")}
+         ("assets", "liabilities", "equity", "owners_equity", "net_income", "owners_net_income", "revenue", "operating_income")}
 SPECS.update(EXTRA_SPECS)
 ACCOUNT_IDS = {normalize_account_id(i) for spec in SPECS.values() for i in spec["ids"]}
 ACCOUNT_NAMES = {normalize_text(n) for spec in SPECS.values() for n in spec["aliases"]}
@@ -181,7 +181,9 @@ def build_metrics(panel, market, interim, store, as_of):
         annual_by_ticker[row["ticker"]].append(row)
     metrics = {}
     market_stocks = market.get("stocks", [])
+    market_by_code = {s["code"]: s for s in market_stocks}
     preferred_by_common = defaultdict(list)
+    common_by_preferred = {}
     common_by_prefix = {s["code"][:5]: s for s in market_stocks if s["code"].endswith("0")}
     for stock in market_stocks:
         common = common_by_prefix.get(stock["code"][:5])
@@ -189,9 +191,11 @@ def build_metrics(panel, market, interim, store, as_of):
             suffix = str(stock.get("name", ""))[len(str(common.get("name", ""))):]
             if str(stock.get("name", "")).startswith(str(common.get("name", ""))) and re.fullmatch(r"(?:\d+)?우[A-Z]?", suffix):
                 preferred_by_common[common["code"]].append(stock)
+                common_by_preferred[stock["code"]] = common["code"]
     for stock in market_stocks:
         ticker = stock["code"]
-        candidates = sorted(annual_by_ticker.get(ticker, []), key=lambda r: r["fiscal_year"])
+        financial_ticker = common_by_preferred.get(ticker, ticker)
+        candidates = sorted(annual_by_ticker.get(financial_ticker, []), key=lambda r: r["fiscal_year"])
         latest = candidates[-1] if candidates else {}
         basis = latest.get("detail_basis") or latest.get("statement_basis")
         corp_code = latest.get("corp_code")
@@ -203,21 +207,21 @@ def build_metrics(panel, market, interim, store, as_of):
             end = f"{row['fiscal_year']}-12-31"
             if end > as_of.isoformat() or b != basis or row.get("corp_code") != corp_code:
                 continue
-            report = store.api((row.get("detail_api_raw_refs") or {}).get(b), ticker, b, end, corp_code)
-            report = report or store.bulk(row["fiscal_year"], "11011").get((ticker, b))
+            report = store.api((row.get("detail_api_raw_refs") or {}).get(b), financial_ticker, b, end, corp_code)
+            report = report or store.bulk(row["fiscal_year"], "11011").get((financial_ticker, b))
             if report:
                 reports[end] = report
         # Quarterly eligibility only requires BS and IS. Missing cash-flow
         # lines in the collector must not hide an otherwise usable report.
-        due_report = store.bulk(year, code).get((ticker, basis)) if due_end > f"{annual_year}-12-31" else None
+        due_report = store.bulk(year, code).get((financial_ticker, basis)) if due_end > f"{annual_year}-12-31" else None
         if due_report:
             reports[due_end] = due_report
-        current = (interim.get("companies") or {}).get(ticker) or {}
+        current = (interim.get("companies") or {}).get(financial_ticker) or {}
         # Even a CF-incomplete report can have complete BS and IS for ROE.
         end = current.get("period_end", "")
         if current.get("status") == "ok" and end and end <= as_of.isoformat() and current.get("basis") == basis and current.get("corp_code") == corp_code:
-            report = store.api(current.get("raw_ref"), ticker, basis, end, corp_code)
-            report = report or store.bulk(current["fiscal_year"], current["report_code"]).get((ticker, basis))
+            report = store.api(current.get("raw_ref"), financial_ticker, basis, end, corp_code)
+            report = report or store.bulk(current["fiscal_year"], current["report_code"]).get((financial_ticker, basis))
             if report:
                 reports[end] = report
         selected_end = max(reports, default="")
@@ -232,6 +236,7 @@ def build_metrics(panel, market, interim, store, as_of):
             result["period_end"] = selected_end
         else:
             selected = reports[selected_end]
+            selected_prior = selected["previous"]
             previous_end = str(int(selected_end[:4]) - 1) + selected_end[4:]
             if selected_end.endswith("12-31"):
                 start = (reports.get(previous_end) or {}).get("current") or selected["previous"]
@@ -239,9 +244,10 @@ def build_metrics(panel, market, interim, store, as_of):
                 sources = selected["sources"]
             else:
                 annual = reports.get(f"{int(selected_end[:4]) - 1}-12-31") or {}
-                prior = store.bulk(int(selected_end[:4]) - 1, REPORTS[selected_end[5:]]).get((ticker, basis)) or {}
+                prior = store.bulk(int(selected_end[:4]) - 1, REPORTS[selected_end[5:]]).get((financial_ticker, basis)) or {}
                 start = prior.get("current", {})
                 prior_income = {**prior.get("current", {}), **selected["previous"]}
+                selected_prior = prior_income
                 income = trailing_income(annual.get("current", {}), selected["current"], prior_income)
                 sources = selected["sources"] + annual.get("sources", []) + prior.get("sources", [])
             history = [r["current"] for e, r in reports.items() if e.endswith("12-31") and previous_end <= e <= selected_end]
@@ -256,8 +262,24 @@ def build_metrics(panel, market, interim, store, as_of):
                 result["eligible"] = False
             result["sources"] = sorted(set(sources))
             result["latest_available_period_end"] = selected_end
+            def growth(key):
+                current_value = selected["current"].get(key)
+                prior_value = selected_prior.get(key)
+                if current_value is None or prior_value is None or prior_value <= 0:
+                    return None
+                return round((current_value / prior_value - 1) * 100, 4)
+
+            result["financials"] = {
+                "source": "OpenDART", "period_end": selected_end, "basis": basis,
+                "assets": selected["current"].get("assets"),
+                "liabilities": selected["current"].get("liabilities"),
+                "revenue_ytd": selected["current"].get("revenue"),
+                "operating_income_ytd": selected["current"].get("operating_income"),
+                "revenue_yoy_pct": growth("revenue"),
+                "operating_income_yoy_pct": growth("operating_income"),
+            }
             result["share_count_as_of"] = market.get("crawled_at_utc")
-            share_classes = [stock, *preferred_by_common[ticker]]
+            share_classes = [market_by_code[financial_ticker], *preferred_by_common[financial_ticker]]
             shares = sum(s.get("listed_shares_exact") or (s.get("listed_shares") or 0) * 1000 for s in share_classes)
             if shares > 0:
                 equity = result.get("owners_equity")
@@ -278,12 +300,15 @@ def build_metrics(panel, market, interim, store, as_of):
                     clean_history.append({"period": e, "roe": historical["roe_pct"]})
             result["clean_roe_history"] = clean_history
         result["ticker"] = ticker
+        result["financial_ticker"] = financial_ticker
         metrics[ticker] = result
     counts = Counter(reason for m in metrics.values() for reason in m["quality_reasons"])
     return {"schema_version": 1, "generated_at_utc": utc_now_iso(), "as_of": as_of.isoformat(),
             "market_data_updated_at_utc": market.get("crawled_at_utc"),
             "required_period_end": required_end, "source": "OpenDART full financial statements",
             "methodology": {"roe": "parent TTM net income / mean parent equity at matching year-apart endpoints",
+                            "universe": "all KOSPI/KOSDAQ market quotes; no vendor ROE prefilter",
+                            "financial_source": "OpenDART", "quote_source": "Naver",
                             "roa": "TTM total net income / mean total assets at matching endpoints",
                             "thin_equity_floor": 0.05, "material_discontinued_profit_share": 0.10,
                             "missing_latest_policy": "exclude; never use vendor ROE as fallback"},

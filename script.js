@@ -1,6 +1,5 @@
-const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
+const MARKET_DATA_URL = "./data/market_sum.json";
 const VALUATION_METRICS_URL = "./data/valuation_metrics.json";
-const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
 const FINANCIAL_N_URL = "./data/financial_n_estimates.json";
 const INVESTMENT_SCREENS_URL = "./data/investment_screens.json";
 const DART_MAJOR_URL = "./data/dart_major_holders.json";
@@ -49,7 +48,6 @@ const state = {
   rawStockByCode: new Map(),
   marketDataUpdatedAt: null,
   valuationMetricsPayload: null,
-  roeHistoryByCode: new Map(),
   financialNByCode: new Map(),
   financialNPeriod: null,
   investmentScreenByCode: new Map(),
@@ -2416,13 +2414,25 @@ function applyValuationMetrics(stock, payload) {
   }
   const bps = metrics.bps;
   const eps = metrics.eps;
+  const price = Number.isFinite(stock.current_price) && stock.current_price > 0 ? stock.current_price : null;
+  const financials = metrics.financials || {};
+  const inHundredMillion = (value) => Number.isFinite(value) ? value / 1e8 : null;
   return {
     ...stock,
     vendorRoe: stock.roe,
     roe: Number.isFinite(metrics.roe_pct) ? metrics.roe_pct : null,
     roa: Number.isFinite(metrics.roa_pct) ? metrics.roa_pct : null,
-    pbr: Number.isFinite(bps) && bps > 0 ? stock.current_price / bps : null,
-    per: Number.isFinite(eps) && eps !== 0 ? stock.current_price / eps : null,
+    pbr: price !== null && Number.isFinite(bps) && bps > 0 ? price / bps : null,
+    per: price !== null && Number.isFinite(eps) && eps !== 0 ? price / eps : null,
+    eps: Number.isFinite(eps) ? eps : null,
+    property_total_krw_100m: inHundredMillion(financials.assets),
+    debt_total_krw_100m: inHundredMillion(financials.liabilities),
+    sales_krw_100m: inHundredMillion(financials.revenue_ytd),
+    operating_profit_krw_100m: inHundredMillion(financials.operating_income_ytd),
+    net_income_krw_100m: inHundredMillion(metrics.net_income),
+    sales_increasing_rate: financials.revenue_yoy_pct ?? null,
+    operating_profit_increasing_rate: financials.operating_income_yoy_pct ?? null,
+    reserve_ratio: null,
     valuationMetrics: metrics,
     valuationEligible: metrics.eligible === true
   };
@@ -2566,21 +2576,6 @@ function getMarketBadgeClass(stock) {
   return stock.market === "KOSDAQ" ? "market-badge kosdaq" : "market-badge kospi";
 }
 
-function getRoeHistoryValues(history) {
-  const fullYearValues = (history?.full_years || [])
-    .map((item) => item?.roe)
-    .filter((value) => typeof value === "number" && Number.isFinite(value));
-
-  if (fullYearValues.length >= 2) {
-    return fullYearValues;
-  }
-
-  const allValues = (history?.roe_values || [])
-    .filter((value) => typeof value === "number" && Number.isFinite(value));
-
-  return allValues;
-}
-
 function extractReporterNames(majorHolder) {
   const holders = majorHolder?.holders || [];
   const seen = new Set();
@@ -2599,7 +2594,7 @@ function extractReporterNames(majorHolder) {
   return names;
 }
 
-function inferRoeRange(stock, history) {
+function inferRoeRange(stock) {
   if (!stock.valuationEligible || !Number.isFinite(stock.roe)) {
     return { conservative: null, base: null, optimistic: null, source: "excluded", values: [] };
   }
@@ -2768,12 +2763,12 @@ function buildScenarioResult(stock, params) {
 
 function enrichStock(stock) {
   const majorHolder = state.dartMajorByCode.get(stock.code) || null;
-  const history = state.roeHistoryByCode.get(stock.code) || null;
   const reporterNames = extractReporterNames(majorHolder);
   const marketImpliedN = estimateMarketImpliedDuration(stock);
-  const roeRange = inferRoeRange(stock, history);
+  const roeRange = inferRoeRange(stock);
   const heuristicNModel = estimateFinancialN(stock, roeRange.values);
-  const financialNEstimate = state.financialNByCode.get(stock.code) || null;
+  const financialCode = stock.valuationMetrics?.financial_ticker || stock.code;
+  const financialNEstimate = state.financialNByCode.get(financialCode) || null;
   const investmentScreen = state.investmentScreenByCode.get(stock.code) || null;
   const nModel = adaptEmpiricalNModel(financialNEstimate, heuristicNModel);
   const durationRange = empiricalDurationRange(financialNEstimate)
@@ -2814,7 +2809,6 @@ function enrichStock(stock) {
     recommendedRoeBase: roeRange.base,
     recommendedRoeOptimistic: roeRange.optimistic,
     roeInferenceSource: roeRange.source,
-    roeHistory: history,
     majorHolder,
     hasMajorHolders: Boolean(majorHolder?.has_major_holders),
     reporterNames,
@@ -4000,19 +3994,6 @@ function renderError(message) {
   document.getElementById("kelly-panel").innerHTML = `<div class="empty-state">${message}</div>`;
 }
 
-function buildRoeHistoryMap(payload) {
-  const map = new Map();
-  const rows = payload?.stocks || [];
-
-  rows.forEach((row) => {
-    if (row?.code) {
-      map.set(row.code, row);
-    }
-  });
-
-  return map;
-}
-
 function buildDartMajorMap(payload) {
   const map = new Map();
   const rows = payload?.stocks || [];
@@ -4054,7 +4035,7 @@ function buildInvestmentScreenMap(payload) {
 
 async function loadStocks() {
   try {
-    const marketPromise = fetch(MARKET_DATA_URL).then((response) => {
+    const marketPromise = fetch(`${MARKET_DATA_URL}?v=${Date.now()}`, { cache: "no-store" }).then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} for market data`);
       }
@@ -4067,15 +4048,6 @@ async function loadStocks() {
         return response.json();
       })
       .catch(() => null);
-
-    const roePromise = fetch(ROE_HISTORY_URL)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status} for ROE history`);
-        }
-        return response.json();
-      })
-      .catch(() => ({ stocks: [] }));
 
     const dartPromise = fetch(DART_MAJOR_URL)
       .then((response) => {
@@ -4110,14 +4082,12 @@ async function loadStocks() {
 
     const [
       marketPayload,
-      roePayload,
       dartPayload,
       financialNPayload,
       investmentScreensPayload,
       valuationPayload
     ] = await Promise.all([
       marketPromise,
-      roePromise,
       dartPromise,
       financialNPromise,
       investmentScreensPromise,
@@ -4130,7 +4100,6 @@ async function loadStocks() {
       state.rawStocks.map((stock) => [stock.code, stock])
     );
     state.marketDataUpdatedAt = marketPayload.crawled_at_utc || null;
-    state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
     state.dartMajorByCode = buildDartMajorMap(dartPayload);
     state.financialNByCode = buildFinancialNMap(financialNPayload);
     state.financialNPeriod = financialNPayload.source_panel?.period || null;

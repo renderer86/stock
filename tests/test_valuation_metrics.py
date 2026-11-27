@@ -113,6 +113,45 @@ class ValuationMetricTests(unittest.TestCase):
         self.assertAlmostEqual(result["roe_pct"], 100 / 900 * 100, places=4)
         self.assertEqual(result["share_count_basis"], "exact")
 
+    def test_all_market_codes_are_evaluated_without_vendor_roe_prefilter(self):
+        store = MemoryReports({(2025, "11011"): {("000001", "CFS"): report("2025-12-31")},
+            (2025, "11014"): {("000001", "CFS"): report("2025-09-30")},
+            (2026, "11014"): {("000001", "CFS"): report("2026-09-30")}})
+        panel = {"observations": [{"ticker": "000001", "fiscal_year": 2025, "corp_code": "00000001", "statement_basis": "CFS"}]}
+        market = {"stocks": [{"code": "000001", "roe": 1, "listed_shares_exact": 100},
+                             {"code": "000002", "roe": -10}, {"code": "000003", "roe": None}]}
+        result = build_metrics(panel, market, {}, store, date(2026, 11, 28))
+        self.assertEqual(set(result["metrics"]), {"000001", "000002", "000003"})
+        self.assertTrue(result["metrics"]["000001"]["eligible"])
+        self.assertGreater(result["metrics"]["000001"]["roe_pct"], 10)
+        self.assertFalse(result["metrics"]["000002"]["eligible"])
+
+    def test_auxiliary_financials_use_same_basis_dart_ytd_comparatives(self):
+        store = MemoryReports({(2025, "11011"): {("000001", "CFS"): report("2025-12-31")},
+            (2025, "11014"): {("000001", "CFS"): report("2025-09-30", current=accounts(revenue=100, operating_income=50))},
+            (2026, "11014"): {("000001", "CFS"): report("2026-09-30", current=accounts(revenue=150, operating_income=40, liabilities=800), previous={})}})
+        data = self.build(store)["financials"]
+        self.assertEqual(data["source"], "OpenDART")
+        self.assertEqual(data["assets"], 2000)
+        self.assertEqual(data["liabilities"], 800)
+        self.assertEqual(data["revenue_yoy_pct"], 50)
+        self.assertEqual(data["operating_income_yoy_pct"], -20)
+
+    def test_preferred_share_uses_issuer_reports_and_same_total_share_count(self):
+        panel = {"observations": [{"ticker": "000010", "fiscal_year": 2025, "corp_code": "00000001", "statement_basis": "CFS"}]}
+        store = MemoryReports({(2025, "11011"): {("000010", "CFS"): report("2025-12-31")},
+            (2025, "11014"): {("000010", "CFS"): report("2025-09-30")},
+            (2026, "11014"): {("000010", "CFS"): report("2026-09-30")}})
+        market = {"stocks": [{"code": "000010", "name": "테스트", "listed_shares_exact": 80},
+            {"code": "000015", "name": "테스트우", "listed_shares_exact": 20},
+            {"code": "00001A", "name": "다른 회사", "listed_shares_exact": 5}]}
+        results = build_metrics(panel, market, {}, store, date(2026, 11, 28))["metrics"]
+        self.assertEqual(results["000015"]["financial_ticker"], "000010")
+        self.assertTrue(results["000015"]["eligible"])
+        self.assertEqual(results["000010"]["bps"], 9)
+        self.assertEqual(results["000015"]["bps"], 9)
+        self.assertFalse(results["00001A"]["eligible"])
+
     def test_incompatible_api_basis_and_entity_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "api.json.gz"

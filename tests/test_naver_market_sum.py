@@ -1,9 +1,25 @@
 import unittest
+import json
+from pathlib import Path
+import tempfile
+from unittest.mock import patch
 
-from crawler_naver_market_sum import MARKETS, fill_preferred_pbr, fund_row, stock_row
+from crawler_naver_market_sum import MARKETS, fill_preferred_pbr, fund_row, main, stock_row
 
 
 class NaverMarketSumTest(unittest.TestCase):
+    def test_daily_outputs_keep_low_negative_and_missing_vendor_roe(self) -> None:
+        stocks = [{"code": "000001", "roe": 1}, {"code": "000002", "roe": -5},
+                  {"code": "000003", "roe": None}]
+        with tempfile.TemporaryDirectory() as directory:
+            full, sorted_output = Path(directory) / "all.json", Path(directory) / "sorted.json"
+            with patch("sys.argv", ["crawler_naver_market_sum.py", "--output", str(full), "--roe-output", str(sorted_output)]), patch("crawler_naver_market_sum.crawl_all", return_value=({"KOSPI": 1, "KOSDAQ": 1}, stocks)):
+                main()
+            for path in (full, sorted_output):
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(payload["count"], 3)
+                self.assertEqual({row["code"] for row in payload["stocks"]}, {"000001", "000002", "000003"})
+
     def test_preferred_pbr_uses_common_stock_bps(self) -> None:
         stocks = [
             {"code": "005930", "current_price": 276000, "pbr": 3.2},

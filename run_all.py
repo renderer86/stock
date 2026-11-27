@@ -170,8 +170,8 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(
         description=(
-            "Run the treasury yield, ETF ticker, Naver, FnGuide, and OpenDART "
-            "crawlers plus public U.S. market datasets in order."
+            "Run all-stock Naver quotes, local DART valuation and supporting "
+            "Korean/U.S. collectors in order."
         )
     )
     parser.add_argument(
@@ -220,7 +220,7 @@ def main() -> None:
     parser.add_argument(
         "--skip-dart",
         action="store_true",
-        help="Skip the OpenDART crawler.",
+        help="Skip OpenDART disclosure/ownership API collectors; local valuation still rebuilds.",
     )
     parser.add_argument(
         "--skip-finra",
@@ -286,6 +286,11 @@ def main() -> None:
         type=float,
         default=0.25,
         help="Delay between FnGuide requests in seconds.",
+    )
+    parser.add_argument(
+        "--include-fnguide-history",
+        action="store_true",
+        help="Optionally refresh legacy FnGuide history; valuation uses DART history by default.",
     )
     parser.add_argument(
         "--fnguide-min-roe",
@@ -446,10 +451,10 @@ def main() -> None:
                 "KRX_ID/KRX_PW are not set",
             )
 
-    remaining_after_naver = []
+    remaining_after_naver = ["DART valuation metrics"] if not args.skip_domestic else []
     if not args.skip_market_heatmap:
         remaining_after_naver.append("Korea and U.S. market heatmap")
-    if not args.skip_domestic:
+    if not args.skip_domestic and args.include_fnguide_history:
         remaining_after_naver.append("FnGuide ROE history")
     if not args.skip_dart:
         remaining_after_naver.extend(
@@ -479,6 +484,7 @@ def main() -> None:
             "crawler_naver_market_sum.py",
             ["--delay", str(args.naver_delay)],
         )
+        run_step("Build latest DART valuation metrics", "build_valuation_metrics.py", [])
     if not args.skip_market_heatmap:
         run_step(
             "Korea and U.S. market heatmap",
@@ -486,7 +492,7 @@ def main() -> None:
             ["--market-scope", args.market_scope],
             optional=True,
         )
-    if not args.skip_domestic:
+    if not args.skip_domestic and args.include_fnguide_history:
         run_step(
             "FnGuide ROE history",
             "crawler_fnguide_roe_history.py",
@@ -562,9 +568,6 @@ def main() -> None:
                 "Gemini market briefing",
                 "GEMINI_API_KEY is not set",
             )
-
-    if not args.skip_domestic:
-        run_step("Build latest valuation metrics", "build_valuation_metrics.py", [])
 
     run_step(
         "Build data manifest",
