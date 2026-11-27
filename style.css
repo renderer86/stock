@@ -5947,3 +5947,18 @@ body.report-mode { padding-bottom: env(safe-area-inset-bottom, 0px); }
   .research-rating { break-inside: avoid; }
   .research-report-footer { margin-top: 24px; }
 }
+
+/* Position sizing: explicit scenarios and a loss-budget ceiling. */
+.risk-section { border-top: 1px solid var(--line); padding-top: 16px; }
+.risk-section h4 { margin: 0 0 8px; font-size: 0.95rem; }
+.risk-controls { margin: 12px 0; }
+.risk-controls label { min-width: 0; }
+.risk-feedback { margin: 10px 0; color: var(--muted); font-size: 0.8rem; line-height: 1.6; }
+.risk-feedback.is-over-budget { color: #b33333; font-weight: 700; }
+.risk-examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.risk-examples > div { display: grid; gap: 4px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; }
+.risk-examples span { color: var(--muted); font-size: 0.75rem; }
+.risk-examples strong { font-size: 0.8rem; overflow-wrap: anywhere; }
+@media (max-width: 420px) {
+  .risk-controls { grid-template-columns: minmax(0, 1fr); }
+}

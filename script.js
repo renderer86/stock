@@ -9,6 +9,8 @@ const MARKET_INDICES_URL = "./data/market_indices.json";
 const MARKET_HEATMAP_URL = "./data/market_heatmap.json";
 const PORTFOLIO_URL = "./data/portfolio.json";
 const PORTFOLIO_STORAGE_KEY = "value-dashboard-portfolio-v2";
+const POSITION_RISK_STORAGE_KEY = "value-dashboard-position-risk-v1";
+const POSITION_RISK_FIELDS = ["failureLossPct", "lossBudgetPct", "positionWeightPct", "horizonYears", "upsidePct", "winProbabilityPct"];
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -60,6 +62,7 @@ const state = {
   discountRate: 10,
   durationOffset: 0,
   roeAdjustment: 0,
+  positionRiskByCode: loadPositionRiskInputs(),
   sortKey: "roe",
   sortDirection: "desc",
   prioritySortKey: "buffettRank",
@@ -2473,7 +2476,7 @@ function renderValuationCoverage() {
   if (!summary || !content) return;
   summary.textContent = `순위 제외 ${excluded.length.toLocaleString("ko-KR")}개 · 사유 보기`;
   const requiredEnd = [state.valuationMetricsPayload?.required_period_end || "", requiredValuationPeriod()].sort().at(-1);
-  content.innerHTML = `<p>필요 기준기간: ${escapeHtml(requiredEnd)}. 최신 자료가 부족하거나 왜곡 검증을 통과하지 못한 종목은 순위·적정가·켈리 산출에서 제외합니다. 종목 검색으로 개별 사유를 확인할 수 있습니다.</p><p>${[...reasons].map(([key, count]) => `${escapeHtml(VALUATION_REASON_LABELS[key] || key)} ${count.toLocaleString("ko-KR")}개`).join(" · ")}</p>`;
+  content.innerHTML = `<p>필요 기준기간: ${escapeHtml(requiredEnd)}. 최신 자료가 부족하거나 왜곡 검증을 통과하지 못한 종목은 순위·적정가·수익률 산출에서 제외합니다. 종목 검색으로 개별 사유를 확인할 수 있습니다.</p><p>${[...reasons].map(([key, count]) => `${escapeHtml(VALUATION_REASON_LABELS[key] || key)} ${count.toLocaleString("ko-KR")}개`).join(" · ")}</p>`;
 }
 
 function getBookValuePerShare(stock) {
@@ -2588,18 +2591,88 @@ function marketImpliedNDescription(stock) {
   return descriptions[stock.marketImpliedDuration?.status] || "";
 }
 
-function estimateKellyRatio(stock, fairPrice) {
-  if (!stock.current_price || !fairPrice || fairPrice <= 0) {
-    return null;
-  }
+function estimateLongTermReturn(stock, params) {
+  if (!stock.valuationEligible || !Number.isFinite(stock.pbr) || stock.pbr <= 0
+      || !Number.isFinite(params.assumedRoe) || params.assumedRoe <= -100
+      || !Number.isFinite(params.durationYears) || params.durationYears <= 0) return null;
+  const result = Math.expm1(Math.log1p(params.assumedRoe / 100)
+    - Math.log(stock.pbr) / params.durationYears) * 100;
+  return Number.isFinite(result) ? result : null;
+}
 
-  const p = 0.5;
-  const b = fairPrice / stock.current_price;
-  if (b <= 0) {
-    return null;
-  }
+function riskInputNumber(inputs, field) {
+  const raw = inputs?.[field];
+  if (raw === null || raw === undefined || String(raw).trim() === "") return null;
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : null;
+}
 
-  return p - ((1 - p) / b);
+function calculatePositionRisk(inputs) {
+  const loss = riskInputNumber(inputs, "failureLossPct");
+  const budget = riskInputNumber(inputs, "lossBudgetPct");
+  const weight = riskInputNumber(inputs, "positionWeightPct");
+  const validLoss = loss !== null && loss > 0 && loss <= 100;
+  const validBudget = budget !== null && budget >= 0 && budget <= 100;
+  const validWeight = weight !== null && weight >= 0 && weight <= 100;
+  const portfolioLossPct = validLoss && validWeight ? weight * loss / 100 : null;
+  return {
+    failureLossPct: validLoss ? loss : null,
+    maxWeightPct: validLoss && validBudget ? Math.min(100, budget * 100 / loss) : null,
+    portfolioLossPct,
+    budgetExceeded: validBudget && portfolioLossPct !== null
+      ? portfolioLossPct > budget + 1e-10 : null
+  };
+}
+
+function calculateBinaryKelly(inputs) {
+  const probability = riskInputNumber(inputs, "winProbabilityPct");
+  const upside = riskInputNumber(inputs, "upsidePct");
+  const loss = riskInputNumber(inputs, "failureLossPct");
+  const years = riskInputNumber(inputs, "horizonYears");
+  if (probability === null || probability <= 0 || probability >= 100
+      || upside === null || upside <= 0 || loss === null || loss <= 0 || loss > 100
+      || years === null || years <= 0 || years > 50) return null;
+  const p = probability / 100;
+  const rawFraction = p / (loss / 100) - (1 - p) / (upside / 100);
+  if (!Number.isFinite(rawFraction)) return null;
+  // Scale the unconstrained Kelly value before imposing a no-borrowing limit.
+  return {
+    horizonYears: years,
+    rawWeightPct: rawFraction * 100,
+    fullWeightPct: clamp(rawFraction, 0, 1) * 100,
+    halfWeightPct: clamp(rawFraction / 2, 0, 1) * 100,
+    quarterWeightPct: clamp(rawFraction / 4, 0, 1) * 100,
+    capped: rawFraction > 1
+  };
+}
+
+function loadPositionRiskInputs() {
+  try {
+    if (typeof localStorage === "undefined") return new Map();
+    const saved = JSON.parse(localStorage.getItem(POSITION_RISK_STORAGE_KEY) || "{}");
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)) return new Map();
+    return new Map(Object.entries(saved).filter(([code, inputs]) =>
+      /^[0-9A-Z]{6}$/i.test(code) && inputs && typeof inputs === "object" && !Array.isArray(inputs)
+    ).map(([code, inputs]) => [code, Object.fromEntries(POSITION_RISK_FIELDS.map(field =>
+      [field, typeof inputs[field] === "string" || typeof inputs[field] === "number"
+        ? String(inputs[field]).slice(0, 32) : ""]
+    ))]));
+  } catch { return new Map(); }
+}
+
+function positionRiskInputs(stock) {
+  return state.positionRiskByCode.get(stock.code) || {};
+}
+
+function savePositionRiskInput(code, field, value) {
+  if (!POSITION_RISK_FIELDS.includes(field)) return;
+  const inputs = { ...(state.positionRiskByCode.get(code) || {}), [field]: String(value).slice(0, 32) };
+  state.positionRiskByCode.set(code, inputs);
+  try {
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem(POSITION_RISK_STORAGE_KEY, JSON.stringify(Object.fromEntries(state.positionRiskByCode)));
+    }
+  } catch { /* Keep the inputs in this session if browser storage is unavailable. */ }
 }
 
 function isSuspendedLike(stock) {
@@ -2792,13 +2865,13 @@ function buildScenarioResult(stock, params) {
   const gapRate = fairPrice && stock.current_price
     ? ((fairPrice - stock.current_price) / stock.current_price) * 100
     : null;
-  const kellyRatio = estimateKellyRatio(stock, fairPrice);
+  const expectedAnnualReturn = estimateLongTermReturn(stock, params);
 
   return {
     params,
     fairPrice,
     gapRate,
-    kellyRatio
+    expectedAnnualReturn
   };
 }
 
@@ -2837,6 +2910,7 @@ function enrichStock(stock) {
     })
   };
 
+  const expectedReturns = Object.values(scenarios).map(item => item.expectedAnnualReturn).filter(Number.isFinite);
   return {
     ...stock,
     bps: getBookValuePerShare(stock),
@@ -2869,9 +2943,11 @@ function enrichStock(stock) {
     gapRateConservative: scenarios.conservative.gapRate,
     gapRateBase: scenarios.base.gapRate,
     gapRateOptimistic: scenarios.optimistic.gapRate,
-    kellyRatioConservative: scenarios.conservative.kellyRatio,
-    kellyRatioBase: scenarios.base.kellyRatio,
-    kellyRatioOptimistic: scenarios.optimistic.kellyRatio,
+    expectedReturnConservative: scenarios.conservative.expectedAnnualReturn,
+    expectedReturnBase: scenarios.base.expectedAnnualReturn,
+    expectedReturnOptimistic: scenarios.optimistic.expectedAnnualReturn,
+    expectedReturnLow: expectedReturns.length ? Math.min(...expectedReturns) : null,
+    expectedReturnHigh: expectedReturns.length ? Math.max(...expectedReturns) : null,
     is_suspended: stock.is_suspended ?? isSuspendedLike(stock)
   };
 }
@@ -3599,7 +3675,7 @@ function renderTable(stocks, roeTenStocks) {
       <td>${formatPrice(stock.fairPriceBase)}</td>
       <td>${formatPrice(stock.fairPriceOptimistic)}</td>
       <td class="${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateConservative, stock.gapRateOptimistic, (value) => formatPercent(value, 1))}</td>
-      <td class="${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</td>
+      <td class="${metricClass(stock.expectedReturnBase)}"><div>${formatRange(stock.expectedReturnLow, stock.expectedReturnHigh, (value) => formatPercent(value, 1))}</div><div class="table-subtext">ROE・자체 N 가정 · 연환산</div></td>
       <td>${stock.reporterCount ? `<div class="table-subtext">${stock.reporterCount}명</div><div class="table-subtext">${escapeHtml(summarizeReporterNames(stock.reporterNames))}</div>` : '<span class="table-subtext">공시 없음</span>'}</td>
     </tr>
   `).join("");
@@ -3801,7 +3877,7 @@ function renderDurationPanel(stock) {
       시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산합니다.
       PBR이 1배 미만이면 비교용 기준으로 N을 1년 고정하고 배지를 붙입니다. 실제 ROE 지속기간을 1년으로 예측한 뜻은 아닙니다.
       PBR이 1배 이상인 역산 대상은 |ROE − 10%|가 2%p 미만이면 N/A, 양의 기간으로 설명되지 않으면 역산 불가로 표시합니다.
-      고정값은 실제 역산 N과 구분해서 해석하며, 적정가와 켈리는 별도의 자체 추정 N으로 계산합니다.
+      고정값은 실제 역산 N과 구분해서 해석하며, 적정가와 장기 추정 수익률은 별도의 자체 추정 N으로 계산합니다.
     </div>
   `;
 }
@@ -3868,67 +3944,83 @@ function renderFairValuePanel(stock) {
   `;
 }
 
-function renderKellyPanel(stock) {
-  const container = document.getElementById("kelly-panel");
+function renderPositionRiskResults(stock) {
+  const inputs = positionRiskInputs(stock);
+  const risk = calculatePositionRisk(inputs);
+  const result = document.getElementById("position-risk-results");
+  const value = number => number === null ? "입력 대기" : formatPercent(number, 1);
+  const feedback = risk.budgetExceeded === true
+    ? "입력한 비중의 실패 시 손실이 계좌 손실예산을 초과합니다."
+    : risk.budgetExceeded === false ? "입력한 실패 시나리오에서 계좌 손실예산 이내입니다."
+    : "실패손실률은 0% 초과 100% 이하, 계좌 손실예산과 비중은 0~100%로 입력하세요.";
+  result.innerHTML = `
+    <div class="calc-grid">
+      <div class="calc-item"><div class="label">손실예산 기준 비중 상한</div><div class="value">${value(risk.maxWeightPct)}</div><div class="table-subtext">계좌 손실예산 ÷ 실패손실률 · 최대 100%</div></div>
+      <div class="calc-item"><div class="label">입력한 비중의 계좌 손실</div><div class="value ${risk.budgetExceeded ? "negative" : ""}">${value(risk.portfolioLossPct)}</div><div class="table-subtext">종목 비중 × 실패손실률</div></div>
+    </div>
+    <p class="risk-feedback ${risk.budgetExceeded ? "is-over-budget" : ""}">${feedback}</p>
+    ${risk.failureLossPct === null ? "" : `<div class="risk-examples" aria-label="비중별 계좌 손실 예시">${[1, 3, 5, 10].map(weight => `<div><span>비중 ${weight}%</span><strong>계좌 손실 ${formatPercent(weight * risk.failureLossPct / 100, 2)}</strong></div>`).join("")}</div>`}
+  `;
+  const kelly = calculateBinaryKelly(inputs);
+  document.getElementById("kelly-reference-results").innerHTML = kelly === null
+    ? '<p class="risk-feedback">동일한 평가기간 T, 상승 시 누적수익률, 위 실패손실률, 승률을 모두 입력하면 참고값을 표시합니다. 승률은 0% 초과 100% 미만이어야 합니다.</p>'
+    : `<div class="scenario-grid">
+        <div class="calc-item"><div class="label">풀 켈리 참고</div><div class="value">${formatPercent(kelly.fullWeightPct, 1)}</div></div>
+        <div class="calc-item"><div class="label">1/2 켈리 참고</div><div class="value">${formatPercent(kelly.halfWeightPct, 1)}</div></div>
+        <div class="calc-item"><div class="label">1/4 켈리 참고</div><div class="value">${formatPercent(kelly.quarterWeightPct, 1)}</div></div>
+      </div><p class="risk-feedback">입력한 ${formatNumber(kelly.horizonYears, 2)}년의 두 결과가 반복된다는 가정입니다. 현금 수익률은 0%이며 각 참고 비중은 0~100%로 제한합니다.${kelly.capped ? " 차입 제한 전 풀 켈리 이론값은 100%를 초과합니다." : ""} 손실예산 상한과 함께 확인하세요.</p>`;
+}
 
+function renderPositionRiskPanel(stock) {
+  const container = document.getElementById("position-risk-panel");
   if (!stock) {
     container.innerHTML = "<div class='empty-state'>선택 종목이 없습니다.</div>";
     return;
   }
-
   if (!stock.valuationEligible) {
-    container.innerHTML = `<div class="empty-state">켈리 비중 산출 제외: ${escapeHtml(valuationQualityLabel(stock))}</div>`;
+    container.innerHTML = `<div class="empty-state">수익률·비중 분석 산출 제외: ${escapeHtml(valuationQualityLabel(stock))}</div>`;
     return;
   }
-
-  const scenarios = [
-    ["보수적", stock.scenarios.conservative],
-    ["기준", stock.scenarios.base],
-    ["낙관적", stock.scenarios.optimistic]
-  ];
-
+  const inputs = positionRiskInputs(stock);
+  const input = (field, label, min, max, step, placeholder) => `
+    <label for="position-${field}"><span>${label}</span>
+      <input id="position-${field}" data-position-risk-field="${field}" type="number" min="${min}" ${max === null ? "" : `max="${max}"`} step="${step}" placeholder="${placeholder}" value="${escapeHtml(inputs[field] ?? "")}">
+    </label>`;
   container.innerHTML = `
     <div class="scenario-grid">
-      ${scenarios.map(([label, scenario]) => {
-        const payoutMultiple = scenario.fairPrice && stock.current_price
-          ? scenario.fairPrice / stock.current_price
-          : null;
-
-        return `
-          <div class="calc-item">
-            <div class="label">${label} 켈리</div>
-            <div class="value ${metricClass(scenario.kellyRatio)}">${scenario.kellyRatio === null ? "N/A" : formatPercent(scenario.kellyRatio * 100, 1)}</div>
-            <div class="table-subtext">
-              b ${payoutMultiple === null ? "N/A" : formatNumber(payoutMultiple, 2)} ·
-              괴리율 ${formatPercent(scenario.gapRate, 1)}
-            </div>
-          </div>
-        `;
-      }).join("")}
+      ${[["보수적", stock.scenarios.conservative], ["기준", stock.scenarios.base], ["낙관적", stock.scenarios.optimistic]].map(([label, scenario]) => `<div class="calc-item"><div class="label">${label} 장기 추정 수익률</div><div class="value ${metricClass(scenario.expectedAnnualReturn)}">${formatPercent(scenario.expectedAnnualReturn, 1)}</div><div class="table-subtext">ROE ${formatPercent(scenario.params.assumedRoe, 1)} · 자체 N ${formatYears(scenario.params.durationYears)}</div></div>`).join("")}
     </div>
-    <div class="calc-grid">
-      <div class="calc-item">
-        <div class="label">승률 p</div>
-        <div class="value">50.0%</div>
+    <div class="calc-note">장기 추정 수익률은 현재 PBR과 각 시나리오의 ROE·자체 N으로 역산한 연환산 값입니다. 이익 전액 유보, 같은 ROE 유지, N년 뒤 PBR 1배를 가정합니다. PBR 1배 미만의 시장 N 고정값은 사용하지 않습니다.</div>
+    <section class="risk-section" aria-labelledby="position-risk-heading">
+      <h4 id="position-risk-heading">실패했을 때 감당할 수 있는 비중</h4>
+      <p class="risk-feedback">실패손실률은 보수적 적정가의 괴리율과 별도로 판단하세요. 입력한 손실이 커지면 계좌 손실도 커지므로 비중 상한은 보장된 최대손실이나 권장 비중이 아닙니다.</p>
+      <div class="inline-controls risk-controls">
+        ${input("failureLossPct", "실패 시 종목 손실률 (%)", 0.1, 100, 0.1, "직접 입력")}
+        ${input("lossBudgetPct", "허용할 계좌 손실 (%)", 0, 100, 0.1, "직접 입력")}
+        ${input("positionWeightPct", "검토 중인 종목 비중 (%)", 0, 100, 0.1, "직접 입력")}
       </div>
-      <div class="calc-item">
-        <div class="label">패배확률 q</div>
-        <div class="value">50.0%</div>
+      <div id="position-risk-results" aria-live="polite"></div>
+      <p class="risk-feedback">같은 업종·사업에 노출된 종목들의 동시 손실은 별도로 합산해서 살펴보세요. 입력은 이 브라우저에서 종목별로 유지됩니다.</p>
+    </section>
+    <details class="screen-method risk-section">
+      <summary>확률과 동일기간 손익을 입력해 켈리 참고값 보기</summary>
+      <p class="risk-feedback">N은 ROE의 지속기간이고 T는 투자 결과를 평가할 기간입니다. 아래 상승수익률과 위 실패손실률은 같은 T년의 배당 포함 누적수익·손실로 입력하세요. 오늘의 적정가 괴리율을 미래 수익률로 자동 대입하지 않습니다.</p>
+      <div class="inline-controls risk-controls">
+        ${input("horizonYears", "동일 평가기간 T (년)", 0.25, 50, 0.25, "직접 입력")}
+        ${input("upsidePct", "상승 시 누적수익률 (%)", 0.1, null, 0.1, "직접 입력")}
+        ${input("winProbabilityPct", "상승 시나리오 확률 (%)", 0.1, 99.9, 0.1, "직접 입력")}
       </div>
-      <div class="calc-item">
-        <div class="label">괴리율 범위</div>
-        <div class="value ${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateConservative, stock.gapRateOptimistic, (value) => formatPercent(value, 1))}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">켈리 범위</div>
-        <div class="value ${metricClass(stock.kellyRatioBase)}">${formatRange(stock.kellyRatioConservative, stock.kellyRatioOptimistic, (value) => formatPercent(value * 100, 1))}</div>
-      </div>
-    </div>
-    <div class="calc-note">
-      켈리 공식은 <strong>K = p - (1-p) / b</strong>를 사용합니다.
-      현재 단계에서는 승률과 패배확률을 각각 50%로 두고, 고ROE 지속기간 N과 과거 ROE 추정치 기반의 적정가 범위로 켈리 범위를 계산합니다.
-    </div>
+      <div id="kelly-reference-results" aria-live="polite"></div>
+      <p class="risk-feedback">N 신뢰도 점수는 승률로 사용하지 않습니다. 켈리 참고값은 p ÷ 손실률 − (1−p) ÷ 상승수익률로 계산하며, 입력 확률과 두 결과에 조건부인 복리 성장 기준입니다.</p>
+    </details>
   `;
+  renderPositionRiskResults(stock);
+  container.querySelectorAll("[data-position-risk-field]").forEach(element => {
+    element.addEventListener("input", () => {
+      savePositionRiskInput(stock.code, element.dataset.positionRiskField, element.value);
+      renderPositionRiskResults(stock);
+    });
+  });
 }
 
 function renderDashboard() {
@@ -3956,7 +4048,7 @@ function renderDashboard() {
   renderSelectedSummary(selectedStock);
   renderDurationPanel(selectedStock);
   renderFairValuePanel(selectedStock);
-  renderKellyPanel(selectedStock);
+  renderPositionRiskPanel(selectedStock);
 }
 
 function syncControlLabels() {
@@ -4036,7 +4128,7 @@ function renderError(message) {
   document.getElementById("selected-stock-summary").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("duration-panel").innerHTML = `<div class="empty-state">${message}</div>`;
   document.getElementById("fair-value-panel").innerHTML = `<div class="empty-state">${message}</div>`;
-  document.getElementById("kelly-panel").innerHTML = `<div class="empty-state">${message}</div>`;
+  document.getElementById("position-risk-panel").innerHTML = `<div class="empty-state">${message}</div>`;
 }
 
 function buildDartMajorMap(payload) {

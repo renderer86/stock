@@ -46,7 +46,7 @@ api.state.rawStocks = [dartStock];
 api.state.financialNByCode.set("000001", { estimate: { base_years: 7, conservative_years: 5, optimistic_years: 9 } });
 
 // The one-year market marker never replaces the seven-year company estimate
-// used for fair price and Kelly; price changes only alter the payoff ratio.
+// used for fair price and long-term return; the fixed market marker is separate.
 const belowBook = api.enrichStock(api.applyValuationMetrics({ ...dailyQuote, current_price: 80 }, dartMetrics));
 const aboveBook = api.enrichStock(dartStock);
 assert.equal(belowBook.marketImpliedN, 1);
@@ -55,7 +55,7 @@ assert.equal(belowBook.estimatedNBase, 7);
 const expectedFairPrice = 100 * (1.15 / 1.10) ** 7;
 assert.ok(Math.abs(belowBook.fairPriceBase - expectedFairPrice) < 1e-9);
 assert.equal(belowBook.fairPriceBase, aboveBook.fairPriceBase);
-assert.ok(Math.abs(belowBook.kellyRatioBase - (0.5 - 0.5 / (expectedFairPrice / 80))) < 1e-12);
+assert.ok(Math.abs(belowBook.expectedReturnBase - ((1.15 / (0.8 ** (1 / 7))) - 1) * 100) < 1e-9);
 api.renderTable([belowBook], [belowBook]);
 api.renderDurationPanel(belowBook);
 api.renderFairValuePanel(belowBook);
@@ -71,4 +71,4 @@ for (const stock of api.state.rawStocks.filter(stock => stock.valuationEligible)
   const n = api.enrichStock(stock).marketImpliedN;
   assert.ok(n === null || n >= 0, `Negative market N for ${stock.code}`);
 }
-console.log("Below-book N badges, inverse boundaries, and independent fair-price/Kelly calculations passed.");
+console.log("Below-book N badges, inverse boundaries, and independent fair-price/long-term-return calculations passed.");

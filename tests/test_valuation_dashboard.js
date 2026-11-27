@@ -10,7 +10,7 @@ class SnapshotDate extends Date {
 const context = { console, Intl, Date: SnapshotDate };
 vm.createContext(context);
 const script = fs.readFileSync("script.js", "utf8").split("\nbindFeatureControls();")[0];
-vm.runInContext(script + "\nglobalThis.api = { applyValuationMetrics, requiredValuationPeriod, inferRoeRange, getFilteredStocks, state, enrichStock, renderTable, renderFairValuePanel, renderKellyPanel, loadStocks };", context);
+vm.runInContext(script + "\nglobalThis.api = { applyValuationMetrics, requiredValuationPeriod, inferRoeRange, getFilteredStocks, state, enrichStock, renderTable, renderFairValuePanel, renderPositionRiskPanel, loadStocks };", context);
 const api = context.api;
 
 for (const [stamp, expected] of [
@@ -48,9 +48,9 @@ assert.match(html, /2025-10-01~2026-09-30 TTM/);
 assert.doesNotMatch(html, /효성화학/);
 assert.match(elements.get("valuation-exclusion-details").innerHTML, /최근 자본잠식/);
 api.renderFairValuePanel(api.enrichStock(hyosung));
-api.renderKellyPanel(api.enrichStock(hyosung));
+api.renderPositionRiskPanel(api.enrichStock(hyosung));
 assert.match(elements.get("fair-value-panel").innerHTML, /산출 제외/);
-assert.match(elements.get("kelly-panel").innerHTML, /산출 제외/);
+assert.match(elements.get("position-risk-panel").innerHTML, /산출 제외/);
 console.log(`Valuation dashboard passed: ${filtered.length} ranked stocks; Hyosung excluded.`);
 
 // A low vendor ROE must not prevent a stock with verified DART returns from
