@@ -945,17 +945,15 @@ function marketMapTileStyle(stock) {
   const value = marketMapMetricValue(stock);
   const config = marketMapMetricConfig();
   if (value === null) {
-    return "--map-tile-bg:#e9e2d8;--map-tile-color:#62584e;--map-tile-border:rgba(71,55,40,.12)";
+    return "--map-tile-bg:var(--bg);--map-tile-color:var(--muted);--map-tile-border:var(--panel)";
   }
   const delta = (value - config.center) / config.scale;
   const intensity = Math.min(Math.abs(delta), 1);
   if (intensity < 0.05) {
-    return "--map-tile-bg:#ddd5ca;--map-tile-color:#534a42;--map-tile-border:rgba(71,55,40,.14)";
+    return "--map-tile-bg:var(--map-neutral);--map-tile-color:var(--text);--map-tile-border:var(--panel)";
   }
-  const rising = delta > 0;
-  const rgb = rising ? "216,72,63" : "52,120,199";
-  const alpha = 0.28 + intensity * 0.64;
-  return `--map-tile-bg:rgba(${rgb},${alpha.toFixed(3)});--map-tile-color:#fff;--map-tile-border:rgba(${rgb},.5)`;
+  const tone = delta > 0 ? "--map-up" : "--map-down";
+  return `--map-tile-bg:color-mix(in srgb,var(${tone}) ${(intensity * 100).toFixed(1)}%,var(--map-neutral));--map-tile-color:var(--text);--map-tile-border:var(--panel)`;
 }
 
 function marketMapTileClass(index) {
