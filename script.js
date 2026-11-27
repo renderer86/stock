@@ -2518,33 +2518,74 @@ function marketImpliedN(
   pbr,
   discountPercent = MARKET_IMPLIED_DISCOUNT_PCT
 ) {
+  return marketImpliedDurationResult(roePercent, pbr, discountPercent).years;
+}
+
+function marketImpliedDurationResult(
+  roePercent,
+  pbr,
+  discountPercent = MARKET_IMPLIED_DISCOUNT_PCT
+) {
   if (
     !Number.isFinite(roePercent)
     || !Number.isFinite(pbr)
     || !Number.isFinite(discountPercent)
     || pbr <= 0
-    || Math.abs(roePercent - discountPercent) < MARKET_IMPLIED_ROE_GUARD_PP
+    || roePercent <= -100
+    || discountPercent <= -100
   ) {
-    return null;
+    return { years: null, status: "invalid_inputs" };
+  }
+
+  // A comparison convention for below-book prices, not an inferred horizon.
+  if (pbr < 1) {
+    return { years: 1, status: "fixed_below_book" };
+  }
+  if (Math.abs(roePercent - discountPercent) < MARKET_IMPLIED_ROE_GUARD_PP) {
+    return { years: null, status: "near_required_return" };
   }
 
   const roe = roePercent / 100;
   const discount = discountPercent / 100;
   const growthRatio = (1 + roe) / (1 + discount);
   if (!Number.isFinite(growthRatio) || growthRatio <= 0 || growthRatio === 1) {
-    return null;
+    return { years: null, status: "invalid_inputs" };
   }
 
   const impliedN = Math.log(pbr) / Math.log(growthRatio);
   if (!Number.isFinite(impliedN)) {
-    return null;
+    return { years: null, status: "invalid_inputs" };
   }
-  return impliedN === 0 ? 0 : impliedN;
+  if (impliedN < 0) {
+    return { years: null, status: "incompatible_assumptions" };
+  }
+  return { years: impliedN === 0 ? 0 : impliedN, status: "calculated" };
 }
 
 function estimateMarketImpliedDuration(stock) {
-  if (!stock.valuationEligible) return null;
-  return marketImpliedN(stock.roe, stock.pbr);
+  if (!stock.valuationEligible) return { years: null, status: "excluded" };
+  return marketImpliedDurationResult(stock.roe, stock.pbr);
+}
+
+function formatMarketImpliedN(stock) {
+  if (stock.marketImpliedDuration?.status === "incompatible_assumptions") {
+    return "역산 불가";
+  }
+  const badge = stock.marketImpliedDuration?.status === "fixed_below_book"
+    ? ' <span class="status-badge">1년 고정</span>' : "";
+  return `${formatYears(stock.marketImpliedN)}${badge}`;
+}
+
+function marketImpliedNDescription(stock) {
+  const descriptions = {
+    fixed_below_book: "PBR 1배 미만 · 비교용 가정",
+    calculated: "PBR·실적 ROE 역산",
+    incompatible_assumptions: "ROE < 요구수익률 · 양의 기간으로 설명 불가",
+    near_required_return: "ROE가 요구수익률에 근접 · 산출 보류",
+    invalid_inputs: "시장 PBR·ROE 자료 부족",
+    excluded: "가치평가 산출 제외"
+  };
+  return descriptions[stock.marketImpliedDuration?.status] || "";
 }
 
 function estimateKellyRatio(stock, fairPrice) {
@@ -2764,7 +2805,7 @@ function buildScenarioResult(stock, params) {
 function enrichStock(stock) {
   const majorHolder = state.dartMajorByCode.get(stock.code) || null;
   const reporterNames = extractReporterNames(majorHolder);
-  const marketImpliedN = estimateMarketImpliedDuration(stock);
+  const marketImpliedDuration = estimateMarketImpliedDuration(stock);
   const roeRange = inferRoeRange(stock);
   const heuristicNModel = estimateFinancialN(stock, roeRange.values);
   const financialCode = stock.valuationMetrics?.financial_ticker || stock.code;
@@ -2799,7 +2840,8 @@ function enrichStock(stock) {
   return {
     ...stock,
     bps: getBookValuePerShare(stock),
-    marketImpliedN,
+    marketImpliedN: marketImpliedDuration.years,
+    marketImpliedDuration,
     estimatedNBase: durationRange.base,
     estimatedNScore: nModel.score,
     estimatedNRaw: nModel.estimatedN,
@@ -3551,7 +3593,7 @@ function renderTable(stocks, roeTenStocks) {
       <td><div>${formatNumber(stock.per, 2)}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))} · 현재 주식수</div></td>
       <td><div>${formatMarketCap(stock.market_cap_krw_100m)}</div><div class="table-subtext">${escapeHtml(valuationPriceDate())}</div></td>
       <td><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)} · ${escapeHtml(nEstimatePeriodLabel(stock))}</div></td>
-      <td><div>${formatYears(stock.marketImpliedN)}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))} · 최신 자본</div></td>
+      <td><div>${formatMarketImpliedN(stock)}</div><div class="table-subtext">${escapeHtml(marketImpliedNDescription(stock))}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))} · 최신 자본</div></td>
       <td><div>${formatPrice(stock.current_price)}</div><div class="table-subtext">${escapeHtml(valuationPriceDate())}</div></td>
       <td>${formatPrice(stock.fairPriceConservative)}</td>
       <td>${formatPrice(stock.fairPriceBase)}</td>
@@ -3720,7 +3762,8 @@ function renderDurationPanel(stock) {
       </div>
       <div class="calc-item">
         <div class="label">시장 내재 N</div>
-        <div class="value">${formatYears(stock.marketImpliedN)}</div>
+        <div class="value">${formatMarketImpliedN(stock)}</div>
+        <div class="table-subtext">${escapeHtml(marketImpliedNDescription(stock))}</div>
       </div>
       <div class="calc-item">
         <div class="label">${stock.nModel.engine === "empirical_persistence" ? "지속기간 N 신뢰도" : "임시 N 점수"}</div>
@@ -3755,9 +3798,10 @@ function renderDurationPanel(stock) {
       ${stock.nModel.engine === "empirical_persistence"
         ? `업종별 4년 ROE 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합한 향후 고ROE 지속기간입니다. 산출 상태는 ${nEstimateMethodLabel(stock.nModel)}입니다.`
         : "아직 실증 지속기간 데이터가 없는 종목이므로 기존 임시 점수표를 사용하며, 적정가에도 이 임시 N이 적용됩니다."}
-      시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산한 값입니다.
-      |ROE − 10%|가 2%p 미만이면 값이 발산하므로 N/A로 표시합니다.
-      엔진 N과의 단순 대소 비교는 ROE가 10%보다 높은 구간에서만 유효하며, 그보다 낮으면 N이 클수록 시장이 부진을 더 오래 반영한다는 뜻입니다.
+      시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산합니다.
+      PBR이 1배 미만이면 비교용 기준으로 N을 1년 고정하고 배지를 붙입니다. 실제 ROE 지속기간을 1년으로 예측한 뜻은 아닙니다.
+      PBR이 1배 이상인 역산 대상은 |ROE − 10%|가 2%p 미만이면 N/A, 양의 기간으로 설명되지 않으면 역산 불가로 표시합니다.
+      고정값은 실제 역산 N과 구분해서 해석하며, 적정가와 켈리는 별도의 자체 추정 N으로 계산합니다.
     </div>
   `;
 }
@@ -3809,7 +3853,8 @@ function renderFairValuePanel(stock) {
       </div>
       <div class="calc-item">
         <div class="label">시장 내재 N</div>
-        <div class="value">${formatYears(stock.marketImpliedN)}</div>
+        <div class="value">${formatMarketImpliedN(stock)}</div>
+        <div class="table-subtext">${escapeHtml(marketImpliedNDescription(stock))}</div>
       </div>
       <div class="calc-item">
         <div class="label">할인율</div>
