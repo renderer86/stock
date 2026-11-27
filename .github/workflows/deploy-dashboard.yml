@@ -15,6 +15,7 @@ on:
       - "data/portfolio.json"
       - "data/financial_n_estimates.json"
       - "data/investment_screens.json"
+      - "data/valuation_metrics.json"
       - "data/data_manifest.json"
       - "data/us_sec_filings.json"
       # AI briefing updates can be deployed without rerunning the full collectors.

@@ -161,6 +161,7 @@ def stock_row(item: dict[str, Any], market_info: dict[str, str], page: int) -> d
         "foreigner_ratio": parse_float(item.get("frgnHoldRate")),
         # 기존 네이버 화면과 같은 천 주 단위로 저장한다.
         "listed_shares": scaled_int(item.get("listedStockCnt"), 1_000),
+        "listed_shares_exact": parse_int(item.get("listedStockCnt")),
         "trade_stop": item.get("tradeStopYn") == "Y",
     }
     # 새 API는 적자 기업의 PER을 null로 준다. 기존 화면처럼 음수 PER을 유지한다.

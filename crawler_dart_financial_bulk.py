@@ -86,9 +86,11 @@ def create_session() -> requests.Session:
     return session
 
 
-def parse_bulk_listing(html: str) -> dict[tuple[int, str], str]:
+def parse_bulk_listing(html: str, period: str = "FY") -> dict[tuple[int, str], str]:
+    if period not in {"FY", "FQ", "HY", "TQ"}:
+        raise ValueError("Invalid bulk reporting period")
     pattern = re.compile(
-        r"download_ext002\(\s*'(?P<year>20\d{2})'\s*,\s*'FY'\s*,\s*"
+        rf"download_ext002\(\s*'(?P<year>20\d{{2}})'\s*,\s*'{period}'\s*,\s*"
         r"'(?P<statement>BS|PL|CF|CE)'\s*,\s*'(?P<file>[^']+)'",
         re.IGNORECASE,
     )
@@ -100,7 +102,7 @@ def parse_bulk_listing(html: str) -> dict[tuple[int, str], str]:
     }
 
 
-def fetch_bulk_listing(session: requests.Session, timeout: float) -> dict[tuple[int, str], str]:
+def fetch_bulk_listing(session: requests.Session, timeout: float, period: str = "FY") -> dict[tuple[int, str], str]:
     session.get(BULK_MAIN_URL, timeout=timeout).raise_for_status()
     response = session.get(
         BULK_LIST_URL,
@@ -108,9 +110,9 @@ def fetch_bulk_listing(session: requests.Session, timeout: float) -> dict[tuple[
         timeout=timeout,
     )
     response.raise_for_status()
-    listing = parse_bulk_listing(response.text)
+    listing = parse_bulk_listing(response.text, period)
     if not listing:
-        raise RuntimeError("OpenDART bulk download listing did not contain annual files.")
+        raise RuntimeError(f"OpenDART bulk download listing did not contain {period} files.")
     return listing
 
 
@@ -129,6 +131,7 @@ def download_bulk_zip(
                 params={"fl_nm": filename},
                 headers={
                     "Referer": BULK_MAIN_URL,
+                    "User-Agent": BROWSER_USER_AGENT,
                     "Accept": "application/zip,application/octet-stream,*/*",
                 },
                 timeout=timeout,

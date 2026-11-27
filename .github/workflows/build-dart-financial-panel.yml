@@ -51,7 +51,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: build-dart-financial-panel
+  group: dart-financial-data
   cancel-in-progress: false
 
 jobs:

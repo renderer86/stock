@@ -76,6 +76,16 @@ class DartFinancialPanelTest(unittest.TestCase):
         self.assertEqual(list(mapping), ["005930"])
         self.assertEqual(mapping["005930"]["corp_name"], "삼성전자")
 
+    def test_corp_code_mapping_retains_alphanumeric_new_listing_codes(self) -> None:
+        archive = io.BytesIO()
+        with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
+            output.writestr("CORPCODE.xml", "<result><list><corp_code>12345678</corp_code><corp_name>신규기업</corp_name><stock_code>0009B0</stock_code></list></result>")
+        session = _RetrySession(_ZipResponse(archive.getvalue()))
+        session.calls = 2
+        self.assertIn("0009B0", fetch_corp_code_map(session, "hidden-key"))
+        existing = corp_code_map_from_existing_panel({"observations": [{"ticker": "0009B0", "corp_code": "12345678"}]})
+        self.assertIn("0009B0", existing)
+
 
 if __name__ == "__main__":
     unittest.main()

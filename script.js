@@ -1,4 +1,5 @@
 const MARKET_DATA_URL = "./data/market_sum_by_roe.json";
+const VALUATION_METRICS_URL = "./data/valuation_metrics.json";
 const ROE_HISTORY_URL = "./data/fnguide_roe_history.json";
 const FINANCIAL_N_URL = "./data/financial_n_estimates.json";
 const INVESTMENT_SCREENS_URL = "./data/investment_screens.json";
@@ -47,8 +48,10 @@ const state = {
   rawStocks: [],
   rawStockByCode: new Map(),
   marketDataUpdatedAt: null,
+  valuationMetricsPayload: null,
   roeHistoryByCode: new Map(),
   financialNByCode: new Map(),
+  financialNPeriod: null,
   investmentScreenByCode: new Map(),
   investmentScreensPayload: null,
   dartMajorByCode: new Map(),
@@ -2373,7 +2376,101 @@ function standardDeviation(values) {
   return Math.sqrt(variance);
 }
 
+const VALUATION_REASON_LABELS = {
+  missing_latest_report: "최신 재무제표 미확보",
+  stale_report: "최신 기준기간 자료 부족",
+  missing_capital: "같은 기간의 지배주주 자본·자산 부족",
+  nonpositive_equity: "기초·기말 자본이 0 이하",
+  capital_impairment: "자본잠식",
+  recent_capital_impairment: "최근 자본잠식·과소자본 이력",
+  thin_equity: "지배주주 자본/자산 5% 미만",
+  invalid_assets: "자산 검증 실패",
+  missing_income: "최근 12개월 이익 산출자료 부족",
+  unverified_discontinued_operations: "중단영업 손익 확인 불가",
+  material_discontinued_profit: "중단영업이익의 영향이 큼",
+  continuing_loss: "계속영업 순손실",
+  owners_loss: "지배주주 순손실",
+  conflicting_financial_sources: "재무 원본 간 수치 불일치"
+};
+
+function requiredValuationPeriod(now = new Date()) {
+  const kst = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  const year = Number(kst.slice(0, 4));
+  const today = Date.parse(`${kst}T00:00:00Z`);
+  let end = `${year - 1}-09-30`;
+  if (kst >= `${year}-03-31`) end = `${year - 1}-12-31`;
+  for (const suffix of ["03-31", "06-30", "09-30"]) {
+    const candidate = `${year}-${suffix}`;
+    if (today >= Date.parse(`${candidate}T00:00:00Z`) + 45 * 86400000) end = candidate;
+  }
+  return end;
+}
+
+function applyValuationMetrics(stock, payload) {
+  const saved = payload?.metrics?.[stock.code];
+  const metrics = saved ? { ...saved, quality_reasons: [...(saved.quality_reasons || [])] }
+    : { eligible: false, quality_reasons: ["missing_latest_report"] };
+  if (metrics.period_end && metrics.period_end < requiredValuationPeriod()) {
+    metrics.eligible = false;
+    metrics.quality_reasons = [...new Set([...metrics.quality_reasons, "stale_report"])];
+  }
+  const bps = metrics.bps;
+  const eps = metrics.eps;
+  return {
+    ...stock,
+    vendorRoe: stock.roe,
+    roe: Number.isFinite(metrics.roe_pct) ? metrics.roe_pct : null,
+    roa: Number.isFinite(metrics.roa_pct) ? metrics.roa_pct : null,
+    pbr: Number.isFinite(bps) && bps > 0 ? stock.current_price / bps : null,
+    per: Number.isFinite(eps) && eps !== 0 ? stock.current_price / eps : null,
+    valuationMetrics: metrics,
+    valuationEligible: metrics.eligible === true
+  };
+}
+
+function valuationPeriodLabel(stock) {
+  const m = stock.valuationMetrics || {};
+  if (!m.period_start || !m.period_end) return "기준기간 자료 부족";
+  return `${m.period_start}~${m.period_end} ${m.method === "ttm" ? "TTM" : "연간"} · ${m.basis === "CFS" ? "연결" : "별도"}`;
+}
+
+function valuationQualityLabel(stock) {
+  return stock.valuationEligible ? "왜곡 검증 통과"
+    : (stock.valuationMetrics?.quality_reasons || ["missing_latest_report"])
+      .map((reason) => VALUATION_REASON_LABELS[reason] || reason).join(" · ");
+}
+
+function valuationPriceDate() {
+  return state.marketDataUpdatedAt ? formatCompactDateTime(state.marketDataUpdatedAt) : "시세 기준일 미확인";
+}
+
+function nEstimatePeriodLabel(stock) {
+  const period = state.financialNPeriod;
+  if (stock.nModel?.engine === "empirical_persistence" && period?.start_year && period?.end_year) {
+    return `${period.start_year}~${period.end_year} 연간 이력`;
+  }
+  return `${stock.valuationMetrics?.period_end || "기준기간 미확인"} 실적 기준`;
+}
+
+function renderValuationCoverage() {
+  const excluded = state.rawStocks.filter((stock) => !stock.valuationEligible);
+  const reasons = new Map();
+  excluded.forEach((stock) => (stock.valuationMetrics?.quality_reasons || []).forEach((reason) => {
+    reasons.set(reason, (reasons.get(reason) || 0) + 1);
+  }));
+  const summary = document.getElementById("valuation-exclusion-summary");
+  const content = document.getElementById("valuation-exclusion-details");
+  if (!summary || !content) return;
+  summary.textContent = `순위 제외 ${excluded.length.toLocaleString("ko-KR")}개 · 사유 보기`;
+  const requiredEnd = [state.valuationMetricsPayload?.required_period_end || "", requiredValuationPeriod()].sort().at(-1);
+  content.innerHTML = `<p>필요 기준기간: ${escapeHtml(requiredEnd)}. 최신 자료가 부족하거나 왜곡 검증을 통과하지 못한 종목은 순위·적정가·켈리 산출에서 제외합니다. 종목 검색으로 개별 사유를 확인할 수 있습니다.</p><p>${[...reasons].map(([key, count]) => `${escapeHtml(VALUATION_REASON_LABELS[key] || key)} ${count.toLocaleString("ko-KR")}개`).join(" · ")}</p>`;
+}
+
 function getBookValuePerShare(stock) {
+  if (stock.valuationMetrics) {
+    return stock.valuationEligible && Number.isFinite(stock.valuationMetrics.bps)
+      ? stock.valuationMetrics.bps : null;
+  }
   if (!stock.current_price || !stock.pbr || stock.pbr <= 0) {
     return null;
   }
@@ -2436,6 +2533,7 @@ function marketImpliedN(
 }
 
 function estimateMarketImpliedDuration(stock) {
+  if (!stock.valuationEligible) return null;
   return marketImpliedN(stock.roe, stock.pbr);
 }
 
@@ -2502,29 +2600,18 @@ function extractReporterNames(majorHolder) {
 }
 
 function inferRoeRange(stock, history) {
-  const values = getRoeHistoryValues(history);
-
-  if (!values.length) {
-    const fallback = typeof stock.roe === "number" ? stock.roe : null;
-    if (fallback === null) {
-      return { conservative: null, base: null, optimistic: null, source: "none", values: [] };
-    }
-
-    return {
-      conservative: clamp(fallback - 4, 1, 100),
-      base: clamp(fallback, 1, 100),
-      optimistic: clamp(fallback + 4, 1, 100),
-      source: "current_roe",
-      values: [fallback]
-    };
+  if (!stock.valuationEligible || !Number.isFinite(stock.roe)) {
+    return { conservative: null, base: null, optimistic: null, source: "excluded", values: [] };
   }
-
+  const cleanValues = (stock.valuationMetrics?.clean_roe_history || [])
+    .map((item) => item.roe).filter(Number.isFinite);
+  const recentValues = [...cleanValues, stock.roe];
   return {
-    conservative: clamp(Math.min(...values), 1, 100),
-    base: clamp(average(values), 1, 100),
-    optimistic: clamp(Math.max(...values), 1, 100),
-    source: values.length >= 2 ? "history_avg" : "latest_mix",
-    values
+    conservative: clamp(Math.min(...recentValues), 1, 100),
+    base: clamp(stock.roe, 1, 100),
+    optimistic: clamp(Math.max(...recentValues), 1, 100),
+    source: stock.valuationMetrics?.method === "ttm" ? "latest_ttm" : "latest_annual",
+    values: recentValues
   };
 }
 
@@ -2831,6 +2918,7 @@ function getFilteredStocks(enrichedStocks = null) {
   const stocks = enrichedStocks || state.rawStocks.map(enrichStock);
 
   return stocks
+    .filter((stock) => stock.valuationEligible)
     .filter((stock) => typeof stock.roe === "number" && stock.roe >= state.threshold)
     .filter(passesRoaFilter)
     .sort((a, b) => compareStocks(a, b, state.sortKey, state.sortDirection));
@@ -3435,7 +3523,8 @@ function renderTable(stocks, roeTenStocks) {
     : null;
 
   countBadge.textContent = `${stocks.length} Stocks`;
-  summaryBadge.textContent = `ROE ${state.threshold}% 이상 · ROA ${state.minRoa}% 이상${state.exemptFinancialRoa ? " (금융업 예외)" : ""}`;
+  summaryBadge.textContent = `검증 통과 · ROE ${state.threshold}% 이상 · ROA ${state.minRoa}% 이상${state.exemptFinancialRoa ? " (금융업 예외)" : ""}`;
+  renderValuationCoverage();
   priceSummary.textContent = `ROE 10% 이상 종목 중 기준 적정가가 현재주가보다 낮은 종목: ${belowBaseFairPriceCount.toLocaleString("ko-KR")}개 / ${roeTenStocks.length.toLocaleString("ko-KR")}개 (${formatPercent(belowBaseFairPriceRatio, 1)})`;
 
   if (!stocks.length) {
@@ -3462,14 +3551,14 @@ function renderTable(stocks, roeTenStocks) {
           ${stock.is_suspended ? '<span class="status-badge">거래정지</span>' : ""}
         </span>
       </td>
-      <td>${formatPercent(stock.roe, 2)}</td>
-      <td>${formatPercent(stock.roa, 2)}</td>
-      <td>${formatNumber(stock.pbr, 2)}</td>
-      <td>${formatNumber(stock.per, 2)}</td>
-      <td>${formatMarketCap(stock.market_cap_krw_100m)}</td>
-      <td><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)}</div></td>
-      <td>${formatYears(stock.marketImpliedN)}</td>
-      <td>${formatPrice(stock.current_price)}</td>
+      <td><div>${formatPercent(stock.roe, 2)}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))}</div></td>
+      <td><div>${formatPercent(stock.roa, 2)}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))}</div></td>
+      <td><div>${formatNumber(stock.pbr, 2)}</div><div class="table-subtext">자본 ${escapeHtml(stock.valuationMetrics?.period_end || "미확인")}</div></td>
+      <td><div>${formatNumber(stock.per, 2)}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))} · 현재 주식수</div></td>
+      <td><div>${formatMarketCap(stock.market_cap_krw_100m)}</div><div class="table-subtext">${escapeHtml(valuationPriceDate())}</div></td>
+      <td><div>${formatYears(stock.estimatedNBase)}</div><div class="table-subtext">${nEstimateMethodLabel(stock.nModel)} · ${escapeHtml(nEstimatePeriodLabel(stock))}</div></td>
+      <td><div>${formatYears(stock.marketImpliedN)}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))} · 최신 자본</div></td>
+      <td><div>${formatPrice(stock.current_price)}</div><div class="table-subtext">${escapeHtml(valuationPriceDate())}</div></td>
       <td>${formatPrice(stock.fairPriceConservative)}</td>
       <td>${formatPrice(stock.fairPriceBase)}</td>
       <td>${formatPrice(stock.fairPriceOptimistic)}</td>
@@ -3595,15 +3684,15 @@ function renderSelectedSummary(stock) {
     </div>
 
     <div class="summary-grid">
-      ${summaryCard("ROE", formatPercent(latest.roe_pct, 1), `장기 평균 ${formatPercent(averages.roe_pct, 1)}`)}
-      ${summaryCard("보수 ROIC", formatPercent(latest.screening_roic_pct, 1), `현금 미차감 · 평균 투하자본 · 장기 평균 ${formatPercent(averages.screening_roic_pct, 1)}`)}
-      ${summaryCard("ROCE", formatPercent(latest.roce_pct, 1), `장기 평균 ${formatPercent(averages.roce_pct, 1)}`)}
-      ${summaryCard("영업이익률", formatPercent(latest.operating_margin_pct, 1), `장기 평균 ${formatPercent(averages.operating_margin_pct, 1)}`)}
+      ${summaryCard("최신 ROE", formatPercent(stock.roe, 1), `${escapeHtml(valuationPeriodLabel(stock))} · ${escapeHtml(valuationQualityLabel(stock))}`)}
+      ${summaryCard("보수 ROIC", formatPercent(latest.screening_roic_pct, 1), `${period.end_year || "기간 미확인"} 연간 · 현금 미차감 · 평균 투하자본 · 장기 평균 ${formatPercent(averages.screening_roic_pct, 1)}`)}
+      ${summaryCard("ROCE", formatPercent(latest.roce_pct, 1), `${period.end_year || "기간 미확인"} 연간 · 장기 평균 ${formatPercent(averages.roce_pct, 1)}`)}
+      ${summaryCard("영업이익률", formatPercent(latest.operating_margin_pct, 1), `${period.end_year || "기간 미확인"} 연간 · 장기 평균 ${formatPercent(averages.operating_margin_pct, 1)}`)}
       ${summaryCard("매출 CAGR", formatPercent(cagr.revenue_pct, 1), periodLabel)}
       ${summaryCard("영업이익 CAGR", formatPercent(cagr.operating_income_pct, 1), periodLabel)}
       ${summaryCard("순이익 CAGR", formatPercent(cagr.net_income_pct, 1), periodLabel)}
       ${summaryCard("EPS CAGR", formatPercent(cagr.eps_pct, 1), epsGrowthLabel)}
-      ${summaryCard("현재 PER / PBR", `${formatNumber(valuation.per, 2)}× / ${formatNumber(valuation.pbr, 2)}×`, "현재 시장가격 기준")}
+      ${summaryCard("최신 실적 PER / PBR", `${formatNumber(stock.per, 2)}× / ${formatNumber(stock.pbr, 2)}×`, `${escapeHtml(valuationPeriodLabel(stock))} · 시세 ${escapeHtml(valuationPriceDate())} · 현재 주식수 기준`)}
       ${summaryCard("장기 EPS PEG", formatNumber(valuation.peg_eps_cagr_long_term, 2), `현재 PER ÷ 보정 EPS CAGR`)}
       ${summaryCard("피터 린치식 PEG", formatNumber(valuation.lynch_peg_eps_cagr_long_term_plus_dividend, 2), `EPS 성장 + 배당 ${formatPercent(valuation.dividend_yield_pct, 1)}`)}
       ${summaryCard("이익 / 리스 차감 FCF 수익률", `${formatPercent(valuation.earnings_yield_pct, 1)} / ${formatPercent(buffettValuation.fcf_yield_pct, 1)}`, fcfBasisLabel)}
@@ -3621,6 +3710,11 @@ function renderDurationPanel(stock) {
 
   if (!stock) {
     container.innerHTML = "<div class='empty-state'>선택 종목이 없습니다.</div>";
+    return;
+  }
+
+  if (!stock.valuationEligible) {
+    container.innerHTML = `<div class="empty-state">지속기간 산출 제외: ${escapeHtml(valuationQualityLabel(stock))}</div>`;
     return;
   }
 
@@ -3663,6 +3757,7 @@ function renderDurationPanel(stock) {
       </div>
     </div>
     <div class="calc-note">
+      N 산출 이력: ${escapeHtml(nEstimatePeriodLabel(stock))}. 시장 내재 N 입력: ${escapeHtml(valuationPeriodLabel(stock))}와 최신 자본 기준 PBR.<br>
       ${stock.nModel.engine === "empirical_persistence"
         ? `업종별 4년 ROE 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합한 향후 고ROE 지속기간입니다. 산출 상태는 ${nEstimateMethodLabel(stock.nModel)}입니다.`
         : "아직 실증 지속기간 데이터가 없는 종목이므로 기존 임시 점수표를 사용하며, 적정가에도 이 임시 N이 적용됩니다."}
@@ -3678,6 +3773,11 @@ function renderFairValuePanel(stock) {
 
   if (!stock) {
     container.innerHTML = "<div class='empty-state'>선택 종목이 없습니다.</div>";
+    return;
+  }
+
+  if (!stock.valuationEligible) {
+    container.innerHTML = `<div class="empty-state">가치평가 산출 제외: ${escapeHtml(valuationQualityLabel(stock))}</div>`;
     return;
   }
 
@@ -3723,6 +3823,7 @@ function renderFairValuePanel(stock) {
       </div>
     </div>
     <div class="calc-note">
+      아래 적정가는 ${escapeHtml(valuationPeriodLabel(stock))} ROE가 향후에도 유지된다는 기본 가정에 사용자 보정치를 더해 계산합니다. 애널리스트의 연간 예상 ROE(F)·향후 12개월 전망(12MF)과는 구분해 해석하세요.<br>
       기준 시나리오 입력값 · BPS <strong>${formatPrice(stock.bps)}</strong> · ROE <strong>${formatPercent(stock.scenarios.base.params.assumedRoe, 1)}</strong> · N <strong>${formatYears(stock.scenarios.base.params.durationYears)}</strong> · 할인율 <strong>${formatPercent(stock.scenarios.base.params.discountRate, 1)}</strong>
     </div>
   `;
@@ -3733,6 +3834,11 @@ function renderKellyPanel(stock) {
 
   if (!stock) {
     container.innerHTML = "<div class='empty-state'>선택 종목이 없습니다.</div>";
+    return;
+  }
+
+  if (!stock.valuationEligible) {
+    container.innerHTML = `<div class="empty-state">켈리 비중 산출 제외: ${escapeHtml(valuationQualityLabel(stock))}</div>`;
     return;
   }
 
@@ -3789,6 +3895,7 @@ function renderKellyPanel(stock) {
 function renderDashboard() {
   const minimumRoe = Math.min(10, state.threshold);
   const enrichedRoeStocks = state.rawStocks
+    .filter((stock) => stock.valuationEligible)
     .filter((stock) => typeof stock.roe === "number" && stock.roe >= minimumRoe)
     .map(enrichStock);
   const roeTenStocks = enrichedRoeStocks.filter((stock) => stock.roe >= 10);
@@ -3954,6 +4061,13 @@ async function loadStocks() {
       return response.json();
     });
 
+    const valuationPromise = fetch(`${VALUATION_METRICS_URL}?v=${Date.now()}`, { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status} for valuation metrics`);
+        return response.json();
+      })
+      .catch(() => null);
+
     const roePromise = fetch(ROE_HISTORY_URL)
       .then((response) => {
         if (!response.ok) {
@@ -3999,16 +4113,19 @@ async function loadStocks() {
       roePayload,
       dartPayload,
       financialNPayload,
-      investmentScreensPayload
+      investmentScreensPayload,
+      valuationPayload
     ] = await Promise.all([
       marketPromise,
       roePromise,
       dartPromise,
       financialNPromise,
-      investmentScreensPromise
+      investmentScreensPromise,
+      valuationPromise
     ]);
 
-    state.rawStocks = marketPayload.stocks || [];
+    state.valuationMetricsPayload = valuationPayload;
+    state.rawStocks = (marketPayload.stocks || []).map((stock) => applyValuationMetrics(stock, valuationPayload));
     state.rawStockByCode = new Map(
       state.rawStocks.map((stock) => [stock.code, stock])
     );
@@ -4016,6 +4133,7 @@ async function loadStocks() {
     state.roeHistoryByCode = buildRoeHistoryMap(roePayload);
     state.dartMajorByCode = buildDartMajorMap(dartPayload);
     state.financialNByCode = buildFinancialNMap(financialNPayload);
+    state.financialNPeriod = financialNPayload.source_panel?.period || null;
     state.investmentScreenByCode = buildInvestmentScreenMap(investmentScreensPayload);
     state.investmentScreensPayload = investmentScreensPayload;
     updateLastUpdated(marketPayload.crawled_at_utc);
@@ -4941,6 +5059,7 @@ function friendlyDataName(path) {
     "data/naver_etf_brands.json": "KoAct·TIME ETF",
     "data/market_sum.json": "국내 종목 시세",
     "data/market_sum_by_roe.json": "국내 가치평가 원본",
+    "data/valuation_metrics.json": "최신 실적 ROE·ROA와 왜곡 검증",
     "data/fnguide_roe_history.json": "FnGuide ROE 이력",
     "data/dart_major_holders.json": "DART 주요주주",
     "data/financial_n_estimates.json": "고ROE 지속기간 N 엔진",

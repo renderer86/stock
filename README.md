@@ -306,6 +306,13 @@ DART 10년 재무 패널은 기업별 전체 재무 API 대신 연도별 일괄 
 연도 갱신·API 보완 실행 방법은
 [`docs/dart_bulk_pipeline.md`](docs/dart_bulk_pipeline.md)를 참고하세요.
 
+전 종목 분기 재무는 기존 `crawler_dart_financial_interim.py`에서 ZIP 4종을 먼저
+반영한 뒤 부족한 기업만 API로 보완합니다. 기본 한도는 실행당 API 기업 500개,
+전체 요청 1,000회, 15분이며 같은 명령으로 이어받습니다. ZIP만 먼저 반영하려면
+`python crawler_dart_financial_interim.py --bulk-only`를 실행하세요.
+자세한 명령과 체크포인트 구조는
+[`docs/dart_quarterly_pipeline.md`](docs/dart_quarterly_pipeline.md)를 참고하세요.
+
 [`.github/workflows/update-market-data.yml`](.github/workflows/update-market-data.yml)이
 GitHub Actions에서 다음 일정으로 실행됩니다.
 

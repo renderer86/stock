@@ -2,6 +2,29 @@ name: Refresh Buffett and quality screens
 
 on:
   workflow_dispatch:
+    inputs:
+      bulk_mode:
+        description: ZIP first, ZIP only, or resume API gaps from saved ZIPs
+        type: choice
+        default: auto
+        options: [auto, only, skip]
+      max_companies:
+        description: Maximum API company attempts per run (0 = all)
+        type: string
+        default: "500"
+      max_requests:
+        description: Maximum HTTP requests including retries and ZIP downloads
+        type: string
+        default: "1000"
+      year:
+        description: Fiscal year (0 = latest due period; set with quarter)
+        type: string
+        default: "0"
+      quarter:
+        description: Quarter (0 = automatic, 2 = half-year)
+        type: choice
+        default: "0"
+        options: ["0", "1", "2", "3"]
   workflow_run:
     workflows:
       - "Build DART 10-year financial panel"
@@ -13,14 +36,15 @@ permissions:
   contents: write
 
 concurrency:
-  group: refresh-buffett-quality-screens
+  # Annual and quarterly collectors both update the raw archive index/panel.
+  group: dart-financial-data
   cancel-in-progress: false
 
 jobs:
   refresh:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       TARGET_BRANCH: ${{ github.event.repository.default_branch }}
       DART_API_KEY: ${{ secrets.DART_API_KEY }}
@@ -60,8 +84,26 @@ jobs:
           python -u crawler_naver_year_end_prices.py
           python -u estimate_financial_n.py --config config/financial_n_engine.json
           python -u build_investment_screens.py
+
+      - name: Import quarterly ZIPs and resume missing company statements
+        id: interim
+        continue-on-error: true
+        env:
+          BULK_MODE: ${{ inputs.bulk_mode || 'auto' }}
+          MAX_COMPANIES: ${{ inputs.max_companies || '500' }}
+          MAX_REQUESTS: ${{ inputs.max_requests || '1000' }}
+          FISCAL_YEAR: ${{ inputs.year || '0' }}
+          QUARTER: ${{ inputs.quarter || '0' }}
+        run: >-
           python -u crawler_dart_financial_interim.py
+          --scope all --bulk-mode "$BULK_MODE"
+          --max-companies "$MAX_COMPANIES" --max-requests "$MAX_REQUESTS"
+          --max-runtime-minutes 15 --year "$FISCAL_YEAR" --quarter "$QUARTER"
+
+      - name: Apply available quarterly data to screens
+        run: |
           python -u build_investment_screens.py
+          python -u build_valuation_metrics.py --fetch-prior-balances
           python -u build_data_manifest.py
 
       - name: Commit refreshed screens
@@ -76,9 +118,19 @@ jobs:
             data/dart_financial_panel.json \
             data/dart_financial_panel/ \
             data/investment_screens.json \
+            data/valuation_metrics.json \
             data/data_manifest.json
           if [[ -f data/dart_financial_interim.json ]]; then
             git add data/dart_financial_interim.json
+          fi
+          if [[ -d data/dart_financial_interim_progress ]]; then
+            git add data/dart_financial_interim_progress/
+          fi
+          if [[ -d data/dart_financial_raw ]]; then
+            git add data/dart_financial_raw/
+          fi
+          if [[ -f data/dart_corp_codes.json ]]; then
+            git add data/dart_corp_codes.json
           fi
           if [[ -f data/dart_debt_notes.json ]]; then
             git add data/dart_debt_notes.json
@@ -111,6 +163,7 @@ jobs:
           exit 1
 
       - name: Upload screen artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: investment-screens-${{ github.run_id }}
@@ -118,6 +171,18 @@ jobs:
             data/financial_n_estimates.json
             data/naver_year_end_prices.json
             data/investment_screens.json
+            data/valuation_metrics.json
             data/dart_financial_interim.json
+            data/dart_financial_interim_progress/*.json
+            data/dart_financial_raw/index.json
+            data/dart_financial_raw/20*/bulk/1101*.json.gz
+            data/dart_financial_raw/20*/api/interim_*.json.gz
+            data/dart_corp_codes.json
             data/data_manifest.json
           retention-days: 14
+
+      - name: Report quarterly collection failure after saving checkpoints
+        if: steps.interim.outcome == 'failure'
+        run: |
+          echo "::error::Quarterly collection failed. Saved ZIPs and partial progress were retained; rerun the same inputs to resume."
+          exit 1

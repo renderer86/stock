@@ -563,6 +563,9 @@ def main() -> None:
                 "GEMINI_API_KEY is not set",
             )
 
+    if not args.skip_domestic:
+        run_step("Build latest valuation metrics", "build_valuation_metrics.py", [])
+
     run_step(
         "Build data manifest",
         "build_data_manifest.py",

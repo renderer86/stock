@@ -278,7 +278,7 @@ def fetch_corp_code_map(
             for item in root.findall("list"):
                 ticker = normalize_ticker(item.findtext("stock_code"))
                 corp_code = str(item.findtext("corp_code") or "").strip()
-                if re.fullmatch(r"\d{6}", ticker) and re.fullmatch(
+                if re.fullmatch(r"[0-9A-Z]{6}", ticker) and re.fullmatch(
                     r"\d{8}", corp_code
                 ):
                     mapping[ticker] = {
@@ -323,7 +323,7 @@ def corp_code_map_from_existing_panel(
     for row in panel.get("observations") or []:
         ticker = normalize_ticker(row.get("ticker"))
         corp_code = str(row.get("corp_code") or "").strip()
-        if not re.fullmatch(r"\d{6}", ticker) or not re.fullmatch(
+        if not re.fullmatch(r"[0-9A-Z]{6}", ticker) or not re.fullmatch(
             r"\d{8}", corp_code
         ):
             continue

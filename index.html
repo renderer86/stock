@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261127-market-palette">
+  <link rel="stylesheet" href="style.css?v=20261128-latest-valuation">
 </head>
 <body>
   <a class="skip-link" href="#dashboard-main">본문으로 이동</a>
@@ -222,7 +222,7 @@
         <div class="section-head">
           <div>
             <p class="section-kicker">1. Top Table</p>
-            <h2>현재 ROE 기준 가치평가 테이블</h2>
+            <h2>최신 실적 ROE 기준 가치평가 테이블</h2>
             <p class="section-description" id="valuation-price-summary">기준 적정가와 현재주가 비교 계산 중</p>
           </div>
           <div class="section-side">
@@ -232,6 +232,9 @@
           </div>
         </div>
 
+        <p class="section-description">ROE·ROA는 최신 보고서까지 최근 12개월(TTM), 결산 시에는 연간 실적을 사용합니다. ROE는 지배주주 순이익과 같은 기간의 기초·기말 평균 지배주주 자본으로 계산합니다. 중단영업이익이 순이익의 10% 이상이거나 계속영업 적자를 흑자로 바꾸는 경우, 자본잠식·최근 자본잠식 이력·자본/자산 5% 미만인 경우는 제외합니다. 자료가 부족하면 과거 ROE로 대체하지 않습니다.</p>
+        <p class="section-description">PBR·적정가는 최신 자본을, PER는 최근 12개월 이익을 사용합니다. 우선주를 포함한 현재 총 상장주식수로 계산한 근사치이며, 정확한 주식수가 없는 종목은 천 주 단위 주식수를 사용합니다. PER는 공시된 가중평균 주당순이익 기준과 다를 수 있습니다. N과 장기 재무 이력의 기준기간은 상세 화면에 별도로 표시합니다.</p>
+        <details class="screen-method"><summary id="valuation-exclusion-summary">제외 사유 확인 중</summary><div class="section-description" id="valuation-exclusion-details"></div></details>
         <div class="table-wrap">
           <table id="valuation-table">
             <thead>
@@ -314,7 +317,7 @@
             <span class="calc-tag">B</span>
             <div>
               <h3>적정가 범위 계산기</h3>
-              <p>과거 ROE 이력과 고ROE 지속기간 N을 바탕으로 보수적·기준·낙관적 3개 시나리오를 계산합니다.</p>
+              <p>최신 실적 ROE가 유지된다는 기본 가정에 사용자 보정치와 고ROE 지속기간 N을 적용합니다. 실적 ROE와 애널리스트 예상 ROE는 구분합니다.</p>
             </div>
           </div>
           <div class="inline-controls">
@@ -928,6 +931,6 @@
     </button>
   </aside>
 
-  <script src="script.js?v=20261127-market-palette"></script>
+  <script src="script.js?v=20261128-latest-valuation"></script>
 </body>
 </html>
