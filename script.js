@@ -5241,7 +5241,7 @@ function bindPublishedReports() {
     renderedSlug = null;
     content.innerHTML = '<p class="report-loading" role="status">리포트를 불러오는 중입니다.</p>';
     if (!requests.has(slug)) {
-      requests.set(slug, fetch(`./assets/reports/${slug}.html?v=20261115`)
+      requests.set(slug, fetch(`./assets/reports/${slug}.html?v=20261127`)
       .then((response) => {
         if (!response.ok) throw new Error(`Report HTTP ${response.status}`);
         return response.text();
