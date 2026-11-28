@@ -11,6 +11,8 @@ const PORTFOLIO_URL = "./data/portfolio.json";
 const PORTFOLIO_STORAGE_KEY = "value-dashboard-portfolio-v2";
 const POSITION_RISK_STORAGE_KEY = "value-dashboard-position-risk-v1";
 const POSITION_RISK_FIELDS = ["failureLossPct", "lossBudgetPct", "positionWeightPct", "horizonYears", "upsidePct", "winProbabilityPct"];
+const VALUATION_SCENARIO_STORAGE_KEY = "value-dashboard-valuation-scenarios-v1";
+const VALUATION_SCENARIOS = [["conservative", "보수"], ["base", "기준"], ["optimistic", "낙관"]];
 const KOREA_FLOW_URL = "./data/korea_investor_flow.json";
 const KOREA_SHORT_URL = "./data/korea_short_selling.json";
 const DART_DISCLOSURES_URL = "./data/dart_disclosures.json";
@@ -63,6 +65,7 @@ const state = {
   durationOffset: 0,
   roeAdjustment: 0,
   positionRiskByCode: loadPositionRiskInputs(),
+  valuationScenariosByCode: loadValuationScenarios(),
   sortKey: "roe",
   sortDirection: "desc",
   prioritySortKey: "buffettRank",
@@ -2675,6 +2678,53 @@ function savePositionRiskInput(code, field, value) {
   } catch { /* Keep the inputs in this session if browser storage is unavailable. */ }
 }
 
+function normalizeValuationScenarios(inputs) {
+  if (!inputs || typeof inputs !== "object" || Array.isArray(inputs)) return null;
+  const scenarios = {};
+  for (const [key] of VALUATION_SCENARIOS) {
+    const input = inputs[key];
+    if (!input || typeof input !== "object" || Array.isArray(input)
+        || !["assumedRoe", "durationYears"].every(field => ["string", "number"].includes(typeof input[field]))) return null;
+    const assumedRoe = riskInputNumber(input, "assumedRoe");
+    const durationYears = riskInputNumber(input, "durationYears");
+    if (assumedRoe === null || assumedRoe < -99 || assumedRoe > 100
+        || durationYears === null || durationYears < 0.1 || durationYears > 30) return null;
+    scenarios[key] = {
+      assumedRoe, durationYears,
+      rationale: typeof input.rationale === "string" ? input.rationale.trim().slice(0, 2000) : "",
+      reviewTrigger: typeof input.reviewTrigger === "string" ? input.reviewTrigger.trim().slice(0, 1000) : ""
+    };
+  }
+  return scenarios;
+}
+
+function loadValuationScenarios() {
+  try {
+    if (typeof localStorage === "undefined") return new Map();
+    const saved = JSON.parse(localStorage.getItem(VALUATION_SCENARIO_STORAGE_KEY) || "{}");
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)) return new Map();
+    return new Map(Object.entries(saved).flatMap(([code, inputs]) => {
+      const scenarios = /^[0-9A-Z]{6}$/i.test(code) ? normalizeValuationScenarios(inputs) : null;
+      return scenarios ? [[code, scenarios]] : [];
+    }));
+  } catch { return new Map(); }
+}
+
+function persistValuationScenarios() {
+  try {
+    if (typeof localStorage === "undefined") return false;
+    localStorage.setItem(VALUATION_SCENARIO_STORAGE_KEY, JSON.stringify(Object.fromEntries(state.valuationScenariosByCode)));
+    return true;
+  } catch { return false; }
+}
+
+function saveValuationScenarios(code, inputs) {
+  const scenarios = normalizeValuationScenarios(inputs);
+  if (!/^[0-9A-Z]{6}$/i.test(code) || !scenarios) return { ok: false, persisted: false };
+  state.valuationScenariosByCode.set(code, scenarios);
+  return { ok: true, persisted: persistValuationScenarios() };
+}
+
 function isSuspendedLike(stock) {
   return stock.volume === 0 && stock.diff === 0 && stock.diff_rate === 0;
 }
@@ -2892,24 +2942,33 @@ function enrichStock(stock) {
   const baseRoe = roeRange.base === null ? null : clamp(roeRange.base + state.roeAdjustment, 1, 100);
   const optimisticRoe = roeRange.optimistic === null ? null : clamp(roeRange.optimistic + state.roeAdjustment, 1, 100);
 
-  const scenarios = {
-    conservative: buildScenarioResult(stock, {
+  const automaticScenarioParams = {
+    conservative: {
       assumedRoe: conservativeRoe,
       durationYears: durationRange.conservative,
       discountRate: state.discountRate
-    }),
-    base: buildScenarioResult(stock, {
+    },
+    base: {
       assumedRoe: baseRoe,
       durationYears: durationRange.base,
       discountRate: state.discountRate
-    }),
-    optimistic: buildScenarioResult(stock, {
+    },
+    optimistic: {
       assumedRoe: optimisticRoe,
       durationYears: durationRange.optimistic,
       discountRate: state.discountRate
-    })
+    }
   };
+  const savedScenarios = state.valuationScenariosByCode.get(stock.code);
+  const scenarios = Object.fromEntries(VALUATION_SCENARIOS.map(([key]) => [key,
+    buildScenarioResult(stock, {
+      ...(savedScenarios?.[key] || automaticScenarioParams[key]),
+      discountRate: state.discountRate
+    })
+  ]));
 
+  const fairPrices = Object.values(scenarios).map(item => item.fairPrice).filter(Number.isFinite);
+  const gapRates = Object.values(scenarios).map(item => item.gapRate).filter(Number.isFinite);
   const expectedReturns = Object.values(scenarios).map(item => item.expectedAnnualReturn).filter(Number.isFinite);
   return {
     ...stock,
@@ -2937,6 +2996,12 @@ function enrichStock(stock) {
     financialNEstimate,
     investmentScreen,
     scenarios,
+    automaticScenarioParams,
+    scenarioMode: savedScenarios ? "manual" : "automatic",
+    fairPriceLow: fairPrices.length ? Math.min(...fairPrices) : null,
+    fairPriceHigh: fairPrices.length ? Math.max(...fairPrices) : null,
+    gapRateLow: gapRates.length ? Math.min(...gapRates) : null,
+    gapRateHigh: gapRates.length ? Math.max(...gapRates) : null,
     fairPriceConservative: scenarios.conservative.fairPrice,
     fairPriceBase: scenarios.base.fairPrice,
     fairPriceOptimistic: scenarios.optimistic.fairPrice,
@@ -3672,10 +3737,10 @@ function renderTable(stocks, roeTenStocks) {
       <td><div>${formatMarketImpliedN(stock)}</div><div class="table-subtext">${escapeHtml(marketImpliedNDescription(stock))}</div><div class="table-subtext">${escapeHtml(valuationPeriodLabel(stock))} · 최신 자본</div></td>
       <td><div>${formatPrice(stock.current_price)}</div><div class="table-subtext">${escapeHtml(valuationPriceDate())}</div></td>
       <td>${formatPrice(stock.fairPriceConservative)}</td>
-      <td>${formatPrice(stock.fairPriceBase)}</td>
+      <td><div>${formatPrice(stock.fairPriceBase)}</div><div class="table-subtext">${stock.scenarioMode === "manual" ? "직접 설정" : "자동 초깃값 · 미검토"}</div></td>
       <td>${formatPrice(stock.fairPriceOptimistic)}</td>
-      <td class="${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateConservative, stock.gapRateOptimistic, (value) => formatPercent(value, 1))}</td>
-      <td class="${metricClass(stock.expectedReturnBase)}"><div>${formatRange(stock.expectedReturnLow, stock.expectedReturnHigh, (value) => formatPercent(value, 1))}</div><div class="table-subtext">ROE・자체 N 가정 · 연환산</div></td>
+      <td class="${metricClass(stock.gapRateBase)}">${formatRange(stock.gapRateLow, stock.gapRateHigh, (value) => formatPercent(value, 1))}</td>
+      <td class="${metricClass(stock.expectedReturnBase)}"><div>${formatRange(stock.expectedReturnLow, stock.expectedReturnHigh, (value) => formatPercent(value, 1))}</div><div class="table-subtext">시나리오 ROE·N 가정 · 연환산</div></td>
       <td>${stock.reporterCount ? `<div class="table-subtext">${stock.reporterCount}명</div><div class="table-subtext">${escapeHtml(summarizeReporterNames(stock.reporterNames))}</div>` : '<span class="table-subtext">공시 없음</span>'}</td>
     </tr>
   `).join("");
@@ -3791,7 +3856,7 @@ function renderSelectedSummary(stock) {
       <div class="summary-market-strip">
         <div><span>현재가</span><strong>${formatPrice(stock.current_price)}</strong></div>
         <div><span>시가총액</span><strong>${formatMarketCap(stock.market_cap_krw_100m)}</strong></div>
-        <div><span>고ROE N</span><strong>${formatYears(stock.estimatedNBase)}</strong></div>
+        <div><span>자동 추정 N</span><strong>${formatYears(stock.estimatedNBase)}</strong></div>
       </div>
     </div>
 
@@ -3833,7 +3898,7 @@ function renderDurationPanel(stock) {
   container.innerHTML = `
     <div class="calc-grid">
       <div class="calc-item">
-        <div class="label">고ROE 지속기간 N</div>
+        <div class="label">자동 추정 지속기간 N</div>
         <div class="value">${formatYears(stock.estimatedNBase)}</div>
       </div>
       <div class="calc-item">
@@ -3873,11 +3938,11 @@ function renderDurationPanel(stock) {
       N 산출 이력: ${escapeHtml(nEstimatePeriodLabel(stock))}. 시장 내재 N 입력: ${escapeHtml(valuationPeriodLabel(stock))}와 최신 자본 기준 PBR.<br>
       ${stock.nModel.engine === "empirical_persistence"
         ? `업종별 4년 ROE 자기상관, 고ROE 생존기간과 기업별 변동성·재투자율·GP/A 수정자를 결합한 향후 고ROE 지속기간입니다. 산출 상태는 ${nEstimateMethodLabel(stock.nModel)}입니다.`
-        : "아직 실증 지속기간 데이터가 없는 종목이므로 기존 임시 점수표를 사용하며, 적정가에도 이 임시 N이 적용됩니다."}
+        : "아직 실증 지속기간 데이터가 없는 종목이므로 기존 임시 점수표를 자동 초깃값으로 사용합니다."}
       시장 내재 N은 현재 PBR과 현재 ROE를 할인율 10%로 역산합니다.
       PBR이 1배 미만이면 비교용 기준으로 N을 1년 고정하고 배지를 붙입니다. 실제 ROE 지속기간을 1년으로 예측한 뜻은 아닙니다.
       PBR이 1배 이상인 역산 대상은 |ROE − 10%|가 2%p 미만이면 N/A, 양의 기간으로 설명되지 않으면 역산 불가로 표시합니다.
-      고정값은 실제 역산 N과 구분해서 해석하며, 적정가와 장기 추정 수익률은 별도의 자체 추정 N으로 계산합니다.
+      시장 N은 비교값입니다. 적정가와 장기 추정 수익률에는 B 카드의 시나리오별 N을 사용하며, 직접 설정하기 전에는 자동 추정 N을 초깃값으로 사용합니다.
     </div>
   `;
 }
@@ -3895,53 +3960,88 @@ function renderFairValuePanel(stock) {
     return;
   }
 
-  const scenarios = [
-    ["보수적", stock.scenarios.conservative],
-    ["기준", stock.scenarios.base],
-    ["낙관적", stock.scenarios.optimistic]
-  ];
-
+  const manual = stock.scenarioMode === "manual";
+  const needsEvidence = manual && VALUATION_SCENARIOS.some(([key]) =>
+    !stock.scenarios[key].params.rationale || !stock.scenarios[key].params.reviewTrigger);
+  const unordered = stock.scenarios.conservative.fairPrice > stock.scenarios.base.fairPrice
+    || stock.scenarios.base.fairPrice > stock.scenarios.optimistic.fairPrice;
   container.innerHTML = `
-    <div class="scenario-grid">
-      ${scenarios.map(([label, scenario]) => `
-        <div class="calc-item">
-          <div class="label">${label} 시나리오</div>
-          <div class="value">${formatPrice(scenario.fairPrice)}</div>
-          <div class="table-subtext">
-            ROE ${formatPercent(scenario.params.assumedRoe, 1)} ·
-            N ${scenario.params.durationYears}년
-          </div>
-        </div>
-      `).join("")}
+    <div class="valuation-scenario-status">
+      <span class="status-badge">${manual ? "직접 설정" : "자동 초깃값 · 미검토"}</span>
+      <span>${manual ? "이 종목에 저장한 ROE·N을 적용합니다." : "과거 ROE와 자동 추정 N입니다. 지속 가능한 수익성과 경쟁력을 검토해 수정하세요."}</span>
     </div>
-    <div class="calc-grid">
-      <div class="calc-item">
-        <div class="label">추정 ROE 범위</div>
-        <div class="value">${formatRange(stock.recommendedRoeConservative, stock.recommendedRoeOptimistic, (value) => formatPercent(value, 1))}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">추정 ROE 보정치</div>
-        <div class="value">${formatSignedPercent(state.roeAdjustment, 1)}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">고ROE 지속기간 N</div>
-        <div class="value">${formatYears(stock.estimatedNBase)}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">시장 내재 N</div>
-        <div class="value">${formatMarketImpliedN(stock)}</div>
-        <div class="table-subtext">${escapeHtml(marketImpliedNDescription(stock))}</div>
-      </div>
-      <div class="calc-item">
-        <div class="label">할인율</div>
-        <div class="value">${formatPercent(state.discountRate, 1)}</div>
-      </div>
+    <div class="calc-grid" aria-live="polite">
+      <div class="calc-item"><div class="label">가치 추정 범위</div><div class="value">${formatRange(stock.fairPriceLow, stock.fairPriceHigh, formatPrice)}</div></div>
+      <div class="calc-item"><div class="label">현재가 대비 괴리율 범위</div><div class="value">${formatRange(stock.gapRateLow, stock.gapRateHigh, value => formatPercent(value, 1))}</div></div>
+      <div class="calc-item"><div class="label">기준 가치 / 현재가</div><div class="value">${formatPrice(stock.fairPriceBase)} / ${formatPrice(stock.current_price)}</div></div>
+      <div class="calc-item"><div class="label">공통 요구수익률 / BPS</div><div class="value">${formatPercent(state.discountRate, 1)} / ${formatPrice(stock.bps)}</div></div>
     </div>
+    <p class="risk-feedback">범위는 세 시나리오의 최저·최고 가치입니다. 주가의 예상 등락 범위나 통계적 신뢰구간이 아니며, 하단도 보장된 가격은 아닙니다.</p>
+    ${unordered ? '<p class="valuation-scenario-warning">가치가 보수 ≤ 기준 ≤ 낙관 순서가 아닙니다. ROE가 요구수익률보다 낮으면 N이 길수록 가치가 낮아질 수 있습니다. 가정을 확인하세요. 범위는 실제 최솟값·최댓값으로 표시합니다.</p>' : ""}
+    ${needsEvidence ? '<p class="valuation-scenario-warning">판단 근거나 가정 변경 조건이 비어 있는 시나리오가 있습니다. 검토 내용을 보완하세요.</p>' : ""}
+    <form id="valuation-scenario-form">
+      <div class="valuation-scenario-editors">
+        ${VALUATION_SCENARIOS.map(([key, label]) => {
+          const scenario = stock.scenarios[key];
+          const params = scenario.params;
+          const initial = stock.automaticScenarioParams[key];
+          return `<fieldset class="valuation-scenario-editor">
+            <legend>${label} 시나리오</legend>
+            <div class="valuation-scenario-value">${formatPrice(scenario.fairPrice)} <small>괴리율 ${formatPercent(scenario.gapRate, 1)}</small></div>
+            <div class="valuation-scenario-numbers">
+              <label><span>지속 가능한 ROE (%)</span><input name="${key}-assumedRoe" aria-label="${label} ROE" type="number" min="-99" max="100" step="any" required value="${params.assumedRoe}"></label>
+              <label><span>ROE 지속기간 N (년)</span><input name="${key}-durationYears" aria-label="${label} N" type="number" min="0.1" max="30" step="any" required value="${params.durationYears}"></label>
+            </div>
+            <small class="valuation-scenario-initial">자동 초깃값: ROE ${formatPercent(initial.assumedRoe, 1)} · N ${formatYears(initial.durationYears)}</small>
+            <label><span>판단 근거 (ROE·N)</span><textarea name="${key}-rationale" aria-label="${label} 판단 근거" rows="3" maxlength="2000" placeholder="정상 수익성, 경쟁 우위, 재투자 기회 등을 근거로 작성">${escapeHtml(params.rationale || "")}</textarea></label>
+            <label><span>가정 변경 조건</span><textarea name="${key}-reviewTrigger" aria-label="${label} 가정 변경 조건" rows="2" maxlength="1000" placeholder="경쟁사 진입, 고객 이탈, 수익성 변화 등 재검토할 조건">${escapeHtml(params.reviewTrigger || "")}</textarea></label>
+          </fieldset>`;
+        }).join("")}
+      </div>
+      <div class="valuation-scenario-actions">
+        <button type="submit" class="primary-button">시나리오 적용·저장</button>
+        <button type="button" id="valuation-scenario-reset" class="ghost-button">자동 초깃값으로 복원</button>
+      </div>
+      <p id="valuation-scenario-feedback" class="risk-feedback" role="status">입력 후 적용·저장을 누르면 표·괴리율·기대수익률에 함께 반영됩니다. 이 브라우저에 종목별로 저장됩니다.</p>
+    </form>
     <div class="calc-note">
-      아래 적정가는 ${escapeHtml(valuationPeriodLabel(stock))} ROE가 향후에도 유지된다는 기본 가정에 사용자 보정치를 더해 계산합니다. 애널리스트의 연간 예상 ROE(F)·향후 12개월 전망(12MF)과는 구분해 해석하세요.<br>
-      기준 시나리오 입력값 · BPS <strong>${formatPrice(stock.bps)}</strong> · ROE <strong>${formatPercent(stock.scenarios.base.params.assumedRoe, 1)}</strong> · N <strong>${formatYears(stock.scenarios.base.params.durationYears)}</strong> · 할인율 <strong>${formatPercent(stock.scenarios.base.params.discountRate, 1)}</strong>
+      적정가 = BPS × [(1 + ROE) / (1 + 요구수익률)]<sup>N</sup>. ROE는 영업이익률이 아닌 자기자본이익률이며, N은 그 ROE의 지속기간입니다.<br>
+      시장 내재 N ${formatMarketImpliedN(stock)} (${escapeHtml(marketImpliedNDescription(stock))})은 비교값이며 시나리오 N에 대입하지 않습니다.<br>
+      직접 설정한 ROE·N에는 전체 자동 보정치를 더하지 않습니다. 요구수익률은 아래 기본 가정에서 세 시나리오에 공통 적용합니다. 이 식은 이익 전액 재투자와 N년 후 장부가치 회수를 단순화한 모델이므로 배당·자산가치 훼손 등은 별도 검토해야 합니다.
     </div>
   `;
+  bindValuationScenarioForm(stock);
+}
+
+function bindValuationScenarioForm(stock) {
+  const form = document.getElementById("valuation-scenario-form");
+  if (!form?.addEventListener) return;
+  const showFeedback = text => {
+    document.getElementById("valuation-scenario-feedback").textContent = text;
+  };
+  form.addEventListener("input", () => showFeedback("수정 중입니다. 적용·저장을 누르면 계산과 저장에 반영됩니다."));
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const inputs = Object.fromEntries(VALUATION_SCENARIOS.map(([key]) => [key,
+      Object.fromEntries(["assumedRoe", "durationYears", "rationale", "reviewTrigger"].map(field => [field, data.get(`${key}-${field}`)]))
+    ]));
+    const result = saveValuationScenarios(stock.code, inputs);
+    if (!result.ok) {
+      showFeedback("세 시나리오의 ROE는 -99~100%, N은 0.1~30년으로 모두 입력하세요. 기존 계산은 유지됩니다.");
+      return;
+    }
+    renderDashboard();
+    renderPortfolioBoard();
+    showFeedback(result.persisted ? "이 종목의 시나리오를 적용하고 브라우저에 저장했습니다." : "시나리오를 적용했습니다. 브라우저 저장을 사용할 수 없어 현재 세션에서만 유지됩니다.");
+  });
+  document.getElementById("valuation-scenario-reset").addEventListener("click", () => {
+    state.valuationScenariosByCode.delete(stock.code);
+    const persisted = persistValuationScenarios();
+    renderDashboard();
+    renderPortfolioBoard();
+    showFeedback(persisted ? "이 종목을 자동 초깃값으로 복원했습니다." : "자동 초깃값으로 복원했습니다. 브라우저 저장을 사용할 수 없어 저장된 이전 가정은 다음 접속에 다시 나타날 수 있습니다.");
+  });
 }
 
 function renderPositionRiskResults(stock) {
@@ -3988,7 +4088,7 @@ function renderPositionRiskPanel(stock) {
     </label>`;
   container.innerHTML = `
     <div class="scenario-grid">
-      ${[["보수적", stock.scenarios.conservative], ["기준", stock.scenarios.base], ["낙관적", stock.scenarios.optimistic]].map(([label, scenario]) => `<div class="calc-item"><div class="label">${label} 장기 추정 수익률</div><div class="value ${metricClass(scenario.expectedAnnualReturn)}">${formatPercent(scenario.expectedAnnualReturn, 1)}</div><div class="table-subtext">ROE ${formatPercent(scenario.params.assumedRoe, 1)} · 자체 N ${formatYears(scenario.params.durationYears)}</div></div>`).join("")}
+      ${[["보수적", stock.scenarios.conservative], ["기준", stock.scenarios.base], ["낙관적", stock.scenarios.optimistic]].map(([label, scenario]) => `<div class="calc-item"><div class="label">${label} 장기 추정 수익률</div><div class="value ${metricClass(scenario.expectedAnnualReturn)}">${formatPercent(scenario.expectedAnnualReturn, 1)}</div><div class="table-subtext">ROE ${formatPercent(scenario.params.assumedRoe, 1)} · 시나리오 N ${formatYears(scenario.params.durationYears)}</div></div>`).join("")}
     </div>
     <div class="calc-note">장기 추정 수익률은 현재 PBR과 각 시나리오의 ROE·자체 N으로 역산한 연환산 값입니다. 이익 전액 유보, 같은 ROE 유지, N년 뒤 PBR 1배를 가정합니다. PBR 1배 미만의 시장 N 고정값은 사용하지 않습니다.</div>
     <section class="risk-section" aria-labelledby="position-risk-heading">

@@ -5948,7 +5948,27 @@ body.report-mode { padding-bottom: env(safe-area-inset-bottom, 0px); }
   .research-report-footer { margin-top: 24px; }
 }
 
-/* Position sizing: explicit scenarios and a loss-budget ceiling. */
+/* Editable valuation assumptions and explicit position sizing. */
+.selected-workbench-grid > .calc-panel { grid-column: 1 / -1; }
+.valuation-scenario-status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: 0.8rem; line-height: 1.6; }
+.valuation-scenario-editors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.valuation-scenario-editor { min-width: 0; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 10px; }
+.valuation-scenario-editor legend { padding: 0 5px; font-size: 0.9rem; font-weight: 700; }
+.valuation-scenario-editor label { display: grid; min-width: 0; gap: 6px; margin-top: 12px; font-size: 0.78rem; }
+.valuation-scenario-editor :is(input, textarea) { box-sizing: border-box; width: 100%; min-width: 0; padding: 9px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--text); font: inherit; }
+.valuation-scenario-editor textarea { resize: vertical; line-height: 1.5; }
+.valuation-scenario-numbers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.valuation-scenario-value { font-weight: 700; overflow-wrap: anywhere; }
+.valuation-scenario-value small { display: block; margin-top: 4px; color: var(--muted); font-weight: 400; }
+.valuation-scenario-initial { display: block; margin-top: 8px; color: var(--muted); font-size: 0.72rem; line-height: 1.6; }
+.valuation-scenario-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.valuation-scenario-actions button { min-height: 40px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--text); font: inherit; font-size: 0.8rem; cursor: pointer; }
+.valuation-scenario-actions button[type="submit"] { border-color: var(--accent); background: var(--accent); color: white; }
+.valuation-scenario-editor textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.valuation-scenario-warning { padding: 10px 12px; margin: 0; border: 1px solid #e6c887; border-radius: 8px; background: #fff8e8; color: #77510e; font-size: 0.8rem; line-height: 1.6; }
+@media (max-width: 1000px) {
+  .valuation-scenario-editors { grid-template-columns: minmax(0, 1fr); }
+}
 .risk-section { border-top: 1px solid var(--line); padding-top: 16px; }
 .risk-section h4 { margin: 0 0 8px; font-size: 0.95rem; }
 .risk-controls { margin: 12px 0; }
