@@ -75,6 +75,10 @@ jobs:
           test -f data/market_sum.json
           test -f config/financial_n_engine.json
 
+      - name: Refresh latest annual ZIPs for trailing income
+        if: inputs.bulk_mode != 'skip'
+        run: python -u crawler_dart_financial_bulk.py --years 1
+
       - name: Build empirical N and investment screens
         shell: bash
         run: |
@@ -100,6 +104,10 @@ jobs:
           --max-companies "$MAX_COMPANIES" --max-requests "$MAX_REQUESTS"
           --max-runtime-minutes 15 --year "$FISCAL_YEAR" --quarter "$QUARTER"
 
+      - name: Fill valuation input gaps from complete statements
+        if: inputs.bulk_mode != 'only'
+        run: python -u crawler_valuation_gaps.py
+
       - name: Apply available quarterly data to screens
         run: |
           python -u build_investment_screens.py
@@ -120,6 +128,9 @@ jobs:
             data/investment_screens.json \
             data/valuation_metrics.json \
             data/data_manifest.json
+          if [[ -f data/valuation_gap_progress.json ]]; then
+            git add data/valuation_gap_progress.json
+          fi
           if [[ -f data/dart_financial_interim.json ]]; then
             git add data/dart_financial_interim.json
           fi

@@ -12,7 +12,6 @@ vm.createContext(context);
 const script = fs.readFileSync("script.js", "utf8").split("\nbindFeatureControls();")[0];
 vm.runInContext(script + "\nglobalThis.api = { applyValuationMetrics, requiredValuationPeriod, inferRoeRange, getFilteredStocks, state, enrichStock, renderTable, renderFairValuePanel, renderPositionRiskPanel, loadStocks };", context);
 const api = context.api;
-
 for (const [stamp, expected] of [
   ["2026-01-01", "2025-09-30"], ["2026-04-15", "2025-12-31"],
   ["2026-05-15", "2026-03-31"], ["2026-11-28", "2026-09-30"]
@@ -20,6 +19,11 @@ for (const [stamp, expected] of [
   assert.equal(api.requiredValuationPeriod(new Date(`${stamp}T00:00:00Z`)), expected);
 }
 const payload = JSON.parse(fs.readFileSync("data/valuation_metrics.json", "utf8"));
+assert.equal(api.requiredValuationPeriod(new Date("2026-11-29T00:00:00Z"), 11), "2026-08-31");
+const novemberFiscal = api.applyValuationMetrics({ code: "000001" }, { metrics: {
+  "000001": { eligible: true, period_end: "2026-08-31", fiscal_month: 11, roe_pct: 15 }
+} });
+assert.equal(novemberFiscal.valuationEligible, true);
 const market = JSON.parse(fs.readFileSync("data/market_sum.json", "utf8"));
 api.state.rawStocks = market.stocks.map(stock => api.applyValuationMetrics(stock, payload));
 const hyosung = api.state.rawStocks.find(stock => stock.code === "298000");
@@ -36,6 +40,11 @@ const filtered = api.getFilteredStocks();
 assert.ok(filtered.length > 0);
 assert.ok(!filtered.some(stock => stock.code === "298000"));
 assert.ok(filtered.every(stock => stock.valuationEligible));
+const pharma = api.state.rawStocks.find(stock => stock.code === "214450");
+assert.equal(pharma.valuationEligible, true);
+assert.ok(filtered.some(stock => stock.code === "214450"));
+assert.equal(pharma.roe, 23.139);
+assert.ok(api.enrichStock(pharma).fairPriceBase > 0);
 
 const elements = new Map();
 context.document = { getElementById(id) {
@@ -82,7 +91,6 @@ const preferred = api.applyValuationMetrics({ ...dailyQuote, code: "000005" }, {
 } });
 assert.equal(api.enrichStock(preferred).estimatedNBase, 7);
 assert.equal(api.enrichStock(preferred).nModel.engine, "empirical_persistence");
-
 api.state.financialNByCode.clear();
 
 (async () => {

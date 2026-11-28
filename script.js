@@ -2397,10 +2397,22 @@ const VALUATION_REASON_LABELS = {
   conflicting_financial_sources: "재무 원본 간 수치 불일치"
 };
 
-function requiredValuationPeriod(now = new Date()) {
+function requiredValuationPeriod(now = new Date(), fiscalMonth = 12) {
   const kst = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
   const year = Number(kst.slice(0, 4));
   const today = Date.parse(`${kst}T00:00:00Z`);
+  if (Number.isInteger(fiscalMonth) && fiscalMonth >= 1 && fiscalMonth < 12) {
+    let required = "";
+    for (let fiscalYear = year - 2; fiscalYear <= year + 1; fiscalYear += 1) {
+      for (const offset of [0, 3, 6, 9]) {
+        const end = new Date(Date.UTC(fiscalYear, fiscalMonth - offset, 0));
+        const deadline = end.getTime() + (offset === 0 ? 90 : 45) * 86400000;
+        const period = end.toISOString().slice(0, 10);
+        if (deadline <= today && period > required) required = period;
+      }
+    }
+    return required;
+  }
   let end = `${year - 1}-09-30`;
   if (kst >= `${year}-03-31`) end = `${year - 1}-12-31`;
   for (const suffix of ["03-31", "06-30", "09-30"]) {
@@ -2414,7 +2426,8 @@ function applyValuationMetrics(stock, payload) {
   const saved = payload?.metrics?.[stock.code];
   const metrics = saved ? { ...saved, quality_reasons: [...(saved.quality_reasons || [])] }
     : { eligible: false, quality_reasons: ["missing_latest_report"] };
-  if (metrics.period_end && metrics.period_end < requiredValuationPeriod()) {
+  const requiredEnd = requiredValuationPeriod(new Date(), metrics.fiscal_month || 12);
+  if (metrics.period_end && metrics.period_end < requiredEnd) {
     metrics.eligible = false;
     metrics.quality_reasons = [...new Set([...metrics.quality_reasons, "stale_report"])];
   }
@@ -2451,9 +2464,16 @@ function valuationPeriodLabel(stock) {
 }
 
 function valuationQualityLabel(stock) {
+  const missing = Object.entries(stock.valuationMetrics?.income_inputs || {}).flatMap(([phase, input]) => {
+    const fields = [["net_income", "전체 순이익"], ["owners_net_income", "지배주주 순이익"],
+      ["continuing_net_income", "계속영업 손익"], ["discontinued_net_income", "중단영업 손익"]]
+      .filter(([key]) => !Number.isFinite(input[key])).map(([, label]) => label);
+    return fields.length ? [`${input.period_end || "기간 미확인"} ${phase === "annual" ? "연간" : "누적"}: ${fields.join("·")}`] : [];
+  });
   return stock.valuationEligible ? "왜곡 검증 통과"
     : (stock.valuationMetrics?.quality_reasons || ["missing_latest_report"])
-      .map((reason) => VALUATION_REASON_LABELS[reason] || reason).join(" · ");
+      .map((reason) => reason === "missing_income" && missing.length
+        ? `실적 항목 미확인 (${missing.join(" / ")})` : VALUATION_REASON_LABELS[reason] || reason).join(" · ");
 }
 
 function valuationPriceDate() {

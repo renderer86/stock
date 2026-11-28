@@ -1,0 +1,2525 @@
+{
+  "as_of": "2026-11-29",
+  "source_url": "https://opendart.fss.or.kr/disclosureinfo/fnltt/dwld/list.do",
+  "annual_source_files": {
+    "BS": "2025_4Q_BS_20261128030408.zip",
+    "PL": "2025_4Q_PL_20261128030804.zip",
+    "CF": "2025_4Q_CF_20261128031132.zip",
+    "CE": "2025_4Q_CE_20261128031454.zip"
+  },
+  "before_summary": {
+    "company_count": 4324,
+    "eligible_count": 1235,
+    "excluded_by_reason": {
+      "continuing_loss": 950,
+      "owners_loss": 866,
+      "unverified_discontinued_operations": 262,
+      "missing_latest_report": 1713,
+      "material_discontinued_profit": 47,
+      "missing_income": 341,
+      "recent_capital_impairment": 132,
+      "thin_equity": 20,
+      "missing_capital": 125,
+      "capital_impairment": 110,
+      "stale_report": 36,
+      "nonpositive_equity": 17
+    }
+  },
+  "after_summary": {
+    "company_count": 4324,
+    "eligible_count": 1448,
+    "excluded_by_reason": {
+      "continuing_loss": 1007,
+      "owners_loss": 1015,
+      "missing_latest_report": 1684,
+      "material_discontinued_profit": 59,
+      "recent_capital_impairment": 133,
+      "thin_equity": 20,
+      "missing_capital": 105,
+      "capital_impairment": 111,
+      "stale_report": 45,
+      "nonpositive_equity": 17,
+      "unverified_discontinued_operations": 10,
+      "missing_income": 2
+    }
+  },
+  "eligible_arithmetic_checks_passed": 1448,
+  "restored_count": 213,
+  "lost_count": 0,
+  "resolved_reasons": {
+    "unverified_discontinued_operations": 252,
+    "missing_income": 339,
+    "missing_capital": 20,
+    "missing_latest_report": 29,
+    "stale_report": 2,
+    "recent_capital_impairment": 1
+  },
+  "pharmaresearch": {
+    "eligible": true,
+    "roe_pct": 23.139,
+    "roa_pct": 16.331,
+    "quality_reasons": [],
+    "required_period_end": "2026-09-30",
+    "fiscal_month": 12,
+    "latest_available_period_end": "2026-09-30",
+    "method": "ttm",
+    "basis": "CFS",
+    "period_end": "2026-09-30",
+    "period_start": "2025-10-01",
+    "balance_start": "2025-09-30",
+    "balance_end": "2026-09-30",
+    "owners_net_income": 166670004807,
+    "net_income": 174540853599,
+    "continuing_net_income": 174540853599,
+    "discontinued_net_income": 0,
+    "owners_equity": 779611818044,
+    "sources": [
+      "dart_financial_raw/2025/bulk/11014_BS_CFS_2.json.gz",
+      "dart_financial_raw/2025/bulk/11014_PL_CFS_2.json.gz",
+      "dart_financial_raw/2025/bulk/BS_CFS_2.json.gz",
+      "dart_financial_raw/2025/bulk/PL_CFS_2.json.gz",
+      "dart_financial_raw/2026/bulk/11014_BS_CFS_2.json.gz",
+      "dart_financial_raw/2026/bulk/11014_PL_CFS_2.json.gz"
+    ],
+    "report_code": "11014",
+    "fiscal_year": 2026,
+    "start_owners_equity": 660986700678,
+    "start_assets": 988303303817,
+    "income_inputs": {
+      "annual": {
+        "period_end": "2025-12-31",
+        "net_income": 168255434874,
+        "owners_net_income": 165120956459,
+        "continuing_net_income": 168255434874,
+        "discontinued_net_income": 0
+      },
+      "current_ytd": {
+        "period_end": "2026-09-30",
+        "net_income": 135210012408,
+        "owners_net_income": 134099083875,
+        "continuing_net_income": 135210012408,
+        "discontinued_net_income": 0
+      },
+      "previous_ytd": {
+        "period_end": "2025-09-30",
+        "net_income": 128924593683,
+        "owners_net_income": 132550035527,
+        "continuing_net_income": 128924593683,
+        "discontinued_net_income": 0
+      }
+    },
+    "financials": {
+      "source": "OpenDART",
+      "period_end": "2026-09-30",
+      "basis": "CFS",
+      "assets": 1149240146443,
+      "liabilities": 334337173465,
+      "revenue_ytd": 496347154830,
+      "operating_income_ytd": 186389299055,
+      "revenue_yoy_pct": 26.315,
+      "operating_income_yoy_pct": 14.7139
+    },
+    "share_count_as_of": "2026-11-27T17:37:04.836931+00:00",
+    "bps": 75037.36585147062,
+    "eps": 16041.929890887544,
+    "share_count_basis": "exact",
+    "share_count_includes_preferred": false,
+    "clean_roe_history": [
+      {
+        "period": "2024-12-31",
+        "roe": 18.9291
+      },
+      {
+        "period": "2025-12-31",
+        "roe": 26.8766
+      }
+    ],
+    "ticker": "214450",
+    "financial_ticker": "214450",
+    "annual_owners_net_income": 165120956459,
+    "current_ytd_owners_net_income": 134099083875,
+    "previous_ytd_owners_net_income": 132550035527,
+    "current_price": 279000
+  },
+  "restored": [
+    {
+      "ticker": "012450",
+      "name": "한화에어로스페이스",
+      "roe_pct": 14.5244,
+      "roa_pct": 4.7958,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "010950",
+      "name": "S-Oil",
+      "roe_pct": 28.8619,
+      "roa_pct": 10.2524,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "016360",
+      "name": "삼성증권",
+      "roe_pct": 17.9384,
+      "roa_pct": 1.8106,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "029780",
+      "name": "삼성카드",
+      "roe_pct": 6.7375,
+      "roa_pct": 1.7545,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "002380",
+      "name": "KCC",
+      "roe_pct": 20.1828,
+      "roa_pct": 9.5634,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "028670",
+      "name": "팬오션",
+      "roe_pct": 8.2077,
+      "roa_pct": 4.1916,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "457190",
+      "name": "이수스페셜티케미컬",
+      "roe_pct": 3.4396,
+      "roa_pct": 1.1938,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "085620",
+      "name": "미래에셋생명",
+      "roe_pct": 1.822,
+      "roa_pct": 0.1331,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "279570",
+      "name": "케이뱅크",
+      "roe_pct": 4.7749,
+      "roa_pct": 0.333,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "001720",
+      "name": "신영증권",
+      "roe_pct": 9.8162,
+      "roa_pct": 1.5883,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "004800",
+      "name": "효성",
+      "roe_pct": 20.1197,
+      "roa_pct": 11.6219,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "103140",
+      "name": "풍산",
+      "roe_pct": 9.8687,
+      "roa_pct": 4.9856,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "192080",
+      "name": "더블유게임즈",
+      "roe_pct": 12.299,
+      "roa_pct": 10.9593,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "003530",
+      "name": "한화투자증권",
+      "roe_pct": 3.4843,
+      "roa_pct": 0.4029,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "003240",
+      "name": "태광산업",
+      "roe_pct": 0.6333,
+      "roa_pct": 0.4026,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "322000",
+      "name": "HD현대에너지솔루션",
+      "roe_pct": 19.0074,
+      "roa_pct": 14.7568,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "185750",
+      "name": "종근당",
+      "roe_pct": 7.933,
+      "roa_pct": 4.6325,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "268280",
+      "name": "미원에스씨",
+      "roe_pct": 15.2208,
+      "roa_pct": 12.2973,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "079900",
+      "name": "전진건설로봇",
+      "roe_pct": 17.0101,
+      "roa_pct": 9.9918,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "001270",
+      "name": "부국증권",
+      "roe_pct": 5.5331,
+      "roa_pct": 0.7311,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "010780",
+      "name": "아이에스동서",
+      "roe_pct": 6.0504,
+      "roa_pct": 2.0766,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "017900",
+      "name": "광전자",
+      "roe_pct": 1.9068,
+      "roa_pct": 1.6897,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "016590",
+      "name": "신대양제지",
+      "roe_pct": 5.2695,
+      "roa_pct": 3.4761,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "075580",
+      "name": "세진중공업",
+      "roe_pct": 27.7533,
+      "roa_pct": 11.7212,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "484870",
+      "name": "엠앤씨솔루션",
+      "roe_pct": 22.229,
+      "roa_pct": 10.7112,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "357120",
+      "name": "코람코라이프인프라리츠",
+      "roe_pct": 0.7836,
+      "roa_pct": 0.2732,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "016800",
+      "name": "퍼시스",
+      "roe_pct": 4.3166,
+      "roa_pct": 3.9057,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "010955",
+      "name": "S-Oil우",
+      "roe_pct": 28.8619,
+      "roa_pct": 10.2524,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "317400",
+      "name": "자이에스앤디",
+      "roe_pct": 3.6399,
+      "roa_pct": 2.3163,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "226320",
+      "name": "잇츠한불",
+      "roe_pct": 4.4628,
+      "roa_pct": 6.2346,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "078520",
+      "name": "에이블씨엔씨",
+      "roe_pct": 30.2537,
+      "roa_pct": 16.3866,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "404990",
+      "name": "신한서부티엔디리츠",
+      "roe_pct": 9.841,
+      "roa_pct": 2.7596,
+      "before_reasons": [
+        "stale_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "004310",
+      "name": "현대약품",
+      "roe_pct": 3.4574,
+      "roa_pct": 1.8494,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "092790",
+      "name": "넥스틸",
+      "roe_pct": 2.2162,
+      "roa_pct": 1.3566,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "088260",
+      "name": "이리츠코크렙",
+      "roe_pct": 3.1619,
+      "roa_pct": 0.9884,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "003610",
+      "name": "방림",
+      "roe_pct": 7.5831,
+      "roa_pct": 5.5519,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "090350",
+      "name": "노루페인트",
+      "roe_pct": 6.8715,
+      "roa_pct": 3.9341,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "024090",
+      "name": "디씨엠",
+      "roe_pct": 3.1932,
+      "roa_pct": 2.8552,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "025560",
+      "name": "미래산업",
+      "roe_pct": 17.2134,
+      "roa_pct": 10.0397,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "004090",
+      "name": "한국석유",
+      "roe_pct": 6.7963,
+      "roa_pct": 3.2818,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "016740",
+      "name": "두올",
+      "roe_pct": 2.3393,
+      "roa_pct": 1.3198,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "018470",
+      "name": "조일알미늄",
+      "roe_pct": 7.6164,
+      "roa_pct": 3.6467,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "350520",
+      "name": "이지스레지던스리츠",
+      "roe_pct": 3.0317,
+      "roa_pct": 2.1785,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "248170",
+      "name": "샘표식품",
+      "roe_pct": 5.3384,
+      "roa_pct": 3.6243,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "210540",
+      "name": "디와이파워",
+      "roe_pct": 7.514,
+      "roa_pct": 6.1639,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "021820",
+      "name": "세원정공",
+      "roe_pct": 4.9158,
+      "roa_pct": 4.394,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "003780",
+      "name": "진양산업",
+      "roe_pct": 7.1403,
+      "roa_pct": 4.6175,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "032560",
+      "name": "황금에스티",
+      "roe_pct": 7.785,
+      "roa_pct": 6.4046,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "007540",
+      "name": "샘표",
+      "roe_pct": 2.9358,
+      "roa_pct": 2.5035,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "001275",
+      "name": "부국증권우",
+      "roe_pct": 5.5331,
+      "roa_pct": 0.7311,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "055490",
+      "name": "테이팩스",
+      "roe_pct": 4.6847,
+      "roa_pct": 3.732,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "007210",
+      "name": "벽산",
+      "roe_pct": 3.1859,
+      "roa_pct": 1.8368,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "338100",
+      "name": "NH프라임리츠",
+      "roe_pct": 1.5479,
+      "roa_pct": 1.5245,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "018500",
+      "name": "동원모빌리티",
+      "roe_pct": 26.7713,
+      "roa_pct": 6.9604,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "071090",
+      "name": "하이스틸",
+      "roe_pct": 0.4807,
+      "roa_pct": 0.244,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "357250",
+      "name": "미래에셋맵스리츠",
+      "roe_pct": 0.2052,
+      "roa_pct": 0.0636,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "134790",
+      "name": "시디즈",
+      "roe_pct": 5.7536,
+      "roa_pct": 3.793,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "002870",
+      "name": "신풍",
+      "roe_pct": 2.8979,
+      "roa_pct": 2.7857,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "003535",
+      "name": "한화투자증권우",
+      "roe_pct": 3.4843,
+      "roa_pct": 0.4029,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "009310",
+      "name": "참엔지니어링",
+      "roe_pct": 1.5054,
+      "roa_pct": 0.1143,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "093240",
+      "name": "형지엘리트",
+      "roe_pct": 5.0255,
+      "roa_pct": 2.8614,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "090355",
+      "name": "노루페인트우",
+      "roe_pct": 6.8715,
+      "roa_pct": 3.9341,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "214450",
+      "name": "파마리서치",
+      "roe_pct": 23.139,
+      "roa_pct": 16.331,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "319660",
+      "name": "피에스케이",
+      "roe_pct": 25.6582,
+      "roa_pct": 21.4114,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "080220",
+      "name": "제주반도체",
+      "roe_pct": 75.8219,
+      "roa_pct": 43.9367,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "218410",
+      "name": "RFHIC",
+      "roe_pct": 11.9695,
+      "roa_pct": 9.6823,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "095610",
+      "name": "테스",
+      "roe_pct": 18.9081,
+      "roa_pct": 15.6533,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "323280",
+      "name": "태성",
+      "roe_pct": 1.5826,
+      "roa_pct": 1.062,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "060370",
+      "name": "LS마린솔루션",
+      "roe_pct": 3.2043,
+      "roa_pct": 2.8015,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "086450",
+      "name": "동국제약",
+      "roe_pct": 10.2913,
+      "roa_pct": 6.7886,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "082920",
+      "name": "비츠로셀",
+      "roe_pct": 18.232,
+      "roa_pct": 16.3874,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "056190",
+      "name": "SFA",
+      "roe_pct": 6.0788,
+      "roa_pct": 2.362,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "251970",
+      "name": "펌텍코리아",
+      "roe_pct": 16.0856,
+      "roa_pct": 13.2839,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "089970",
+      "name": "브이엠",
+      "roe_pct": 32.946,
+      "roa_pct": 26.241,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "093320",
+      "name": "케이아이엔엑스",
+      "roe_pct": 12.093,
+      "roa_pct": 7.87,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "171090",
+      "name": "선익시스템",
+      "roe_pct": 8.9286,
+      "roa_pct": 2.8049,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "083450",
+      "name": "GST",
+      "roe_pct": 19.8522,
+      "roa_pct": 15.4848,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "031330",
+      "name": "에스에이엠티",
+      "roe_pct": 69.7919,
+      "roa_pct": 26.0682,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "425420",
+      "name": "티에프이",
+      "roe_pct": 21.5806,
+      "roa_pct": 14.9256,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "079940",
+      "name": "가비아",
+      "roe_pct": 10.8415,
+      "roa_pct": 6.3792,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "033100",
+      "name": "제룡전기",
+      "roe_pct": 19.1894,
+      "roa_pct": 17.1145,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "053610",
+      "name": "프로텍",
+      "roe_pct": 23.029,
+      "roa_pct": 16.6156,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "137400",
+      "name": "피엔티",
+      "roe_pct": 5.9372,
+      "roa_pct": 1.9731,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "050890",
+      "name": "쏠리드",
+      "roe_pct": 11.7234,
+      "roa_pct": 7.3068,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "102710",
+      "name": "이엔에프테크놀로지",
+      "roe_pct": 11.2732,
+      "roa_pct": 7.0492,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "119850",
+      "name": "지엔씨에너지",
+      "roe_pct": 9.214,
+      "roa_pct": 5.5322,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "060250",
+      "name": "NHN KCP",
+      "roe_pct": 17.0189,
+      "roa_pct": 7.5401,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "340570",
+      "name": "티앤엘",
+      "roe_pct": 24.1804,
+      "roa_pct": 21.9367,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "204620",
+      "name": "글로벌텍스프리",
+      "roe_pct": 24.8716,
+      "roa_pct": 17.9299,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "015750",
+      "name": "성우하이텍",
+      "roe_pct": 5.5044,
+      "roa_pct": 1.3642,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "121440",
+      "name": "골프존홀딩스",
+      "roe_pct": 1.9154,
+      "roa_pct": 1.3043,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "067160",
+      "name": "SOOP",
+      "roe_pct": 15.1376,
+      "roa_pct": 7.8809,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "013030",
+      "name": "하이록코리아",
+      "roe_pct": 11.754,
+      "roa_pct": 10.9079,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "078020",
+      "name": "LS증권",
+      "roe_pct": 7.2774,
+      "roa_pct": 0.6215,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "241770",
+      "name": "메카로",
+      "roe_pct": 6.5045,
+      "roa_pct": 5.8776,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "060280",
+      "name": "큐렉소",
+      "roe_pct": 1.3971,
+      "roa_pct": 1.287,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "101930",
+      "name": "인화정공",
+      "roe_pct": 11.2011,
+      "roa_pct": 8.6929,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "439090",
+      "name": "마녀공장",
+      "roe_pct": 9.2579,
+      "roa_pct": 8.2603,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "046970",
+      "name": "우리로",
+      "roe_pct": 9.7663,
+      "roa_pct": 6.5397,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "036200",
+      "name": "유니셈",
+      "roe_pct": 7.6809,
+      "roa_pct": 6.4593,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "200670",
+      "name": "휴메딕스",
+      "roe_pct": 8.8757,
+      "roa_pct": 8.2177,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "033160",
+      "name": "엠케이전자",
+      "roe_pct": 7.9853,
+      "roa_pct": 2.7448,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "203650",
+      "name": "드림시큐리티",
+      "roe_pct": 8.9188,
+      "roa_pct": 1.5347,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "265520",
+      "name": "AP시스템",
+      "roe_pct": 8.7213,
+      "roa_pct": 5.0096,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "206640",
+      "name": "바디텍메드",
+      "roe_pct": 8.6563,
+      "roa_pct": 7.177,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "094360",
+      "name": "칩스앤미디어",
+      "roe_pct": 7.8786,
+      "roa_pct": 6.6203,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "042370",
+      "name": "비츠로테크",
+      "roe_pct": 0.2148,
+      "roa_pct": 5.6645,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "086390",
+      "name": "유니테스트",
+      "roe_pct": 6.0398,
+      "roa_pct": 2.6862,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "192440",
+      "name": "슈피겐코리아",
+      "roe_pct": 10.3923,
+      "roa_pct": 9.4645,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "450950",
+      "name": "아스테라시스",
+      "roe_pct": 7.4959,
+      "roa_pct": 6.5223,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "272110",
+      "name": "케이엔제이",
+      "roe_pct": 22.9166,
+      "roa_pct": 10.4897,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "114190",
+      "name": "강원에너지",
+      "roe_pct": 4.4049,
+      "roa_pct": 1.6861,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "234690",
+      "name": "녹십자웰빙",
+      "roe_pct": 4.4571,
+      "roa_pct": 2.1532,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "038390",
+      "name": "레드캡투어",
+      "roe_pct": 12.2591,
+      "roa_pct": 3.4723,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "092130",
+      "name": "이크레더블",
+      "roe_pct": 30.4853,
+      "roa_pct": 24.4327,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "045390",
+      "name": "대아티아이",
+      "roe_pct": 6.8833,
+      "roa_pct": 3.7244,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "357550",
+      "name": "석경에이티",
+      "roe_pct": 8.3554,
+      "roa_pct": 6.7391,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "119610",
+      "name": "인터로조",
+      "roe_pct": 10.7527,
+      "roa_pct": 7.1426,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "143160",
+      "name": "아이디스",
+      "roe_pct": 6.3735,
+      "roa_pct": 4.7816,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "123330",
+      "name": "제닉",
+      "roe_pct": 57.6001,
+      "roa_pct": 40.8737,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "108380",
+      "name": "대양전기공업",
+      "roe_pct": 8.6682,
+      "roa_pct": 7.009,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "085910",
+      "name": "네오티스",
+      "roe_pct": 12.5184,
+      "roa_pct": 6.8314,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "126730",
+      "name": "코칩",
+      "roe_pct": 13.2851,
+      "roa_pct": 10.9927,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "035610",
+      "name": "솔본",
+      "roe_pct": 0.94,
+      "roa_pct": 4.3326,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "118990",
+      "name": "모트렉스",
+      "roe_pct": 11.8626,
+      "roa_pct": 3.1809,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "289080",
+      "name": "SV인베스트먼트",
+      "roe_pct": 0.8688,
+      "roa_pct": 0.6883,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "141000",
+      "name": "비아트론",
+      "roe_pct": 2.8351,
+      "roa_pct": 2.3322,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "443670",
+      "name": "에스피소프트",
+      "roe_pct": 5.0362,
+      "roa_pct": 4.1291,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "130580",
+      "name": "나이스디앤비",
+      "roe_pct": 11.2844,
+      "roa_pct": 9.3981,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "056090",
+      "name": "시지메드텍",
+      "roe_pct": 6.8323,
+      "roa_pct": 5.0132,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "209640",
+      "name": "와이제이링크",
+      "roe_pct": 5.9403,
+      "roa_pct": 3.4011,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "052260",
+      "name": "현대바이오랜드",
+      "roe_pct": 9.4504,
+      "roa_pct": 7.7169,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "120240",
+      "name": "대정화금",
+      "roe_pct": 9.1542,
+      "roa_pct": 7.8494,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "297890",
+      "name": "HB솔루션",
+      "roe_pct": 15.0759,
+      "roa_pct": 11.5816,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "255440",
+      "name": "야스",
+      "roe_pct": 16.9505,
+      "roa_pct": 12.3665,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "006620",
+      "name": "동구바이오제약",
+      "roe_pct": 21.8251,
+      "roa_pct": 9.1055,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "108230",
+      "name": "톱텍",
+      "roe_pct": 1.4511,
+      "roa_pct": 0.4008,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "041440",
+      "name": "현대에버다임",
+      "roe_pct": 1.6174,
+      "roa_pct": 0.9063,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "134580",
+      "name": "엔키AX",
+      "roe_pct": 5.3353,
+      "roa_pct": 3.0614,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "086980",
+      "name": "쇼박스",
+      "roe_pct": 20.638,
+      "roa_pct": 16.33,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "059210",
+      "name": "메타바이오메드",
+      "roe_pct": 8.9739,
+      "roa_pct": 5.759,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "125210",
+      "name": "아모그린텍",
+      "roe_pct": 2.8266,
+      "roa_pct": 1.1612,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "226590",
+      "name": "엠디바이스",
+      "roe_pct": 11.1146,
+      "roa_pct": 5.008,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "099750",
+      "name": "이지케어텍",
+      "roe_pct": 8.1554,
+      "roa_pct": 5.5012,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "086960",
+      "name": "MDS테크",
+      "roe_pct": 10.6414,
+      "roa_pct": 6.927,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "066590",
+      "name": "스모트로닉",
+      "roe_pct": 5.1798,
+      "roa_pct": 1.6898,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "478560",
+      "name": "블랙야크아이앤씨",
+      "roe_pct": 39.5183,
+      "roa_pct": 9.263,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "047770",
+      "name": "코데즈컴바인",
+      "roe_pct": 5.971,
+      "roa_pct": 4.5541,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "104620",
+      "name": "노랑풍선",
+      "roe_pct": 11.7656,
+      "roa_pct": 3.8116,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "205100",
+      "name": "엑셈",
+      "roe_pct": 16.5305,
+      "roa_pct": 15.3748,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "060590",
+      "name": "씨티씨바이오",
+      "roe_pct": 11.6431,
+      "roa_pct": 5.886,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "216050",
+      "name": "인크로스",
+      "roe_pct": 10.3276,
+      "roa_pct": 4.975,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "170030",
+      "name": "현대공업",
+      "roe_pct": 8.1198,
+      "roa_pct": 5.3435,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "347000",
+      "name": "센코",
+      "roe_pct": 7.1233,
+      "roa_pct": 5.0955,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "171120",
+      "name": "라이온켐텍",
+      "roe_pct": 8.1811,
+      "roa_pct": 6.8171,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "054670",
+      "name": "대한뉴팜",
+      "roe_pct": 11.8158,
+      "roa_pct": 6.19,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "012700",
+      "name": "리드코프",
+      "roe_pct": 1.4599,
+      "roa_pct": 0.43,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "149980",
+      "name": "하이로닉",
+      "roe_pct": 7.0076,
+      "roa_pct": 6.2487,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "126880",
+      "name": "제이엔케이글로벌",
+      "roe_pct": 6.1848,
+      "roa_pct": 3.5425,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "047820",
+      "name": "초록뱀미디어",
+      "roe_pct": 3.1144,
+      "roa_pct": 1.8136,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "265560",
+      "name": "영화테크",
+      "roe_pct": 22.9616,
+      "roa_pct": 17.0862,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "024740",
+      "name": "한일단조",
+      "roe_pct": 1.8559,
+      "roa_pct": 0.9923,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "109860",
+      "name": "동일금속",
+      "roe_pct": 3.0486,
+      "roa_pct": 2.5924,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "048430",
+      "name": "유라테크",
+      "roe_pct": 3.4362,
+      "roa_pct": 2.8587,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "104540",
+      "name": "코렌텍",
+      "roe_pct": 6.1919,
+      "roa_pct": 3.1658,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "010240",
+      "name": "흥국",
+      "roe_pct": 9.393,
+      "roa_pct": 8.1906,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "092300",
+      "name": "현우산업",
+      "roe_pct": 13.3189,
+      "roa_pct": 7.5429,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "024950",
+      "name": "삼천리자전거",
+      "roe_pct": 2.9866,
+      "roa_pct": 2.1417,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "050960",
+      "name": "수산아이앤티",
+      "roe_pct": 7.1601,
+      "roa_pct": 6.7956,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "081150",
+      "name": "티플랙스",
+      "roe_pct": 2.487,
+      "roa_pct": 1.5491,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "227950",
+      "name": "엔투텍",
+      "roe_pct": 17.4634,
+      "roa_pct": 14.4225,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "007370",
+      "name": "진양제약",
+      "roe_pct": 17.1673,
+      "roa_pct": 9.8439,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "056360",
+      "name": "코위버",
+      "roe_pct": 2.5814,
+      "roa_pct": 2.1938,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "215360",
+      "name": "우리산업",
+      "roe_pct": 7.0003,
+      "roa_pct": 2.293,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "033310",
+      "name": "엠투엔",
+      "roe_pct": 0.9156,
+      "roa_pct": 0.709,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "046940",
+      "name": "우원개발",
+      "roe_pct": 15.4604,
+      "roa_pct": 8.9834,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "042110",
+      "name": "에스씨디",
+      "roe_pct": 1.2681,
+      "roa_pct": 0.9883,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "189690",
+      "name": "포시에스",
+      "roe_pct": 11.1071,
+      "roa_pct": 10.2175,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "471820",
+      "name": "셀로맥스사이언스",
+      "roe_pct": 6.9021,
+      "roa_pct": 6.3524,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "089790",
+      "name": "제이티",
+      "roe_pct": 5.5024,
+      "roa_pct": 3.6392,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "190650",
+      "name": "코리아에셋투자증권",
+      "roe_pct": 7.8726,
+      "roa_pct": 0.7852,
+      "before_reasons": [
+        "stale_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "459550",
+      "name": "알트",
+      "roe_pct": 0.2273,
+      "roa_pct": 0.1675,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "050860",
+      "name": "아세아텍",
+      "roe_pct": 1.9924,
+      "roa_pct": 1.3066,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "321260",
+      "name": "프로이천",
+      "roe_pct": 16.8654,
+      "roa_pct": 14.9765,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "169330",
+      "name": "엠브레인",
+      "roe_pct": 6.1291,
+      "roa_pct": 3.1845,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "123570",
+      "name": "이엠넷",
+      "roe_pct": 2.111,
+      "roa_pct": 1.5538,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "081580",
+      "name": "성우전자",
+      "roe_pct": 8.3436,
+      "roa_pct": 5.4744,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "067010",
+      "name": "이씨에스",
+      "roe_pct": 5.2687,
+      "roa_pct": 3.3379,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "072470",
+      "name": "우리산업홀딩스",
+      "roe_pct": 1.6105,
+      "roa_pct": 0.8131,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "097870",
+      "name": "효성오앤비",
+      "roe_pct": 0.8436,
+      "roa_pct": 0.7567,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "115160",
+      "name": "휴맥스",
+      "roe_pct": 4.48,
+      "roa_pct": 0.6045,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "021650",
+      "name": "한국큐빅",
+      "roe_pct": 0.8826,
+      "roa_pct": 0.5241,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "020180",
+      "name": "대신정보통신",
+      "roe_pct": 28.0629,
+      "roa_pct": 7.496,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "236810",
+      "name": "엔비티",
+      "roe_pct": 13.4032,
+      "roa_pct": 5.2706,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "080530",
+      "name": "코디",
+      "roe_pct": 9.718,
+      "roa_pct": 7.0693,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "188040",
+      "name": "바이오포트",
+      "roe_pct": 4.3985,
+      "roa_pct": 2.7567,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "139670",
+      "name": "키네마스터",
+      "roe_pct": 21.0264,
+      "roa_pct": 19.6739,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "462310",
+      "name": "뉴키즈온",
+      "roe_pct": 1.1652,
+      "roa_pct": 0.621,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "290270",
+      "name": "휴네시온",
+      "roe_pct": 9.5797,
+      "roa_pct": 8.4929,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "093380",
+      "name": "풍강",
+      "roe_pct": 6.7112,
+      "roa_pct": 5.1789,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "065370",
+      "name": "위세아이텍",
+      "roe_pct": 5.8305,
+      "roa_pct": 2.8727,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "017250",
+      "name": "인터엠",
+      "roe_pct": 8.3191,
+      "roa_pct": 3.8789,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "215480",
+      "name": "토박스코리아",
+      "roe_pct": 0.8226,
+      "roa_pct": 0.6956,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "033200",
+      "name": "모아텍",
+      "roe_pct": 0.267,
+      "roa_pct": 0.2481,
+      "before_reasons": [
+        "missing_latest_report"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "208350",
+      "name": "지란지교시큐리티",
+      "roe_pct": 5.5944,
+      "roa_pct": 1.653,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "113810",
+      "name": "디젠스",
+      "roe_pct": 10.5014,
+      "roa_pct": 4.6638,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "069410",
+      "name": "엔텔스",
+      "roe_pct": 2.2917,
+      "roa_pct": 1.7877,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "069330",
+      "name": "유아이디",
+      "roe_pct": 2.6754,
+      "roa_pct": 5.1128,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "115480",
+      "name": "씨유메디칼",
+      "roe_pct": 11.6984,
+      "roa_pct": 5.4692,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "331520",
+      "name": "밸로프",
+      "roe_pct": 9.0397,
+      "roa_pct": 5.4071,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "013810",
+      "name": "스페코",
+      "roe_pct": 0.7641,
+      "roa_pct": 0.3313,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "024940",
+      "name": "PN풍년",
+      "roe_pct": 2.7479,
+      "roa_pct": 2.4018,
+      "before_reasons": [
+        "missing_income"
+      ],
+      "after_reasons": []
+    },
+    {
+      "ticker": "079970",
+      "name": "투비소프트",
+      "roe_pct": 12.5907,
+      "roa_pct": 8.4639,
+      "before_reasons": [
+        "unverified_discontinued_operations"
+      ],
+      "after_reasons": []
+    }
+  ],
+  "newly_excluded": [],
+  "remaining_missing_income_count": 2,
+  "remaining_missing_income_patterns": [
+    {
+      "count": 1,
+      "missing_fields_by_period": {
+        "annual:2025-12-31": [
+          "net_income",
+          "discontinued_net_income"
+        ],
+        "current_ytd:2026-09-30": [],
+        "previous_ytd:2025-09-30": []
+      }
+    },
+    {
+      "count": 1,
+      "missing_fields_by_period": {
+        "annual:2025-12-31": [],
+        "current_ytd:2026-09-30": [],
+        "previous_ytd:2025-09-30": [
+          "owners_net_income"
+        ]
+      }
+    }
+  ],
+  "remaining_missing_income": [
+    {
+      "ticker": "466100",
+      "name": "클로봇",
+      "roe_pct": -1.6513,
+      "roa_pct": null,
+      "before_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations",
+        "continuing_loss"
+      ],
+      "after_reasons": [
+        "missing_income",
+        "unverified_discontinued_operations",
+        "continuing_loss",
+        "owners_loss"
+      ],
+      "missing_fields_by_period": {
+        "annual:2025-12-31": [
+          "net_income",
+          "discontinued_net_income"
+        ],
+        "current_ytd:2026-09-30": [],
+        "previous_ytd:2025-09-30": []
+      }
+    },
+    {
+      "ticker": "417860",
+      "name": "오브젠",
+      "roe_pct": null,
+      "roa_pct": null,
+      "before_reasons": [
+        "missing_capital",
+        "missing_income"
+      ],
+      "after_reasons": [
+        "missing_capital",
+        "missing_income"
+      ],
+      "missing_fields_by_period": {
+        "annual:2025-12-31": [],
+        "current_ytd:2026-09-30": [],
+        "previous_ytd:2025-09-30": [
+          "owners_net_income"
+        ]
+      }
+    }
+  ],
+  "followup_196": {
+    "baseline_count": 196,
+    "income_gap_resolved_count": 194,
+    "eligible_count": 81,
+    "still_missing_income": [
+      {
+        "ticker": "466100",
+        "name": "클로봇",
+        "quality_reasons": [
+          "missing_income",
+          "unverified_discontinued_operations",
+          "continuing_loss",
+          "owners_loss"
+        ],
+        "income_inputs": {
+          "annual": {
+            "period_end": "2025-12-31",
+            "net_income": null,
+            "owners_net_income": -2150246086,
+            "continuing_net_income": -2150246086,
+            "discontinued_net_income": null
+          },
+          "current_ytd": {
+            "period_end": "2026-09-30",
+            "net_income": -2971708179,
+            "owners_net_income": -2971708179,
+            "continuing_net_income": -2971708179,
+            "discontinued_net_income": 0
+          },
+          "previous_ytd": {
+            "period_end": "2025-09-30",
+            "net_income": -3217316269,
+            "owners_net_income": -3217316269,
+            "continuing_net_income": -3217316269,
+            "discontinued_net_income": 0
+          }
+        },
+        "sources": [
+          "dart_financial_raw/2025/api/valuation_11011_CFS_4.json.gz",
+          "dart_financial_raw/2025/bulk/11014_BS_CFS_4.json.gz",
+          "dart_financial_raw/2025/bulk/11014_PL_CFS_4.json.gz",
+          "dart_financial_raw/2026/api/valuation_11014_CFS_4.json.gz"
+        ]
+      },
+      {
+        "ticker": "417860",
+        "name": "오브젠",
+        "quality_reasons": [
+          "missing_capital",
+          "missing_income"
+        ],
+        "income_inputs": {
+          "annual": {
+            "period_end": "2025-12-31",
+            "net_income": -3427176644,
+            "owners_net_income": -3427176644,
+            "continuing_net_income": -3427176644,
+            "discontinued_net_income": 0
+          },
+          "current_ytd": {
+            "period_end": "2026-09-30",
+            "net_income": 4882003162,
+            "owners_net_income": 4882003162,
+            "continuing_net_income": 4882191620,
+            "discontinued_net_income": -188458
+          },
+          "previous_ytd": {
+            "period_end": "2025-09-30",
+            "net_income": -3831622745,
+            "owners_net_income": null,
+            "continuing_net_income": -3831622745,
+            "discontinued_net_income": 0
+          }
+        },
+        "sources": [
+          "dart_financial_raw/2025/api/valuation_11011_CFS_4.json.gz",
+          "dart_financial_raw/2026/bulk/11014_BS_CFS_4.json.gz",
+          "dart_financial_raw/2026/bulk/11014_PL_CFS_4.json.gz"
+        ]
+      }
+    ]
+  }
+}

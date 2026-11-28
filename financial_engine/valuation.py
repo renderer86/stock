@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
+import calendar
 import math
 
 
@@ -35,7 +36,8 @@ def capital_reasons(accounts: dict) -> list[str]:
 def evaluate_returns(start: dict, end: dict, income: dict, *, period_end: str,
                      basis: str, method: str, capital_history=()) -> dict:
     end_date = date.fromisoformat(period_end)
-    balance_start = end_date.replace(year=end_date.year - 1)
+    balance_start = date(end_date.year - 1, end_date.month,
+                         min(end_date.day, calendar.monthrange(end_date.year - 1, end_date.month)[1]))
     result = {"method": method, "basis": basis, "period_end": period_end,
               "period_start": (balance_start + timedelta(days=1)).isoformat(),
               "balance_start": balance_start.isoformat(), "balance_end": period_end,
